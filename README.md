@@ -33,7 +33,14 @@ if ()
 private bool isValid;
 ```
     
-### 유니티 설치 / 설정 :
+### 유니티 설치 / 설정
     - 버전 : 2022.3.16f1
     - Windows Build Support (IL2CPP)
     - Version Control / Mode: “Visible Meta Files” Asset Serialization / Mode: “Force Text”
+    
+### 병합 시 유의할 점
+    - 작업 시작하기 전에 반드시 Petch-Origin 하기
+    - 두 사람이 한 Scene을 작업하는 행위 금지 (충돌 여부 미확인)
+    - 두 사람이 한 Script를 작업하는 행위 금지 (충돌 여부 미확인)
+    - 한 번에 너무 많은 Asset/이미지 파일 등을 넣지 말 것
+    - Scene / script 이름 변경은 모두와 합의한 뒤 할 것.
