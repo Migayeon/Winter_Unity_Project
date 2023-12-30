@@ -8,14 +8,18 @@ public class cat : MonoBehaviour
 {
     private int i;
     private GameObject catObject;
+    [SerializeField]
+    private int catCnt;
     void Start()
     {
         catObject = gameObject;
-        Debug.Log("meow");
+        for(int k = 0; k < catCnt; k++)
+            Debug.Log("meow");
     }
     void Update()
     {
-        Debug.Log("grrr");
+        for (int k = 0; k < catCnt; k++)
+            Debug.Log("grrr");
         Debug.Log(i++);
         Debug.Log(catObject.name);
     }
