@@ -7,13 +7,17 @@ using System.Security.Cryptography;
 public class cat : MonoBehaviour
 {
     private int i;
+    [SerializeField]
+    private int catCnt;
     void Start()
     {
-        Debug.Log("meow");
+        for(int k = 0; k < catCnt; k++)
+            Debug.Log("meow");
     }
     void Update()
     {
-        Debug.Log("grrr");
+        for (int k = 0; k < catCnt; k++)
+            Debug.Log("grrr");
         Debug.Log(i++);
     }
 }
