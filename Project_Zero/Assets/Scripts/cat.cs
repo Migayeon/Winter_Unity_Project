@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using System.Security.Cryptography;
 
 public class cat : MonoBehaviour
 {
@@ -11,6 +13,7 @@ public class cat : MonoBehaviour
     }
     void Update()
     {
+        Debug.Log("grrr");
         Debug.Log(i++);
     }
 }
