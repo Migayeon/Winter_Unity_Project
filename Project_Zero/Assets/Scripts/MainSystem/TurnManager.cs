@@ -14,6 +14,9 @@ using UnityEngine;
 public class TurnManager : MonoBehaviour
 {
     public static int turn;
-
+    void Start()
+    {
+        turn = 1; // test
+    }
 
 }
