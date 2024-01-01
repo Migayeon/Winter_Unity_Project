@@ -34,8 +34,10 @@ public class TitleManager : MonoBehaviour
     // UI
     // 스크립트에서 따로 할당하지 않음 유니티에서 직접 할당
     public Button newGame, continueGame, gameOption, exitGame;
-    private Button yesButton, noButton;
+    private Button yesButton, noButton, xButton;
     public GameObject exitMessage;
+    public GameObject warningMessage;
+    SaveData saveData;
 
     public void NewGameStart() // 새로운 게임 시작
     {
@@ -46,11 +48,19 @@ public class TitleManager : MonoBehaviour
     {
         if (!PlayerPrefs.HasKey("saveFile")) // 세이브 데이터가 존재하지 않을 경우
         {
-            //return false;  
+            warningMessage.SetActive(true);
+            xButton = warningMessage.transform.GetChild(1).GetComponent<Button>();
+            xButton.onClick.AddListener(CloseWarning);
         }
-        TurnManager.turn = PlayerPrefs.GetInt("turn",-1); // 
+        TurnManager.turn = PlayerPrefs.GetInt("turn", -1); // 
 
-        //return true;
+        // return true;
+    }
+
+    public void CloseWarning() 
+    {
+        xButton.onClick.RemoveAllListeners();
+        warningMessage.SetActive(false);
     }
 
     public void OpenOption()
@@ -58,12 +68,12 @@ public class TitleManager : MonoBehaviour
         // 미구현
     }
 
-    public void ExitGame()
+    public void ExitGame() // 게임 종료 창 띄우기
     {
         exitMessage.SetActive(true);
-        yesButton = exitMessage.transform.GetChild(1).GetComponent<Button>();
+        yesButton = exitMessage.transform.GetChild(1).GetComponent<Button>(); // 버튼 할당
         noButton = exitMessage.transform.GetChild(2).GetComponent<Button>();
-        yesButton.onClick.AddListener(YesExit);
+        yesButton.onClick.AddListener(YesExit); // 버튼에 함수 할당
         noButton.onClick.AddListener(NoExit);
     }
 
@@ -76,7 +86,7 @@ public class TitleManager : MonoBehaviour
 #endif
     }
 
-    public void NoExit()
+    public void NoExit() // 종료 취소
     {
         yesButton.onClick.RemoveAllListeners();
         noButton.onClick.RemoveAllListeners();
@@ -91,7 +101,8 @@ public class TitleManager : MonoBehaviour
         gameOption.onClick.AddListener(OpenOption);
         exitGame.onClick.AddListener(ExitGame);
 
-        //UI 기본 설정
+        // UI 기본 설정
         exitMessage.SetActive(false);
+        warningMessage.SetActive(false);
     }
 }
