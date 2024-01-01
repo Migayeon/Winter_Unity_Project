@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,6 +28,9 @@ public class TitleManager : MonoBehaviour
     // 스크립트에서 따로 할당하지 않음 유니티에서 직접 할당
     public Button newGame, continueGame, gameOption, exitGame;
     public GameObject exitMessage;
+
+    static string type = "common";
+    StreamReader reader = new StreamReader($"Asset\\Resources\\Csv\\{type}.csv");
 
     public void NewGameStart()
     {
