@@ -39,6 +39,7 @@ private bool isValid;
 - 버전 : 2022.3.16f1
 - Windows Build Support (IL2CPP)
 - Version Control / Mode: “Visible Meta Files” Asset Serialization / Mode: “Force Text”
+- 화면 비율 : free aspect / 1920x1440
     
 ### 병합 시 유의할 점
 - 작업 시작하기 전에 반드시 Petch-Origin 하기
