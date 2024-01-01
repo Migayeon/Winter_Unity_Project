@@ -1,5 +1,10 @@
 using System;
 
+public static class Constants
+{
+    public const int professorStats = 6;
+}
+
 public class Professor
 {
     private int id ; //Professor ID (can be any int)
@@ -8,14 +13,16 @@ public class Professor
     private int type; //Professor type (1: Unique, 0: Normal)
 
     //insert Professor stats here
+    private List<int> stat;
 
     public Professor() {}
-    public Professor(int _id, string _name, int _tenure, int _type)
+    public Professor(int _id, string _name, int _tenure, int _type, List<int> _stat)
     {
         id = _id;
         name = _name;
         tenure = _tenure;
         type = _type;
+        stat = new List<int>(_stat);
     }
     
     public int ProfessorGetID() { return id; }
@@ -37,6 +44,12 @@ public class Professor
             Console.WriteLine("Type: Unique");
         else
             Console.WriteLine("Type: Normal");
+        Console.Write("Stats: ");
+        for (int i = 0; i < Constants.professorStats; ++i)
+        {
+            Console.Write(stat[i]);
+            Console.Write(" ");
+        }
     }
 }
 
@@ -50,7 +63,12 @@ class ProfessorSystem
         string _name = Console.ReadLine();
         int _tenure = Convert.ToInt32(Console.ReadLine());
         int _type = Convert.ToInt32(Console.ReadLine());
-        Professor testprof = new(_id, _name, _tenure, _type);
+        List<int> _stat = new List<int>(Constants.professorStats);
+        for (int i = 1; i <= Constants.professorStats; ++i)
+        {
+            _stat.Add(i);
+        }
+        Professor testprof = new(_id, _name, _tenure, _type, _stat);
         testprof.ConsolePrintProfessorInfo();
         */
     }
