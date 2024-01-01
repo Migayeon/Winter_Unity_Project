@@ -16,6 +16,7 @@ public class Professor
     //insert Professor stats here
     private List<int> stat;
 
+    private bool away; //true = is away, false = is not away (able to teach)
     public Professor() {}
     public Professor(int _id, string _name, int _tenure, int _type, List<int> _stat)
     {
@@ -24,18 +25,23 @@ public class Professor
         tenure = _tenure;
         type = _type;
         stat = new List<int>(_stat);
+        away = false;
     }
     
     public int ProfessorGetID() { return id; }
     public string ProfessorGetName() { return name; }
     public int ProfessorGetTenure() { return tenure; }
     public int ProfessorGetType() { return type; }
-
+    
     public void ProfessorIncreaseTenure()
     {
         tenure++;
     }
 
+    public void ProfessorSetAwayStatus(bool status)
+    {
+        away = status;
+    }
     public void ConsolePrintProfessorInfo()
     {
         Console.WriteLine($"ID: {id}");
