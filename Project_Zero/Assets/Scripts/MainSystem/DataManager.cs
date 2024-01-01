@@ -17,7 +17,7 @@ function
 
 3. void SaveGame()
  - Save variables in playerprefs
- - ÇÑ±¹¸» ¸ø ½á¼­ ´ä´äÇÏ´Ù!
+ - í•œê¸€
 */
 
 public class DataManager : MonoBehaviour
