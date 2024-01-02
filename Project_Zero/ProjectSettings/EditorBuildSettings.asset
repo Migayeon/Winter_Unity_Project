@@ -15,6 +15,6 @@ EditorBuildSettings:
     path: Assets/Scenes/BeforeTurn.unity
     guid: 7d99293a2ed1ed7478be29b52b33c6db
   - enabled: 1
-    path: Assets/Scenes/DuringTurn.unity
+    path: Assets/Scenes/DuringTurn/Main.unity
     guid: fb01fafbf314da541b980d17c6002082
   m_configObjects: {}
