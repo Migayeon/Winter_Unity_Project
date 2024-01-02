@@ -35,6 +35,8 @@ using System.ComponentModel.Design;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEditor.PackageManager;
+using UnityEngine.UI;
 
 public class EventManager : MonoBehaviour
 {
@@ -224,6 +226,22 @@ public class EventManager : MonoBehaviour
         }
         //code for testing output
         
+    }
+
+    // Code for showing appropriate Event Sprites
+    public static Sprite ShowEvent(string rarity, int eventID)
+    {
+        Sprite returnSprite;
+        string filePath = "";
+        string[] filenames = new string[] { "Sprites/Common/",
+            "Sprites/Rare/", "Sprites/Unique/" }; //enter filenames here
+        int rarityIndex = 0;
+        if (rarity == "common") rarityIndex = 0;
+        else if (rarity == "rare") rarityIndex = 1;
+        else rarityIndex = 2;
+        filePath = filenames[rarityIndex];
+        returnSprite = Resources.Load(filePath + eventID.ToString(), typeof(Sprite)) as Sprite;
+        return returnSprite;
     }
     public void Start()
     {

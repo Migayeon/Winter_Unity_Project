@@ -4,11 +4,13 @@ using System;
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class BeforeTurn : MonoBehaviour
 {
     [SerializeField] private int correctionMax = 10;
     [SerializeField] private int correctionMin = 10;
+    [SerializeField] GameObject eventImage;
     private int maxRate;
     private int minRate;
     public (string, int) eventInfo = ("", 0);
@@ -25,8 +27,15 @@ public class BeforeTurn : MonoBehaviour
 
         // 이벤트 가져오기
         eventInfo = EventManager.GetEvent();
-
-
+        if (eventInfo.Item2 == -1)
+        {
+            SceneManager.LoadScene("Main");
+        }
+        else
+        {
+            eventImage.SetActive(true);
+            eventImage.GetComponent<Image>().sprite = EventManager.ShowEvent(eventInfo.Item1, eventInfo.Item2);
+        }
         // string temp = GenerateName(); //for testing
         
     }
