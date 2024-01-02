@@ -13,16 +13,30 @@ public class StockManager : MonoBehaviour
     // 환전 정보
     [SerializeField] TextMeshProUGUI exchangeRate;
     [SerializeField] TextMeshProUGUI exchangePercent;
-    [SerializeField] TextMeshProUGUI purchaseAmountText;
+
 
     // 구매 시스템
     [SerializeField] Button purchaseButton;
     [SerializeField] GameObject checkPurchase;
     [SerializeField] Button checkPurchaseYes;
     [SerializeField] Button checkPurchaseNo;
+    [SerializeField] TextMeshProUGUI purchaseAmountText;
+
+    // 판매 시스템
+    [SerializeField] Button saleButton;
+    [SerializeField] GameObject checkSale;
+    [SerializeField] Button checkSaleYes;
+    [SerializeField] Button checkSaleNo;
+    [SerializeField] TextMeshProUGUI saleAmountText;
     void Awake()
     {
         purchaseButton.onClick.AddListener(() => AbleUI(checkPurchase));
+        checkPurchaseYes.onClick.AddListener(PurchaseStone);
+        checkPurchaseNo.onClick.AddListener(() => DisableUI(checkPurchase));
+
+        saleButton.onClick.AddListener(() => AbleUI(checkSale));
+        checkSaleYes.onClick.AddListener(SaleStone);
+        checkSaleNo.onClick.AddListener(() => DisableUI(checkSale));
     }
     void Start()
     {
@@ -34,13 +48,9 @@ public class StockManager : MonoBehaviour
         try
         {
             purchaseAmountText.text = purchaseAmount.ToString();
-
+            saleAmountText.text = saleAmount.ToString();
         }
-        catch
-        {
-
-        }
-
+        catch { };
     }
     public void AbleUI(GameObject target)
     {
@@ -55,6 +65,8 @@ public class StockManager : MonoBehaviour
     {
         GoodsManager.goodsAr -= GoodsManager.exchangeRate * purchaseAmount;
         GoodsManager.goodsStone += purchaseAmount;
+        purchaseAmount = 0;
+        DisableUI(checkPurchase);
     }
     public void AddPurchaseAmount(int amount)
     {
@@ -74,6 +86,24 @@ public class StockManager : MonoBehaviour
     // 판매 관련 함수
     public void SaleStone()
     {
-        
+        GoodsManager.goodsStone -= saleAmount;
+        GoodsManager.goodsAr += (int)(GoodsManager.exchangeRate * saleAmount * 0.97);
+        saleAmount = 0;
+        DisableUI(checkSale);
+    }
+    public void AddSaleAmount(int amount)
+    {
+        if (saleAmount + amount < 0)
+        {
+            saleAmount = 0;
+        }
+        else if (saleAmount + amount > GoodsManager.goodsStone)
+        {
+            saleAmount = GoodsManager.goodsStone;
+        }
+        else
+        {
+            saleAmount += amount;
+        }
     }
 }
