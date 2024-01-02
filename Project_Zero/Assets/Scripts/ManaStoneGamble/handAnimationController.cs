@@ -53,7 +53,7 @@ public class handAnimationController : MonoBehaviour
             float verticallPos = originY * (1 - progress) + targetY * progress + getVerticalPos(progress) / 5f;
             transform.position = new Vector2(horizontalPos, verticallPos);
         }
-        else if (manaStoneGambleManager.isPlaying == manaStoneGambleManager.State.Die || manaStoneGambleManager.isPlaying == manaStoneGambleManager.State.Selected)
+        else if (manaStoneGambleManager.isPlaying == manaStoneGambleManager.State.Die)
         {
             transform.position = Vector2.Lerp(transform.position, backPos, 0.3f);
         }
