@@ -40,6 +40,9 @@ private bool isValid;
 - Windows Build Support (IL2CPP)
 - Version Control / Mode: “Visible Meta Files” Asset Serialization / Mode: “Force Text”
 - 화면 비율 : free aspect / 1920x1440
+- Canvas 사용시 유의 바람.
+- ![image](https://github.com/Migayeon/Winter_Unity_Project/assets/132274328/a81821f5-f79a-4591-bb60-82271e88d4af)
+
     
 ### 병합 시 유의할 점
 - 작업 시작하기 전에 반드시 Petch-Origin 하기
