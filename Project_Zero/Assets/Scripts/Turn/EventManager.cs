@@ -11,11 +11,14 @@ IMPORTANT: DO NOT DETELE THE (0,0) AT THE TOPMOST LINES OF THE CSV FILES
 
 using System;
 using System.ComponentModel;
-using System.IO;
+using System.ComponentModel.Design;
 using System.Collections.Generic;
+using System.IO;
+using UnityEngine;
 
-public class GenerateRandomEventCommon
+public class GenerateRandomEvent : MonoBehaviour
 {
+    //you can edit these constants before compile
     public const int NoneProbability = 4;
     public const int CommonProbability = 3;
     public const int RareProbability = 2;
@@ -25,16 +28,34 @@ public class GenerateRandomEventCommon
     public const int CommonCaseCount = 6;
     public const int RareCaseCount = 6;
     public const int UniqueCaseCount = 6;
-    public static void Main(string[] args)
+    static (string, int) GetEvent()
     {
-        
-        int returnValue;
-        int rarityType = 0;
+        System.Random generateRandom = new System.Random();
+        string[] filenames = new string[] { "Assets\\Resources\\Events\\Common.csv", "Assets\\Resources\\Events\\Rare.csv", "Assets\\Resources\\Events\\Unique.csv" }; //enter filenames here
+        string[] rarityTypes = new string[] { "common", "rare", "unique" };
+        int SelectRandomEvent(int rarity, int casecount, int[,] datalist)
+        {
+            
+            List<int> cases = new List<int>(casecount);
+            for (int i = 0; i < casecount; ++i)
+            {
+                for (int j = 0; j < datalist[i, 1]; ++j)
+                {
+                    cases.Add(datalist[i, 0]);
+                }
+            }
+            int returnValueIndex = generateRandom.Next(0, casecount);
+            return cases[returnValueIndex];
+        }
+
+        (string, int) returnValue;
         string FileName;
         bool OpenFileFlag;
+
         List<int> probability = new List<int>(totalProbability);
-        Random generateRandom = new Random();
+
         int randnum = generateRandom.Next(0, totalProbability);
+
         for (int i = 0; i < NoneProbability; ++i)
         {
             probability.Add(0);
@@ -59,24 +80,10 @@ public class GenerateRandomEventCommon
             FileName = null;
             OpenFileFlag = false;
         }
-        else if (rarity == 1) //common
+        else
         {
-            FileName = "\\Assets\\Resources\\Events\\Common.csv";
+            FileName = filenames[rarity-1];
             OpenFileFlag = true;
-            rarityType = 1;
-        }
-
-        else if (rarity == 2) //rare
-        {
-            FileName = "\\Assets\\Resources\\Events\\Rare.csv";
-            OpenFileFlag = true;
-            rarityType = 2;
-        }
-        else //unique
-        {
-            FileName = "\\Assets\\Resources\\Events\\Unique.csv";
-            OpenFileFlag = true;
-            rarityType = 3;
         }
 
         if (OpenFileFlag)
@@ -95,54 +102,119 @@ public class GenerateRandomEventCommon
                 idx++;
             }
             sr.Close();
-            if (rarityType == 1)
+
+            if (rarity == 1)
             {
-                List<int> cases = new List<int>(CommonCaseCount);
-                for (int i = 0; i < CommonCaseCount; ++i)
-                {
-                    for (int j = 0; j < datalist[i, 0]; ++j)
-                    {
-                        cases.Add(datalist[i, 1]);
-                    }
-                }
-                int returnValueIndex = generateRandom.Next(0, CommonCaseCount);
-                returnValue = cases[returnValueIndex];
+                returnValue = (rarityTypes[rarity - 1], SelectRandomEvent(rarity, CommonCaseCount, datalist));
             }
-            else if (rarityType == 2)
+            else if (rarity == 2)
             {
-                List<int> cases = new List<int>(RareCaseCount);
-                for (int i = 0; i < RareCaseCount; ++i)
-                {
-                    for (int j = 0; j < datalist[i, 0]; ++j)
-                    {
-                        cases.Add(datalist[i, 1]);
-                    }
-                }
-                int returnValueIndex = generateRandom.Next(0, RareCaseCount);
-                returnValue = cases[returnValueIndex];
+                returnValue = (rarityTypes[rarity - 1], SelectRandomEvent(rarity, RareCaseCount, datalist));
             }
             else
             {
-                List<int> cases = new List<int>(UniqueCaseCount);
-                for (int i = 0; i < UniqueCaseCount; ++i)
-                {
-                    for (int j = 0; j < datalist[i, 0]; ++j)
-                    {
-                        cases.Add(datalist[i, 1]);
-                    }
-                }
-                int returnValueIndex = generateRandom.Next(0, UniqueCaseCount);
-                returnValue = cases[returnValueIndex];
+                returnValue = (rarityTypes[rarity - 1], SelectRandomEvent(rarity, UniqueCaseCount, datalist));
             }
         }
         else
         {
-            returnValue = -1;
+            returnValue = ("none", -1);
         }
         //code for testing output
-        /*
-        Console.WriteLine(FileName);
-        Console.WriteLine(returnValue);
-        */
+        Debug.Log(FileName);
+        Debug.Log(returnValue);
+        return returnValue;
+    }
+
+    static void SetEvent(string rarity, int EventID, int changeValue)
+    {
+        int rarityIndex;
+        string[] filenames = new string[] { "Assets\\Resources\\Events\\Common.csv", "Assets\\Resources\\Events\\Rare.csv", "Assets\\Resources\\Events\\Unique.csv" }; //enter filenames here
+        int[] filelength = new int[] { CommonCaseCount, RareCaseCount, UniqueCaseCount };
+        bool FoundEventID = false;
+        if (rarity == "common")
+        {
+            rarityIndex = 0;
+        }
+        else if (rarity == "rare")
+        {
+            rarityIndex = 1;
+        }
+        else
+        {
+            rarityIndex = 2;
+        }
+
+        StreamReader sr = new StreamReader(filenames[rarityIndex]);
+        string line;
+        string[] row;
+        int[,] datalist = new int[30, 2];
+        int idx = 0;
+        sr.ReadLine();
+        while ((line = sr.ReadLine()) != null)
+        {
+            row = line.Split(',');
+            datalist[idx, 0] = Convert.ToInt32(row[0]);
+            datalist[idx, 1] = Convert.ToInt32(row[1]);
+            idx++;
+        }
+        sr.Close();
+            
+        for (int j = 0; j < filelength[rarityIndex]; ++j)
+        {
+            if (datalist[j, 0] == EventID)
+            {
+                //code for testing
+                Debug.Log("EventID found");
+                Debug.Log(filenames[rarityIndex]);
+                Debug.Log("<Original CSV Data>");
+                for (int k = 0; k < filelength[rarityIndex]; ++k)
+                {
+                    Debug.Log(datalist[k, 0]);
+                    Debug.Log(datalist[k, 1]);
+                }
+                //end
+
+                FoundEventID = true;
+                if (datalist[j, 1] + changeValue > 0)
+                {
+                    datalist[j, 1] += changeValue;
+                }
+                //code for testing
+                Debug.Log("<New CSV Data>");
+                for (int k = 0; k < filelength[rarityIndex]; ++k)
+                {
+                    Debug.Log(datalist[k, 0]);
+                    Debug.Log(datalist[k, 1]);
+                }
+                //end
+                break;
+
+            }
+        }
+        if (FoundEventID)
+        {
+            StreamWriter sw = new StreamWriter(filenames[rarityIndex]);
+            sw.WriteLine("0,0");
+            for (int j = 0; j < filelength[rarityIndex]; ++j)
+            {
+                sw.WriteLine(Convert.ToString(datalist[j, 0]) + "," + Convert.ToString(datalist[j, 1]));
+            }
+            sw.Close();
+        }
+        //code for testing output
+        
+    }
+    public void Start()
+    {
+        //test
+        Debug.Log("GetEvent Test");
+        (string, int) GeneratedRandomEvent = GetEvent();
+        Debug.Log("SetEvent Test");
+        Debug.Log("Enter rarity, EventID and delta, separated by whitespace");
+        string rarityInput = "common";
+        int id = 3;
+        int delta = 5;
+        SetEvent(rarityInput, id, delta);
     }
 }
