@@ -11,9 +11,11 @@ public class SaveData
         
     }
 
-    public int number;
     public int turn;
     public string name;
+    public int ar;
+    public int debt;
+    
 
     /*
      
@@ -24,8 +26,15 @@ public class SaveData
 
 public class SaveManager : MonoBehaviour
 {
-    void TryLoad()
+    /*
+    public static SaveData LoadData(int i)
     {
+        
+        if()
+        var loadedJson = Resources.Load<TextAsset>($"Data\\save{i}");
+
+        return saveData;
 
     }
+    */
 }
