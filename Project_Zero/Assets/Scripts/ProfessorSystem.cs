@@ -8,7 +8,7 @@ public class ProfessorSystem : MonoBehaviour
     public const int professorStats = 6;
     public class Professor
     {
-        private int id ; //Professor ID (can be any int)
+        private long id ; //Professor ID (can be any int)
         private string name; //Professor name
         private int tenure; //Professor tenure ( >= 0)
         private int type; //Professor type (1: unique, 0: normal)
@@ -16,7 +16,7 @@ public class ProfessorSystem : MonoBehaviour
         private int salary;
         private bool away; //true = is away, false = is not away (able to teach)
 
-        Dictionary<int, string> statlist = new Dictionary<int, string>
+        public static Dictionary<int, string> statlist = new Dictionary<int, string>
         {
             {0, "lecture"},
             {1, "theory"},
@@ -27,7 +27,7 @@ public class ProfessorSystem : MonoBehaviour
         };
 
         public Professor() {}
-        public Professor(int _id, string _name, int _tenure, int _type, List<int> _stat)
+        public Professor(long _id, string _name, int _tenure, int _type, List<int> _stat)
         {
             id = _id;
             name = _name;
@@ -35,6 +35,18 @@ public class ProfessorSystem : MonoBehaviour
             type = _type;
             stat = new List<int>(_stat);
             away = false;
+            //insert salary related issue  here
+            ProfessorSetDefaultSalary();
+        }
+        public Professor(long _id, string _name, int _tenure, int _type, List<int> _stat, int _salary)
+        {
+            id = _id;
+            name = _name;
+            tenure = _tenure;
+            type = _type;
+            stat = new List<int>(_stat);
+            away = false;
+            salary = _salary;
             //insert salary related issue  here
             ProfessorSetDefaultSalary();
         }
@@ -49,7 +61,7 @@ public class ProfessorSystem : MonoBehaviour
             }
             salary = sum;
         }
-        public int ProfessorGetID() { return id; }
+        public long ProfessorGetID() { return id; }
         public string ProfessorGetName() { return name; }
         public int ProfessorGetTenure() { return tenure; }
         public int ProfessorGetType() { return type; }
@@ -106,12 +118,15 @@ public class ProfessorSystem : MonoBehaviour
                 Debug.Log("Type: normal");
             }
             Debug.Log("Stats Information");
-            string temp = "";
+            string temp = "Professor Stats : ";
             for (int i = 0; i < professorStats; ++i)
             {
-                temp = statlist[i] + " " + Convert.ToString(stat[i]);
-                Debug.Log(temp);
+                temp += statlist[i];
+                temp += " ";
+                temp += Convert.ToString(stat[i]);
+                temp += "     ";
             }
+            Debug.Log(temp);
             Debug.Log(string.Format("Salary: {0}", salary));
         }
     }
