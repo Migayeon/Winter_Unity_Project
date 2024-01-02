@@ -13,7 +13,7 @@ public class SoundManager : MonoBehaviour
 
     private void Awake()
     {
-        bgmSlider.onValueChanged.
+        //bgmSlider.onValueChanged
     }
     public void ControlBGM()
     {
