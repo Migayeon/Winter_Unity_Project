@@ -8,7 +8,7 @@ using UnityEngine.UI;
 /*
 MainSystem/TitleManager.cs 
 
-* 함수 목록
+* 주요 함수 목록
 1. void NewGameStart()
  - 변수 초기화
  - 프롤로그 재생 (있다면)
@@ -20,7 +20,7 @@ MainSystem/TitleManager.cs
  - 존재할 경우 SaveData scene으로 연결
 
 3. void OpenOption()
- - 옵션 창 띄우기 (아직 미구현)
+ - 옵션 창 띄우기 (현재 데이터 초기화 버튼만 구현)
 
 4. void ExitGame()
  - exitMessage 활성화
