@@ -28,6 +28,7 @@ public class StockManager : MonoBehaviour
     [SerializeField] Button checkSaleYes;
     [SerializeField] Button checkSaleNo;
     [SerializeField] TextMeshProUGUI saleAmountText;
+    [SerializeField] TextMeshProUGUI expectArAmount;
     void Awake()
     {
         purchaseButton.onClick.AddListener(() => AbleUI(checkPurchase));
@@ -42,15 +43,6 @@ public class StockManager : MonoBehaviour
     {
         exchangeRate.text = $"현재 가격: {GoodsManager.exchangeRate}";
         exchangePercent.text = $"({GoodsManager.exchangePercent}%)";
-    }
-    private void Update()
-    {
-        try
-        {
-            purchaseAmountText.text = purchaseAmount.ToString();
-            saleAmountText.text = saleAmount.ToString();
-        }
-        catch { };
     }
     public void AbleUI(GameObject target)
     {
@@ -82,6 +74,7 @@ public class StockManager : MonoBehaviour
         {
             purchaseAmount += amount;
         }
+        purchaseAmountText.text = purchaseAmount.ToString();
     }
     // 판매 관련 함수
     public void SaleStone()
@@ -105,5 +98,7 @@ public class StockManager : MonoBehaviour
         {
             saleAmount += amount;
         }
+        saleAmountText.text = saleAmount.ToString();
+        expectArAmount.text = $"아르 획득량: {(int)(GoodsManager.exchangeRate * saleAmount * 0.97)}";
     }
 }
