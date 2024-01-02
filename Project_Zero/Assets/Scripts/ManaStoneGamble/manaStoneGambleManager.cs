@@ -46,6 +46,7 @@ public class manaStoneGambleManager : MonoBehaviour
 
     public void resetGame()
     {
+        betInputField.GetComponent<TMP_InputField>().text = "";
         isCalculated = false;
         betAr = 0;
         nowPower = 0;
