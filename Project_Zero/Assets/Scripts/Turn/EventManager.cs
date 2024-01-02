@@ -41,10 +41,10 @@ using UnityEngine.UI;
 public class EventManager : MonoBehaviour
 {
     //you can edit these constants before compile
-    public const int NoneProbability = 4;
-    public const int CommonProbability = 3;
-    public const int RareProbability = 2;
-    public const int UniqueProbability = 1;
+    public const int NoneProbability = 65;
+    public const int CommonProbability = 20;
+    public const int RareProbability = 10;
+    public const int UniqueProbability = 5;
     public const int totalProbability = NoneProbability + CommonProbability + RareProbability + UniqueProbability;
 
     public const int CommonCaseCount = 6;
