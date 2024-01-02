@@ -5,7 +5,7 @@ using UnityEngine;
 public class GoodsManager : MonoBehaviour
 {
     // 기본 재화
-    public static int goodsAr = 0;
+    public static int goodsAr = 20000;
     public static int goodsStone = 0;
     public static int goodsFame = 0;
     public static int goodsStudent = 0;
@@ -16,7 +16,7 @@ public class GoodsManager : MonoBehaviour
     public static int maxRate = 20;
     public static int minRate = -20;
 
-    void Start()
+    void Awake()
     {
         // json 저장 시스템 구현되면 try ~ except문으로 각 재화 초기화
     }
