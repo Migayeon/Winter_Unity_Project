@@ -21,6 +21,8 @@ public class manaStoneGambleManager : MonoBehaviour
     public static double selectedPower = 0;
     public static State isPlaying = State.None;
     [SerializeField]
+    private double increasePercent;
+    [SerializeField]
     private GameObject startButtonObject, stopButtonObject, restartButtonObject, nowPowerDisplayObject, selectedPowerDisplayObject;
     [SerializeField]
     private TMP_Text nowPowerDisplay, selectedPowerDisplay;
@@ -63,6 +65,8 @@ public class manaStoneGambleManager : MonoBehaviour
     {
         selectedPower = nowPower;
         stopButtonObject.SetActive(false);
+        if (rand.NextDouble() < increasePercent / 100)
+            stopPower = Math.Max(stopPower * 1.2, maxPower);
         isPlaying = State.Selected;
         selectedPowerDisplayObject.SetActive(true);
         selectedPowerDisplay.text = String.Concat("× ", String.Format("{0:0.000}", (Math.Round(nowPower * 1000) / 1000).ToString()));
