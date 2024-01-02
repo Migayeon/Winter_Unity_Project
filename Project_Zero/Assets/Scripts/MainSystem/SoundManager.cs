@@ -1,28 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.UI;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using UnityEngine.Windows.Speech;
 
 public class SoundManager : MonoBehaviour
 {
-    public static float bgmVolume, masterVolume, sfxVolume;
+    public static Dictionary<string, float> volume = new Dictionary<string, float>() 
+    { { "BGM", 10.0f }, { "SFX", 10.0f }, { "Master", 10.0f } };
     public AudioMixer mixer;
-    public Slider bgmSlider;
-    // Start is called before the first frame update
-    public void ControlBGM()
+    public Slider bgmSlider, masterSlider, sfxSlider;
+
+    public void ControlVolume(Slider slider)
     {
-        bgmVolume = bgmSlider.value;
-        if (bgmSlider.value == -40f)
-            mixer.SetFloat("BGM", -80f);
+        string type = slider.name;
+        volume[type] = slider.value;
+        if (slider.value == -40f)
+            mixer.SetFloat(type, -80f);
         else
-            mixer.SetFloat("BGM", bgmVolume);
-       
+            mixer.SetFloat(type, volume[type]);
     }
 
     private void Awake()
     {
-        bgmSlider.onValueChanged.AddListener(delegate { ControlBGM(); });
-        mixer.SetFloat("BGM", bgmSlider.value);
+        bgmSlider.onValueChanged.AddListener(delegate { ControlVolume(bgmSlider); });
+        masterSlider.onValueChanged.AddListener(delegate { ControlVolume(masterSlider); });
+        sfxSlider.onValueChanged.AddListener(delegate { ControlVolume(sfxSlider); });
+        bgmSlider.value = volume["BGM"];
+        sfxSlider.value = volume["SFX"];
+        masterSlider.value = volume["Master"];
     }
 }
