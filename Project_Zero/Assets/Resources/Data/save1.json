@@ -2,5 +2,9 @@
   "turn": 1,
   "name": "default",
   "ar": 20000,
-  "debt": 80000
+  "debt": 80000,
+  "tc": [
+    "jin",
+    1
+  ]
 }
