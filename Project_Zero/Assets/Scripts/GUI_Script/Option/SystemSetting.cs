@@ -13,7 +13,7 @@ public class SystemSetting : MonoBehaviour
     {
         message.SetActive(true);
         yesButton.onClick.AddListener(YesReset);
-        yesButton.onClick.AddListener(NoReset);
+        noButton.onClick.AddListener(NoReset);
     }
 
     public void YesReset()

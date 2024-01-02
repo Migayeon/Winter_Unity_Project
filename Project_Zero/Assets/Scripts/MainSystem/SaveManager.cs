@@ -11,9 +11,11 @@ public class SaveData
         
     }
 
-    public int number;
     public int turn;
     public string name;
+    public int ar;
+    public int debt;
+    public string[] tc;
 
     /*
      
@@ -22,10 +24,32 @@ public class SaveData
     */
 }
 
+public class testClass
+{
+    public string name;
+    public int id;
+}
+
 public class SaveManager : MonoBehaviour
 {
-    void TryLoad()
+    public static SaveData LoadData(int i)
     {
+        if (PlayerPrefs.HasKey("save"+i.ToString()))
+        {
+            return null;
+        }
+        var loadedJson = Resources.Load<TextAsset>($"Data\\save{i}");
+        SaveData saveData = JsonUtility.FromJson<SaveData>(loadedJson.ToString());
+        return saveData;
+    }
 
+    private void Awake()
+    {
+        SaveData save = LoadData(1);
+        Debug.Log(save.name);
+        Debug.Log(save.turn);
+        Debug.Log(save.tc[0]);
+        Debug.Log(save.tc[1]);
     }
 }
+
