@@ -1,22 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class DuringTurn : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI currentTurn;
-    [SerializeField] TextMeshProUGUI exchangeRate;
-    [SerializeField] TextMeshProUGUI exchangePercent;
-    void Start()
+    public Button endTurn;
+    void Awake()
     {
-        currentTurn.text = $"Turn: {TurnManager.turn}";
-        exchangeRate.text = $"Current Price: {GoodsManager.exchangeRate}";
-        exchangePercent.text = $"({GoodsManager.exchangePercent}%)";
+        endTurn.onClick.AddListener(EndTurn);
     }
 
-    public void MoveToAfterTurn()
+    public void EndTurn()
     {
         SceneManager.LoadScene("AfterTurn");
     }
