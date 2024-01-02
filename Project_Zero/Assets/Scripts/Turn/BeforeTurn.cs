@@ -33,7 +33,7 @@ public class BeforeTurn : MonoBehaviour
     //이름 무작위 생성 코드
     //필요에 맞게 알아서 수정하면 됩니다
 
-    static string GenerateName()
+    public static string GenerateName()
     {
         StreamReader ReadEnglishName = new StreamReader("Assets\\Resources\\Names\\englishNames.csv");
         StreamReader ReadKoreanName = new StreamReader("Assets\\Resources\\Names\\koreanNames.csv");
