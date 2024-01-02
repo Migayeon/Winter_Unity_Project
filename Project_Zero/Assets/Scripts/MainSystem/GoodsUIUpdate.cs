@@ -9,6 +9,10 @@ public class GoodsUIUpdate : MonoBehaviour
     [SerializeField] TextMeshProUGUI currentTurn;
     [SerializeField] TextMeshProUGUI currentAr;
     [SerializeField] TextMeshProUGUI currentStone;
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
     void Update()
     {
         currentTurn.text = $"턴: {TurnManager.turn}";

@@ -42,7 +42,16 @@ public class StockManager : MonoBehaviour
     void Start()
     {
         exchangeRate.text = $"현재 가격: {GoodsManager.exchangeRate}";
-        exchangePercent.text = $"({GoodsManager.exchangePercent}%)";
+        if (GoodsManager.exchangePercent >= 0)
+        {
+            exchangePercent.text = $"(+{GoodsManager.exchangePercent}%)";
+            exchangePercent.color = new Color32(255, 0, 0, 255);
+        }
+        else
+        {
+            exchangePercent.text = $"({GoodsManager.exchangePercent}%)";
+            exchangePercent.color = new Color32(0, 100, 255, 255);
+        }
     }
     public void AbleUI(GameObject target)
     {
