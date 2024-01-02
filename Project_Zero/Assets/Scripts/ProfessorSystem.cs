@@ -124,6 +124,12 @@ public class ProfessorSystem : MonoBehaviour
         Professor myprofrofessor = new Professor(20231547, "Buru Chang", 1, 1, temp);
         myprofrofessor.UnityDebugLogProfessorInfo();
         */
+        
     }
 }
+
+/*
+unique probability = 5%
+
+*/
 
