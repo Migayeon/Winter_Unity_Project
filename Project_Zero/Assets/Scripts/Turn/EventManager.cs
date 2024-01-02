@@ -1,9 +1,29 @@
 /*
-variable returnValue equals the eventID resulting from the random selection
-If "None" was selected, returnValue will be -1.
+DOCUMENTATION
 
-Note: this code is absolute garbage tier code that only barely works.
-I might clean it up to make it perform better, no promises though
+<Constants>
+- NoneProbability, CommonProbability, RareProbability, UniqueProbability refers to the probability of each type of event.
+- totalProbability is the sum of the above four constants.
+
+- CommonCaseCount, RareCaseCount, UniqueCaseCount refers to the number of events that exist for each rarity type.
+
+
+<Functions>
+GetEvent()
+- This function, when called, calculates a random event based on rarity.
+- returns a tuple of a string and an integer.
+- the return string is  "common", "rare", or "unique", and refers to the rarity of the event that was randomly selected.
+- The return integer is the EventID of the event that was randomly selected.
+
+SetEvent()
+- This function, when called, changes the value associated to an EventID.
+- returns void.
+- Accepts a string and two integers as parameters.
+- The string *MUST* be one of the three: "common", "rare", or "unique". (NO EXCEPTION HANDLING IMPLEMENTED)
+- The first integer is the EventID that you wish to change.
+- The second integer is the amount you want to change the current value by.
+
+
 
 IMPORTANT: DO NOT DETELE THE (0,0) AT THE TOPMOST LINES OF THE CSV FILES
 중요: CSV 파일들의 첫 번째 행에 있는 (0,0) 데이터를 삭제하지 말아주세요!
