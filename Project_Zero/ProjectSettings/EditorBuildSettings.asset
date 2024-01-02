@@ -20,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DuringTurn/Stock.unity
     guid: b5bb8083dbd288b4eae453f51a88bdbb
+  - enabled: 1
+    path: Assets/Scenes/Title/Setting.unity
+    guid: bf84a6a3b321c5b478faf55805402fe7
+  - enabled: 1
+    path: Assets/Scenes/Title/Continue.unity
+    guid: be7d31e904aa05342a28be2b3369f010
   m_configObjects: {}

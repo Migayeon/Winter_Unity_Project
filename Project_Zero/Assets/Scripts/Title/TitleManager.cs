@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /*
@@ -65,7 +66,8 @@ public class TitleManager : MonoBehaviour
 
     public void OpenOption()
     {
-        // 미구현
+        SettingManager.backPath = "Title";
+        SceneManager.LoadScene("Setting");
     }
 
     public void ExitGame() // 게임 종료 창 띄우기
