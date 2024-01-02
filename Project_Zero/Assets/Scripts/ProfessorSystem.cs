@@ -5,6 +5,7 @@ using System;
 
 public class ProfessorSystem : MonoBehaviour
 {
+    
     public const int professorStats = 6;
     public class Professor
     {

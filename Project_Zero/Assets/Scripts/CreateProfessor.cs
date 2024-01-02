@@ -1,9 +1,13 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
+using TMPro;
+
 
 //WIP
+
 public class CreateProfessor : ProfessorSystem
 {
     const int UniqueProfessorRarity = 5;
@@ -133,6 +137,7 @@ public class CreateProfessor : ProfessorSystem
         return NewProfessor;
 
     }
+    public TextMeshProUGUI[,] ProfessorData = new TextMeshProUGUI[3,3];
     void Start()
     {
         List<Professor> NewProfessorList = new List<Professor>(3);
@@ -142,5 +147,32 @@ public class CreateProfessor : ProfessorSystem
             tempProfessor = CreateNewProfessor(i);
             NewProfessorList.Add(tempProfessor);
         }
+        for (int i = 0; i < 3; ++i)
+        {
+            List<int> tempStatData = new List<int>(professorStats);
+            string temp = "";
+
+            Dictionary<int, string> KoreanStatList = new Dictionary<int, string>(6)
+            {
+                {0, "강의력"},
+                {1, "마법이론"},
+                {2, "마나감응"},
+                {3, "손재주"},
+                {4, "속성력"},
+                {5, "영창"},
+            };
+            ProfessorData[i,0].text = NewProfessorList[i].ProfessorGetName();
+            tempStatData = NewProfessorList[i].ProfessorGetStats();
+            for (int j = 0; j < professorStats; ++j)
+            {
+                temp += KoreanStatList[i];
+                temp += " : ";
+                temp += tempStatData[j];
+                temp += "\n";
+            }
+            ProfessorData[i,1].text = temp;
+            ProfessorData[i,2].text = Convert.ToString(NewProfessorList[i].ProfessorGetSalary());
+        }
+
     }
 }
