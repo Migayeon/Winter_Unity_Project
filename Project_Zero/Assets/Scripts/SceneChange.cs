@@ -1,0 +1,14 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class SceneChange : MonoBehaviour
+{
+    // 버튼 오브젝트에 스크립트 적용 후 바꿀 씬 이름 넣으면 전환됨
+    [SerializeField] public string targetScene = "";
+    public void ChangeScene()
+    {
+        SceneManager.LoadScene(targetScene);
+    }
+}

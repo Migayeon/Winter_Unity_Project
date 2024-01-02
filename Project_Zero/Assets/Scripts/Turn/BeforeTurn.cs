@@ -24,6 +24,6 @@ public class BeforeTurn : MonoBehaviour
 
 
         // DuringScene 불러오기
-        SceneManager.LoadScene("DuringTurn");
+        SceneManager.LoadScene("Main");
     }
 }
