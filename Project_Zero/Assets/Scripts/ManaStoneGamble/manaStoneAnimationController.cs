@@ -15,9 +15,17 @@ public class manaStoneAnimationController : MonoBehaviour
         manaStoneAnimator = GetComponent<Animator>();
     }
 
+    private void Update()
+    {
+        if (manaStoneGambleManager.isPlaying == manaStoneGambleManager.State.Playing)
+            manaStoneAnimator.SetBool("start", true);
+        if (manaStoneGambleManager.isPlaying == manaStoneGambleManager.State.Die)
+            manaStoneAnimator.SetBool("die", true);
+    }
+
     public void FixedUpdate()
     {
-        if (manaStoneGambleManager.isPlaying)
+        if (manaStoneGambleManager.isPlaying == manaStoneGambleManager.State.Playing)
         {
             double logPower = Math.Log(manaStoneGambleManager.nowPower + 1) / Math.Log(manaStoneGambleManager.maxPower + 1);
             manaStoneAnimator.SetFloat("speed", (float) logPower);
@@ -28,9 +36,9 @@ public class manaStoneAnimationController : MonoBehaviour
             float purposeY = originY + (float)randomVerticalShake;
             transform.position = new Vector2(purposeX, purposeY);
         }
-        else
+        else if (manaStoneGambleManager.isPlaying == manaStoneGambleManager.State.Die)
         {
-            manaStoneAnimator.SetFloat("speed", 0);
+            manaStoneAnimator.SetFloat("speed", 1);
             transform.position = new Vector2(originX, originY);
         }
     }
