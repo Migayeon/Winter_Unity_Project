@@ -13,8 +13,8 @@ public class GoodsManager : MonoBehaviour
     // 아르<->마정석 환전
     public static int exchangePercent = 0;
     public static int exchangeRate = 500;
-    public static int maxRate = 20;
-    public static int minRate = -20;
+    public static int maxRate = 30;
+    public static int minRate = -25;
 
     void Awake()
     {

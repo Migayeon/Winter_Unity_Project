@@ -11,6 +11,7 @@ public class BeforeTurn : MonoBehaviour
     [SerializeField] private int correctionMin = 10;
     private int maxRate;
     private int minRate;
+    public (string, int) eventInfo = ("", 0);
     void Start()
     {
         maxRate = GoodsManager.maxRate;
@@ -23,11 +24,11 @@ public class BeforeTurn : MonoBehaviour
 
 
         // 이벤트 가져오기
+        eventInfo = EventManager.GetEvent();
 
-        //string temp = GenerateName(); //for testing
+
+        // string temp = GenerateName(); //for testing
         
-        // DuringScene 불러오기
-        SceneManager.LoadScene("Main");
     }
 
     //이름 무작위 생성 코드
@@ -80,6 +81,4 @@ public class BeforeTurn : MonoBehaviour
         Debug.Log(finalRandomName);
         return finalRandomName;
     }
-
-
 }

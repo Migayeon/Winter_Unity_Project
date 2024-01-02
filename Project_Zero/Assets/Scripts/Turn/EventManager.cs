@@ -36,7 +36,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class GenerateRandomEvent : MonoBehaviour
+public class EventManager : MonoBehaviour
 {
     //you can edit these constants before compile
     public const int NoneProbability = 4;
@@ -48,7 +48,7 @@ public class GenerateRandomEvent : MonoBehaviour
     public const int CommonCaseCount = 6;
     public const int RareCaseCount = 6;
     public const int UniqueCaseCount = 6;
-    static (string, int) GetEvent()
+    public static (string, int) GetEvent()
     {
         System.Random generateRandom = new System.Random();
         string[] filenames = new string[] { "Assets\\Resources\\Events\\Common.csv", "Assets\\Resources\\Events\\Rare.csv", "Assets\\Resources\\Events\\Unique.csv" }; //enter filenames here
@@ -146,7 +146,7 @@ public class GenerateRandomEvent : MonoBehaviour
         return returnValue;
     }
 
-    static void SetEvent(string rarity, int EventID, int changeValue)
+    public static void SetEvent(string rarity, int EventID, int changeValue)
     {
         int rarityIndex;
         string[] filenames = new string[] { "Assets\\Resources\\Events\\Common.csv", "Assets\\Resources\\Events\\Rare.csv", "Assets\\Resources\\Events\\Unique.csv" }; //enter filenames here
