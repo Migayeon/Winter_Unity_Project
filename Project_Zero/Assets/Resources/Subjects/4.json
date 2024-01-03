@@ -1,0 +1,18 @@
+{
+    "id": 4,
+    "tier": 1,
+    "subjectName": "전투 주문",
+    "enforceType": [
+        1,
+        4
+    ],
+    "enforceAmount": [
+        80,
+        20
+    ],
+    "nextAvailableId": [
+        0
+    ],
+    "relativeSubjectGroupId": -1,
+    "needToBeAvailable": 1
+}
