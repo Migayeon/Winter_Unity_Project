@@ -138,9 +138,16 @@ public class CreateProfessor : ProfessorSystem
 
     }
     public GameObject TestObject;
-    public TextMeshProUGUI ProfessorNameTest;
-    public TextMeshProUGUI ProfessorStatTest;
-    public TextMeshProUGUI ProfessorSalaryTest;
+    public TextMeshProUGUI Professor1Name;
+    public TextMeshProUGUI Professor1Stat;
+    public TextMeshProUGUI Professor1Salary;
+    public TextMeshProUGUI Professor2Name;
+    public TextMeshProUGUI Professor2Stat;
+    public TextMeshProUGUI Professor2Salary;
+    public TextMeshProUGUI Professor3Name;
+    public TextMeshProUGUI Professor3Stat;
+    public TextMeshProUGUI Professor3Salary;
+
     public Dictionary<int, string> KoreanStatList = new Dictionary<int, string>(6)
         {
             {0, "강의력"},
@@ -159,47 +166,70 @@ public class CreateProfessor : ProfessorSystem
     }
     void Start()
     {
-        int testInt = 17168;
-        Professor NewProfessor = CreateNewProfessor(testInt);
-        /*
+        List<Professor> NewProfessors = new List<Professor>();
         for (int i = 0; i < 3; ++i)
         {
-            
-            List<int> tempStatData = new List<int>(professorStats);
-            string temp = "";
+            NewProfessors.Add(CreateNewProfessor(i));
+        }
 
-            ProfessorData[i,0].text = (NewProfessorList[i]).ProfessorGetName();
-            tempStatData = (NewProfessorList[i]).ProfessorGetStats();
+        Professor1Name.text = NewProfessors[0].ProfessorGetName();
+        Professor2Name.text = NewProfessors[1].ProfessorGetName();
+        Professor3Name.text = NewProfessors[2].ProfessorGetName();
+        
+        Professor1Salary.text = "월급 : " + Convert.ToString(NewProfessors[0].ProfessorGetSalary());
+        Professor2Salary.text = "월급 : " + Convert.ToString(NewProfessors[1].ProfessorGetSalary());
+        Professor3Salary.text = "월급 : " + Convert.ToString(NewProfessors[2].ProfessorGetSalary());
+        Debug.Log("CHECK");
+        {
+
+            List<int> tempStatData = new List<int>(professorStats);
+            tempStatData = NewProfessors[0].ProfessorGetStats();
+            string temp = "";
             for (int j = 0; j < professorStats; ++j)
             {
-                temp += KoreanStatList[i];
+                temp += KoreanStatList[j];
+                temp += " : ";
+                temp += tempStatData[j];
+                temp += "\n";
+                Debug.Log(string.Format("Iteration {0}", j));
+            }
+            Professor1Stat.text = temp;
+        }
+        Debug.Log("passed First Loop");
+        {
+
+            List<int> tempStatData = new List<int>(professorStats);
+            tempStatData = NewProfessors[1].ProfessorGetStats();
+            string temp = "";
+            for (int j = 0; j < professorStats; ++j)
+            {
+                temp += KoreanStatList[j];
                 temp += " : ";
                 temp += tempStatData[j];
                 temp += "\n";
             }
-            ProfessorData[i,1].text = temp;
-            ProfessorData[i,2].text = Convert.ToString((NewProfessorList[i]).ProfessorGetSalary());
-            
+            Professor2Stat.text = temp;
         }
-        */
-        ProfessorNameTest.text = NewProfessor.ProfessorGetName();
-        ProfessorSalaryTest.text = "월급 : " + Convert.ToString(NewProfessor.ProfessorGetSalary());
-        string tempstr = "";
-        List<int> templist = new List<int>(6);
-        templist = NewProfessor.ProfessorGetStats();
-        for (int i = 0; i < 6; ++i)
         {
-            tempstr += KoreanStatList[i];
-            tempstr += " : ";
-            tempstr += Convert.ToString(templist[i]);
-            tempstr += "\n";
+
+            List<int> tempStatData = new List<int>(professorStats);
+            string temp = "";
+            tempStatData = NewProfessors[2].ProfessorGetStats();
+            for (int j = 0; j < professorStats; ++j)
+            {
+                temp += KoreanStatList[j];
+                temp += " : ";
+                temp += tempStatData[j];
+                temp += "\n";
+            }
+            Professor3Stat.text = temp;
         }
-        ProfessorStatTest.text = tempstr;
-        Debug.Log("STAT PRINT");
-        Debug.Log(tempstr);
-        ProfessorNameTest = TestObject.GetComponentInChildren<TextMeshProUGUI>(); 
-        ProfessorStatTest = TestObject.GetComponentInChildren<TextMeshProUGUI>();
-        ProfessorSalaryTest = TestObject.GetComponentInChildren<TextMeshProUGUI>();
+        Professor1Name = TestObject.GetComponentInChildren<TextMeshProUGUI>(); 
+        Professor2Name = TestObject.GetComponentInChildren<TextMeshProUGUI>();
+        Professor3Name = TestObject.GetComponentInChildren<TextMeshProUGUI>();
+        Professor1Stat = TestObject.GetComponentInChildren<TextMeshProUGUI>(); 
+        Professor2Stat = TestObject.GetComponentInChildren<TextMeshProUGUI>();
+        Professor3Stat = TestObject.GetComponentInChildren<TextMeshProUGUI>();
 
         
         /*

@@ -1,0 +1,74 @@
+[
+  {
+    "id": 0,
+    "tier": 1,
+    "subjectName": "마법의 역사",
+    "enforceType": [ "theory" ],
+    "enforceAmount": [ 10 ],
+    "nextAvailableID": [ 2, 3 ],
+    "needToBeAvailable": 0
+  },
+  {
+    "id": 1,
+    "tier": 1,
+    "subjectName": "주문 기초",
+    "enforceType": [ "theory","mana" ],
+    "enforceAmount": [ 50, 50 ],
+    "nextAvailableID": [ 5, 6, 7 ],
+    "needToBeAvailable": 0
+  },
+  {
+    "id": 2,
+    "tier": 2,
+    "subjectName": "신학",
+    "enforceType": ["theory","element"],
+    "enforceAmount": [ 40, 20 ],
+    "nextAvailableID": [ 0 ],
+    "needToBeAvailable": 1
+  },
+  {
+    "id": 3,
+    "tier": 1,
+    "subjectName": "룬어",
+    "enforceType": [ "theory" ],
+    "enforceAmount": [100],
+    "nextAvailableID": [ 0 ],
+    "needToBeAvailable": 1
+  },
+  {
+    "id": 4,
+    "tier": 1,
+    "subjectName": "전투 주문",
+    "enforceType": [ "mana","attack" ],
+    "enforceAmount": [80,20],
+    "nextAvailableID": [ 0 ],
+    "needToBeAvailable": 1
+  },
+  {
+    "id": 5,
+    "tier": 1,
+    "subjectName": "소환 주문",
+    "enforceType": [ "mana","attack" ],
+    "enforceAmount": [70,30],
+    "nextAvailableID": [ 0 ],
+    "needToBeAvailable": 1
+  },
+  {
+    "id": 6,
+    "tier": 1,
+    "subjectName": "마법 공학",
+    "enforceType": [ "theory","craft" ],
+    "enforceAmount": [50,50],
+    "nextAvailableID": [ 0 ],
+    "needToBeAvailable": 1
+  },
+  {
+    "id": 7,
+    "tier": 1,
+    "subjectName": "연금술",
+    "enforceType": [ "theory","craft" ],
+    "enforceAmount": [70,30],
+    "nextAvailableID": [ 0 ],
+    "needToBeAvailable": 1
+  }
+]
