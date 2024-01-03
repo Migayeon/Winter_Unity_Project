@@ -10,7 +10,7 @@ using TMPro;
 
 public class CreateProfessor : ProfessorSystem
 {
-    const int UniqueProfessorRarity = 5;
+    const int UniqueProfessorRarity = 3;
     const int TotalRarity = 100;
     public static string GenerateName()
     {
@@ -63,7 +63,7 @@ public class CreateProfessor : ProfessorSystem
         return finalRandomName;
     }
 
-    Professor CreateNewProfessor(int num)
+    public Professor CreateNewProfessor(int num)
     {
         System.Random RandomGenerator = new System.Random();
         List<int> ProfessorRarityList = new List<int>(TotalRarity);
@@ -137,14 +137,24 @@ public class CreateProfessor : ProfessorSystem
         return NewProfessor;
 
     }
-    public GameObject TestObject;
+
+    public Button PickProfessor1Button;
+    public Button PickProfessor2Button;
+    public Button PickProfessor3Button;
+    public Button RetryProfessorsButton;
+    public Button ReturnMenuButton;
+    public GameObject ShowTextObject;
+    public GameObject ButtonClickObject;
     public TextMeshProUGUI Professor1Name;
+    public TextMeshProUGUI Professor1Type;
     public TextMeshProUGUI Professor1Stat;
     public TextMeshProUGUI Professor1Salary;
     public TextMeshProUGUI Professor2Name;
+    public TextMeshProUGUI Professor2Type;
     public TextMeshProUGUI Professor2Stat;
     public TextMeshProUGUI Professor2Salary;
     public TextMeshProUGUI Professor3Name;
+    public TextMeshProUGUI Professor3Type;
     public TextMeshProUGUI Professor3Stat;
     public TextMeshProUGUI Professor3Salary;
 
@@ -158,14 +168,17 @@ public class CreateProfessor : ProfessorSystem
             {5, "영창"},
         };
 
-   //public TextMeshProUGUI[,] ProfessorData = new TextMeshProUGUI[3,3];
-
-    void Awake()
+    public Dictionary<int, string> ProfessorTypeList = new Dictionary<int, string>(2)
     {
-
-    }
+        {0, "일반" },
+        {1, "유니크" },
+    };
+   //public TextMeshProUGUI[,] ProfessorData = new TextMeshProUGUI[3,3];
+    
+    
     void Start()
     {
+        
         List<Professor> NewProfessors = new List<Professor>();
         for (int i = 0; i < 3; ++i)
         {
@@ -175,7 +188,11 @@ public class CreateProfessor : ProfessorSystem
         Professor1Name.text = NewProfessors[0].ProfessorGetName();
         Professor2Name.text = NewProfessors[1].ProfessorGetName();
         Professor3Name.text = NewProfessors[2].ProfessorGetName();
-        
+
+        Professor1Type.text = ProfessorTypeList[NewProfessors[0].ProfessorGetType()];
+        Professor2Type.text = ProfessorTypeList[NewProfessors[1].ProfessorGetType()];
+        Professor3Type.text = ProfessorTypeList[NewProfessors[2].ProfessorGetType()];
+
         Professor1Salary.text = "월급 : " + Convert.ToString(NewProfessors[0].ProfessorGetSalary());
         Professor2Salary.text = "월급 : " + Convert.ToString(NewProfessors[1].ProfessorGetSalary());
         Professor3Salary.text = "월급 : " + Convert.ToString(NewProfessors[2].ProfessorGetSalary());
@@ -191,11 +208,9 @@ public class CreateProfessor : ProfessorSystem
                 temp += " : ";
                 temp += tempStatData[j];
                 temp += "\n";
-                Debug.Log(string.Format("Iteration {0}", j));
             }
             Professor1Stat.text = temp;
         }
-        Debug.Log("passed First Loop");
         {
 
             List<int> tempStatData = new List<int>(professorStats);
@@ -224,19 +239,78 @@ public class CreateProfessor : ProfessorSystem
             }
             Professor3Stat.text = temp;
         }
-        Professor1Name = TestObject.GetComponentInChildren<TextMeshProUGUI>(); 
-        Professor2Name = TestObject.GetComponentInChildren<TextMeshProUGUI>();
-        Professor3Name = TestObject.GetComponentInChildren<TextMeshProUGUI>();
-        Professor1Stat = TestObject.GetComponentInChildren<TextMeshProUGUI>(); 
-        Professor2Stat = TestObject.GetComponentInChildren<TextMeshProUGUI>();
-        Professor3Stat = TestObject.GetComponentInChildren<TextMeshProUGUI>();
+        Professor1Name = ShowTextObject.GetComponentInChildren<TextMeshProUGUI>(); 
+        Professor2Name = ShowTextObject.GetComponentInChildren<TextMeshProUGUI>();
+        Professor3Name = ShowTextObject.GetComponentInChildren<TextMeshProUGUI>();
+        Professor1Stat = ShowTextObject.GetComponentInChildren<TextMeshProUGUI>(); 
+        Professor2Stat = ShowTextObject.GetComponentInChildren<TextMeshProUGUI>();
+        Professor3Stat = ShowTextObject.GetComponentInChildren<TextMeshProUGUI>();
 
-        
         /*
-        if (false)
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
+        PickProfessor1Button = ButtonClickObject.GetComponentInChildren<Button>();
+        PickProfessor2Button = ButtonClickObject.GetComponentInChildren<Button>();
+        PickProfessor3Button = ButtonClickObject.GetComponentInChildren<Button>();
+        RetryProfessorsButton = ButtonClickObject.GetComponentInChildren<Button>();
+        ReturnMenuButton = ButtonClickObject.GetComponentInChildren<Button>();
         */
+
+        PickProfessor1Button.onClick.AddListener(() => PickProfessor1(NewProfessors[0]));
+        PickProfessor2Button.onClick.AddListener(() => PickProfessor2(NewProfessors[1]));
+        PickProfessor3Button.onClick.AddListener(() => PickProfessor3(NewProfessors[2]));
+        RetryProfessorsButton.onClick.AddListener(RetryProfessors);
+        ReturnMenuButton.onClick.AddListener(ReturnMenu);
+    }
+
+    void Update()
+    {
+
+    }
+    
+    public void PickProfessor1(Professor InsertProf)
+    {
+        Debug.Log("PickProfessor1");
+        PlayerInfo.ProfessorList.Add(InsertProf);
+        Professor2Name.text = null;
+        Professor2Type.text = null;
+        Professor2Stat.text = null;
+        Professor2Salary.text = null;
+        Professor3Name.text = "TEST_BUTTON_ACTIVE_1";
+        Professor3Type.text = "TEST_BUTTON_ACTIVE_1";
+        Professor3Stat.text = "TEST_BUTTON_ACTIVE_1";
+        Professor3Salary.text = "TEST_BUTTON_ACTIVE_1";
+    }
+    public void PickProfessor2(Professor InsertProf)
+    {
+        Debug.Log("PickProfessor2");
+        PlayerInfo.ProfessorList.Add(InsertProf);
+        Professor1Name.text = "TEST_BUTTON_ACTIVE_2";
+        Professor1Type.text = "TEST_BUTTON_ACTIVE_2";
+        Professor1Stat.text = "TEST_BUTTON_ACTIVE_2";
+        Professor1Salary.text = "TEST_BUTTON_ACTIVE_2";
+        Professor3Name.text = "TEST_BUTTON_ACTIVE_2";
+        Professor3Type.text = "TEST_BUTTON_ACTIVE_2";
+        Professor3Stat.text = "TEST_BUTTON_ACTIVE_2";
+        Professor3Salary.text = "TEST_BUTTON_ACTIVE_2";
+    }
+    public void PickProfessor3(Professor InsertProf)
+    {
+        Debug.Log("PickProfessor3");
+        PlayerInfo.ProfessorList.Add(InsertProf);
+        Professor1Name.text = "TEST_BUTTON_ACTIVE_3";
+        Professor1Type.text = "TEST_BUTTON_ACTIVE_3";
+        Professor1Stat.text = "TEST_BUTTON_ACTIVE_3";
+        Professor1Salary.text = "TEST_BUTTON_ACTIVE_3";
+        Professor2Name.text = "TEST_BUTTON_ACTIVE_3";
+        Professor2Type.text = "TEST_BUTTON_ACTIVE_3";
+        Professor2Stat.text = "TEST_BUTTON_ACTIVE_3";
+        Professor2Salary.text = "TEST_BUTTON_ACTIVE_3";
+    }
+    public void RetryProfessors()
+    {
+        Debug.Log("RetryProfessors");
+    }
+    public void ReturnMenu()
+    {
+        Debug.Log("ReturnMenu");
     }
 }
