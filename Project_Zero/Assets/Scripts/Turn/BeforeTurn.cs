@@ -5,6 +5,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class BeforeTurn : MonoBehaviour
 {
@@ -37,6 +38,6 @@ public class BeforeTurn : MonoBehaviour
             eventImage.GetComponent<Image>().sprite = EventManager.ShowEvent(eventInfo.Item1, eventInfo.Item2);
         }
         // string temp = GenerateName(); //for testing
-        
+
     }
 }
