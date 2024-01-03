@@ -20,7 +20,6 @@ public class PlayerData
     public int turn, ar, stone, studentsNum, fame; //, debt; 빚 추가해야 함.
     public string myName, arcademyName;
 
-
     //public string[] professor; // 클래스 정보 받아서 하나의 스트링으로
     //public string[] students;
     /*
@@ -29,7 +28,6 @@ public class PlayerData
 
     */
 }
-
 public class ProfessorData
 {
     private string[] professors;
@@ -78,15 +76,15 @@ public class SaveManager : MonoBehaviour
 
     private static string ProfessorSave(ProfessorSystem.Professor professor)
     {
-        string information = "";
-        information += professor.ProfessorGetID().ToString() + ',';
-        information += professor.ProfessorGetName() + ',';
-        information += professor.ProfessorGetTenure().ToString() + ',';
-        information += professor.ProfessorGetType().ToString() + ',';
+        string information = 
+            professor.ProfessorGetID().ToString() + '/' +
+            professor.ProfessorGetName() + '/' +
+            professor.ProfessorGetTenure().ToString() + '/' +
+            professor.ProfessorGetType().ToString() + '/';
         List<int> stat = professor.ProfessorGetStats();
         foreach (int i in stat)
-            information += i.ToString() + ',';
-        information += professor.ProfessorGetSalary() + ',';
+            information += i.ToString() + '/';
+        information += professor.ProfessorGetSalary() + '/';
         information += professor.ProfessorGetAwayStatus() ? "1" : "0";
 
         return information;

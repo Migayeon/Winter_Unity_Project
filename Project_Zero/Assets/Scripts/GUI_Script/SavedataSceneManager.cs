@@ -30,7 +30,7 @@ public class SavedataSceneManager : MonoBehaviour
 
          */
 
-        SceneManager.LoadScene("Tutorial");
+        SceneManager.LoadScene("StartSetting");
     }
 
     public void LoadGame()
@@ -70,7 +70,7 @@ public class SavedataSceneManager : MonoBehaviour
                 playerData = SaveManager.PlayerDataLoad(i);
                 tmp.transform.GetChild(0).gameObject.SetActive(false);
                 tmp.transform.GetChild(1).GetComponent<Text>().text
-                    = $"{playerData.myName}의 {playerData.arcademyName} 학원\r\n" +
+                    = $"{playerData.myName}의 {playerData.arcademyName} 아카데미\r\n" +
                     $"Turn : {playerData.turn}\r\n아르 : {playerData.ar}\r\n" +
                     $"명성 : {playerData.fame}";
                 tmp.transform.GetChild(1).gameObject.SetActive(true);

@@ -30,6 +30,9 @@ EditorBuildSettings:
     path: Assets/Scenes/manaStoneGamble.unity
     guid: e23a7a2e012d1d7478c8cf296989d363
   - enabled: 1
-    path: Assets/Scenes/Tutorial.unity
+    path: Assets/Scenes/Intro/Tutorial.unity
     guid: 816082fd802170a4bb64759580a2e7fe
+  - enabled: 1
+    path: Assets/Scenes/Intro/StartSetting.unity
+    guid: 5b9b25a1aa0ed0e4294c57a956a177c6
   m_configObjects: {}
