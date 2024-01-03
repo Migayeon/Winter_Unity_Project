@@ -1,0 +1,10 @@
+{
+    "Count": 7,
+    "EnforceTypeName": [
+        "Theory",
+        "Mana",
+        "Craft",
+        "Element",
+        "Attack"
+    ]
+}
