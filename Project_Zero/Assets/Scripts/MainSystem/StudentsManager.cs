@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class StudentGroup
 {
+    //SubjectManager.SubjectTree s = new SubjectManager.SubjectTree();
     public StudentGroup(int _d, int _n, int _a, int _co, int[,] _c, int[] _st)
     {
         division = _d;
@@ -39,7 +40,7 @@ public class StudentGroup
 
             return;
         }
-        List<int> result;
+        //List<int> result = ;
         curriculum[age, 1] = 1;
         age++;
     }
