@@ -78,7 +78,7 @@ public static class SubjectTree
         return subjects[id].nextAvailableId;
     }
 
-    public static int relativeSubjectGroupId(int id)
+    //public static int relativeSubjectGroupId(int id)
     public static int root;
     public static int needToBeAvailable;
 

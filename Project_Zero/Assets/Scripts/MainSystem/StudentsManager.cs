@@ -7,14 +7,33 @@ using UnityEngine;
 public class StudentGroup
 {
     //SubjectManager.SubjectTree s = new SubjectManager.SubjectTree();
-    public StudentGroup(int _d, int _n, int _a, int _co, int[,] _c, int[] _st)
+    public StudentGroup(int div , int num , int c)
     {
-        division = _d;
-        number = _n;
-        age = _a;
-        cost = _co;
-        curriculum = _c;
-        stat = _st;
+        division = div;
+        number = num;
+        age = 0;
+        cost = c;
+        curriculum = null; // 함수 연결
+        stat = new int[5];
+
+        int lim = 0;
+        int statSum = Random.Range(300, 400);
+        int lastSum = statSum;
+
+        for (int i = 0; i < 5; i++)
+        {
+            stat[i] = 10 + statSum * (Random.Range(lim, lim + 20) - lim) / 100;
+            lastSum -= stat[i];
+        }
+        for (int i = 0; i < lastSum; i++)
+        {
+            if (stat[i % 5] >= 100)
+            {
+                lastSum++;
+                continue;
+            }
+            stat[i % 5]++;
+        }
     }
     public StudentGroup() { }
 
@@ -40,7 +59,9 @@ public class StudentGroup
 
             return;
         }
-        //List<int> result = ;
+        List<int> enforceType = SubjectTree.getEnforceType(curriculum[age, 0]);
+        List<int> enforceAmount = SubjectTree.getEnforceAmount(curriculum[age, 0]);
+        for (int i = 0; i < enforceType.Count; i++) { stat[enforceType[i]] = enforceAmount[i]; }
         curriculum[age, 1] = 1;
         age++;
     }
@@ -58,38 +79,16 @@ public class StudentGroup
 
 public class StudentsManager : MonoBehaviour
 {
-    public static StudentGroup CreateStudentGroup(int div, int num, int cost)
-    {
-        int[,] curriculum = null; // 커리큘럼 호출 함수 연결
-        int[] stat = new int[5];
-        int lim = 0;
-        int statSum = Random.Range(300, 400);
-        int lastSum = statSum;
-
-        for (int i = 0; i < 5; i++)
-        {
-            stat[i] = 10 + statSum * (Random.Range(lim, lim + 20)-lim) / 100;
-            lastSum -= stat[i];
-        }
-        for (int i = 0; i < lastSum; i++)
-        {
-            if (stat[i % 5] >= 100)
-            {
-                lastSum++;
-                continue;
-            }
-            stat[i%5]++;
-        }
-        StudentGroup studentGroup = new StudentGroup(div, num, 0, cost, curriculum, stat);
-        return studentGroup;
-    }
-
-
+   
     private void Awake()
     {
-        for (int i = 0; i < 20; i++)
-        {
-            CreateStudentGroup(1, 1, 1);
-        }
+        /*
+         
+        구현할 것
+        1. 활성화된 과목 비활성화 된 과목 분리
+        2. 스크립트 오브젝트에 부여
+        3.  
+
+         */
     }
 }
