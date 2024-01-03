@@ -11,8 +11,9 @@
         50
     ],
     "nextAvailableId": [
-        0
+        1
     ],
     "relativeSubjectGroupId": -1,
+    "root" : 0,
     "needToBeAvailable": 1
 }
