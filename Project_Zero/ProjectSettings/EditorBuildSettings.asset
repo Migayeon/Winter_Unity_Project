@@ -24,9 +24,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Title/Setting.unity
     guid: bf84a6a3b321c5b478faf55805402fe7
   - enabled: 1
-    path: Assets/Scenes/Title/Continue.unity
+    path: Assets/Scenes/Title/Savedata.unity
     guid: be7d31e904aa05342a28be2b3369f010
   - enabled: 1
     path: Assets/Scenes/manaStoneGamble.unity
     guid: e23a7a2e012d1d7478c8cf296989d363
+  - enabled: 1
+    path: Assets/Scenes/Tutorial.unity
+    guid: 816082fd802170a4bb64759580a2e7fe
   m_configObjects: {}

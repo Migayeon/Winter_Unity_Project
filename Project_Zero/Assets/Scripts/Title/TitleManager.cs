@@ -38,11 +38,12 @@ public class TitleManager : MonoBehaviour
     private Button yesButton, noButton, xButton;
     public GameObject exitMessage;
     public GameObject warningMessage;
-    SaveData saveData;
 
     public void NewGameStart() // 새로운 게임 시작
     {
-        TurnManager.turn = 1;
+        SavedataSceneManager.backPath = "Title";
+        SavedataSceneManager.workType = "Save";
+        SceneManager.LoadScene("Savedata");
     }
 
     public void ContinueGame() // 게임 불러오기
@@ -53,7 +54,12 @@ public class TitleManager : MonoBehaviour
             xButton = warningMessage.transform.GetChild(1).GetComponent<Button>();
             xButton.onClick.AddListener(CloseWarning);
         }
-        TurnManager.turn = PlayerPrefs.GetInt("turn", -1); // 
+        else
+        {
+            SavedataSceneManager.backPath = "Title";
+            SavedataSceneManager.workType = "Load";
+            SceneManager.LoadScene("Savedata");
+        } 
 
         // return true;
     }

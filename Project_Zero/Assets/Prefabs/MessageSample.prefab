@@ -487,7 +487,7 @@ GameObject:
   - component: {fileID: 1416683390771880852}
   - component: {fileID: 7561259065727855499}
   m_Layer: 5
-  m_Name: ExitBackground
+  m_Name: MessageSample
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
