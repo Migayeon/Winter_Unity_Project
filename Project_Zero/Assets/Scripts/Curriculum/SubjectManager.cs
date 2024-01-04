@@ -137,13 +137,12 @@ public static class SubjectTree
         while (searchQ.Count > 0)
         {
             int nowNodeId = searchQ.Dequeue();
-            cntList[nowNodeId]--;
             List<int> next = subjects[nowNodeId].nextAvailableId;
             for (int i = 0; i < next.Count; i++)
             {
                 int index = next[i];
                 rst[index] = State.ReadyToOpen;
-                if (cntList[index] == 0 && rst[i] == State.Open)
+                if (--cntList[index] == 0 && rst[i] == State.Open)
                 {
                     searchQ.Enqueue(index);
                     flatSearchList[i] = true;
