@@ -1,17 +1,14 @@
 {
     "id": 3,
     "tier": 2,
-    "subjectName": "룬어",
-    "enforceType": [
-        1
-    ],
-    "enforceAmount": [
-        100
-    ],
-    "nextAvailableId": [
+    "name": "룬어",
+    "enforceContents": {
+        "0": 100
+    },
+    "nextSubjects": [
         9
     ],
-    "relativeSubjectGroupId": -1,
-    "root" : 0,
-    "needToBeAvailable": 1
-  }
+    "subjectGroupId": 0,
+    "root": 0,
+    "needCount": 1
+}

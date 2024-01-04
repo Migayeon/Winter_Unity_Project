@@ -1,17 +1,15 @@
 {
-    "id": 3,
-    "tier": 1,
-    "subjectName": "룬어",
-    "enforceType": [
-        1
-    ],
-    "enforceAmount": [
-        100
-    ],
-    "nextAvailableId": [
+    "id": 18,
+    "tier": 4,
+    "name": "바람",
+    "enforceContents": {
+        "3": 80,
+        "1": 20
+    },
+    "nextSubjects": [
         29
     ],
-    "relativeSubjectGroupId": -1,
-    "root" : 0,
-    "needToBeAvailable": 1
-  }
+    "subjectGroupId": 0,
+    "root": 0,
+    "needCount": 1
+}

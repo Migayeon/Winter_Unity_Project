@@ -1,17 +1,12 @@
 {
-    "id": 4,
-    "tier": 2,
-    "subjectName": "전투 주문",
-    "enforceType": [
-        1,
-        4
-    ],
-    "enforceAmount": [
-        80,
-        20
-    ],
-    "nextAvailableId": [],
-    "relativeSubjectGroupId": -1,
-    "root" : 1,
-    "needToBeAvailable": 0
+    "id": 27,
+    "tier": 5,
+    "name": "기계화",
+    "enforceContents": {
+        "2": 100
+    },
+    "nextSubjects": [],
+    "subjectGroupId": 0,
+    "root": 0,
+    "needCount": 2
 }

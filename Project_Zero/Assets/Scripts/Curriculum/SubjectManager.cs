@@ -45,12 +45,7 @@ public static class SubjectTree
     
     public static void initSubjectsAndInfo()
     {
-        Dictionary<Subject.EnforceType, int> a = new Dictionary<Subject.EnforceType, int>();
-        List<int> b = new List<int>();
-        Subject c = new Subject(1, 2, "?", a, b, -1, -1, 10);
-        string json = JsonUtility.ToJson(c, true);
         subjects = new List<Subject>();
-        File.WriteAllText(Path.Combine(Application.dataPath, "Resources/Subjects/test.json"), json);
         string loadJson = File.ReadAllText(INFO_PATH);
         subjectsInfo = JsonUtility.FromJson<SubjectInfo>(loadJson);
         subjectsCount = subjectsInfo.count;
@@ -186,7 +181,6 @@ public static class SubjectTree
         while (searchQ.Count > 0)
         {
             int nowNodeId = searchQ.Dequeue();
-            Debug.Log("nowNodeId : " + nowNodeId.ToString());
             List<int> next = subjects[nowNodeId].nextSubjects;
             for (int i = 0; i < next.Count; i++)
             {

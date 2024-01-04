@@ -1,19 +1,15 @@
 {
-    "id": 2,
-    "tier": 2,
-    "subjectName": "신학",
-    "enforceType": [
-        0,
-        3
-    ],
-    "enforceAmount": [
-        40,
-        20
-    ],
-    "nextAvailableId": [
+    "id": 17,
+    "tier": 4,
+    "name": "대지",
+    "enforceContents": {
+        "3": 80,
+        "1": 20
+    },
+    "nextSubjects": [
         29
     ],
-    "relativeSubjectGroupId": -1,
-    "root" : 0,
-    "needToBeAvailable": 1
-  }
+    "subjectGroupId": 0,
+    "root": 0,
+    "needCount": 1
+}

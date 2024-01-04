@@ -1,18 +1,16 @@
 {
-    "id": 0,
-    "tier": 1,
-    "subjectName": "마법의 역사",
-    "enforceType": [
-        0
-    ],
-    "enforceAmount": [
-        10
-    ],
-    "nextAvailableId": [
+    "id": 23,
+    "tier": 4,
+    "name": "시간제어",
+    "enforceContents": {
+        "3": 30,
+        "1": 70
+    },
+    "nextSubjects": [
         26,
         28
     ],
-    "relativeSubjectGroupId": -1,
-    "root" : 0,
-    "needToBeAvailable": 0
+    "subjectGroupId": 0,
+    "root": 0,
+    "needCount": 1
 }

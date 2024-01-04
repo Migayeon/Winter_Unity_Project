@@ -1,19 +1,14 @@
 {
-    "id": 6,
-    "tier": 1,
-    "subjectName": "마법 공학",
-    "enforceType": [
-        0,
-        2
-    ],
-    "enforceAmount": [
-        50,
-        50
-    ],
-    "nextAvailableId": [
+    "id": 21,
+    "tier": 4,
+    "name": "공격",
+    "enforceContents": {
+        "4": 100
+    },
+    "nextSubjects": [
         25
     ],
-    "relativeSubjectGroupId": -1,
-    "root" : 0,
-    "needToBeAvailable": 1
+    "subjectGroupId": 0,
+    "root": 0,
+    "needCount": 1
 }

@@ -1,19 +1,14 @@
 {
-    "id": 6,
-    "tier": 1,
-    "subjectName": "마법 공학",
-    "enforceType": [
-        0,
-        2
-    ],
-    "enforceAmount": [
-        50,
-        50
-    ],
-    "nextAvailableId": [
+    "id": 14,
+    "tier": 3,
+    "name": "마나제어",
+    "enforceContents": {
+        "1": 100
+    },
+    "nextSubjects": [
         23
     ],
-    "relativeSubjectGroupId": -1,
-    "root" : 0,
-    "needToBeAvailable": 1
+    "subjectGroupId": 0,
+    "root": 0,
+    "needCount": 1
 }

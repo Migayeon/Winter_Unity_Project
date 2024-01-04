@@ -1,19 +1,15 @@
 {
     "id": 7,
     "tier": 2,
-    "subjectName": "연금술",
-    "enforceType": [
-        0,
-        2
-    ],
-    "enforceAmount": [
-        70,
-        30
-    ],
-    "nextAvailableId": [
+    "name": "연금술",
+    "enforceContents": {
+        "0": 70,
+        "2": 30
+    },
+    "nextSubjects": [
         13
     ],
-    "relativeSubjectGroupId": -1,
-    "root" : 0,
-    "needToBeAvailable": 1
-  }
+    "subjectGroupId": 0,
+    "root": 0,
+    "needCount": 1
+}

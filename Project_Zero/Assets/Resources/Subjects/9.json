@@ -1,20 +1,16 @@
 {
-    "id": 1,
-    "tier": 1,
-    "subjectName": "주문 기초",
-    "enforceType": [
-        0,
-        1
-    ],
-    "enforceAmount": [
-        50,
-        50
-    ],
-    "nextAvailableId": [
+    "id": 9,
+    "tier": 3,
+    "name": "대형 마법",
+    "enforceContents": {
+        "1": 30,
+        "2": 70
+    },
+    "nextSubjects": [
         24,
         27
     ],
-    "relativeSubjectGroupId": -1,
-    "root" : 0,
-    "needToBeAvailable": 0
+    "subjectGroupId": 0,
+    "root": 0,
+    "needCount": 2
 }

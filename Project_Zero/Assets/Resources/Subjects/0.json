@@ -2,14 +2,14 @@
     "id": 0,
     "tier": 1,
     "name": "마법의 역사",
-    "enforceContent": {
-        "0" : 100
+    "enforceContents": {
+        "0": 10
     },
-    "nextAvailableId": [
+    "nextSubjects": [
         2,
         3
     ],
-    "relativeSubjectGroupId": -1,
-    "root" : 0,
-    "needToBeAvailable": 0
+    "subjectGroupId": 0,
+    "root": 0,
+    "needCount": 0
 }

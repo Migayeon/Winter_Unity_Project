@@ -1,20 +1,18 @@
 {
     "id": 8,
     "tier": 3,
-    "subjectName": "원소의 이해",
-    "enforceType": [
-        0
-    ],
-    "enforceAmount": [
-        10
-    ],
-    "nextAvailableId": [
+    "name": "원소의 이해",
+    "enforceContents": {
+        "0": 60,
+        "3": 40
+    },
+    "nextSubjects": [
         15,
         16,
         17,
         18
     ],
-    "relativeSubjectGroupId": -1,
-    "root" : 0,
-    "needToBeAvailable": 0
+    "subjectGroupId": 0,
+    "root": 0,
+    "needCount": 1
 }

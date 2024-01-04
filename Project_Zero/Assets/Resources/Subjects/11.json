@@ -1,19 +1,17 @@
 {
-    "id": 3,
-    "tier": 1,
-    "subjectName": "룬어",
-    "enforceType": [
-        1
-    ],
-    "enforceAmount": [
-        100
-    ],
-    "nextAvailableId": [
+    "id": 11,
+    "tier": 3,
+    "name": "대인 주문",
+    "enforceContents": {
+        "1": 10,
+        "4": 90
+    },
+    "nextSubjects": [
         21,
         22,
         24
     ],
-    "relativeSubjectGroupId": -1,
-    "root" : 0,
-    "needToBeAvailable": 1
-  }
+    "subjectGroupId": 0,
+    "root": 0,
+    "needCount": 1
+}

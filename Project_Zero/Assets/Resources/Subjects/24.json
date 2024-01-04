@@ -1,17 +1,14 @@
 {
-    "id": 1,
-    "tier": 1,
-    "subjectName": "주문 기초",
-    "enforceType": [
-        0,
-        1
-    ],
-    "enforceAmount": [
-        50,
-        50
-    ],
-    "nextAvailableId": [],
-    "relativeSubjectGroupId": -1,
-    "root" : 0,
-    "needToBeAvailable": 0
+    "id": 24,
+    "tier": 5,
+    "name": "차원이동",
+    "enforceContents": {
+        "3": 40,
+        "1": 40,
+        "2": 20
+    },
+    "nextSubjects": [],
+    "subjectGroupId": 0,
+    "root": 0,
+    "needCount": 2
 }

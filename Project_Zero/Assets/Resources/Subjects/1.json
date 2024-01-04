@@ -1,21 +1,19 @@
 {
     "id": 1,
     "tier": 1,
-    "subjectName": "주문 기초",
-    "enforceType": [
-        0,
-        1
-    ],
-    "enforceAmount": [
-        50,
-        50
-    ],
-    "nextAvailableId": [
+    "name": "주문 기초",
+    "enforceContents": {
+        "0": 50,
+        "1": 50
+    },
+    "nextSubjects": [
         5,
         6,
-        7
+        7,
+        9,
+        14
     ],
-    "relativeSubjectGroupId": -1,
-    "root" : 0,
-    "needToBeAvailable": 0
+    "subjectGroupId": 0,
+    "root": 0,
+    "needCount": 0
 }

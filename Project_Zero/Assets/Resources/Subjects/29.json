@@ -1,17 +1,13 @@
 {
-    "id": 6,
-    "tier": 1,
-    "subjectName": "마법 공학",
-    "enforceType": [
-        0,
-        2
-    ],
-    "enforceAmount": [
-        50,
-        50
-    ],
-    "nextAvailableId": [],
-    "relativeSubjectGroupId": -1,
-    "root" : 0,
-    "needToBeAvailable": 1
+    "id": 29,
+    "tier": 5,
+    "name": "정령술",
+    "enforceContents": {
+        "1": 60,
+        "3": 40
+    },
+    "nextSubjects": [],
+    "subjectGroupId": 0,
+    "root": 0,
+    "needCount": 2
 }
