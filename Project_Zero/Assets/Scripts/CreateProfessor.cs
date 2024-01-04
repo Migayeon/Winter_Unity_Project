@@ -298,8 +298,8 @@ public class CreateProfessor : ProfessorSystem
         PlayerInfo.ProfessorList.Add(InsertProf);
         PickedProfessorName.text = InsertProf.ProfessorGetName();
         PickedProfessorType.text = InsertProf.ProfessorGetTypeInString();
-        PickedProfessorStat.text = "월급 : " + StatToString(InsertProf.ProfessorGetStats());
-        PickedProfessorSalary.text = Convert.ToString(InsertProf.ProfessorGetSalary());
+        PickedProfessorStat.text = StatToString(InsertProf.ProfessorGetStats());
+        PickedProfessorSalary.text = "월급 : " + Convert.ToString(InsertProf.ProfessorGetSalary());
         PickedProfessorName = HideTextObject.GetComponentInChildren<TextMeshProUGUI>();
         PickedProfessorType = HideTextObject.GetComponentInChildren<TextMeshProUGUI>();
         PickedProfessorStat = HideTextObject.GetComponentInChildren<TextMeshProUGUI>();
@@ -313,8 +313,8 @@ public class CreateProfessor : ProfessorSystem
         PlayerInfo.ProfessorList.Add(InsertProf);
         PickedProfessorName.text = InsertProf.ProfessorGetName();
         PickedProfessorType.text = InsertProf.ProfessorGetTypeInString();
-        PickedProfessorStat.text = "월급 : " + StatToString(InsertProf.ProfessorGetStats());
-        PickedProfessorSalary.text = Convert.ToString(InsertProf.ProfessorGetSalary());
+        PickedProfessorStat.text = StatToString(InsertProf.ProfessorGetStats());
+        PickedProfessorSalary.text = "월급 : " + Convert.ToString(InsertProf.ProfessorGetSalary());
         PickedProfessorName = HideTextObject.GetComponentInChildren<TextMeshProUGUI>();
         PickedProfessorType = HideTextObject.GetComponentInChildren<TextMeshProUGUI>();
         PickedProfessorStat = HideTextObject.GetComponentInChildren<TextMeshProUGUI>();
