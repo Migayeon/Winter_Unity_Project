@@ -176,18 +176,20 @@ public static class SubjectTree
         while (searchQ.Count > 0)
         {
             int nowNodeId = searchQ.Dequeue();
+            Debug.Log("nowNodeId : " + nowNodeId.ToString());
             cntList[nowNodeId]--;
             List<int> next = subjects[nowNodeId].nextAvailableId;
             for (int i = 0; i < next.Count; i++)
             {
                 int index = next[i];
-                if (cntList[index] == 0 && !flatSearchList[index] && flatIdList[index])
+                if (cntList[index] == 0 && flatIdList[index])
                 {
                     searchQ.Enqueue(index);
                     flatSearchList[index] = true;
                 }
             }
         }
+        Debug.Log(flatSearchList);
 
         List<bool> isSameGroup = new List<bool>(subjectsCount);
         foreach (int id in subjectsId)
