@@ -1462,11 +1462,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1212289252827607414, guid: ac68d3eb7ff07304bb5f380db2b8225f, type: 3}
       propertyPath: m_fontSize
-      value: 30
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 1212289252827607414, guid: ac68d3eb7ff07304bb5f380db2b8225f, type: 3}
       propertyPath: m_fontSizeBase
-      value: 30
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 2242661460015930673, guid: ac68d3eb7ff07304bb5f380db2b8225f, type: 3}
       propertyPath: m_text
@@ -1474,11 +1474,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2242661460015930673, guid: ac68d3eb7ff07304bb5f380db2b8225f, type: 3}
       propertyPath: m_fontSize
-      value: 30
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 2242661460015930673, guid: ac68d3eb7ff07304bb5f380db2b8225f, type: 3}
       propertyPath: m_fontSizeBase
-      value: 30
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 2497588938044423379, guid: ac68d3eb7ff07304bb5f380db2b8225f, type: 3}
       propertyPath: m_Pivot.x
