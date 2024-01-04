@@ -63,6 +63,7 @@ public class CurriculumSetting : MonoBehaviour
             status.color = Color.white;
             status.transform.GetChild(0).gameObject.SetActive(false);
             CurriculumList.RemoveAt(CurriculumList.Count-1);
+            lineRenderer.positionCount--;
         }
     }
 
