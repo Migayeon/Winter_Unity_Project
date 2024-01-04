@@ -27,7 +27,6 @@ public class CameraController : MonoBehaviour
             if (isAlt) {
 
                 Vector3 move = (curPoint - prevPoint) * (-1) * dragSpeed;
-                Debug.Log(move);
                 transform.Translate(move);
             }
             prevPoint = Input.mousePosition;

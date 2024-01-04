@@ -59,8 +59,9 @@ public class StudentGroup
 
             return;
         }
-        List<int> enforceType = SubjectTree.getEnforceType(curriculum[age, 0]);
-        List<int> enforceAmount = SubjectTree.getEnforceAmount(curriculum[age, 0]);
+        Subject subject = SubjectTree.getSubject(curriculum[age, 0]);
+        List<int> enforceType = subject.enforceType;
+        List<int> enforceAmount = subject.enforceAmount;
         for (int i = 0; i < enforceType.Count; i++) { stat[enforceType[i]] = enforceAmount[i]; }
         curriculum[age, 1] = 1;
         age++;
