@@ -185,7 +185,19 @@ public class CreateProfessor : ProfessorSystem
         };
    //public TextMeshProUGUI[,] ProfessorData = new TextMeshProUGUI[3,3];
     
-    
+    public string StatToString(List<int> stat)
+    {
+        
+        string temp = "";
+        for (int j = 0; j < professorStats; ++j)
+        {
+            temp += KoreanStatList[j];
+            temp += " : ";
+            temp += stat[j];
+            temp += "<br>";
+        }
+        return temp;
+    }
     void Start()
     {
         List<Professor> NewProfessors = new List<Professor>();
@@ -198,49 +210,25 @@ public class CreateProfessor : ProfessorSystem
         Professor2Name.text = NewProfessors[1].ProfessorGetName();
         Professor3Name.text = NewProfessors[2].ProfessorGetName();
         Professor1Type.text = NewProfessors[0].ProfessorGetTypeInString();
-        Professor2Type.text = NewProfessors[0].ProfessorGetTypeInString();
-        Professor3Type.text = NewProfessors[0].ProfessorGetTypeInString();
+        Professor2Type.text = NewProfessors[1].ProfessorGetTypeInString();
+        Professor3Type.text = NewProfessors[2].ProfessorGetTypeInString();
         {
 
             List<int> tempStatData = new List<int>(professorStats);
             tempStatData = NewProfessors[0].ProfessorGetStats();
-            string temp = "";
-            for (int j = 0; j < professorStats; ++j)
-            {
-                temp += KoreanStatList[j];
-                temp += " : ";
-                temp += tempStatData[j];
-                temp += "<br>";
-            }
-            Professor1Stat.text = temp;
+            Professor1Stat.text = StatToString(tempStatData);
         }
         {
 
             List<int> tempStatData = new List<int>(professorStats);
             tempStatData = NewProfessors[1].ProfessorGetStats();
-            string temp = "";
-            for (int j = 0; j < professorStats; ++j)
-            {
-                temp += KoreanStatList[j];
-                temp += " : ";
-                temp += tempStatData[j];
-                temp += "<br>";
-            }
-            Professor2Stat.text = temp;
+            Professor2Stat.text = StatToString(tempStatData);
         }
         {
 
             List<int> tempStatData = new List<int>(professorStats);
-            string temp = "";
             tempStatData = NewProfessors[2].ProfessorGetStats();
-            for (int j = 0; j < professorStats; ++j)
-            {
-                temp += KoreanStatList[j];
-                temp += " : ";
-                temp += tempStatData[j];
-                temp += "<br>";
-            }
-            Professor3Stat.text = temp;
+            Professor3Stat.text = StatToString(tempStatData);
         }
         Professor1Salary.text = "월급 : " + Convert.ToString(NewProfessors[0].ProfessorGetSalary());
         Professor2Salary.text = "월급 : " + Convert.ToString(NewProfessors[1].ProfessorGetSalary());
@@ -294,12 +282,10 @@ public class CreateProfessor : ProfessorSystem
         Professor2Salary.ForceMeshUpdate(true);
         Professor3Salary.ForceMeshUpdate(true);
         */
-
-
-        PickedProfessorName.text = Professor1Name.text;
-        PickedProfessorType.text = Professor1Type.text;
-        PickedProfessorStat.text = Professor1Stat.text;
-        PickedProfessorSalary.text = Professor1Salary.text;
+        PickedProfessorName.text = InsertProf.ProfessorGetName();
+        PickedProfessorType.text = InsertProf.ProfessorGetTypeInString();
+        PickedProfessorStat.text = StatToString(InsertProf.ProfessorGetStats());
+        PickedProfessorSalary.text = "월급 : " + Convert.ToString(InsertProf.ProfessorGetSalary());
         PickedProfessorName = HideTextObject.GetComponentInChildren<TextMeshProUGUI>();
         PickedProfessorType = HideTextObject.GetComponentInChildren<TextMeshProUGUI>();
         PickedProfessorStat = HideTextObject.GetComponentInChildren<TextMeshProUGUI>();
@@ -310,6 +296,14 @@ public class CreateProfessor : ProfessorSystem
     {
         Debug.Log("PickProfessor2");
         PlayerInfo.ProfessorList.Add(InsertProf);
+        PickedProfessorName.text = InsertProf.ProfessorGetName();
+        PickedProfessorType.text = InsertProf.ProfessorGetTypeInString();
+        PickedProfessorStat.text = "월급 : " + StatToString(InsertProf.ProfessorGetStats());
+        PickedProfessorSalary.text = Convert.ToString(InsertProf.ProfessorGetSalary());
+        PickedProfessorName = HideTextObject.GetComponentInChildren<TextMeshProUGUI>();
+        PickedProfessorType = HideTextObject.GetComponentInChildren<TextMeshProUGUI>();
+        PickedProfessorStat = HideTextObject.GetComponentInChildren<TextMeshProUGUI>();
+        PickedProfessorSalary = HideTextObject.GetComponentInChildren<TextMeshProUGUI>();
         HideTextObject.SetActive(true);
 
     }
@@ -317,6 +311,15 @@ public class CreateProfessor : ProfessorSystem
     {
         Debug.Log("PickProfessor3");
         PlayerInfo.ProfessorList.Add(InsertProf);
+        PickedProfessorName.text = InsertProf.ProfessorGetName();
+        PickedProfessorType.text = InsertProf.ProfessorGetTypeInString();
+        PickedProfessorStat.text = "월급 : " + StatToString(InsertProf.ProfessorGetStats());
+        PickedProfessorSalary.text = Convert.ToString(InsertProf.ProfessorGetSalary());
+        PickedProfessorName = HideTextObject.GetComponentInChildren<TextMeshProUGUI>();
+        PickedProfessorType = HideTextObject.GetComponentInChildren<TextMeshProUGUI>();
+        PickedProfessorStat = HideTextObject.GetComponentInChildren<TextMeshProUGUI>();
+        PickedProfessorSalary = HideTextObject.GetComponentInChildren<TextMeshProUGUI>();
+        HideTextObject.SetActive(true);
     }
     public void RetryProfessors()
     {
@@ -326,5 +329,6 @@ public class CreateProfessor : ProfessorSystem
     public void ReturnMenu()
     {
         Debug.Log("ReturnMenu");
+        SceneManager.LoadScene("Main");
     }
 }
