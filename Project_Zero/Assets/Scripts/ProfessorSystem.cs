@@ -17,7 +17,7 @@ public class ProfessorSystem : MonoBehaviour
         private int salary;
         private bool away; //true = is away, false = is not away (able to teach)
 
-        public static Dictionary<int, string> statlist = new Dictionary<int, string>
+        public static Dictionary<int, string> statlist = new Dictionary<int, string>(6)
         {
             {0, "lecture"},
             {1, "theory"},
@@ -27,6 +27,12 @@ public class ProfessorSystem : MonoBehaviour
             {5, "attack"},
         };
 
+        public static Dictionary<int, string> ProfessorTypeList = new Dictionary<int, string>(3)
+        {
+            {0, "일반" },
+            {1, "유니크" },
+            {2, "전투"},
+        };
         public Professor() {}
         public Professor(long _id, string _name, int _tenure, int _type, List<int> _stat)
         {
@@ -105,6 +111,10 @@ public class ProfessorSystem : MonoBehaviour
             salary = (int)((double)salary * mul);
         }
 
+        public string ProfessorGetTypeInString()
+        {
+            return ProfessorTypeList[type];
+        }
         public void UnityDebugLogProfessorInfo()
         {
             Debug.Log(string.Format("ID: {0}", id));

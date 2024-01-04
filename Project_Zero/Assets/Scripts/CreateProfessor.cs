@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 
 //WIP
@@ -124,6 +125,7 @@ public class CreateProfessor : ProfessorSystem
         Professor NewProfessor = new Professor(ProfessorID, ProfessorName, ProfessorTenure, ProfessorRarity, ProfessorStats, ProfessorSalary);
         Debug.Log(string.Format("num {0}", num));
         NewProfessor.UnityDebugLogProfessorInfo();
+
         //test logging
         /*
         Debug.Log(string.Format("num {0}", num));
@@ -157,6 +159,8 @@ public class CreateProfessor : ProfessorSystem
     public Button ReturnMenuButton;
     public GameObject ShowTextObject1, ShowTextObject2, ShowTextObject3;
     public GameObject ButtonClickObject;
+    public GameObject HideTextObject;
+    public TextMeshProUGUI PickedProfessorName, PickedProfessorType, PickedProfessorStat, PickedProfessorSalary;
     public TextMeshProUGUI Professor1Name;
     public TextMeshProUGUI Professor1Type;
     public TextMeshProUGUI Professor1Stat;
@@ -179,13 +183,6 @@ public class CreateProfessor : ProfessorSystem
             {4, "속성력"},
             {5, "영창"},
         };
-
-    public Dictionary<int, string> ProfessorTypeList = new Dictionary<int, string>(2)
-    {
-        {0, "일반" },
-        {1, "유니크" },
-        {2, "전투"},
-    };
    //public TextMeshProUGUI[,] ProfessorData = new TextMeshProUGUI[3,3];
     
     
@@ -200,9 +197,9 @@ public class CreateProfessor : ProfessorSystem
         Professor1Name.text = NewProfessors[0].ProfessorGetName();
         Professor2Name.text = NewProfessors[1].ProfessorGetName();
         Professor3Name.text = NewProfessors[2].ProfessorGetName();
-        Professor1Type.text = ProfessorTypeList[NewProfessors[0].ProfessorGetType()];
-        Professor2Type.text = ProfessorTypeList[NewProfessors[1].ProfessorGetType()];
-        Professor3Type.text = ProfessorTypeList[NewProfessors[2].ProfessorGetType()];
+        Professor1Type.text = NewProfessors[0].ProfessorGetTypeInString();
+        Professor2Type.text = NewProfessors[0].ProfessorGetTypeInString();
+        Professor3Type.text = NewProfessors[0].ProfessorGetTypeInString();
         {
 
             List<int> tempStatData = new List<int>(professorStats);
@@ -263,6 +260,7 @@ public class CreateProfessor : ProfessorSystem
         RetryProfessorsButton.onClick.AddListener(RetryProfessors);
         ReturnMenuButton.onClick.AddListener(ReturnMenu);
 
+        HideTextObject.SetActive(false);
         Professor1Name = ShowTextObject1.GetComponentInChildren<TextMeshProUGUI>();
         Professor2Name = ShowTextObject2.GetComponentInChildren<TextMeshProUGUI>();
         Professor3Name = ShowTextObject3.GetComponentInChildren<TextMeshProUGUI>();
@@ -296,11 +294,24 @@ public class CreateProfessor : ProfessorSystem
         Professor2Salary.ForceMeshUpdate(true);
         Professor3Salary.ForceMeshUpdate(true);
         */
+
+
+        PickedProfessorName.text = Professor1Name.text;
+        PickedProfessorType.text = Professor1Type.text;
+        PickedProfessorStat.text = Professor1Stat.text;
+        PickedProfessorSalary.text = Professor1Salary.text;
+        PickedProfessorName = HideTextObject.GetComponentInChildren<TextMeshProUGUI>();
+        PickedProfessorType = HideTextObject.GetComponentInChildren<TextMeshProUGUI>();
+        PickedProfessorStat = HideTextObject.GetComponentInChildren<TextMeshProUGUI>();
+        PickedProfessorSalary = HideTextObject.GetComponentInChildren<TextMeshProUGUI>();
+        HideTextObject.SetActive(true);
     }
         public void PickProfessor2(Professor InsertProf)
     {
         Debug.Log("PickProfessor2");
         PlayerInfo.ProfessorList.Add(InsertProf);
+        HideTextObject.SetActive(true);
+
     }
     public void PickProfessor3(Professor InsertProf)
     {
@@ -310,6 +321,7 @@ public class CreateProfessor : ProfessorSystem
     public void RetryProfessors()
     {
         Debug.Log("RetryProfessors");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     public void ReturnMenu()
     {
