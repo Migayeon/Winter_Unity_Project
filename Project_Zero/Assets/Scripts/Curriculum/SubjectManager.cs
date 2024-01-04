@@ -39,13 +39,15 @@ public static class SubjectTree
     public static void initSubjectsAndInfo()
     {
         subjects = new List<Subject>();
-        TextAsset loadedJson = Resources.Load<TextAsset>("Subjects/subjectsInfo.json");
-        subjectsInfo = JsonUtility.FromJson<SubjectInfo>(loadedJson.ToString());
-        subjectsCount = subjectsInfo.Count;
+        string infoFilePath = Path.Combine(Application.dataPath, "Resources/Subjects/subjectsInfo.json");
+        string loadJson = File.ReadAllText(infoFilePath);
+        subjectsInfo = JsonUtility.FromJson<SubjectInfo>(loadJson);
+        subjectsCount = subjectsInfo.count;
         for (int i = 0; i < subjectsCount; i++)
         {
-            loadedJson = Resources.Load<TextAsset>(string.Concat("Subjects/", i.ToString(), ".json"));
-            subjects.Add(JsonUtility.FromJson<Subject>(loadedJson.ToString()));
+            string subjectPath = Path.Combine(Application.dataPath, "Resources/Subjects/" + i.ToString() + ".json");
+            loadJson = File.ReadAllText(subjectPath);
+            subjects.Add(JsonUtility.FromJson<Subject>(loadJson));
         }
     }
 
@@ -153,19 +155,60 @@ public static class SubjectTree
         }
         return rst;
     }
+    public static bool isVaildCurriculum(List<int> subjectsId)
+    {
+        List<int> cntList = newCntList();
+        List<bool> flatIdList = flattenList(subjectsId);
+        List<bool> flatSearchList = flattenList(new List<int>());
+        Queue<int> searchQ = new Queue<int>();
+        for (int i = 0; i < subjectsCount; i++)
+        {
+            if (subjects[i].needToBeAvailable == 0 && flatIdList[i])
+            {
+                searchQ.Enqueue(i);
+                flatSearchList[i] = true;
+            }
+        }
+        while (searchQ.Count > 0)
+        {
+            int nowNodeId = searchQ.Dequeue();
+            cntList[nowNodeId]--;
+            List<int> next = subjects[nowNodeId].nextAvailableId;
+            for (int i = 0; i < next.Count; i++)
+            {
+                int index = next[i];
+                if (cntList[index] == 0 && !flatSearchList[index] && flatIdList[index])
+                    searchQ.Enqueue(index);
+            }
+        }
+        List<bool> isSameGroup = new List<bool>(subjectsCount);
+        foreach (int id in subjectsId)
+        {
+            if (subjects[id].relativeSubjectGroupId != DONT_HAVE_GROUP)
+            {
+                if (!isSameGroup[subjects[id].relativeSubjectGroupId])
+                    isSameGroup[subjects[id].relativeSubjectGroupId] = true;
+                else
+                    return false;
+            }
+            if (!flatSearchList[id])
+                return false;
+        }
+        return true;
+    }
 }
 
 [System.Serializable]
 public class SubjectInfo
 {
-    public int Count;
-    public string[] EnforceTypeName;
+    public int count;
+    public string[] enforceTypeName;
     public int groupCount;
-    public SubjectInfo(int count, string[] enforceTypeName, int groupCount)
+    public SubjectInfo(int Count, string[] EnforceTypeName, int GroupCount)
     {
-        Count = count;
-        EnforceTypeName = enforceTypeName;
-        this.groupCount = groupCount;
+        count = Count;
+        enforceTypeName = EnforceTypeName;
+        groupCount = GroupCount;
     }
 }
 
@@ -201,7 +244,6 @@ public class SubjectManager : MonoBehaviour
     public void Awake()
     {
         SubjectTree.initSubjectsAndInfo();
-        print(SubjectTree.subjects);
     }
 }
 
