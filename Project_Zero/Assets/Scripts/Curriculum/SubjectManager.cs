@@ -188,6 +188,7 @@ public static class SubjectTree
                 }
             }
         }
+
         List<bool> isSameGroup = new List<bool>(subjectsCount);
         foreach (int id in subjectsId)
         {
