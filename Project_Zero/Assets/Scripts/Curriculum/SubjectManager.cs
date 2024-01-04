@@ -181,7 +181,7 @@ public static class SubjectTree
             for (int i = 0; i < next.Count; i++)
             {
                 int index = next[i];
-                if (cntList[index]-- == 0 && flatIdList[index])
+                if (--cntList[index] == 0 && flatIdList[index])
                 {
                     searchQ.Enqueue(index);
                     flatSearchList[index] = true;
