@@ -2,10 +2,13 @@
     "id": 6,
     "tier": 2,
     "name": "마법 공학",
-    "enforceContents": {
-        "0": 50,
-        "2": 50
-    },
+    "enforceContents": [
+        50,
+        0,
+        50,
+        0,
+        0
+    ],
     "nextSubjects": [
         12
     ],

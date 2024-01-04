@@ -2,10 +2,13 @@
     "id": 5,
     "tier": 2,
     "name": "소환 주문",
-    "enforceContents": {
-        "1": 70,
-        "4": 30
-    },
+    "enforceContents": [
+        0,
+        70,
+        0,
+        0,
+        30
+    ],
     "nextSubjects": [
         29
     ],

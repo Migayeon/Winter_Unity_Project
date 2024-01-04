@@ -2,10 +2,13 @@
     "id": 13,
     "tier": 3,
     "name": "포션",
-    "enforceContents": {
-        "0": 20,
-        "2": 80
-    },
+    "enforceContents": [
+        20,
+        0,
+        80,
+        0,
+        0
+    ],
     "nextSubjects": [],
     "subjectGroupId": 0,
     "root": 0,

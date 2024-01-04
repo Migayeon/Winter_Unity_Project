@@ -2,10 +2,13 @@
     "id": 29,
     "tier": 5,
     "name": "정령술",
-    "enforceContents": {
-        "1": 60,
-        "3": 40
-    },
+    "enforceContents": [
+        0,
+        60,
+        0,
+        40,
+        0
+    ],
     "nextSubjects": [],
     "subjectGroupId": 0,
     "root": 0,

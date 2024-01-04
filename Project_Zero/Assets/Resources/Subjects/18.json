@@ -2,14 +2,17 @@
     "id": 18,
     "tier": 4,
     "name": "바람",
-    "enforceContents": {
-        "3": 80,
-        "1": 20
-    },
+    "enforceContents": [
+        0,
+        20,
+        0,
+        80,
+        0
+    ],
     "nextSubjects": [
         29
     ],
-    "subjectGroupId": 1,
+    "subjectGroupId": 0,
     "root": 0,
     "needCount": 1
 }

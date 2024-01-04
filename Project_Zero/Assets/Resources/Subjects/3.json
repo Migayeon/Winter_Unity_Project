@@ -2,9 +2,13 @@
     "id": 3,
     "tier": 2,
     "name": "룬어",
-    "enforceContents": {
-        "0": 100
-    },
+    "enforceContents": [
+        100,
+        0,
+        0,
+        0,
+        0
+    ],
     "nextSubjects": [
         9
     ],

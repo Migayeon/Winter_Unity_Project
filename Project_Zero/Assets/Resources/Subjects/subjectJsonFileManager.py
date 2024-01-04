@@ -48,7 +48,7 @@ def convertCsvToJson(fileName, infoFileName = "subjectsInfo"):
     ]
     temp["groupCount"] = 3
     jsonFile = open(f"./{infoFileName}.json", 'w', encoding='UTF8')
-    jsonFile.write(jsonContents)
+    jsonFile.write(json.dumps(temp, ensure_ascii = False, indent=4))
     jsonFile.close()
     f.close()
 
@@ -77,4 +77,32 @@ def convertJsonToCsv(fileName, infoFileName = "subjectsInfo"):
     writer.writerows(csvList)
     csvFile.close()
 
-convertJsonToCsv("test")
+def flattenDictionary(infoFileName = "subjectsInfo"):
+    NAMES = {
+        "theory" : 0,
+        "mana" : 1,
+        "craft" : 2,
+        "element" : 3,
+        "attack" : 4
+    }
+    jsonFile = open(f"./{infoFileName}.json", 'r', encoding='UTF8')
+    info = json.load(jsonFile)
+    jsonFile.close()
+    for i in range(info["count"]):
+        jsonFile = open(f"./{i}.json", 'r', encoding='UTF8')
+        jsonContents = dict(json.loads(jsonFile.read()))
+        jsonFile.close()
+        print("?", jsonContents)
+        a = jsonContents["enforceContents"]
+        b = [0, 0, 0, 0, 0]
+        print("?", a)
+        for j in a.keys():
+            b[int(j)] = a[j]
+        jsonContents["enforceContents"] = b
+        jsonWrite = open(f"./{i}.json", 'w', encoding='UTF8')
+        #print(json.dumps(jsonContents, ensure_ascii = False, indent=4))
+        jsonWrite.write(json.dumps(jsonContents, ensure_ascii = False, indent=4))
+        jsonWrite.close()
+convertCsvToJson("metaSubjectInfo")
+#convertJsonToCsv("test")
+flattenDictionary()

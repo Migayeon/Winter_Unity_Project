@@ -2,10 +2,13 @@
     "id": 1,
     "tier": 1,
     "name": "주문 기초",
-    "enforceContents": {
-        "0": 50,
-        "1": 50
-    },
+    "enforceContents": [
+        50,
+        50,
+        0,
+        0,
+        0
+    ],
     "nextSubjects": [
         5,
         6,

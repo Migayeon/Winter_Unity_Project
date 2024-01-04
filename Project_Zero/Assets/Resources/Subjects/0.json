@@ -2,9 +2,13 @@
     "id": 0,
     "tier": 1,
     "name": "마법의 역사",
-    "enforceContents": {
-        "0": 10
-    },
+    "enforceContents": [
+        10,
+        0,
+        0,
+        0,
+        0
+    ],
     "nextSubjects": [
         2,
         3

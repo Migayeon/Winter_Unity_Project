@@ -2,9 +2,13 @@
     "id": 27,
     "tier": 5,
     "name": "기계화",
-    "enforceContents": {
-        "2": 100
-    },
+    "enforceContents": [
+        0,
+        0,
+        100,
+        0,
+        0
+    ],
     "nextSubjects": [],
     "subjectGroupId": 0,
     "root": 0,

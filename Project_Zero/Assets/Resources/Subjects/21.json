@@ -2,13 +2,17 @@
     "id": 21,
     "tier": 4,
     "name": "공격",
-    "enforceContents": {
-        "4": 100
-    },
+    "enforceContents": [
+        0,
+        0,
+        0,
+        0,
+        100
+    ],
     "nextSubjects": [
         25
     ],
     "subjectGroupId": 0,
-    "root": 1,
+    "root": 0,
     "needCount": 1
 }

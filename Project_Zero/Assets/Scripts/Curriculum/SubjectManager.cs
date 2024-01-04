@@ -9,6 +9,8 @@ public class SubjectManager : MonoBehaviour
     public void Awake()
     {
         SubjectTree.initSubjectsAndInfo();
+        Subject test = SubjectTree.getSubject(0);
+        print(test.enforceContents);
     }
 }
 public static class SubjectTree
@@ -37,6 +39,7 @@ public static class SubjectTree
         ReadyToOpen
     }
     private const int DONT_HAVE_GROUP = 0;
+    private const int NORMAL_ROOT = 0;
     private static string INFO_PATH = Path.Combine(Application.dataPath, "Resources/Subjects/subjectsInfo.json");
     public static List<Subject> subjects = new List<Subject>();
     public static SubjectInfo subjectsInfo;
@@ -224,26 +227,19 @@ public class SubjectInfo
     }
 }
 
-[System.Serializable]
 public class Subject
 {
-    public enum EnforceType
-    {
-        magicTheory,    // 마법 이론
-        manaTelepathic, // 마나 감응
-        handCraft,      // 손재주
-        chantMagic      // 영창 마법
-    }
+    public const int MAGIC_THEORY = 0, MANA_TELE = 1, HAND_CRAFT = 2, ELEMENT = 3, CHANT_MAGIC = 4;
     public int id;
     public int tier;
     public string name;
-    public Dictionary<EnforceType, int> enforceContents;
+    public List<int> enforceContents;
     public List<int> nextSubjects;
     public int subjectGroupId;
     public int root;
     public int needCount;
 
-    public Subject(int Id, int Tier, string Name, Dictionary<EnforceType, int> EnforceContents, List<int> NextSubjects, int SubjectGroupId, int Root, int NeedCount)
+    public Subject(int Id, int Tier, string Name, List<int> EnforceContents, List<int> NextSubjects, int SubjectGroupId, int Root, int NeedCount)
     {
         id = Id;
         tier = Tier;

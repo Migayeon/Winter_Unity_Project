@@ -2,16 +2,19 @@
     "id": 11,
     "tier": 3,
     "name": "대인 주문",
-    "enforceContents": {
-        "1": 10,
-        "4": 90
-    },
+    "enforceContents": [
+        0,
+        10,
+        0,
+        0,
+        90
+    ],
     "nextSubjects": [
         21,
         22,
         24
     ],
     "subjectGroupId": 0,
-    "root": 1,
+    "root": 0,
     "needCount": 1
 }

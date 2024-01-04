@@ -2,10 +2,13 @@
     "id": 2,
     "tier": 2,
     "name": "신학",
-    "enforceContents": {
-        "0": 80,
-        "3": 20
-    },
+    "enforceContents": [
+        80,
+        0,
+        0,
+        20,
+        0
+    ],
     "nextSubjects": [
         8,
         10

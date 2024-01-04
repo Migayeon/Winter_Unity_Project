@@ -2,10 +2,13 @@
     "id": 9,
     "tier": 3,
     "name": "대형 마법",
-    "enforceContents": {
-        "1": 30,
-        "2": 70
-    },
+    "enforceContents": [
+        0,
+        30,
+        70,
+        0,
+        0
+    ],
     "nextSubjects": [
         24,
         27

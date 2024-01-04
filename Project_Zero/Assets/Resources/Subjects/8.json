@@ -2,10 +2,13 @@
     "id": 8,
     "tier": 3,
     "name": "원소의 이해",
-    "enforceContents": {
-        "0": 60,
-        "3": 40
-    },
+    "enforceContents": [
+        60,
+        0,
+        0,
+        40,
+        0
+    ],
     "nextSubjects": [
         15,
         16,

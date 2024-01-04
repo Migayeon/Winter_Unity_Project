@@ -2,10 +2,13 @@
     "id": 26,
     "tier": 5,
     "name": "치유",
-    "enforceContents": {
-        "3": 50,
-        "1": 50
-    },
+    "enforceContents": [
+        0,
+        50,
+        0,
+        50,
+        0
+    ],
     "nextSubjects": [],
     "subjectGroupId": 0,
     "root": 0,

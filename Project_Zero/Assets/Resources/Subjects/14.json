@@ -2,9 +2,13 @@
     "id": 14,
     "tier": 3,
     "name": "마나제어",
-    "enforceContents": {
-        "1": 100
-    },
+    "enforceContents": [
+        0,
+        100,
+        0,
+        0,
+        0
+    ],
     "nextSubjects": [
         23
     ],

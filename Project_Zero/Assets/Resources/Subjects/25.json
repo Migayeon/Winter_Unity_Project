@@ -2,13 +2,15 @@
     "id": 25,
     "tier": 5,
     "name": "저주",
-    "enforceContents": {
-        "4": 70,
-        "3": 20,
-        "1": 10
-    },
+    "enforceContents": [
+        0,
+        10,
+        0,
+        20,
+        70
+    ],
     "nextSubjects": [],
     "subjectGroupId": 0,
-    "root": 1,
+    "root": 0,
     "needCount": 2
 }

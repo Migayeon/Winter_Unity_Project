@@ -2,10 +2,13 @@
     "id": 23,
     "tier": 4,
     "name": "시간제어",
-    "enforceContents": {
-        "3": 30,
-        "1": 70
-    },
+    "enforceContents": [
+        0,
+        70,
+        0,
+        30,
+        0
+    ],
     "nextSubjects": [
         26,
         28

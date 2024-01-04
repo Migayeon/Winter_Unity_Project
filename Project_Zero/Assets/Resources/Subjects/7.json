@@ -2,10 +2,13 @@
     "id": 7,
     "tier": 2,
     "name": "연금술",
-    "enforceContents": {
-        "0": 70,
-        "2": 30
-    },
+    "enforceContents": [
+        70,
+        0,
+        30,
+        0,
+        0
+    ],
     "nextSubjects": [
         13
     ],

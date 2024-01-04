@@ -2,11 +2,13 @@
     "id": 24,
     "tier": 5,
     "name": "차원이동",
-    "enforceContents": {
-        "3": 40,
-        "1": 40,
-        "2": 20
-    },
+    "enforceContents": [
+        0,
+        40,
+        20,
+        40,
+        0
+    ],
     "nextSubjects": [],
     "subjectGroupId": 0,
     "root": 0,

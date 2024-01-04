@@ -2,9 +2,13 @@
     "id": 12,
     "tier": 3,
     "name": "마정석 가공",
-    "enforceContents": {
-        "2": 100
-    },
+    "enforceContents": [
+        0,
+        0,
+        100,
+        0,
+        0
+    ],
     "nextSubjects": [
         27
     ],
