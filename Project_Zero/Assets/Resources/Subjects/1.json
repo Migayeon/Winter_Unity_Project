@@ -10,7 +10,11 @@
         50,
         50
     ],
-    "nextAvailableId": [],
+    "nextAvailableId": [
+        5,
+        6,
+        7
+    ],
     "relativeSubjectGroupId": -1,
     "root" : 0,
     "needToBeAvailable": 0

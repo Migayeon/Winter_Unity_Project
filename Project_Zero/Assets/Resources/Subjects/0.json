@@ -8,7 +8,10 @@
     "enforceAmount": [
         10
     ],
-    "nextAvailableId": [],
+    "nextAvailableId": [
+        2,
+        3
+    ],
     "relativeSubjectGroupId": -1,
     "root" : 0,
     "needToBeAvailable": 0

@@ -110,7 +110,9 @@ public static class SubjectTree
     }
     public static List<State> initSubjectStates(List<int> openedSubjectsId)
     {
-        List<State> rst = new List<State>(subjectsCount);
+        List<State> rst = new List<State>();
+        for (int i = 0; i < subjectsCount; i++)
+            rst.Add(State.Closed);
         for (int i = 0; i < openedSubjectsId.Count; i++)
             rst[openedSubjectsId[i]] = State.Open;
         List<int> cntList = newCntList();
