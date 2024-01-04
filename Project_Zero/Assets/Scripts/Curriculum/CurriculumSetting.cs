@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CurriculumSetting : MonoBehaviour
@@ -10,6 +11,7 @@ public class CurriculumSetting : MonoBehaviour
     public List<int> CurriculumList;
     public Text warningMessage;
     public Text infoMessage;
+    public Button next;
     public StudentGroup[] studentGroup = new StudentGroup[3];
     private int div = 0;
     private int num = 0;
@@ -90,6 +92,7 @@ public class CurriculumSetting : MonoBehaviour
         if(div == 3)
         {
             PlayerInfo.studentGroups.Add(studentGroup);
+            SceneManager.LoadScene("BeforeTurn");
             return;
         }
         NewCurriculum();
@@ -116,5 +119,6 @@ public class CurriculumSetting : MonoBehaviour
             subject.onClick.AddListener(delegate { SubjectClick(Convert.ToInt32(subject.name)); });
         }
         NewCurriculum();
+        next.onClick.AddListener(SaveCurriculum);
     }
 }

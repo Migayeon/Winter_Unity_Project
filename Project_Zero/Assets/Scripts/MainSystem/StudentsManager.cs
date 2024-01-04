@@ -66,9 +66,11 @@ public class StudentGroup
             return;
         }
         Subject subject = SubjectTree.getSubject(curriculum[age]);
-        List<int> enforceType = subject.enforceType;
-        List<int> enforceAmount = subject.enforceAmount;
-        for (int i = 0; i < enforceType.Count; i++) { stat[enforceType[i]] = enforceAmount[i]; }
+        Dictionary<Subject.EnforceType, int> enforceType = subject.enforceContents;
+        foreach (Subject.EnforceType i in enforceType.Keys)
+        { 
+            stat[(int) i] += enforceType[i];
+        }
         age++;
     }
 
