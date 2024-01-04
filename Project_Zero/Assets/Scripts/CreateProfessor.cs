@@ -6,7 +6,6 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-
 //WIP
 
 public class CreateProfessor : ProfessorSystem
@@ -65,7 +64,7 @@ public class CreateProfessor : ProfessorSystem
         return finalRandomName;
     }
 
-    public Professor CreateNewProfessor(int num)
+    public static Professor CreateNewProfessor(int num) // "static" keyword is included for testing purposes only (used in professor info management testing), may remove later
     {
         System.Random RandomGenerator = new System.Random();
         List<int> ProfessorRarityList = new List<int>(TotalRarity);
