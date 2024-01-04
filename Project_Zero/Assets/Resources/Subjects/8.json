@@ -1,19 +1,20 @@
 {
-    "id": 4,
-    "tier": 2,
-    "subjectName": "전투 주문",
+    "id": 8,
+    "tier": 3,
+    "subjectName": "원소의 이해",
     "enforceType": [
-        1,
-        4
+        0
     ],
     "enforceAmount": [
-        20,
-        80
+        10
     ],
     "nextAvailableId": [
-        11
+        15,
+        16,
+        17,
+        18
     ],
     "relativeSubjectGroupId": -1,
-    "root" : 1,
+    "root" : 0,
     "needToBeAvailable": 0
 }

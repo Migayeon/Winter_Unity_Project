@@ -1,17 +1,18 @@
 {
-    "id": 3,
-    "tier": 2,
-    "subjectName": "룬어",
+    "id": 0,
+    "tier": 1,
+    "subjectName": "마법의 역사",
     "enforceType": [
-        1
+        0
     ],
     "enforceAmount": [
-        100
+        10
     ],
     "nextAvailableId": [
-        9
+        26,
+        28
     ],
     "relativeSubjectGroupId": -1,
     "root" : 0,
-    "needToBeAvailable": 1
-  }
+    "needToBeAvailable": 0
+}

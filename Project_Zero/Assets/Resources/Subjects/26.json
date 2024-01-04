@@ -1,6 +1,6 @@
 {
     "id": 3,
-    "tier": 2,
+    "tier": 1,
     "subjectName": "룬어",
     "enforceType": [
         1
@@ -8,9 +8,7 @@
     "enforceAmount": [
         100
     ],
-    "nextAvailableId": [
-        9
-    ],
+    "nextAvailableId": [],
     "relativeSubjectGroupId": -1,
     "root" : 0,
     "needToBeAvailable": 1

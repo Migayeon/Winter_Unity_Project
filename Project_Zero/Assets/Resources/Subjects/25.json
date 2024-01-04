@@ -1,19 +1,17 @@
 {
-    "id": 5,
+    "id": 2,
     "tier": 2,
-    "subjectName": "소환 주문",
+    "subjectName": "신학",
     "enforceType": [
-        1,
-        4
+        0,
+        3
     ],
     "enforceAmount": [
-        70,
-        30
+        40,
+        20
     ],
-    "nextAvailableId": [
-        29
-    ],
+    "nextAvailableId": [],
     "relativeSubjectGroupId": -1,
     "root" : 0,
     "needToBeAvailable": 1
-}
+  }

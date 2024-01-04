@@ -1,6 +1,6 @@
 {
     "id": 6,
-    "tier": 2,
+    "tier": 1,
     "subjectName": "마법 공학",
     "enforceType": [
         0,
@@ -10,9 +10,7 @@
         50,
         50
     ],
-    "nextAvailableId": [
-        12
-    ],
+    "nextAvailableId": [],
     "relativeSubjectGroupId": -1,
     "root" : 0,
     "needToBeAvailable": 1

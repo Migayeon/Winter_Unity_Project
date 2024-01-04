@@ -1,6 +1,6 @@
 {
     "id": 7,
-    "tier": 1,
+    "tier": 2,
     "subjectName": "연금술",
     "enforceType": [
         0,
@@ -10,7 +10,9 @@
         70,
         30
     ],
-    "nextAvailableId": [],
+    "nextAvailableId": [
+        13
+    ],
     "relativeSubjectGroupId": -1,
     "root" : 0,
     "needToBeAvailable": 1

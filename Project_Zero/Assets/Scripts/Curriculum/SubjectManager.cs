@@ -4,13 +4,19 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
-
+public class SubjectManager : MonoBehaviour
+{
+    public void Awake()
+    {
+        SubjectTree.initSubjectsAndInfo();
+    }
+}
 public static class SubjectTree
 {
     /* << Attributes >>
      *  - List<Subject> subjects : 과목들을 저장합니다.
      *  - Dictionary<string, int> subjectsInfo : 전체적인 정보를 저장합니다.
-     *  - ulong subjectState : 어떤 과목이 현재 열려있는 지 저장합니다.
+     *  - List<State> subjectState : 과목의 상태를 저장합니다. (닫힘, 열림, 준비됨)
      *  
      *  << Funtions >>
      *  - void init() : 정보를 json파일로부터 불러옵니다.
@@ -31,6 +37,7 @@ public static class SubjectTree
         ReadyToOpen
     }
     private const int DONT_HAVE_GROUP = -1;
+    private static string INFO_PATH = Path.Combine(Application.dataPath, "Resources/Subjects/subjectsInfo.json");
     public static List<Subject> subjects = new List<Subject>();
     public static SubjectInfo subjectsInfo;
     public static List<State> subjectState = new List<State>();
@@ -38,9 +45,13 @@ public static class SubjectTree
     
     public static void initSubjectsAndInfo()
     {
+        Dictionary<Subject.EnforceType, int> a = new Dictionary<Subject.EnforceType, int>();
+        List<int> b = new List<int>();
+        Subject c = new Subject(1, 2, "?", a, b, -1, -1, 10);
+        string json = JsonUtility.ToJson(c, true);
         subjects = new List<Subject>();
-        string infoFilePath = Path.Combine(Application.dataPath, "Resources/Subjects/subjectsInfo.json");
-        string loadJson = File.ReadAllText(infoFilePath);
+        File.WriteAllText(Path.Combine(Application.dataPath, "Resources/Subjects/test.json"), json);
+        string loadJson = File.ReadAllText(INFO_PATH);
         subjectsInfo = JsonUtility.FromJson<SubjectInfo>(loadJson);
         subjectsCount = subjectsInfo.count;
         for (int i = 0; i < subjectsCount; i++)
@@ -58,14 +69,14 @@ public static class SubjectTree
     public static void openSubject(int id)
     {
         subjectState[id] = State.Open;
-        if (subjects[id].relativeSubjectGroupId != DONT_HAVE_GROUP) {
+        if (subjects[id].subjectGroupId != DONT_HAVE_GROUP) {
             for (int i = 0; i < subjectsCount; i++)
             {
-                if (subjects[i].relativeSubjectGroupId == subjects[id].relativeSubjectGroupId)
+                if (subjects[i].subjectGroupId == subjects[id].subjectGroupId)
                     subjectState[id] = State.Closed;
             }
         }
-        foreach (int nextNode in subjects[id].nextAvailableId)
+        foreach (int nextNode in subjects[id].nextSubjects)
         {
             subjectState[nextNode] = State.ReadyToOpen;
         }
@@ -73,15 +84,15 @@ public static class SubjectTree
     public static void closeSubject(int id)
     {
         subjectState[id] = State.ReadyToOpen;
-        if (subjects[id].relativeSubjectGroupId != DONT_HAVE_GROUP)
+        if (subjects[id].subjectGroupId != DONT_HAVE_GROUP)
         {
             for (int i = 0; i < subjectsCount; i++)
             {
-                if (subjects[i].relativeSubjectGroupId == subjects[id].relativeSubjectGroupId)
+                if (subjects[i].subjectGroupId == subjects[id].subjectGroupId)
                     subjectState[id] = State.ReadyToOpen;
             }
         }
-        foreach (int nextNode in subjects[id].nextAvailableId)
+        foreach (int nextNode in subjects[id].nextSubjects)
         {
             subjectState[nextNode] = State.Closed;
         }
@@ -96,7 +107,7 @@ public static class SubjectTree
     {
         List<int> rst = new List<int>();
         for (int i = 0; i < subjectsCount; i++)
-            rst.Add(subjects[i].needToBeAvailable);
+            rst.Add(subjects[i].needCount);
         return rst;
     }
     private static List<bool> flattenList(List<int> idList)
@@ -121,7 +132,7 @@ public static class SubjectTree
         Queue<int> searchQ = new Queue<int>();
         for (int i = 0; i < subjectsCount; i++)
         {
-            if (subjects[i].needToBeAvailable == 0)
+            if (subjects[i].needCount == 0)
             {
                 if (rst[i] == State.Open)
                 {
@@ -137,7 +148,7 @@ public static class SubjectTree
         while (searchQ.Count > 0)
         {
             int nowNodeId = searchQ.Dequeue();
-            List<int> next = subjects[nowNodeId].nextAvailableId;
+            List<int> next = subjects[nowNodeId].nextSubjects;
             for (int i = 0; i < next.Count; i++)
             {
                 int index = next[i];
@@ -148,10 +159,10 @@ public static class SubjectTree
                     flatSearchList[i] = true;
                 }
             }
-            if (subjects[nowNodeId].relativeSubjectGroupId != DONT_HAVE_GROUP)
+            if (subjects[nowNodeId].subjectGroupId != DONT_HAVE_GROUP)
             {
-                if (!isSameGroup[subjects[nowNodeId].relativeSubjectGroupId] && rst[nowNodeId] == State.Open)
-                    isSameGroup[subjects[nowNodeId].relativeSubjectGroupId] = true;
+                if (!isSameGroup[subjects[nowNodeId].subjectGroupId] && rst[nowNodeId] == State.Open)
+                    isSameGroup[subjects[nowNodeId].subjectGroupId] = true;
                 else
                     rst[nowNodeId] = State.Closed;
             }
@@ -166,7 +177,7 @@ public static class SubjectTree
         Queue<int> searchQ = new Queue<int>();
         for (int i = 0; i < subjectsCount; i++)
         {
-            if (subjects[i].needToBeAvailable == 0 && flatIdList[i])
+            if (subjects[i].needCount == 0 && flatIdList[i])
             {
                 searchQ.Enqueue(i);
                 flatSearchList[i] = true;
@@ -176,7 +187,7 @@ public static class SubjectTree
         {
             int nowNodeId = searchQ.Dequeue();
             Debug.Log("nowNodeId : " + nowNodeId.ToString());
-            List<int> next = subjects[nowNodeId].nextAvailableId;
+            List<int> next = subjects[nowNodeId].nextSubjects;
             for (int i = 0; i < next.Count; i++)
             {
                 int index = next[i];
@@ -191,10 +202,10 @@ public static class SubjectTree
         List<bool> isSameGroup = new List<bool>(subjectsCount);
         foreach (int id in subjectsId)
         {
-            if (subjects[id].relativeSubjectGroupId != DONT_HAVE_GROUP)
+            if (subjects[id].subjectGroupId != DONT_HAVE_GROUP)
             {
-                if (!isSameGroup[subjects[id].relativeSubjectGroupId])
-                    isSameGroup[subjects[id].relativeSubjectGroupId] = true;
+                if (!isSameGroup[subjects[id].subjectGroupId])
+                    isSameGroup[subjects[id].subjectGroupId] = true;
                 else
                     return false;
             }
@@ -222,36 +233,31 @@ public class SubjectInfo
 [System.Serializable]
 public class Subject
 {
+    public enum EnforceType
+    {
+        magicTheory,    // 마법 이론
+        manaTelepathic, // 마나 감응
+        handCraft,      // 손재주
+        chantMagic      // 영창 마법
+    }
     public int id;
     public int tier;
-    public string subjectName;
-    public List<int> enforceType;
-    public List<int> enforceAmount;
-    public List<int> nextAvailableId;
-    public int relativeSubjectGroupId;
+    public string name;
+    public Dictionary<EnforceType, int> enforceContents;
+    public List<int> nextSubjects;
+    public int subjectGroupId;
     public int root;
-    public int needToBeAvailable;
+    public int needCount;
 
-    public Subject(int id, int tier, string subjectName, List<int> enforceType, List<int> enforceAmount, List<int> nextAvailableId, int relativeSubjectGroupId, int root, int needToBeAvailable)
+    public Subject(int Id, int Tier, string Name, Dictionary<EnforceType, int> EnforceContents, List<int> NextSubjects, int SubjectGroupId, int Root, int NeedCount)
     {
-        this.id = id;
-        this.tier = tier;
-        this.subjectName = subjectName;
-        this.enforceType = enforceType;
-        this.enforceAmount = enforceAmount;
-        this.nextAvailableId = nextAvailableId;
-        this.relativeSubjectGroupId = relativeSubjectGroupId;
-        this.root = root;
-        this.needToBeAvailable = needToBeAvailable;
+        id = Id;
+        tier = Tier;
+        name = Name;
+        enforceContents = EnforceContents;
+        nextSubjects = NextSubjects;
+        subjectGroupId = SubjectGroupId;
+        root = Root;
+        needCount = NeedCount;
     }
 }
-
-public class SubjectManager : MonoBehaviour
-{
-    public void Awake()
-    {
-        SubjectTree.initSubjectsAndInfo();
-    }
-}
-
-

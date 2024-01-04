@@ -1,19 +1,17 @@
 {
-    "id": 6,
-    "tier": 2,
-    "subjectName": "마법 공학",
+    "id": 1,
+    "tier": 1,
+    "subjectName": "주문 기초",
     "enforceType": [
         0,
-        2
+        1
     ],
     "enforceAmount": [
         50,
         50
     ],
-    "nextAvailableId": [
-        12
-    ],
+    "nextAvailableId": [],
     "relativeSubjectGroupId": -1,
     "root" : 0,
-    "needToBeAvailable": 1
+    "needToBeAvailable": 0
 }

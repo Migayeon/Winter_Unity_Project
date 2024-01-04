@@ -1,11 +1,11 @@
 {
-    "count": 8,
+    "count": 0,
     "enforceTypeName": [
-        "Theory",
-        "Mana",
-        "Craft",
-        "Element",
-        "Attack"
+        "마법 이론",
+        "마나 감응",
+        "손재주",
+        "속성력",
+        "영창"
     ],
     "groupCount": 3
 }

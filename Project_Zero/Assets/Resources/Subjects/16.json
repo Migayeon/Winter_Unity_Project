@@ -1,19 +1,19 @@
 {
-    "id": 5,
-    "tier": 2,
-    "subjectName": "소환 주문",
+    "id": 1,
+    "tier": 1,
+    "subjectName": "주문 기초",
     "enforceType": [
-        1,
-        4
+        0,
+        1
     ],
     "enforceAmount": [
-        70,
-        30
+        50,
+        50
     ],
     "nextAvailableId": [
         29
     ],
     "relativeSubjectGroupId": -1,
     "root" : 0,
-    "needToBeAvailable": 1
+    "needToBeAvailable": 0
 }

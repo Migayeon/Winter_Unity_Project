@@ -1,10 +1,10 @@
 {
-    "id": 5,
-    "tier": 2,
-    "subjectName": "소환 주문",
+    "id": 7,
+    "tier": 1,
+    "subjectName": "연금술",
     "enforceType": [
-        1,
-        4
+        0,
+        2
     ],
     "enforceAmount": [
         70,
@@ -16,4 +16,4 @@
     "relativeSubjectGroupId": -1,
     "root" : 0,
     "needToBeAvailable": 1
-}
+  }
