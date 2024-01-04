@@ -12,7 +12,7 @@ public class ProfessorSystem : MonoBehaviour
         private long id ; //Professor ID (can be any int)
         private string name; //Professor name
         private int tenure; //Professor tenure ( >= 0)
-        private int type; //Professor type (1: unique, 0: normal)
+        private int type; //Professor type (2: unique, 1: battle, 0: normal)
         private List<int> stat; //professor stats
         private int salary;
         private bool away; //true = is away, false = is not away (able to teach)
