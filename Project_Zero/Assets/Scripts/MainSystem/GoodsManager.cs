@@ -7,7 +7,7 @@ public class GoodsManager : MonoBehaviour
     // 기본 재화
     public static int goodsAr = 20000;
     public static int goodsStone = 0;
-    public static int goodsFame = 0;
+    public static int goodsFame = 1;
     public static int goodsStudent = 0;
 
     // 아르<->마정석 환전

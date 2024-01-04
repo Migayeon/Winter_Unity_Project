@@ -14,7 +14,7 @@ public class StudentGroup
         age = 0;
         cost = c;
         curriculum = null; // 함수 연결
-        stat = new int[5];
+        stat = new List<int> { 0, 0, 0, 0, 0 };
 
         int lim = 0;
         int statSum = Random.Range(300, 400);
@@ -41,15 +41,21 @@ public class StudentGroup
     private int number; // 학생 수
     private int age; // 공부 기간
     private int cost; // 학원비
-    private int[,] curriculum; // 커리큘럼
-    private int[] stat; // 스탯
+    private List<int> curriculum; // 커리큘럼
+    private List<int> stat; // 스탯
 
     public int GetDivision(){ return division; }
     public int GetNumber() { return number; }
     public int GetAge() { return age; }
     public int GetCost() { return cost; }
-    public int[,] GetCurriculum() { return curriculum; }
-    public int[] GetStat() { return stat; }
+    public List<int> GetCurriculum() { return curriculum; }
+    public List<int> GetStat() { return stat; }
+
+    public void SetCurriCulum(List<int> newCurri)
+    {
+        curriculum = newCurri;
+        return;
+    }
 
     public void CurriculumSequence()
     {
@@ -59,11 +65,10 @@ public class StudentGroup
 
             return;
         }
-        Subject subject = SubjectTree.getSubject(curriculum[age, 0]);
+        Subject subject = SubjectTree.getSubject(curriculum[age]);
         List<int> enforceType = subject.enforceType;
         List<int> enforceAmount = subject.enforceAmount;
         for (int i = 0; i < enforceType.Count; i++) { stat[enforceType[i]] = enforceAmount[i]; }
-        curriculum[age, 1] = 1;
         age++;
     }
 
