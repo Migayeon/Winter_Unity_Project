@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GoodsUIUpdate : MonoBehaviour
@@ -18,5 +19,18 @@ public class GoodsUIUpdate : MonoBehaviour
         currentTurn.text = $"{TurnManager.turn}";
         currentAr.text = $"{GoodsManager.goodsAr}";
         currentStone.text = $"{GoodsManager.goodsStone}";
+    }
+    public static void HideUI()
+    {
+        GameObject.Find("CurrentTurn").SetActive(false);
+        GameObject.Find("Ar").SetActive(false);
+        GameObject.Find("Stone").SetActive(false);
+    }
+
+    public static void ShowUI()
+    {
+        GameObject.Find("CurrentTurn").SetActive(true);
+        GameObject.Find("Ar").SetActive(true);
+        GameObject.Find("Stone").SetActive(true);
     }
 }

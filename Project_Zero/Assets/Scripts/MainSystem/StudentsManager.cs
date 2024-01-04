@@ -59,7 +59,7 @@ public class StudentGroup
 
     public void CurriculumSequence()
     {
-        if (age == 8)
+        if (age == 3)
         {
             SelectTest();
 
@@ -67,6 +67,7 @@ public class StudentGroup
         }
         Subject subject = SubjectTree.getSubject(curriculum[age]);
         Dictionary<Subject.EnforceType, int> enforceType = subject.enforceContents;
+        Debug.Log(enforceType);
         foreach (Subject.EnforceType i in enforceType.Keys)
         { 
             stat[(int) i] += enforceType[i];
@@ -81,6 +82,10 @@ public class StudentGroup
         시험 선택 함수. 
 
          */
+        foreach (int i in stat)
+        {
+            Debug.Log(i);
+        }
     }
     
 }

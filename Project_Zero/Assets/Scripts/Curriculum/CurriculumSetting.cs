@@ -83,7 +83,7 @@ public class CurriculumSetting : MonoBehaviour
 
     public void SaveCurriculum() 
     {
-        if (CurriculumList.Count < 8)
+        if (CurriculumList.Count < 3)
         {
             StartCoroutine(WarningMessage("커리큘럼의 길이가 너무 짧습니다."));
             return;
@@ -92,6 +92,7 @@ public class CurriculumSetting : MonoBehaviour
         if(div == 3)
         {
             PlayerInfo.studentGroups.Add(studentGroup);
+            //GoodsUIUpdate.ShowUI();
             SceneManager.LoadScene("BeforeTurn");
             return;
         }

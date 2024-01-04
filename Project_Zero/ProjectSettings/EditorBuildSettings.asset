@@ -35,4 +35,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Intro/StartSetting.unity
     guid: 5b9b25a1aa0ed0e4294c57a956a177c6
+  - enabled: 1
+    path: Assets/Scenes/Curriculum.unity
+    guid: 92ae120f194fcfb438cc2d2fd3f24347
+  - enabled: 1
+    path: Assets/Scenes/Student/StudentCost.unity
+    guid: 708d7567338638240873b90827d748ec
   m_configObjects: {}
