@@ -59,20 +59,19 @@ public class StudentGroup
 
     public void CurriculumSequence()
     {
-        if (age == 3)
+        Subject subject = SubjectTree.getSubject(curriculum[age]);
+        List<int> enforceType = subject.enforceContents;
+        for (int i = 0; i < enforceType.Count; i++)
+        {
+            stat[i] += enforceType[i];
+        }
+        age++;
+        if (age == 8)
         {
             SelectTest();
 
             return;
         }
-        Subject subject = SubjectTree.getSubject(curriculum[age]);
-        Dictionary<Subject.EnforceType, int> enforceType = subject.enforceContents;
-        Debug.Log(enforceType);
-        foreach (Subject.EnforceType i in enforceType.Keys)
-        { 
-            stat[(int) i] += enforceType[i];
-        }
-        age++;
     }
 
     public void SelectTest()

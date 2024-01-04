@@ -9,10 +9,14 @@ using UnityEngine.UI;
 public class CurriculumSetting : MonoBehaviour
 {
     public List<int> CurriculumList;
+
     public Text warningMessage;
     public Text infoMessage;
     public Button next;
+    public LineRenderer lineRenderer;
+
     public StudentGroup[] studentGroup = new StudentGroup[3];
+
     private int div = 0;
     private int num = 0;
     private int localMinimum;
@@ -44,6 +48,8 @@ public class CurriculumSetting : MonoBehaviour
             GameObject order = status.transform.GetChild(0).gameObject;
             order.GetComponent<Text>().text = CurriculumList.Count.ToString();
             order.SetActive(true);
+            lineRenderer.positionCount++;
+            lineRenderer.SetPosition(CurriculumList.Count - 1, status.transform.position);
         }
     }
 
@@ -83,9 +89,9 @@ public class CurriculumSetting : MonoBehaviour
 
     public void SaveCurriculum() 
     {
-        if (CurriculumList.Count < 3)
+        if (CurriculumList.Count < 8)
         {
-            StartCoroutine(WarningMessage("커리큘럼의 길이가 너무 짧습니다."));
+            StartCoroutine(WarningMessage("커리큘럼은 8과목으로 구성되어야 합니다."));
             return;
         }
         studentGroup[div - 1].SetCurriCulum(CurriculumList);
@@ -113,12 +119,16 @@ public class CurriculumSetting : MonoBehaviour
         localMinimum = UnityEngine.Random.Range(320, 400);
         num = PlayerInfo.cost - localMinimum;
         num = (num*num)/coefficient;
+
         SubjectTree.initSubjectsAndInfo();
+
         warningMessage.enabled = false;
         foreach (var subject in GetComponentsInChildren<Button>())
         {
             subject.onClick.AddListener(delegate { SubjectClick(Convert.ToInt32(subject.name)); });
         }
+        lineRenderer.positionCount = 0;
+
         NewCurriculum();
         next.onClick.AddListener(SaveCurriculum);
     }
