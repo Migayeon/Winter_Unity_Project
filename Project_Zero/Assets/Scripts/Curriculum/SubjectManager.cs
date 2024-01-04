@@ -36,7 +36,7 @@ public static class SubjectTree
         Open,
         ReadyToOpen
     }
-    private const int DONT_HAVE_GROUP = -1;
+    private const int DONT_HAVE_GROUP = 0;
     private static string INFO_PATH = Path.Combine(Application.dataPath, "Resources/Subjects/subjectsInfo.json");
     public static List<Subject> subjects = new List<Subject>();
     public static SubjectInfo subjectsInfo;

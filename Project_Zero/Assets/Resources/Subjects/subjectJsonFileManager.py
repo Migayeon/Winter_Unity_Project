@@ -26,7 +26,6 @@ def convertCsvToJson():
         temp["name"] = name
         temp["enforceContents"] = enforceContents
         temp["nextSubjects"] = nextSubjects
-        temp["id"] = id
         temp["subjectGroupId"] = 0
         temp["root"] = 0
         temp["needCount"] = needCount
