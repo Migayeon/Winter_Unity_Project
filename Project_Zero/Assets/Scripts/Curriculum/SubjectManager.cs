@@ -101,7 +101,9 @@ public static class SubjectTree
     }
     private static List<bool> flattenList(List<int> idList)
     {
-        List<bool> rst = new List<bool>(subjectsCount);
+        List<bool> rst = new List<bool>();
+        for (int i = 0; i < subjectsCount; i++)
+            rst.Add(false);
         for (int i = 0; i < idList.Count; i++)
             rst[idList[i]] = true;
         return rst;
