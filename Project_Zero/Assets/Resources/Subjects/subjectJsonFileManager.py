@@ -1,6 +1,7 @@
 import csv, json
-def convertCsvToJson():
-    f = open("./metaSubjectInfo.csv", "r", encoding='UTF8')
+def convertCsvToJson(fileName, infoFileName = "subjectsInfo"):
+    fileName = fileName if ".csv" in fileName else fileName + ".csv"
+    f = open(f"./{fileName}", "r", encoding='UTF8')
     rd = csv.reader(f)
     NAMES = {
         "theory" : 0,
@@ -9,6 +10,7 @@ def convertCsvToJson():
         "element" : 3,
         "attack" : 4
     }
+    cnt = 0
     for line in rd:
         temp = {}
         id = int(line[0])
@@ -34,4 +36,45 @@ def convertCsvToJson():
         jsonFile = open(f"./{id}.json", 'w', encoding='UTF8')
         jsonFile.write(jsonContents)
         jsonFile.close()
+        cnt += 1
+    temp = {}
+    temp["count"] = cnt
+    temp["enforceTypeName"] = [
+        "마법 이론",
+        "마나 감응",
+        "손재주",
+        "속성력",
+        "영창"
+    ]
+    temp["groupCount"] = 3
+    jsonFile = open(f"./{infoFileName}.json", 'w', encoding='UTF8')
+    jsonFile.write(jsonContents)
+    jsonFile.close()
     f.close()
+
+def convertJsonToCsv(fileName, infoFileName = "subjectsInfo"):
+    NAMES = {
+        "theory" : 0,
+        "mana" : 1,
+        "craft" : 2,
+        "element" : 3,
+        "attack" : 4
+    }
+    fileName = fileName if ".csv" in fileName else fileName + ".csv"
+    jsonFile = open(f"./{infoFileName}.json", 'r', encoding='UTF8')
+    info = json.load(jsonFile)
+    jsonFile.close()
+    csvList = []
+    for i in range(info["count"]):
+        jsonFile = open(f"./{i}.json", 'r', encoding='UTF8')
+        jsonContents = dict(json.loads(jsonFile.read()))
+        jsonFile.close()
+        if i == 0:
+            csvList.append(list(jsonContents.keys()))
+        csvList.append(list(map(str, jsonContents.values())))
+    csvFile = open(f"./{fileName}", 'w', encoding='UTF8')
+    writer = csv.writer(csvFile)
+    writer.writerows(csvList)
+    csvFile.close()
+
+convertJsonToCsv("test")
