@@ -182,7 +182,10 @@ public static class SubjectTree
             {
                 int index = next[i];
                 if (cntList[index] == 0 && !flatSearchList[index] && flatIdList[index])
+                {
                     searchQ.Enqueue(index);
+                    flatSearchList[index] = true;
+                }
             }
         }
         List<bool> isSameGroup = new List<bool>(subjectsCount);
