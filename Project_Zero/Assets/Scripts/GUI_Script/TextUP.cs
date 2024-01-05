@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TextUP : MonoBehaviour
 {
@@ -17,6 +18,9 @@ public class TextUP : MonoBehaviour
         {
             speed = 0.03f;
         }
-        
+        if(transform.localPosition.y >= 3170)
+        {
+            SceneManager.LoadScene("StartSetting");
+        }
     }
 }

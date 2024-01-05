@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class testtesttesttest : MonoBehaviour
 {
-    public void save()
+    public void Tutorial_to_Main()
     {
-        SaveManager.SaveProcess();
+        SceneManager.LoadScene("Main");
     }
 }

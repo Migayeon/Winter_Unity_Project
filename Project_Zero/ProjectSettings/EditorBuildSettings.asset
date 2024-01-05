@@ -53,4 +53,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DuringTurn/Student/Test_Section.unity
     guid: 7e437484f46694045a2db6a2f7bf9e13
+  - enabled: 1
+    path: Assets/Scenes/Intro/Intro.unity
+    guid: df20ff9f7c6e9e14b8f8b24bb732ced9
   m_configObjects: {}
