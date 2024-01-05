@@ -24,7 +24,7 @@ public class CurriculumTreeDrawingManager : MonoBehaviour
     {
         List<List<int>> groupSubjects = new List<List<int>>();
         List<GroupBox> groupBoxes = new List<GroupBox>();
-        for (int i = 0; i < SubjectTree.subjectsInfo.groupCount; i++)
+        for (int i = 0; i < SubjectTree.subjectsInfo.groupCount + 1; i++)
         {
             groupSubjects.Add(new List<int>());
             groupBoxes.Add(new GroupBox());
@@ -32,7 +32,7 @@ public class CurriculumTreeDrawingManager : MonoBehaviour
         for (int i = 0; i < subjectsObject.childCount; i++)
         {
             int groupId = SubjectTree.getSubject(i).subjectGroupId;
-            if (SubjectTree.getSubject(i).subjectGroupId != -1)
+            if (SubjectTree.getSubject(i).subjectGroupId != 0)
             {
                 groupSubjects[groupId].Add(i);
                 groupBoxes[groupId].addNewPoint(subjectTransform[i].position);
@@ -42,12 +42,27 @@ public class CurriculumTreeDrawingManager : MonoBehaviour
         {
             foreach (int id in SubjectTree.getSubject(i).nextSubjects)
             {
+                int targetGroupId = SubjectTree.getSubject(id).subjectGroupId;
+                int groupId = SubjectTree.getSubject(i).subjectGroupId;
+                if (groupId != 0 && groupBoxes[groupId].haveLineOutput) continue;
+                if (targetGroupId != 0 && groupBoxes[targetGroupId].haveLineInput) continue;
                 GameObject oneLine = Instantiate(linePrefab, subjectTransform[i].position, Quaternion.identity, linesTransform);
                 LineRenderer lr = oneLine.GetComponent<LineRenderer>();
                 Vector2 posA = subjectTransform[i].position;
+                if (groupId != 0)
+                {
+                    posA.x = ((groupBoxes[groupId].P0 + groupBoxes[groupId].P1) / 2).x;
+                    posA.y = groupBoxes[groupId].P1.y - 1;
+                    groupBoxes[groupId].haveLineOutput = true;
+                }
                 Vector2 posB = subjectTransform[id].position;
+                if (targetGroupId != 0) {
+                    posB.x = ((groupBoxes[targetGroupId].P0 + groupBoxes[targetGroupId].P1) / 2).x;
+                    posB.y = groupBoxes[targetGroupId].P0.y + 1;
+                    groupBoxes[targetGroupId].haveLineInput = true;
+                }
                 Vector3 diff = posA - posB;
-                lr.positionCount = lineCnt + 3;
+                lr.positionCount = lineCnt;
                 for (int line = 0; line < lineCnt; line++)
                 {
                     float t;
@@ -55,17 +70,15 @@ public class CurriculumTreeDrawingManager : MonoBehaviour
                         t = 0;
                     else
                         t = (float)line / (lineCnt - 1);
-                    Vector2 bezier = Bezier(posA, posA - new Vector2(0, diff.y / 3 - 1),
-                        posB + new Vector2(0, diff.y / 3 - 0.5f), posB, t);
+                    Vector2 bezier = Bezier(posA, posA - new Vector2(0, diff.y / 3 + 0.5f),
+                        posB + new Vector2(0, diff.y / 3 + 0.5f), posB, t);
                     lr.SetPosition(line, bezier);
                 }
-                lr.SetPosition(lineCnt, subjectTransform[id].position + new Vector3(-0.3f, 0.3f, 0));
-                lr.SetPosition(lineCnt + 1, subjectTransform[id].position);
-                lr.SetPosition(lineCnt + 2, subjectTransform[id].position + new Vector3(0.3f, 0.3f, 0));
             }
         }
-        for (int j = 0; j < SubjectTree.subjectsInfo.groupCount; j++)
+        for (int j = 0; j < SubjectTree.subjectsInfo.groupCount + 1; j++)
         {
+            groupBoxes[j].expandBox(1);
             groupBoxes[j].draw(linePrefab, linesTransform);
         }
     }
@@ -85,7 +98,9 @@ public class CurriculumTreeDrawingManager : MonoBehaviour
     {
         public Vector2 P0 = Vector2.zero;
         public Vector2 P1 = Vector2.zero;
-        bool isFirstTimeToEdit = true;
+        private bool isFirstTimeToEdit = true;
+        public bool haveLineInput = false;
+        public bool haveLineOutput = false;
         public void addNewPoint(Vector2 newPoint)
         {
             if (isFirstTimeToEdit) { 
@@ -112,14 +127,17 @@ public class CurriculumTreeDrawingManager : MonoBehaviour
         }
         public void draw(GameObject linePrefab, Transform linesTransform)
         {
-            GameObject oneLine = Instantiate(linePrefab, P0, Quaternion.identity, linesTransform);
-            LineRenderer lr = oneLine.GetComponent<LineRenderer>();
-            lr.positionCount = 4;
-            lr.loop = true;
-            lr.SetPosition(0, P0);
-            lr.SetPosition(1, new Vector2(P1.x, P0.y));
-            lr.SetPosition(2, P1);
-            lr.SetPosition(3, new Vector2(P0.x, P1.y));
+            if (!isFirstTimeToEdit)
+            {
+                GameObject oneLine = Instantiate(linePrefab, P0, Quaternion.identity, linesTransform);
+                LineRenderer lr = oneLine.GetComponent<LineRenderer>();
+                lr.positionCount = 4;
+                lr.loop = true;
+                lr.SetPosition(0, P0);
+                lr.SetPosition(1, new Vector2(P1.x, P0.y));
+                lr.SetPosition(2, P1);
+                lr.SetPosition(3, new Vector2(P0.x, P1.y));
+            }
         }
     }
 }
