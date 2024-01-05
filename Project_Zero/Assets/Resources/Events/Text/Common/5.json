@@ -3,5 +3,5 @@
   "content": "마정석 광산이 큰 규모로 발견되며 마정석의 가격이 크게 떨어졌습니다. 이는 마법 연구에 큰 도움이 될 것으로 보입니다.",
   "effectFormula": 0, 
   "effectType": 4, 
-  "effectAmount": [ -30 ]
+  "effectAmount": [ -40, -20 ]
 }

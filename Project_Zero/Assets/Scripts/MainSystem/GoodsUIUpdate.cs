@@ -16,7 +16,7 @@ public class GoodsUIUpdate : MonoBehaviour
     }
     void Update()
     {
-        currentTurn.text = $"{TurnManager.turn}";
+        currentTurn.text = $"턴: {TurnManager.turn}";
         currentAr.text = $"{GoodsManager.goodsAr}";
         currentStone.text = $"{GoodsManager.goodsStone}";
     }

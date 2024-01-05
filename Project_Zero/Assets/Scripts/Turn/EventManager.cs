@@ -47,7 +47,7 @@ public class EventManager : MonoBehaviour
     //you can edit these constants before compile
 
 
-    public const int NoneProbability = 0;// 65
+    public const int NoneProbability = 0;   // 65
     public const int CommonProbability = 20;
     public const int RareProbability = 10;
     public const int UniqueProbability = 5;

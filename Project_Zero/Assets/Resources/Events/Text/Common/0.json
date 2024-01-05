@@ -3,5 +3,5 @@
   "content": "20위 길드 '챔피온'이 파산했습니다. 왕국의 여러 길드들이 줄줄이 파산하고 있습니다. 갑작스럽게 왕국을 덥친 암흑기는 얼마나 지속될까요?",
   "effectFormula": 0, 
   "effectType":  2, 
-  "effectAmount": [ 10 ] 
+  "effectAmount": [ 5, 10 ] 
 }

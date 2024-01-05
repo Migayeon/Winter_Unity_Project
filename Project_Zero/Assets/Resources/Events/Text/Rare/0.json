@@ -3,5 +3,5 @@
   "content": "모 아카데미의 교수가 학생들에게 \"너희들은 사회를 갉아먹는 바퀴벌레다.\"라는 발언을 해 논란이 되고 있습니다.",
   "effectFormula": 0, 
   "effectType": 2,
-  "effectAmount": [ -20 ] 
+  "effectAmount": [ -25, -20  ] 
 }

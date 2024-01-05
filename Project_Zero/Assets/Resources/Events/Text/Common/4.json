@@ -3,5 +3,5 @@
   "content": "왕국의 한 연구소에서 '뜨거운 6'을 개발했습니다. 이는 대학원생들에게 큰 지지를 받고 있습니다.",
   "effectFormula": 0, 
   "effectType": 3, 
-  "effectAmount": [ 10 ] 
+  "effectAmount": [ 10, 15 ] 
 }
