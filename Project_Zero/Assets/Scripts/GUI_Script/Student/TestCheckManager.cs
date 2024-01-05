@@ -66,7 +66,16 @@ public class TestCheckManager : MonoBehaviour
 
     public void StudentClicked(List<int> stat)
     {
-        getStat();
+        // [이론, 마나, 손재주, 원소, 영창]
+
+        /*
+         
+        현재 학생들의 스탯을 리스트로 넘겨받는 기능 구현.
+        나머지는 연욱씨에게...
+         
+         */
+
+
         // 학생 스텟 기반으로 확률 계산
         // 진학사처럼 표현
     }
