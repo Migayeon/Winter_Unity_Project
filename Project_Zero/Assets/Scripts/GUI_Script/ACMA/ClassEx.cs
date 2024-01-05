@@ -51,7 +51,7 @@ public class ClassEx : MonoBehaviour
             
             GoodsManager.goodsAr -= officeAr;
             PlayerInfo.maxProfessor += num;
-            officeAr *= 2;
+            officeAr *= 2;  
             requiredProfessor.text = $"{officeAr}";
         }
 
