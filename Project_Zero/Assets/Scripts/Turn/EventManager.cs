@@ -38,13 +38,16 @@ using UnityEngine;
 using UnityEditor.PackageManager;
 using UnityEngine.UI;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
+using System.Diagnostics.Tracing;
+using Unity.VisualScripting.Antlr3.Runtime;
 
 public class EventManager : MonoBehaviour
 {
     //you can edit these constants before compile
 
 
-    public const int NoneProbability = 65;
+    public const int NoneProbability = 0;// 65
     public const int CommonProbability = 20;
     public const int RareProbability = 10;
     public const int UniqueProbability = 5;
@@ -268,9 +271,103 @@ public class EventManager : MonoBehaviour
         eventInfo = JsonUtility.FromJson<EventInfo>(loadJson.ToString());
         returnList.Add(eventInfo.title);
         returnList.Add(eventInfo.content);
-        // returnSprite = Resources.Load(filePath + eventID.ToString(), typeof(Sprite)) as Sprite;
+        returnList.Add(EventChanges(eventInfo));
         return returnList;
     }
+    // 이벤트 적용시키는 함수(나중에 수정할 예정)
+    private static string EventChanges(EventInfo info)
+    {
+        string returnString = "";
+        string type = "";
+        string formula = "";
+        string amount = "";
+        if (info.effectAmount.Count == 1)
+        {
+            amount = info.effectAmount[0].ToString();
+        }
+        else
+        {
+            int rand = UnityEngine.Random.Range(info.effectAmount[0], info.effectAmount[1]);
+            amount = rand.ToString();
+        }
+        switch (info.effectFormula)
+        {
+            case 0:
+                if (Convert.ToInt32(amount) >= 0)  
+                {
+                    formula = "+";
+                }
+                switch (info.effectType)
+                {
+                    case 0:
+                        type = "아르 ";
+                        GoodsManager.goodsAr += Convert.ToInt32(amount);
+                        break;
+                    case 1:
+                        type = "마정석 ";
+                        GoodsManager.goodsStone += Convert.ToInt32(amount);
+                        break;
+                    case 2:
+                        type = "명성 ";
+                        GoodsManager.goodsFame += Convert.ToInt32(amount);
+                        break;
+                    case 3:
+                        type = "무작위 학생 그룹 무작위 스탯 ";
+                        GoodsManager.goodsAr += Convert.ToInt32(amount); // 나중에 학생 스탯으로 변경
+                        break;
+                    case 4:
+                        type = "마정석 가격 ";
+                        GoodsManager.exchangePercent += Convert.ToInt32(amount);
+                        amount += "%";
+                        break;
+                    case 5:
+                        type = "무작위 교수 스탯 ";
+                        GoodsManager.goodsAr += Convert.ToInt32(amount); // 나중에 학생 스탯으로 변경
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case 1:
+                formula = "x";
+                switch (info.effectType)
+                {
+                    case 0:
+                        type = "아르 ";
+                        GoodsManager.goodsAr *= Convert.ToInt32(amount);
+                        break;
+                    case 1:
+                        type = "마정석 ";
+                        GoodsManager.goodsStone *= Convert.ToInt32(amount);
+                        break;
+                    case 2:
+                        type = "명성 ";
+                        GoodsManager.goodsFame *= Convert.ToInt32(amount);
+                        break;
+                    case 3:
+                        type = "무작위 학생 그룹 무작위 스탯 ";
+                        GoodsManager.goodsAr *= Convert.ToInt32(amount); // 나중에 학생 스탯으로 변경
+                        break;
+                    case 4:
+                        type = "마정석 가격 ";
+                        GoodsManager.exchangePercent *= Convert.ToInt32(amount);
+                        amount += "%";
+                        break;
+                    case 5:
+                        type = "무작위 교수 스탯 ";
+                        GoodsManager.goodsAr *= Convert.ToInt32(amount); // 나중에 학생 스탯으로 변경
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            default:
+                break;
+        }
+        returnString = "( " + type + formula + amount + " )";
+        return returnString;
+    }
+
     public void Start()
     {
         //test

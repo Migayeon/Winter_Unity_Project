@@ -5,7 +5,6 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using TMPro;
 
 public class BeforeTurn : MonoBehaviour
@@ -14,6 +13,7 @@ public class BeforeTurn : MonoBehaviour
     [SerializeField] private int correctionMin = 10;
     [SerializeField] TMP_Text eventTitle;
     [SerializeField] TMP_Text eventContent;
+    [SerializeField] TMP_Text eventChanges;
     private int maxRate;
     private int minRate;
     public (string, int) eventInfo = ("", 0);
@@ -38,6 +38,7 @@ public class BeforeTurn : MonoBehaviour
             eventList = EventManager.ShowEvent(eventInfo.Item1, eventInfo.Item2);
             eventTitle.text = eventList[0];
             eventContent.text = eventList[1];
+            eventChanges.text = eventList[2];
         }
 
         // 이벤트 가져온 이후 실제 환전 비율에 따라 가격 변환
