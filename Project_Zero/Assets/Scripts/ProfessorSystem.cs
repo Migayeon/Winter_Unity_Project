@@ -31,8 +31,8 @@ public class ProfessorSystem : MonoBehaviour
         public static Dictionary<int, string> ProfessorTypeList = new Dictionary<int, string>(3)
         {
             {0, "일반" },
-            {1, "유니크" },
-            {2, "전투"},
+            {1, "전투" },
+            {2, "유니크"},
         };
         public Professor() {}
         public Professor(long _id, string _name, int _tenure, int _type, List<int> _stat)
