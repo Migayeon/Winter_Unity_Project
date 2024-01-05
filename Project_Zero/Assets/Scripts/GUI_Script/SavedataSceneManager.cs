@@ -8,9 +8,10 @@ using UnityEngine.UI;
 public class SavedataSceneManager : MonoBehaviour
 {
     public static string backPath = "Title";
-    public static string workType = "Save";
+    public static string workType = "New";
 
     public Button backButton;
+    public GameObject warningMessage;
  
     public GameObject[] save = new GameObject[3];
     PlayerData playerData;
@@ -30,7 +31,19 @@ public class SavedataSceneManager : MonoBehaviour
 
          */
 
-        SceneManager.LoadScene("StartSetting");
+        SceneManager.LoadScene("Intro");
+    }
+
+    public void NewGameWarning(int i)
+    {
+        warningMessage.SetActive(true);
+        warningMessage.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(delegate { NewGame(i); });
+        warningMessage.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(CloseWarning);
+    }
+
+    public void CloseWarning()
+    {
+        warningMessage.SetActive(false);
     }
 
     public void LoadGame()
@@ -51,11 +64,21 @@ public class SavedataSceneManager : MonoBehaviour
     private void Awake()
     {
         backButton.onClick.AddListener(BackTracking);
-        if(workType == "Save")
+        warningMessage.SetActive(false);
+        if(workType == "New")
         {
-            save[0].GetComponent<Button>().onClick.AddListener(delegate { NewGame(1); });
-            save[1].GetComponent<Button>().onClick.AddListener(delegate { NewGame(2); });
-            save[2].GetComponent<Button>().onClick.AddListener(delegate { NewGame(3); });
+            for (int i = 0; i < 3; i++)
+            {
+                int j = i;
+                if (PlayerPrefs.HasKey("save" + (i + 1).ToString()))
+                {
+                    save[j].GetComponent<Button>().onClick.AddListener(delegate { NewGameWarning(j+1); });
+                }
+                else
+                {
+                    save[j].GetComponent<Button>().onClick.AddListener(delegate { NewGame(j+1); });
+                }
+            }
         }
         else
         {

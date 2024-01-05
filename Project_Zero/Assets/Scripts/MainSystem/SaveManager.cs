@@ -72,6 +72,7 @@ public class SaveManager : MonoBehaviour
         string json = JsonUtility.ToJson(newSave, true);
         File.WriteAllText($"Assets/Resources/Data/player{i}.json",json);
         Debug.Log("Success");
+        return;
     }
 
     private static string ProfessorSave(ProfessorSystem.Professor professor)

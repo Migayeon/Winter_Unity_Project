@@ -42,7 +42,7 @@ public class TitleManager : MonoBehaviour
     public void NewGameStart() // 새로운 게임 시작
     {
         SavedataSceneManager.backPath = "Title";
-        SavedataSceneManager.workType = "Save";
+        SavedataSceneManager.workType = "New";
         SceneManager.LoadScene("Savedata");
     }
 
