@@ -9,8 +9,6 @@ public class SubjectManager : MonoBehaviour
     public void Awake()
     {
         SubjectTree.initSubjectsAndInfo();
-        Subject test = SubjectTree.getSubject(0);
-        print(test.enforceContents);
     }
 }
 public static class SubjectTree
@@ -41,6 +39,7 @@ public static class SubjectTree
     private const int DONT_HAVE_GROUP = 0;
     private const int NORMAL_ROOT = 0;
     private static string INFO_PATH = Path.Combine(Application.dataPath, "Resources/Subjects/subjectsInfo.json");
+    public static List<bool> professors = new List<bool>();
     public static List<Subject> subjects = new List<Subject>();
     public static SubjectInfo subjectsInfo;
     public static List<State> subjectState = new List<State>();
@@ -210,6 +209,17 @@ public static class SubjectTree
                 return false;
         }
         return true;
+    }
+
+    public static List<int> save()
+    {
+        return subjectState.Select(x => (int)x).ToList<int>();
+    }
+
+    public static void load(List<int> subjectState)
+    {
+        initSubjectsAndInfo();
+        initSubjectStates(subjectState);
     }
 }
 
