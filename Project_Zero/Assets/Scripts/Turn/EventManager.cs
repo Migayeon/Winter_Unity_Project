@@ -37,6 +37,7 @@ using System.IO;
 using UnityEngine;
 using UnityEditor.PackageManager;
 using UnityEngine.UI;
+using System.Linq;
 
 public class EventManager : MonoBehaviour
 {
@@ -231,19 +232,44 @@ public class EventManager : MonoBehaviour
     }
 
     // Code for showing appropriate Event Sprites
-    public static Sprite ShowEvent(string rarity, int eventID)
+    // return: Title & Content
+    [System.Serializable]
+    public class EventInfo
     {
-        Sprite returnSprite;
+        public string title;
+        public string content;
+        public int effectFormula;
+        public int effectType;
+        public List<int> effectAmount;
+        public EventInfo()
+        {
+            title = "";
+            content = "";
+            effectFormula = 0;
+            effectType = 0;
+            effectAmount = new List<int>();
+        }
+    }
+
+    public static List<string> ShowEvent(string rarity, int eventID)
+    {
+        EventInfo eventInfo = new EventInfo();
+        List<string> returnList=new List<string>();
         string filePath = "";
-        string[] fileNames = new string[] { "Sprites/Common/",
-            "Sprites/Rare/", "Sprites/Unique/" }; //enter filenames here
-        int rarityIndex = 0;
+        string[] fileNames = new string[] { "Events/Text/Common/",
+            "Events/Text/Rare/", "Events/Text/Unique/" }; //enter filenames here
+        int rarityIndex;
         if (rarity == "common") rarityIndex = 0;
         else if (rarity == "rare") rarityIndex = 1;
         else rarityIndex = 2;
         filePath = fileNames[rarityIndex];
-        returnSprite = Resources.Load(filePath + eventID.ToString(), typeof(Sprite)) as Sprite;
-        return returnSprite;
+        // json파일 받아오는거 + 효과 적용 구현해야함
+        var loadJson = Resources.Load<TextAsset>(filePath + eventID.ToString());
+        eventInfo = JsonUtility.FromJson<EventInfo>(loadJson.ToString());
+        returnList.Add(eventInfo.title);
+        returnList.Add(eventInfo.content);
+        // returnSprite = Resources.Load(filePath + eventID.ToString(), typeof(Sprite)) as Sprite;
+        return returnList;
     }
     public void Start()
     {
