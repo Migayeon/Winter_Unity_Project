@@ -24,14 +24,14 @@ public class MainSceneUIManager : MonoBehaviour
 
 
     public Button[] sceneButton = new Button[9];
-    string[] sceneName = new string[9] 
+    string[] sceneName = new string[9] // 연결된 scene 추가
     { "AcademyManagement", 
         "",
         "StudentCost",
         "ManageProfessor",
         "GetProfessor",
         "",
-        "",
+        "Test_Section",
         "manaStoneGamble",
         "Stock" 
     };
@@ -128,7 +128,7 @@ public class MainSceneUIManager : MonoBehaviour
         }
         for (int i = 0;i<9;i++)
         {
-            if(i==1 || i == 5 || i == 6)
+            if(i==1 || i == 5 )
             {
                 continue;
             }

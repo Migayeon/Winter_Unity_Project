@@ -9,6 +9,7 @@ public class StudentGroup
     //SubjectManager.SubjectTree s = new SubjectManager.SubjectTree();
     public StudentGroup(int div , int num , int c)
     {
+        period = TurnManager.turn;
         division = div;
         number = num;
         age = 0;
@@ -37,6 +38,7 @@ public class StudentGroup
     }
     public StudentGroup() { }
 
+    private int period;
     private int division; // 분반
     private int number; // 학생 수
     private int age; // 공부 기간
@@ -44,6 +46,7 @@ public class StudentGroup
     private List<int> curriculum; // 커리큘럼
     private List<int> stat; // 스탯
 
+    public int GetPeriod() { return period; }
     public int GetDivision(){ return division; }
     public int GetNumber() { return number; }
     public int GetAge() { return age; }

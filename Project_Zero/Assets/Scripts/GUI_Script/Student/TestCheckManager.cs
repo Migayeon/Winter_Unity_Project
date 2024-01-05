@@ -14,10 +14,13 @@ class info
     public List<int> require = new List<int>();
 }
 
-public class kimtest : MonoBehaviour
+public class TestCheckManager : MonoBehaviour
 {
     public GameObject testcase;
-    public Transform content;
+    public Transform testContent;
+
+    public GameObject student;
+    public Transform studentContent;
 
     List<int> getStat()
     {
@@ -40,14 +43,28 @@ public class kimtest : MonoBehaviour
 
             var loadedSprite = Resources.Load<Sprite>("UI/Test_Section/" + testInfo.testclass.ToString());
             Debug.Log(testInfo.testclass.ToString());
-            GameObject test = Instantiate(testcase, content);
+            GameObject test = Instantiate(testcase, testContent);
 
             test.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = testInfo.testname;
             test.transform.GetChild(2).GetComponent<Image>().sprite = loadedSprite;
         }
+
+        for (int i = 0; i<PlayerInfo.studentGroups.Count; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                StudentGroup studentgroup = PlayerInfo.studentGroups[i][j];
+                GameObject studentInfo = Instantiate(student, studentContent);
+                studentInfo.transform.GetChild(0).GetComponent<Text>().text =
+                    $"{studentgroup.GetPeriod()}기 {studentgroup.GetDivision()}분반";
+                studentInfo.transform.GetChild(1).GetComponent<Text>().text =
+                    $"{8 - studentgroup.GetAge()}턴 뒤 시험";
+                studentInfo.GetComponent<Button>().onClick.AddListener(delegate { StudentClicked(studentgroup.GetStat()); });
+            }
+        }
     }
 
-    public void afterStudentClicked()
+    public void StudentClicked(List<int> stat)
     {
         getStat();
         // 학생 스텟 기반으로 확률 계산
