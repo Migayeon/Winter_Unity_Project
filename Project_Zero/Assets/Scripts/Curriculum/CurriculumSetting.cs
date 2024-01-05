@@ -10,6 +10,7 @@ public class CurriculumSetting : MonoBehaviour
 {
     public List<int> CurriculumList;
 
+    public Transform manager;
     public Text warningMessage;
     public Text infoMessage;
     public Button next;
@@ -47,12 +48,14 @@ public class CurriculumSetting : MonoBehaviour
             GameObject order = status.transform.GetChild(0).gameObject;
             order.GetComponent<Text>().text = CurriculumList.Count.ToString();
             order.SetActive(true);
+            manager.GetComponent<CurriculumTreeDrawingManager>().drawTree(CurriculumList);
         }
     }
 
     public void CurriculumCancel(int i)
     {
         int time = CurriculumList.Count - CurriculumList.IndexOf(i);
+        int next = i;
         for (int j = 0; j < time; j++)
         {
             int subject = CurriculumList[CurriculumList.Count - 1];
@@ -60,7 +63,9 @@ public class CurriculumSetting : MonoBehaviour
             status.color = Color.white;
             status.transform.GetChild(0).gameObject.SetActive(false);
             CurriculumList.RemoveAt(CurriculumList.Count-1);
+            next = subject;
         }
+        manager.GetComponent<CurriculumTreeDrawingManager>().drawTree(CurriculumList);
     }
 
     public void NewCurriculum()
