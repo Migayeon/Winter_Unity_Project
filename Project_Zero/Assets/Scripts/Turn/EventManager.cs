@@ -327,6 +327,7 @@ public class EventManager : MonoBehaviour
                     default:
                         break;
                 }
+                returnString = "( " + type + formula + amount + " )";
                 break;
             case 1:
                 formula = "x";
@@ -360,11 +361,46 @@ public class EventManager : MonoBehaviour
                     default:
                         break;
                 }
+                returnString = "( " + type + formula + amount + " )";
+                break;
+            case 2:
+                formula = "x";
+                switch (info.effectType)
+                {
+                    case 0:
+                        type = "아르 ";
+                        GoodsManager.goodsAr /= Convert.ToInt32(amount);
+                        break;
+                    case 1:
+                        type = "마정석 ";
+                        GoodsManager.goodsStone /= Convert.ToInt32(amount);
+                        break;
+                    case 2:
+                        type = "명성 ";
+                        GoodsManager.goodsFame /= Convert.ToInt32(amount);
+                        break;
+                    case 3:
+                        type = "무작위 학생 그룹 무작위 스탯 ";
+                        GoodsManager.goodsAr /= Convert.ToInt32(amount); // 나중에 학생 스탯으로 변경
+                        break;
+                    case 4:
+                        type = "마정석 가격 ";
+                        GoodsManager.exchangePercent /= Convert.ToInt32(amount);
+                        amount += "%";
+                        break;
+                    case 5:
+                        type = "무작위 교수 스탯 ";
+                        GoodsManager.goodsAr /= Convert.ToInt32(amount); // 나중에 학생 스탯으로 변경
+                        break;
+                    default:
+                        break;
+                }
+                double realAmount = 1 / Convert.ToDouble(amount);
+                returnString = "( " + type + formula + realAmount + " )";
                 break;
             default:
                 break;
         }
-        returnString = "( " + type + formula + amount + " )";
         return returnString;
     }
 
