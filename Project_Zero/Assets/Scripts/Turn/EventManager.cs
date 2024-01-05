@@ -235,13 +235,13 @@ public class EventManager : MonoBehaviour
     {
         Sprite returnSprite;
         string filePath = "";
-        string[] filenames = new string[] { "Sprites/Common/",
+        string[] fileNames = new string[] { "Sprites/Common/",
             "Sprites/Rare/", "Sprites/Unique/" }; //enter filenames here
         int rarityIndex = 0;
         if (rarity == "common") rarityIndex = 0;
         else if (rarity == "rare") rarityIndex = 1;
         else rarityIndex = 2;
-        filePath = filenames[rarityIndex];
+        filePath = fileNames[rarityIndex];
         returnSprite = Resources.Load(filePath + eventID.ToString(), typeof(Sprite)) as Sprite;
         return returnSprite;
     }

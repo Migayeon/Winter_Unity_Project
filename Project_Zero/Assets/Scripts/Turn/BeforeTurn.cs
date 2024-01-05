@@ -17,14 +17,6 @@ public class BeforeTurn : MonoBehaviour
     public (string, int) eventInfo = ("", 0);
     void Start()
     {
-        maxRate = GoodsManager.maxRate;
-        minRate = GoodsManager.minRate;
-        // 오르<->마정석 환전 비율 변환
-        if (GoodsManager.exchangeRate <= 300) maxRate += correctionMax;
-        if (GoodsManager.exchangeRate >= 700) minRate -= correctionMin;
-        GoodsManager.exchangePercent = UnityEngine.Random.Range(minRate, maxRate);
-        GoodsManager.exchangeRate = GoodsManager.exchangeRate + (GoodsManager.exchangeRate * GoodsManager.exchangePercent / 100);
-
 
         // 이벤트 가져오기
         eventInfo = EventManager.GetEvent();
@@ -37,6 +29,16 @@ public class BeforeTurn : MonoBehaviour
             eventImage.SetActive(true);
             eventImage.GetComponent<Image>().sprite = EventManager.ShowEvent(eventInfo.Item1, eventInfo.Item2);
         }
+
+        maxRate = GoodsManager.maxRate;
+        minRate = GoodsManager.minRate;
+        // 오르<->마정석 환전 비율 변환
+        if (GoodsManager.exchangeRate <= 300) maxRate += correctionMax;
+        if (GoodsManager.exchangeRate >= 700) minRate -= correctionMin;
+        GoodsManager.exchangePercent = UnityEngine.Random.Range(minRate, maxRate);
+        GoodsManager.exchangeRate = GoodsManager.exchangeRate + (GoodsManager.exchangeRate * GoodsManager.exchangePercent / 100);
+
+
         // string temp = GenerateName(); //for testing
 
     }
