@@ -13,6 +13,7 @@ public class CurriculumSetting : MonoBehaviour
     public Transform manager;
     public Text warningMessage;
     public Text infoMessage;
+    public GameObject subjectGameobject;
     public Button next;
 
     public StudentGroup[] studentGroup = new StudentGroup[3];
@@ -43,7 +44,7 @@ public class CurriculumSetting : MonoBehaviour
                 StartCoroutine(WarningMessage("해당 과목의 이수 조건을 만족하지 못했습니다."));
                 return;
             }
-            Image status = transform.GetChild(i).GetComponent<Image>();
+            Image status = subjectGameobject.transform.GetChild(i).GetComponent<Image>();
             status.color = Color.green;
             GameObject order = status.transform.GetChild(0).gameObject;
             order.GetComponent<Text>().text = CurriculumList.Count.ToString();
@@ -59,7 +60,7 @@ public class CurriculumSetting : MonoBehaviour
         for (int j = 0; j < time; j++)
         {
             int subject = CurriculumList[CurriculumList.Count - 1];
-            Image status = transform.GetChild(subject).GetComponent<Image>();
+            Image status = subjectGameobject.transform.GetChild(subject).GetComponent<Image>();
             status.color = Color.white;
             status.transform.GetChild(0).gameObject.SetActive(false);
             CurriculumList.RemoveAt(CurriculumList.Count-1);
@@ -73,7 +74,7 @@ public class CurriculumSetting : MonoBehaviour
         CurriculumList = new List<int>();
         div++;
         studentGroup[div - 1] = new StudentGroup(div, num, PlayerInfo.cost);
-        foreach (var subject in GetComponentsInChildren<Button>())
+        foreach (var subject in subjectGameobject.transform.GetComponentsInChildren<Button>())
         {
             subject.image.color = Color.white;
             subject.transform.GetChild(0).gameObject.SetActive(false);
@@ -125,7 +126,7 @@ public class CurriculumSetting : MonoBehaviour
         SubjectTree.initSubjectsAndInfo();
 
         warningMessage.enabled = false;
-        foreach (var subject in GetComponentsInChildren<Button>())
+        foreach (var subject in subjectGameobject.transform.GetComponentsInChildren<Button>())
         {
             subject.onClick.AddListener(delegate { SubjectClick(Convert.ToInt32(subject.name)); });
         }
