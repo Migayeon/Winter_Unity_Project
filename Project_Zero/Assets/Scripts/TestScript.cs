@@ -44,24 +44,22 @@ public class Example : MonoBehaviour
 
     void Start()
     {
-        //To be implemented after PlayerInfo correctly stores current runtime data;
-        /*
         int ProfessorCount = PlayerInfo.ProfessorList.Count;
         Debug.Log(ProfessorCount);
-        */
 
         PopUpObject.SetActive(false);
 
         //temporary # of professors
-        int ProfessorCount = 10;
+        //int ProfessorCount = 10;
 
         //temporary professor list;
-        List<ProfessorSystem.Professor> TempProfessorList = new List<ProfessorSystem.Professor>(ProfessorCount);
+        //List<ProfessorSystem.Professor> TempProfessorList = new List<ProfessorSystem.Professor>(ProfessorCount);
+        /*
         for (int i = 0; i < 10; ++i)
         {
-            TempProfessorList.Add(CreateProfessor.CreateNewProfessor(i));
+            PlayerInfo.ProfessorList.Add(CreateProfessor.CreateNewProfessor(i));
         }
-
+        */
         //List of GameObjects that store professor information (prefab)
         List<GameObject> ProfessorInfoObjects = new List<GameObject>(ProfessorCount);
 
@@ -88,16 +86,16 @@ public class Example : MonoBehaviour
         {
             ProfessorInfoButton.Add(ProfessorInfoObjects[i].GetComponent<Button>()); //add button
             int idx = i;
-            ProfessorInfoButton[i].onClick.AddListener(() => ShowInfoOnPopup(TempProfessorList[idx])); //change later (from TempProfessorList to actual Player data list)
+            ProfessorInfoButton[i].onClick.AddListener(() => ShowInfoOnPopup(PlayerInfo.ProfessorList[idx])); //change later (from TempProfessorList to actual Player data list)
             Debug.Log(ProfessorInfoButton.Count);
             // change index from 0 to (other variable)
             Debug.Log("CHECK");
             ProfessorInfo = ProfessorInfoObjects[i].GetComponentsInChildren<TextMeshProUGUI>();
-            ProfessorInfo[0].text = TempProfessorList[i].ProfessorGetName();
-            ProfessorInfo[1].text = TempProfessorList[i].ProfessorGetTypeInString();
+            ProfessorInfo[0].text = PlayerInfo.ProfessorList[i].ProfessorGetName();
+            ProfessorInfo[1].text = PlayerInfo.ProfessorList[i].ProfessorGetTypeInString();
             Debug.Log(ProfessorInfo[1].text);
-            Debug.Log(TempProfessorList[i].ProfessorGetTypeInString());
-            profTypeInt = TempProfessorList[i].ProfessorGetType();
+            Debug.Log(PlayerInfo.ProfessorList[i].ProfessorGetTypeInString());
+            profTypeInt = PlayerInfo.ProfessorList[i].ProfessorGetType();
             if (profTypeInt == 2)
             {
                 ProfessorInfo[1].color = new Color32(238, 184, 196, 255);
@@ -106,7 +104,7 @@ public class Example : MonoBehaviour
             {
                 ProfessorInfo[1].color = new Color32(230, 212, 123, 255);
             }
-            tempStatList = TempProfessorList[i].ProfessorGetStats();
+            tempStatList = PlayerInfo.ProfessorList[i].ProfessorGetStats();
             tempStatStr = "";
             for (int j = 0; j < 3; ++j)
             {
@@ -125,7 +123,7 @@ public class Example : MonoBehaviour
                 tempStatStr += "<br>";
             }
             ProfessorInfo[3].text = tempStatStr;
-            ProfessorInfo[4].text = "급여 : " + Convert.ToString(TempProfessorList[i].ProfessorGetSalary());
+            ProfessorInfo[4].text = "급여 : " + Convert.ToString(PlayerInfo.ProfessorList[i].ProfessorGetSalary());
         }
         ReturnButton.onClick.AddListener(ReturnToMenu);
     }
@@ -159,7 +157,7 @@ public class Example : MonoBehaviour
             PopupText[2].text = "";
         //hijack for testing
         PopupText[2].text = "출장중";
-        PopupText[3].text = Convert.ToString(ProfData.ProfessorGetTenure());
+        PopupText[3].text = Convert.ToString(ProfData.ProfessorGetTenureInTurns());
         PopupText[4].text = Convert.ToString(ProfData.ProfessorGetSalary());
         List<int> PopupStatList = ProfData.ProfessorGetStats();
         string PopupStatStr = "";

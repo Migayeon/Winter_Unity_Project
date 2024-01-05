@@ -79,7 +79,7 @@ public class SaveManager : MonoBehaviour
         string information = 
             professor.ProfessorGetID().ToString() + '/' +
             professor.ProfessorGetName() + '/' +
-            professor.ProfessorGetTenure().ToString() + '/' +
+            professor.ProfessorGetTenureInTurns().ToString() + '/' +
             professor.ProfessorGetType().ToString() + '/';
         List<int> stat = professor.ProfessorGetStats();
         foreach (int i in stat)
