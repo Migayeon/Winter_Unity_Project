@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -26,10 +27,16 @@ public class kimtest : MonoBehaviour
         for (int i = 1; i < 16; i++)
         {
             var loadedJson = Resources.Load<TextAsset>("TestCase/" + i.ToString());
+            
             info testInfo = JsonUtility.FromJson<info>(loadedJson.ToString());
             Debug.Log($"{testInfo.testclass}, {testInfo.testname}, {testInfo.require}");
+
+            var loadedSprite = Resources.Load<Sprite>("UI/Test_Section/" + testInfo.testclass.ToString());
+            Debug.Log(testInfo.testclass.ToString());
             GameObject test = Instantiate(testcase, content);
+
             test.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = testInfo.testname;
+            test.transform.GetChild(2).GetComponent<Image>().sprite = loadedSprite;
         }
 
     }
