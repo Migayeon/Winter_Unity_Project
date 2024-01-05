@@ -7,8 +7,10 @@ using UnityEngine.UIElements;
 public class CurriculumTreeDrawingManager : MonoBehaviour
 {
     public Transform subjectsObject;
-    public GameObject linePrefab;
-    public Transform linesTransform;
+    [SerializeField]
+    private GameObject linePrefab;
+    [SerializeField]
+    private Transform linesTransform;
     private List<Transform> subjectTransform = new List<Transform>();
     public int lineCnt = 10;
     public void Start()
@@ -62,6 +64,10 @@ public class CurriculumTreeDrawingManager : MonoBehaviour
                 lr.SetPosition(lineCnt + 2, subjectTransform[id].position + new Vector3(0.3f, 0.3f, 0));
             }
         }
+        for (int j = 0; j < SubjectTree.subjectsInfo.groupCount; j++)
+        {
+            groupBoxes[j].draw(linePrefab, linesTransform);
+        }
     }
     private Vector2 Bezier(Vector2 P0, Vector2 P1, Vector2 P2, Vector2 P3, float t)
     {
@@ -104,10 +110,16 @@ public class CurriculumTreeDrawingManager : MonoBehaviour
             P0.x -= value; P1.x += value;
             P0.y += value; P1.y -= value;
         }
-        public void draw()
+        public void draw(GameObject linePrefab, Transform linesTransform)
         {
-            GameObject oneLine = Instantiate(linePrefab, subjectTransform[i].position, Quaternion.identity, linesTransform);
-
+            GameObject oneLine = Instantiate(linePrefab, P0, Quaternion.identity, linesTransform);
+            LineRenderer lr = oneLine.GetComponent<LineRenderer>();
+            lr.positionCount = 4;
+            lr.loop = true;
+            lr.SetPosition(0, P0);
+            lr.SetPosition(1, new Vector2(P1.x, P0.y));
+            lr.SetPosition(2, P1);
+            lr.SetPosition(3, new Vector2(P0.x, P1.y));
         }
     }
 }
