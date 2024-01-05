@@ -45,7 +45,7 @@ EditorBuildSettings:
     path: Assets/Scenes/DuringTurn/Professor/ManageProfessor.unity
     guid: ee1aff089349bc24bb7b0cae9ad75761
   - enabled: 1
-    path: Assets/Scenes/DuringTurn/Academy/AcademyManagment.unity
+    path: Assets/Scenes/DuringTurn/Academy/AcademyManagement.unity
     guid: 01703f9e012b2e048942601c5566927b
   - enabled: 1
     path: Assets/Scenes/DuringTurn/Academy/StudentCost.unity

@@ -16,6 +16,8 @@ public class StudentCostManager : MonoBehaviour
 
     void Awake()
     {
+        costSlider.value = PlayerInfo.cost;
+        currentCost.text = PlayerInfo.cost.ToString();
         costSlider.onValueChanged.AddListener(delegate { CostChange(); });
     }
 
