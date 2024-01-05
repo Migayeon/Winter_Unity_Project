@@ -22,9 +22,9 @@ public class BeforeTurn : MonoBehaviour
         // 오르<->마정석 환전 비율 변환
         if (GoodsManager.exchangeRate <= 300) maxRate += correctionMax;
         if (GoodsManager.exchangeRate >= 700) minRate -= correctionMin;
-        GoodsManager.exchangePercent = UnityEngine.Random.Range(minRate, maxRate);
         maxRate = GoodsManager.maxRate;
         minRate = GoodsManager.minRate;
+        GoodsManager.exchangePercent = UnityEngine.Random.Range(minRate, maxRate);
 
         // 이벤트 가져오기
         eventInfo = EventManager.GetEvent();
@@ -42,7 +42,7 @@ public class BeforeTurn : MonoBehaviour
         }
 
         // 이벤트 가져온 이후 실제 환전 비율에 따라 가격 변환
-        GoodsManager.exchangeRate = GoodsManager.exchangeRate + (GoodsManager.exchangeRate * GoodsManager.exchangePercent / 100);
+        GoodsManager.exchangeRate = GoodsManager.exchangeRate + (int)((double)GoodsManager.exchangeRate * GoodsManager.exchangePercent / 100);
 
 
         // string temp = GenerateName(); //for testing

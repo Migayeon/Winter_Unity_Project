@@ -317,7 +317,7 @@ public class EventManager : MonoBehaviour
                         break;
                     case 4:
                         type = "마정석 가격 ";
-                        GoodsManager.exchangePercent += Convert.ToInt32(amount);
+                        GoodsManager.exchangePercent = Convert.ToInt32(amount);
                         amount += "%";
                         break;
                     case 5:
