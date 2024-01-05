@@ -10,37 +10,43 @@ using UnityEngine.UI;
 public class CurriculumInfoUIManager : MonoBehaviour
 {
     [SerializeField]
-    GameObject subjectInfoUI;
+    private Transform subjectInfoUI;
+    [SerializeField]
+    private Transform professorInfoUI;
 
-    private Subject subjectInfo;
-    void Start()
+    private Transform subjectContentsUI;
+    private Transform subjectNameUI;
+    private Transform professorContentsUI;
+    private Transform professorNameUI;
+
+    private void Start()
     {
         SubjectTree.initSubjectsAndInfo();
-       // subjectInfoUI.SetActive(false);
+
+        subjectContentsUI = subjectInfoUI.GetChild(0).GetChild(0);
+        subjectNameUI = subjectInfoUI.GetChild(1);
+
+        professorContentsUI = professorInfoUI.GetChild(0).GetChild(0);
+        professorNameUI = professorInfoUI.GetChild(1);
     }
-    void Update()
+    private void Update()
     {
         Vector2 mp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Ray2D ray2 = new Ray2D(mp, Vector2.zero);
         RaycastHit2D hit = Physics2D.Raycast(ray2.origin, ray2.direction);
-        GameObject testObject = null;
-        try
+        if (hit.collider != null)
         {
-            testObject = hit.collider.gameObject;
-        }
-        catch { }
-        if (testObject != null) 
-        {
-            subjectInfoUI.SetActive(true);
-            subjectInfo = SubjectTree.getSubject(Convert.ToInt32(testObject.name));
-            subjectInfoUI.transform.GetChild(0).GetComponent<TMP_Text>().text = subjectInfo.name;
+            GameObject nowObj = hit.collider.gameObject;
+            subjectInfoUI.gameObject.SetActive(true);
+            Subject subjectInfo = SubjectTree.getSubject(int.Parse(nowObj.name));
+            subjectNameUI.GetComponent<TMP_Text>().text = subjectInfo.name;
             List<int> enforceInfo = subjectInfo.enforceContents;
-            subjectInfoUI.transform.GetChild(1).GetComponent<TMP_Text>().text =
+            subjectContentsUI.GetComponent<TMP_Text>().text =
                 $"{enforceInfo[0]}, {enforceInfo[1]}, {enforceInfo[2]}, {enforceInfo[3]}, {enforceInfo[4]}";
         }
         else
         {
-           subjectInfoUI.SetActive(false);
+            subjectInfoUI.gameObject.SetActive(false);
         }
     }
 }
