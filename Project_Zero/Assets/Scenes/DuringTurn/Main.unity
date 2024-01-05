@@ -322,6 +322,16 @@ MonoBehaviour:
   selectOpenButton: {fileID: 1424691950}
   tabList: {fileID: 1980602894}
   tabName: {fileID: 1984672493}
+  sceneButton:
+  - {fileID: 648767492}
+  - {fileID: 946745554}
+  - {fileID: 1370050677}
+  - {fileID: 1064134848}
+  - {fileID: 1348910442}
+  - {fileID: 1678336421}
+  - {fileID: 1134326740}
+  - {fileID: 1564783658}
+  - {fileID: 1027959265}
 --- !u!4 &249375979
 Transform:
   m_ObjectHideFlags: 0
@@ -1181,7 +1191,7 @@ GameObject:
   - component: {fileID: 648767493}
   - component: {fileID: 648767492}
   m_Layer: 5
-  m_Name: ArcademyManageButton
+  m_Name: AcademyManageButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2173,7 +2183,6 @@ GameObject:
   - component: {fileID: 1027959267}
   - component: {fileID: 1027959266}
   - component: {fileID: 1027959265}
-  - component: {fileID: 1027959264}
   m_Layer: 5
   m_Name: ManaStoneGambleButton
   m_TagString: Untagged
@@ -2201,19 +2210,6 @@ RectTransform:
   m_AnchoredPosition: {x: 200, y: -120}
   m_SizeDelta: {x: 900, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1027959264
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1027959262}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd4117217385e9948b08f2cdf88ca9cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetScene: manaStoneGamble
 --- !u!114 &1027959265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2257,19 +2253,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1027959266}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1027959264}
-        m_TargetAssemblyTypeName: SceneChange, Assembly-CSharp
-        m_MethodName: ChangeScene
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1027959266
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2909,7 +2893,6 @@ GameObject:
   - component: {fileID: 1370050679}
   - component: {fileID: 1370050678}
   - component: {fileID: 1370050677}
-  - component: {fileID: 1370050676}
   m_Layer: 5
   m_Name: StudentCostButton
   m_TagString: Untagged
@@ -2937,18 +2920,6 @@ RectTransform:
   m_AnchoredPosition: {x: 200, y: -180}
   m_SizeDelta: {x: 900, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1370050676
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1370050674}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f48311a403fef2147b41b46aab635c2b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1370050677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2992,19 +2963,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1370050678}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1370050676}
-        m_TargetAssemblyTypeName: StudentStatisticsScene, Assembly-CSharp
-        m_MethodName: MoveToStatistics
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1370050678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3467,7 +3426,6 @@ GameObject:
   - component: {fileID: 1564783660}
   - component: {fileID: 1564783659}
   - component: {fileID: 1564783658}
-  - component: {fileID: 1564783657}
   m_Layer: 5
   m_Name: StockButton
   m_TagString: Untagged
@@ -3495,19 +3453,6 @@ RectTransform:
   m_AnchoredPosition: {x: 200, y: 180}
   m_SizeDelta: {x: 900, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1564783657
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1564783655}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd4117217385e9948b08f2cdf88ca9cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetScene: Stock
 --- !u!114 &1564783658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3551,19 +3496,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1564783659}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1564783657}
-        m_TargetAssemblyTypeName: SceneChange, Assembly-CSharp
-        m_MethodName: ChangeScene
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1564783659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4471,12 +4404,12 @@ GameObject:
   - component: {fileID: 1949550815}
   - component: {fileID: 1949550814}
   m_Layer: 5
-  m_Name: ArcademyCanvas
+  m_Name: AcademyCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1949550814
 MonoBehaviour:
   m_ObjectHideFlags: 0

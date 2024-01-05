@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using Unity.Jobs;
+using Unity.VisualScripting;
+using UnityEditor.Build.Content;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainSceneUIManager : MonoBehaviour
@@ -10,7 +13,7 @@ public class MainSceneUIManager : MonoBehaviour
     static int index = 0;
     bool isOpen = false;
 
-    public GameObject[] tabCanvas =  new GameObject[4];
+    public GameObject[] tabCanvas = new GameObject[4];
     string[] tabNameArr = new string[4] { "학원", "교수", "학생", "자산 관리" };
 
     public Button nextButton;
@@ -18,7 +21,23 @@ public class MainSceneUIManager : MonoBehaviour
     public Button selectOpenButton;
     public GameObject tabList;
     public Text tabName;
-    
+
+
+    public Button[] sceneButton = new Button[9];
+    string[] sceneName = new string[9] 
+    { "AcademyManagement", 
+        "",
+        "StudentCost",
+        "ManageProfessor",
+        "GetProfessor",
+        "",
+        "",
+        "manaStoneGamble",
+        "Stock" 
+    };
+
+
+
     public void NextTab()
     {
         tabCanvas[index].SetActive(false);
@@ -90,6 +109,11 @@ public class MainSceneUIManager : MonoBehaviour
         tabList.transform.GetChild(index).GetComponent<Image>().color = Color.gray;
     }
 
+    public void MoveScene(int i)
+    {
+        SceneManager.LoadScene(sceneName[i]);
+    }
+
     private void Awake()
     {
         isOpen = true;
@@ -101,6 +125,15 @@ public class MainSceneUIManager : MonoBehaviour
         {
             int j = i;
             tabList.transform.GetChild(i).GetComponent<Button>().onClick.AddListener(delegate { MoveTab(j); });
+        }
+        for (int i = 0;i<9;i++)
+        {
+            if(i==1 || i == 5 || i == 6)
+            {
+                continue;
+            }
+            int j = i;
+            sceneButton[i].onClick.AddListener(delegate { MoveScene(j); });
         }
     }
 }

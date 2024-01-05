@@ -11,12 +11,13 @@ public class ProfessorSystem : MonoBehaviour
     {
         private long id ; //Professor ID (can be any int)
         private string name; //Professor name
-        private int tenure; //Professor tenure ( >= 0)
+        private int tenure; //Professor tenure ( >= 0), measured in *TURNS*
         private int type; //Professor type (2: unique, 1: battle, 0: normal)
         private List<int> stat = new List<int>(6); //professor stats
         private int salary;
         private bool away; //true = is away, false = is not away (able to teach)
         private List<int> subjects = new List<int>(); //List of subjects that the professor is teaching
+
 
         public static Dictionary<int, string> statlist = new Dictionary<int, string>(6)
         {
@@ -31,8 +32,8 @@ public class ProfessorSystem : MonoBehaviour
         public static Dictionary<int, string> ProfessorTypeList = new Dictionary<int, string>(3)
         {
             {0, "일반" },
-            {1, "유니크" },
-            {2, "전투"},
+            {1, "전투" },
+            {2, "유니크"},
         };
         public Professor() {}
         public Professor(long _id, string _name, int _tenure, int _type, List<int> _stat)
@@ -69,7 +70,8 @@ public class ProfessorSystem : MonoBehaviour
         }
         public long ProfessorGetID() { return id; }
         public string ProfessorGetName() { return name; }
-        public int ProfessorGetTenure() { return tenure; }
+        public int ProfessorGetTenureInTurns() { return tenure; }
+        public int ProfessorGetTenureInYears() { return tenure / 4; }
         public int ProfessorGetType() { return type; }
         public List<int> ProfessorGetStats() { return stat; }
         public bool ProfessorGetAwayStatus() { return away; }
