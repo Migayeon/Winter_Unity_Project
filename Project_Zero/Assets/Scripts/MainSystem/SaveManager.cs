@@ -70,7 +70,7 @@ public class SaveManager : MonoBehaviour
         newSave.myName = PlayerInfo.playerName;
         newSave.arcademyName = PlayerInfo.arcademyName;
         string json = JsonUtility.ToJson(newSave, true);
-        File.WriteAllText($"Assets\\Resources\\Data\\player{i}.json",json);
+        File.WriteAllText($"Assets/Resources/Data/player{i}.json",json);
         Debug.Log("Success");
     }
 
