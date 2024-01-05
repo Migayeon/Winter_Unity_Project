@@ -125,7 +125,9 @@ public static class SubjectTree
             rst[openedSubjectsId[i]] = State.Open;
         List<int> cntList = newCntList();
         List<bool> flatSearchList = flattenList(new List<int>());
-        List<bool> isSameGroup = new List<bool>(subjectsInfo.groupCount);
+        List<bool> isSameGroup = new List<bool>();
+        for (int i = 0; i < subjectsInfo.groupCount; i++)
+            isSameGroup.Add(false);
         Queue<int> searchQ = new Queue<int>();
         for (int i = 0; i < subjectsCount; i++)
         {
@@ -195,7 +197,9 @@ public static class SubjectTree
             }
         }
 
-        List<bool> isSameGroup = new List<bool>(subjectsCount);
+        List<bool> isSameGroup = new List<bool>();
+        for (int i = 0; i < subjectsCount; i++)
+            isSameGroup.Add(false);
         foreach (int id in subjectsId)
         {
             if (subjects[id].subjectGroupId != DONT_HAVE_GROUP)

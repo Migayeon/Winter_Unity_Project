@@ -7,30 +7,44 @@ using UnityEngine.UIElements;
 public class CurriculumTreeDrawingManager : MonoBehaviour
 {
     public Transform subjectsObject;
-    [SerializeField]
-    private GameObject linePrefab;
-    [SerializeField]
-    private Transform linesTransform;
+    public GameObject linePrefab;
+    public Transform linesTransform;
     private List<Transform> subjectTransform = new List<Transform>();
     public int lineCnt = 10;
     public void Start()
     {
         for (int i = 0; i < subjectsObject.childCount; i++)
-        {
             subjectTransform.Add(subjectsObject.GetChild(i));
-        }
         drawTree();
     }
 
     private void drawTree()
     {
-        for(int i = 0; i < subjectsObject.childCount; i++)
+        List<List<int>> groupSubjects = new List<List<int>>();
+        List<GroupBox> groupBoxes = new List<GroupBox>();
+        for (int i = 0; i < SubjectTree.subjectsInfo.groupCount; i++)
+        {
+            groupSubjects.Add(new List<int>());
+            groupBoxes.Add(new GroupBox());
+        }
+        for (int i = 0; i < subjectsObject.childCount; i++)
+        {
+            int groupId = SubjectTree.getSubject(i).subjectGroupId;
+            if (SubjectTree.getSubject(i).subjectGroupId != -1)
+            {
+                groupSubjects[groupId].Add(i);
+                groupBoxes[groupId].addNewPoint(subjectTransform[i].position);
+            }
+        }
+        for (int i = 0; i < subjectsObject.childCount; i++)
         {
             foreach (int id in SubjectTree.getSubject(i).nextSubjects)
             {
                 GameObject oneLine = Instantiate(linePrefab, subjectTransform[i].position, Quaternion.identity, linesTransform);
                 LineRenderer lr = oneLine.GetComponent<LineRenderer>();
-                Vector3 diff = subjectTransform[i].position - subjectTransform[id].position;
+                Vector2 posA = subjectTransform[i].position;
+                Vector2 posB = subjectTransform[id].position;
+                Vector3 diff = posA - posB;
                 lr.positionCount = lineCnt + 3;
                 for (int line = 0; line < lineCnt; line++)
                 {
@@ -39,8 +53,8 @@ public class CurriculumTreeDrawingManager : MonoBehaviour
                         t = 0;
                     else
                         t = (float)line / (lineCnt - 1);
-                    Vector2 bezier = Bezier(subjectTransform[i].position, subjectTransform[i].position - new Vector3(0, diff.y / 3 - 1, 0),
-                        subjectTransform[id].position + new Vector3(0, diff.y / 3 - 0.5f, 0), subjectTransform[id].position, t);
+                    Vector2 bezier = Bezier(posA, posA - new Vector2(0, diff.y / 3 - 1),
+                        posB + new Vector2(0, diff.y / 3 - 0.5f), posB, t);
                     lr.SetPosition(line, bezier);
                 }
                 lr.SetPosition(lineCnt, subjectTransform[id].position + new Vector3(-0.3f, 0.3f, 0));
@@ -59,5 +73,41 @@ public class CurriculumTreeDrawingManager : MonoBehaviour
         Vector2 B1 = Vector2.Lerp(M1, M2, t);
 
         return Vector2.Lerp(B0, B1, t);
+    }
+
+    private class GroupBox
+    {
+        public Vector2 P0 = Vector2.zero;
+        public Vector2 P1 = Vector2.zero;
+        bool isFirstTimeToEdit = true;
+        public void addNewPoint(Vector2 newPoint)
+        {
+            if (isFirstTimeToEdit) { 
+                P0 = newPoint;
+                P1 = newPoint;
+                isFirstTimeToEdit = false;
+            }
+            else
+            {
+                if (P0.x > newPoint.x)
+                    P0.x = newPoint.x;
+                if (P0.y < newPoint.y)
+                    P0.y = newPoint.y;
+                if (P1.x < newPoint.x)
+                    P1.x = newPoint.x;
+                if (P1.y > newPoint.y)
+                    P1.y = newPoint.y;
+            }
+        }
+        public void expandBox(float value)
+        {
+            P0.x -= value; P1.x += value;
+            P0.y += value; P1.y -= value;
+        }
+        public void draw()
+        {
+            GameObject oneLine = Instantiate(linePrefab, subjectTransform[i].position, Quaternion.identity, linesTransform);
+
+        }
     }
 }
