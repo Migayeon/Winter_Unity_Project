@@ -57,6 +57,14 @@ public class StudentGroup
         return;
     }
 
+    public void RandomStatUp()
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            stat[Random.Range(0, 4)]++;
+        }
+    }
+
     public void CurriculumSequence()
     {
         Subject subject = SubjectTree.getSubject(curriculum[age]);

@@ -7,6 +7,8 @@ public class StudentCostManager : MonoBehaviour
 {
     public Slider costSlider;
     public Text currentCost;
+    public GameObject infoPrefab;
+    public Transform content;
 
     void CostChange()
     {
@@ -19,11 +21,24 @@ public class StudentCostManager : MonoBehaviour
         costSlider.value = PlayerInfo.cost;
         currentCost.text = PlayerInfo.cost.ToString();
         costSlider.onValueChanged.AddListener(delegate { CostChange(); });
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+        foreach (Transform prevInfo in content.GetComponentInChildren<Transform>())
+        {
+            Destroy(prevInfo.gameObject);
+        }
+        int div;
+        int costSum;
+        for (int i = 0; i<PlayerInfo.studentGroups.Count; i++)
+        {
+            costSum = 0;
+            div = i + 1;
+            foreach (StudentGroup student in PlayerInfo.studentGroups[i])
+            {
+                costSum += student.GetCost() * student.GetAge();
+            }
+            GameObject studentInfo = Instantiate(infoPrefab, content);
+            Text info = studentInfo.transform.GetChild(0).GetComponent<Text>();
+            info.text = $"분반 : {div} , 총 수입 : {costSum}";
+        }
         
     }
 }
