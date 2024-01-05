@@ -15,7 +15,10 @@ public class CurriculumTreeDrawingManager : MonoBehaviour
     public int lineCnt = 10;
     public void Start()
     {
-        subjectTransform = subjectsObject.GetComponentsInChildren<Transform>().ToList<Transform>();
+        for (int i = 0; i < subjectsObject.childCount; i++)
+        {
+            subjectTransform.Add(subjectsObject.GetChild(i));
+        }
         drawTree();
     }
 
@@ -37,7 +40,7 @@ public class CurriculumTreeDrawingManager : MonoBehaviour
                     else
                         t = (float)line / (lineCnt - 1);
                     Vector2 bezier = Bezier(subjectTransform[i].position, subjectTransform[i].position - new Vector3(0, diff.y / 3 - 1, 0),
-                        subjectTransform[id].position + new Vector3(0, diff.y / 3 - 1, 0), subjectTransform[id].position, t);
+                        subjectTransform[id].position + new Vector3(0, diff.y / 3 - 0.5f, 0), subjectTransform[id].position, t);
                     lr.SetPosition(line, bezier);
                 }
                 lr.SetPosition(lineCnt, subjectTransform[id].position + new Vector3(-0.3f, 0.3f, 0));
