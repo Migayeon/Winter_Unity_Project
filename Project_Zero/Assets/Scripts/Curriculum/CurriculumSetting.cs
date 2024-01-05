@@ -13,7 +13,6 @@ public class CurriculumSetting : MonoBehaviour
     public Text warningMessage;
     public Text infoMessage;
     public Button next;
-    public LineRenderer lineRenderer;
 
     public StudentGroup[] studentGroup = new StudentGroup[3];
 
@@ -48,8 +47,6 @@ public class CurriculumSetting : MonoBehaviour
             GameObject order = status.transform.GetChild(0).gameObject;
             order.GetComponent<Text>().text = CurriculumList.Count.ToString();
             order.SetActive(true);
-            lineRenderer.positionCount++;
-            lineRenderer.SetPosition(CurriculumList.Count - 1, status.transform.position);
         }
     }
 
@@ -63,7 +60,6 @@ public class CurriculumSetting : MonoBehaviour
             status.color = Color.white;
             status.transform.GetChild(0).gameObject.SetActive(false);
             CurriculumList.RemoveAt(CurriculumList.Count-1);
-            lineRenderer.positionCount--;
         }
     }
 
@@ -128,7 +124,6 @@ public class CurriculumSetting : MonoBehaviour
         {
             subject.onClick.AddListener(delegate { SubjectClick(Convert.ToInt32(subject.name)); });
         }
-        lineRenderer.positionCount = 0;
 
         NewCurriculum();
         next.onClick.AddListener(SaveCurriculum);
