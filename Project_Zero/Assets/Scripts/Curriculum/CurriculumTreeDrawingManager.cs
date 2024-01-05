@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -14,8 +15,7 @@ public class CurriculumTreeDrawingManager : MonoBehaviour
     public int lineCnt = 10;
     public void Start()
     {
-        for (int i = 0; i < subjectsObject.childCount; i++)
-            subjectTransform.Add(subjectsObject.GetChild(i));
+        subjectTransform = subjectsObject.GetComponentsInChildren<Transform>().ToList<Transform>();
         drawTree();
     }
 
@@ -28,7 +28,7 @@ public class CurriculumTreeDrawingManager : MonoBehaviour
                 GameObject oneLine = Instantiate(linePrefab, subjectTransform[i].position, Quaternion.identity, linesTransform);
                 LineRenderer lr = oneLine.GetComponent<LineRenderer>();
                 Vector3 diff = subjectTransform[i].position - subjectTransform[id].position;
-                lr.positionCount = lineCnt;
+                lr.positionCount = lineCnt + 3;
                 for (int line = 0; line < lineCnt; line++)
                 {
                     float t;
@@ -36,11 +36,13 @@ public class CurriculumTreeDrawingManager : MonoBehaviour
                         t = 0;
                     else
                         t = (float)line / (lineCnt - 1);
-                    Vector2 bezier = Bezier(subjectTransform[i].position, subjectTransform[i].position - new Vector3(0, diff.y / 2, 0),
-                        subjectTransform[id].position + new Vector3(0, diff.y / 2, 0), subjectTransform[id].position, t);
+                    Vector2 bezier = Bezier(subjectTransform[i].position, subjectTransform[i].position - new Vector3(0, diff.y / 3 - 1, 0),
+                        subjectTransform[id].position + new Vector3(0, diff.y / 3 - 1, 0), subjectTransform[id].position, t);
                     lr.SetPosition(line, bezier);
                 }
-
+                lr.SetPosition(lineCnt, subjectTransform[id].position + new Vector3(-0.3f, 0.3f, 0));
+                lr.SetPosition(lineCnt + 1, subjectTransform[id].position);
+                lr.SetPosition(lineCnt + 2, subjectTransform[id].position + new Vector3(0.3f, 0.3f, 0));
             }
         }
     }
