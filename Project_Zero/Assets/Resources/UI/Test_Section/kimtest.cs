@@ -19,6 +19,13 @@ public class kimtest : MonoBehaviour
     public GameObject testcase;
     public Transform content;
 
+    List<int> getStat()
+    {
+        List<int> stat = new List<int>();
+        return stat;
+        // [이론, 마나, 손재주, 원소, 영창]
+        // [theory, mana, craft, element, attack]
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +45,12 @@ public class kimtest : MonoBehaviour
             test.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = testInfo.testname;
             test.transform.GetChild(2).GetComponent<Image>().sprite = loadedSprite;
         }
+    }
 
+    public void afterStudentClicked()
+    {
+        getStat();
+        // 학생 스텟 기반으로 확률 계산
+        // 진학사처럼 표현
     }
 }
