@@ -159,6 +159,7 @@ public class CreateProfessor : ProfessorSystem
     public GameObject ShowTextObject1, ShowTextObject2, ShowTextObject3;
     public GameObject ButtonClickObject;
     public GameObject HideTextObject;
+    public GameObject HideTextUIObject;
     public TextMeshProUGUI PickedProfessorName, PickedProfessorType, PickedProfessorStat, PickedProfessorSalary;
     public TextMeshProUGUI Professor1Name;
     public TextMeshProUGUI Professor1Type;
@@ -204,7 +205,6 @@ public class CreateProfessor : ProfessorSystem
         {
             NewProfessors.Add(CreateNewProfessor(i));
         }
-
         Professor1Name.text = NewProfessors[0].ProfessorGetName();
         Professor2Name.text = NewProfessors[1].ProfessorGetName();
         Professor3Name.text = NewProfessors[2].ProfessorGetName();

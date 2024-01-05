@@ -13,9 +13,10 @@ public class ProfessorSystem : MonoBehaviour
         private string name; //Professor name
         private int tenure; //Professor tenure ( >= 0)
         private int type; //Professor type (2: unique, 1: battle, 0: normal)
-        private List<int> stat; //professor stats
+        private List<int> stat = new List<int>(6); //professor stats
         private int salary;
         private bool away; //true = is away, false = is not away (able to teach)
+        private List<int> subjects = new List<int>(); //List of subjects that the professor is teaching
 
         public static Dictionary<int, string> statlist = new Dictionary<int, string>(6)
         {
@@ -54,8 +55,6 @@ public class ProfessorSystem : MonoBehaviour
             stat = new List<int>(_stat);
             away = false;
             salary = _salary;
-            //insert salary related issue  here
-            ProfessorSetDefaultSalary();
         }
         
         public void ProfessorSetDefaultSalary()
@@ -115,6 +114,17 @@ public class ProfessorSystem : MonoBehaviour
         {
             return ProfessorTypeList[type];
         }
+
+        public void ProfessorAddSubject(int subjectID)
+        {
+            subjects.Add(subjectID);
+
+        }
+        public void ProfessorRemoveSubject(int subjectID)
+        {
+            bool RemoveCheck = subjects.Remove(subjectID);
+        }
+
         public void UnityDebugLogProfessorInfo()
         {
             Debug.Log(string.Format("ID: {0}", id));
