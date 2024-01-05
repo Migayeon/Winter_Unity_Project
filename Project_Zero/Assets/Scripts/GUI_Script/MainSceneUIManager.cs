@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using Unity.Jobs;
+using Unity.VisualScripting;
 using UnityEditor.Build.Content;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -23,7 +24,17 @@ public class MainSceneUIManager : MonoBehaviour
 
 
     public Button[] sceneButton = new Button[9];
-    string[] sceneName = new string[9] { "", "", "", "ManageProfessor", "GetProfessor", "", "", "", "" };
+    string[] sceneName = new string[9] 
+    { "AcademyManagement", 
+        "",
+        "StudentCost",
+        "ManageProfessor",
+        "GetProfessor",
+        "",
+        "",
+        "manaStoneGamble",
+        "Stock" 
+    };
 
 
 
@@ -115,7 +126,14 @@ public class MainSceneUIManager : MonoBehaviour
             int j = i;
             tabList.transform.GetChild(i).GetComponent<Button>().onClick.AddListener(delegate { MoveTab(j); });
         }
-        sceneButton[3].onClick.AddListener(delegate { MoveScene(3); });
-        sceneButton[4].onClick.AddListener(delegate { MoveScene(4); });
+        for (int i = 0;i<9;i++)
+        {
+            if(i==1 || i == 5 || i == 6)
+            {
+                continue;
+            }
+            int j = i;
+            sceneButton[i].onClick.AddListener(delegate { MoveScene(j); });
+        }
     }
 }
