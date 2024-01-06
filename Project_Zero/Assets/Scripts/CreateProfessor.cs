@@ -86,35 +86,18 @@ public class CreateProfessor : ProfessorSystem
         int ProfessorTenure = 0;
         int ProfessorRarity = ProfessorRarityList[RandomGenerator.Next(0, 100)];
         List<int> ProfessorStats = new List<int>(6);
-        if (ProfessorRarity == 2)
+        int StatScale = RandomGenerator.Next(3000, 4001);
+        int StatSum = 0;
+        for (int i = 0; i < ProfessorSystem.professorStats; ++i)
         {
-            for (int i = 0; i < ProfessorSystem.professorStats; ++i)
-            {
-                ProfessorStats.Add(666);  //Temporary stats for <BATTLE> type Professor, edit later
-            }
+            ProfessorStats.Add(RandomGenerator.Next(1000, 10000));
+            StatSum += ProfessorStats[i];
         }
-        else if (ProfessorRarity == 1)
+        for (int i = 0; i < ProfessorSystem.professorStats; ++i)
         {
-            for (int i = 0; i < ProfessorSystem.professorStats; ++i)
-            {
-                ProfessorStats.Add(666);  //Temporary stats for <BATTLE> type Professor, edit later
-            }
+            ProfessorStats[i] = (int)((float)(ProfessorStats[i]) * ((float)StatScale / StatSum));
         }
-        else
-        {
-            int StatScale = RandomGenerator.Next(3000, 4001);
-            int StatSum = 0;
-            for (int i = 0; i < ProfessorSystem.professorStats; ++i)
-            {
-                ProfessorStats.Add(RandomGenerator.Next(1000, 10000));
-                StatSum += ProfessorStats[i];
-            }
-            for (int i = 0; i < ProfessorSystem.professorStats; ++i)
-            {
-                ProfessorStats[i] = (int)((float)(ProfessorStats[i]) * ((float)StatScale / StatSum));
-            }
-            //3000~4000, divide among 6 stats;
-        }
+        //3000~4000, divide among 6 stats;
         //set salary (sum of all stats)
         int ProfessorSalary = 0;
         for (int i = 0; i < ProfessorSystem.professorStats; ++i)
@@ -173,6 +156,9 @@ public class CreateProfessor : ProfessorSystem
     public TextMeshProUGUI Professor3Type;
     public TextMeshProUGUI Professor3Stat;
     public TextMeshProUGUI Professor3Salary;
+
+    public TextMeshProUGUI RetryCostInfo;
+    public TextMeshProUGUI RetryFailMessage;
     
     public Dictionary<int, string> KoreanStatList = new Dictionary<int, string>(6)
         {
@@ -200,6 +186,8 @@ public class CreateProfessor : ProfessorSystem
     }
     void Start()
     {
+        RetryCostInfo.enabled = true;
+        RetryFailMessage.enabled = false;
         List<Professor> NewProfessors = new List<Professor>();
         for (int i = 0; i < 3; ++i)
         {
@@ -323,7 +311,15 @@ public class CreateProfessor : ProfessorSystem
     public void RetryProfessors()
     {
         Debug.Log("RetryProfessors");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        if (GoodsManager.goodsAr >= 50)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+        else
+        {
+            RetryCostInfo.enabled = false;
+            RetryFailMessage.enabled = true;
+        }
     }
     public void ReturnMenu()
     {

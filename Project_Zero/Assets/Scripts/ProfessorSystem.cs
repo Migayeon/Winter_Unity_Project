@@ -154,6 +154,7 @@ public class ProfessorSystem : MonoBehaviour
         }
     }
     
+
     void Start()
     {
         //code for testing Professor class using Console input/output
@@ -162,7 +163,6 @@ public class ProfessorSystem : MonoBehaviour
         Professor myprofrofessor = new Professor(20231547, "Buru Chang", 1, 1, temp);
         myprofrofessor.UnityDebugLogProfessorInfo();
         */
-        
     }
 }
 
