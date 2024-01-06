@@ -129,14 +129,8 @@ public class MainSceneUIManager : MonoBehaviour
     public void Save()
     {
         loading.SetActive(true);
-
         SaveManager.SaveProcess();
-        var loadedJson = Resources.Load<TextAsset>($"Data\\jsonCheck");
-        jsonCheck jCheck = JsonUtility.FromJson<jsonCheck>(loadedJson.ToString());
-        check = ++jCheck.check;
-        string json = JsonUtility.ToJson(jCheck, true);
-        File.WriteAllText($"Assets/Resources/Data/jsonCheck.json", json);
-        checkSave = true;
+        loading.SetActive(false);
     }
 
     public void Setting()
@@ -195,6 +189,7 @@ public class MainSceneUIManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            Debug.Log("hi");
             escMessage.SetActive(true);
             loading.SetActive(false);
             toTitleMessage.SetActive(false);
@@ -203,22 +198,6 @@ public class MainSceneUIManager : MonoBehaviour
             escMessage.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(TitleCheckMessage);
             escMessage.transform.GetChild(5).GetComponent<Button>().onClick.AddListener(CloseMessage);
 
-        }
-        if (checkSave)
-        {
-            time += Time.deltaTime;
-            if (time >= 1)
-            {
-                time = 0;
-                var loadedJson = Resources.Load<TextAsset>($"Data\\jsonCheck");
-                jsonCheck jCheck = JsonUtility.FromJson<jsonCheck>(loadedJson.ToString());
-                Debug.Log($"{jCheck.check}  {check}");
-                if(jCheck.check == check)
-                {
-                    loading.SetActive(false);
-                    checkSave = false;
-                }
-            }
         }
     }
 }

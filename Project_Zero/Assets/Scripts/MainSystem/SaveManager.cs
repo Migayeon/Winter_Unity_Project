@@ -81,17 +81,18 @@ public class StudentData
 public class SaveManager : MonoBehaviour
 {
     private static ProfessorSystem.Professor professor1;
+    private static string path = Application.dataPath + '/';
 
     public static string[] PlayerDataPreview(int i)
     {
-        var loadedJson = Resources.Load<TextAsset>($"Data\\player{i}");
-        PlayerData playerData = JsonUtility.FromJson<PlayerData>(loadedJson.ToString());
+        string jsonData = File.ReadAllText(path + "player" + i.ToString());
+        PlayerData playerData = JsonUtility.FromJson<PlayerData>(jsonData);
         return playerData.DataPreview();
     }
     public static void PlayerDataLoad(int i)
     {
-        var loadedJson = Resources.Load<TextAsset>($"Data\\player{i}");
-        PlayerData playerData = JsonUtility.FromJson<PlayerData>(loadedJson.ToString());
+        string jsonData = File.ReadAllText(path + "player" + i.ToString());
+        PlayerData playerData = JsonUtility.FromJson<PlayerData>(jsonData);
         TurnManager.turn = playerData.turn;
         GoodsManager.goodsAr = playerData.ar;
         GoodsManager.goodsStone = playerData.stone;
@@ -115,8 +116,9 @@ public class SaveManager : MonoBehaviour
          */
         newSave.myName = PlayerInfo.playerName;
         newSave.arcademyName = PlayerInfo.arcademyName;
+
         string json = JsonUtility.ToJson(newSave, true);
-        File.WriteAllText($"Assets/Resources/Data/player{i}.json",json);
+        File.WriteAllText(path+"player"+i.ToString(),json);
         Debug.Log("Success");
         return;
     }
@@ -125,14 +127,14 @@ public class SaveManager : MonoBehaviour
     {
         StudentData studentData = new StudentData();
         string json = JsonUtility.ToJson(studentData, true);
-        File.WriteAllText($"Assets/Resources/Data/student{i}.json", json);
+        File.WriteAllText(path + "student" + i.ToString(), json);
         Debug.Log("Success");
     }
 
     public static void StudentLoad(int i)
     {
-        var loadedJson = Resources.Load<TextAsset>($"Data\\student{i}");
-        StudentData studentData = JsonUtility.FromJson<StudentData>(loadedJson.ToString());
+        string jsonData = File.ReadAllText(path + "player" + i.ToString());
+        StudentData studentData = JsonUtility.FromJson<StudentData>(jsonData);
         PlayerInfo.LoadStudentData(studentData.GetStudentData(),studentData.GetGroupNum());
     }
 
@@ -168,7 +170,7 @@ public class SaveManager : MonoBehaviour
 
         PlayerDataSave(i);
         //ProfessorSave(i);
-        StudentSave(i);
+        //StudentSave(i);
 
     }
 

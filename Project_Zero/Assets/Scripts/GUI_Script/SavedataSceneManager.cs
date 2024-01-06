@@ -16,7 +16,7 @@ public class SavedataSceneManager : MonoBehaviour
     public GameObject[] save = new GameObject[3];
     string[] dataPreview;
 
-    public void NewGame(int i)
+    public void NewGame(int i) // 게임 시작.
     {
         PlayerInfo.dataIndex = i;
         TurnManager.turn = 1;
