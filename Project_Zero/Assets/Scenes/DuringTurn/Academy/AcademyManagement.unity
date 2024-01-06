@@ -730,6 +730,8 @@ MonoBehaviour:
   requiredProfessor: {fileID: 411261507}
   requiredMarketA: {fileID: 0}
   requiredMarketB: {fileID: 0}
+  preProfessor: {fileID: 1303467420}
+  preStudent: {fileID: 961154070}
 --- !u!4 &433698377
 Transform:
   m_ObjectHideFlags: 0
@@ -957,7 +959,7 @@ GameObject:
   - component: {fileID: 961154071}
   - component: {fileID: 961154070}
   m_Layer: 5
-  m_Name: present/Max Professor
+  m_Name: present/Max Student
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1115,7 +1117,7 @@ GameObject:
   - component: {fileID: 1303467421}
   - component: {fileID: 1303467420}
   m_Layer: 5
-  m_Name: present/Max Student
+  m_Name: present/Max Professor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

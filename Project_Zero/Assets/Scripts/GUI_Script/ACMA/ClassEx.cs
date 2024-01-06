@@ -26,8 +26,8 @@ public class ClassEx : MonoBehaviour
     public void ClassExpan()
     {
         int num = 50;
-        
-        if(GoodsManager.goodsAr - classAr < 0)
+        int count = PlayerInfo.ProfessorCount();
+        if (GoodsManager.goodsAr - classAr < 0)
         {
             Debug.Log("파산");
         }
@@ -37,6 +37,7 @@ public class ClassEx : MonoBehaviour
             classAr *= 2;
             PlayerInfo.maxStudent += num;
             requiredClass.text = $"{classAr}";
+            preStudent.text = $"{count}/{PlayerInfo.maxStudent}";
         }
     }
 
@@ -44,7 +45,8 @@ public class ClassEx : MonoBehaviour
     {
         
         int num = 50;
-        if(GoodsManager.goodsAr - officeAr < 0)
+        int professCount = PlayerInfo.ProfessorCount();
+        if (GoodsManager.goodsAr - officeAr < 0)
         {
             Debug.Log("파산");
         }
@@ -55,6 +57,7 @@ public class ClassEx : MonoBehaviour
             PlayerInfo.maxProfessor += num;
             officeAr *= 2;
             requiredProfessor.text = $"{officeAr}";
+            preProfessor.text = $"{professCount}/{PlayerInfo.maxProfessor}";
         }
 
     }
@@ -72,8 +75,12 @@ public class ClassEx : MonoBehaviour
 
     private void Awake()
     {
+        int count = PlayerInfo.StudentGroupCount();
+        int professCount = PlayerInfo.ProfessorCount();
         requiredClass.text = $"{classAr}";
         requiredProfessor.text = $"{officeAr}";
+        preStudent.text = $"{count}/{PlayerInfo.maxStudent}";
+        preProfessor.text = $"{professCount}/{PlayerInfo.maxProfessor}";
         ClassExp.onClick.AddListener(ClassExpan);
         
         OfficeExp.onClick.AddListener(OfficeExpan);
