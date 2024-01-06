@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class PlayerInfo : MonoBehaviour
 {
-    public static int dataIndex = 1;
-    public static int cost = 60;
-    public static string playerName = "default";
-    public static string arcademyName = "default";
-    public static int maxStudent = 300;
-    public static int maxProfessor = 30;
+    public static int dataIndex = 1; // 세이브 데이터 번호  
+    public static int cost = 60; // 학원비
+    public static string playerName = "default"; // 플레이어 이름
+    public static string arcademyName = "default"; // 학원 이름
+    public static int maxStudent = 300; // 최대 학생 명수
+    public static int maxProfessor = 30; // 최대 교수 명수
 
+    // 교수 리스트
     public static List<ProfessorSystem.Professor> ProfessorList = new List<ProfessorSystem.Professor>();
+    // 학생 리스트 
     public static List<StudentGroup[]> studentGroups = new List<StudentGroup[]>();
+
     /*
     public class Player
     {
@@ -25,6 +28,7 @@ public class PlayerInfo : MonoBehaviour
     {
         return ProfessorList.Count;
     } 
+
     public static int StudentGroupCount()
     {
         int sum = 0;
@@ -33,5 +37,19 @@ public class PlayerInfo : MonoBehaviour
             sum += group[0].GetNumber() * 3;
         }
         return sum;
+    }
+
+    public static void LoadStudentData(string[] data, int lim)
+    {
+        studentGroups.Clear();
+        for(int i = 0; i < lim/3; i++)
+        {
+            StudentGroup[] students = new StudentGroup[3];
+            for (int j =0; j < 3;j++)
+            {
+                students[j] = new StudentGroup(data[3 * i + j]);
+            }
+            studentGroups.Add(students);
+        }
     }
 }

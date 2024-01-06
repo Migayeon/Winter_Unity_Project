@@ -14,7 +14,7 @@ public class SavedataSceneManager : MonoBehaviour
     public GameObject warningMessage;
  
     public GameObject[] save = new GameObject[3];
-    PlayerData playerData;
+    string[] dataPreview;
 
     public void NewGame(int i)
     {
@@ -46,9 +46,11 @@ public class SavedataSceneManager : MonoBehaviour
         warningMessage.SetActive(false);
     }
 
-    public void LoadGame()
+    public void LoadGame(int i)
     {
-
+        PlayerInfo.dataIndex = i;
+        SaveManager.LoadProcess();
+        SceneManager.LoadScene("Main");
     }
 
     public void ErrorMessage()
@@ -82,7 +84,18 @@ public class SavedataSceneManager : MonoBehaviour
         }
         else
         {
-            save[0].GetComponent<Button>().onClick.AddListener(delegate { NewGame(1); });
+            for (int i = 0; i < 3; i++)
+            {
+                int j = i;
+                if (!PlayerPrefs.HasKey("save" + (i + 1).ToString()))
+                {
+                    save[j].GetComponent<Button>().onClick.AddListener(ErrorMessage);
+                }
+                else
+                {
+                    save[j].GetComponent<Button>().onClick.AddListener(delegate { LoadGame(j + 1); });
+                }
+            }
         }
 
         for (int i = 1; i <= 3;i++)
@@ -90,12 +103,12 @@ public class SavedataSceneManager : MonoBehaviour
             GameObject tmp = save[i - 1];
             if (PlayerPrefs.HasKey($"save{i}"))
             {
-                playerData = SaveManager.PlayerDataLoad(i);
+                dataPreview = SaveManager.PlayerDataPreview(i);
                 tmp.transform.GetChild(0).gameObject.SetActive(false);
                 tmp.transform.GetChild(1).GetComponent<Text>().text
-                    = $"{playerData.myName}의 {playerData.arcademyName} 아카데미\r\n" +
-                    $"Turn : {playerData.turn}\r\n아르 : {playerData.ar}\r\n" +
-                    $"명성 : {playerData.fame}";
+                    = dataPreview[0] + "의 " + dataPreview[1] + "아카데미\r\n" +
+                    "Turn : " + dataPreview[2] + "\r\n아르 : " + dataPreview[3] +
+                    "\r\n명성 : " + dataPreview[4];
                 tmp.transform.GetChild(1).gameObject.SetActive(true);
             }
             else
