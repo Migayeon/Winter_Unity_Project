@@ -10,8 +10,10 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
 
-public class Example : MonoBehaviour
+public class ManageProfessorTest : MonoBehaviour
 {
+    public const int ProfessorAwayTime = 3;
+    
     public GameObject ReferencePrefab; //reference Prefab (ProfessorInfo file)
     public GameObject content; //GameObject for spawning new instances of the reference prefab
 
@@ -32,6 +34,14 @@ public class Example : MonoBehaviour
     public TextMeshProUGUI[] ProfessorInfo = new TextMeshProUGUI[5];
     public TextMeshProUGUI[] PopupText = new TextMeshProUGUI[6];
 
+    public TextMeshProUGUI ProfessorCountInfo;
+
+    public Button[] UpgradeButtons = new Button[6];
+    public Button AwayButton;
+    public Button FireButton;
+
+    public GameObject NoProfessorsHired;
+
     public Dictionary<int, string> KoreanStatList = new Dictionary<int, string>(6)
         {
             {0, "강의력"},
@@ -47,6 +57,16 @@ public class Example : MonoBehaviour
         int ProfessorCount = PlayerInfo.ProfessorList.Count;
         Debug.Log(ProfessorCount);
 
+        ProfessorCountInfo.text = Convert.ToString(ProfessorCount);
+
+        if (ProfessorCount == 0)
+        {
+            NoProfessorsHired.SetActive(true);
+        }
+        else
+        {
+            NoProfessorsHired.SetActive(false);
+        }
         PopUpObject.SetActive(false);
 
         //temporary # of professors
@@ -62,14 +82,14 @@ public class Example : MonoBehaviour
         */
         //List of GameObjects that store professor information (prefab)
         List<GameObject> ProfessorInfoObjects = new List<GameObject>(ProfessorCount);
-
+                                
 
         List<TextMeshProUGUI> ProfessorTMPData = new List<TextMeshProUGUI>(5);
 
         //instantiate Button objects that store professor data from prefab
         for (int i = 0; i < ProfessorCount; ++i)
         {
-            ProfessorInfoObjects.Add(Instantiate(ReferencePrefab, new Vector3(0, 0, 0), Quaternion.identity, content.transform));
+            ProfessorInfoObjects.Add(Instantiate(ReferencePrefab, new Vector3(-1920, 0, 0), Quaternion.identity, content.transform));
         }
 
         //Create list for storing professor stat data
@@ -169,12 +189,43 @@ public class Example : MonoBehaviour
             PopupStatStr += "<br>";
         }
         PopupText[5].text = PopupStatStr;
+
+        for (int i = 0; i < 6; ++i)
+        {
+            int idx = i;
+
+            UpgradeButtons[i].onClick.AddListener(() => UpgradeStats(idx));
+        }
+        AwayButton.onClick.AddListener(() => ProfessorSendAway(ProfData));
+        FireButton.onClick.AddListener(() => FireProfessor(ProfData));
+        {
+
+        }
         PopUpObject.SetActive(true);
+
+
     }
     public void RemovePopup()
     {
         Debug.Log("Remove Popup call");
         PopUpObject.SetActive(false);
+    }
+
+    public void UpgradeStats(int StatIndex)
+    {
+        Debug.Log("Button Click registered, index : " + StatIndex);
+    }
+
+    public void ProfessorSendAway(ProfessorSystem.Professor ProfData)
+    {
+        Debug.Log("ProfessorSendAway");
+        //TODO
+    }
+
+    public void FireProfessor(ProfessorSystem.Professor ProfData)
+    {
+        Debug.Log("FireProfessor");
+        //TODO
     }
 }
 
@@ -182,5 +233,11 @@ public class Example : MonoBehaviour
 
 - 매 턴마다 모든 교슈의 속성 중 랜덤으로 2개를 강화 가능
 ex) A교수 속성1, 속성3 / B교수 속성5, 속성6
+
+*/
+
+/*
+Get student groups from StudentsManager.cs
+iterate through them all using the fucntions from SubjectManager.cs (subjectTree.canRemoveProfessor)
 
 */

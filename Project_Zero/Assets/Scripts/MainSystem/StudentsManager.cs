@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -7,7 +8,7 @@ using UnityEngine;
 public class StudentGroup
 {
     //SubjectManager.SubjectTree s = new SubjectManager.SubjectTree();
-    public StudentGroup(int div , int num , int c)
+    public StudentGroup(int div, int num, int c)
     {
         period = TurnManager.turn;
         division = div;
@@ -34,6 +35,24 @@ public class StudentGroup
                 continue;
             }
             stat[i % 5]++;
+        }
+    }
+    public StudentGroup(string data)
+    {
+        string[] dataArr =data.Split('/');
+        period = int.Parse(dataArr[0]);
+        division = int.Parse(dataArr[1]);
+        number = int.Parse(dataArr[2]);
+        age = int.Parse(dataArr[3]);
+        cost = int.Parse(dataArr[4]);
+        curriculum = new List<int>();
+        for (int i = 5; i < 13; i++)
+        {
+            curriculum.Add(int.Parse(dataArr[i]));
+        }
+        for (int i = 13; i < 17; i++)
+        {
+            curriculum.Add(int.Parse(dataArr[i]));
         }
     }
     public StudentGroup() { }
@@ -96,6 +115,25 @@ public class StudentGroup
         {
             Debug.Log(i);
         }
+    }
+
+    public string StudentDataToString()
+    {
+        string data =
+            period.ToString() + '/' +
+            division.ToString() + '/' +
+            number.ToString() + '/' +
+            age.ToString() + '/' +
+            cost.ToString();
+        foreach (int i in curriculum)
+        {
+            data += '/' + i.ToString();
+        }
+        foreach(int i in stat)
+        {
+            data += "/" + i.ToString();
+        }
+        return data;
     }
     
 }

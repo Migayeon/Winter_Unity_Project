@@ -27,6 +27,10 @@ public class PlayerData
     재화 시스템에 따라 더 추가하기. (무엇을 저장해야 하는가?) 
 
     */
+    public string[] DataPreview()
+    {
+        return new string[5]{myName,arcademyName,turn.ToString(),ar.ToString(),fame.ToString()};
+    }
 }
 public class ProfessorData
 {
@@ -43,15 +47,57 @@ public class ProfessorData
         return null;
     }
 }
+public class StudentData
+{
+    private int groupNum;
+    private string[] studentData;
+
+    public StudentData() 
+    {
+        int i = 0;
+        groupNum = PlayerInfo.studentGroups.Count*3;
+        studentData = new string[groupNum];
+        foreach (StudentGroup[] students in PlayerInfo.studentGroups)
+        {
+            foreach(StudentGroup student in students)
+            {
+                studentData[i] = student.StudentDataToString();
+                i++;
+            }
+        }
+    }
+
+    public int GetGroupNum()
+    {
+        return groupNum;
+    }
+
+    public string[] GetStudentData()
+    {
+        return studentData;
+    }
+}
 
 public class SaveManager : MonoBehaviour
 {
     private static ProfessorSystem.Professor professor1;
-    public static PlayerData PlayerDataLoad(int i)
+
+    public static string[] PlayerDataPreview(int i)
     {
         var loadedJson = Resources.Load<TextAsset>($"Data\\player{i}");
-        PlayerData saveData = JsonUtility.FromJson<PlayerData>(loadedJson.ToString());
-        return saveData;
+        PlayerData playerData = JsonUtility.FromJson<PlayerData>(loadedJson.ToString());
+        return playerData.DataPreview();
+    }
+    public static void PlayerDataLoad(int i)
+    {
+        var loadedJson = Resources.Load<TextAsset>($"Data\\player{i}");
+        PlayerData playerData = JsonUtility.FromJson<PlayerData>(loadedJson.ToString());
+        TurnManager.turn = playerData.turn;
+        GoodsManager.goodsAr = playerData.ar;
+        GoodsManager.goodsStone = playerData.stone;
+        GoodsManager.goodsFame = playerData.fame;
+        PlayerInfo.playerName = playerData.myName;
+        PlayerInfo.arcademyName = playerData.arcademyName;
     }
 
     public static void PlayerDataSave(int i)
@@ -61,7 +107,7 @@ public class SaveManager : MonoBehaviour
         newSave.ar = GoodsManager.goodsAr;
         newSave.stone = GoodsManager.goodsStone;
         newSave.fame = GoodsManager.goodsFame;
-        newSave.studentsNum = GoodsManager.goodsStudent;
+        //newSave.studentsNum = GoodsManager.goodsStudent;
         /*
          
         이름 / 학원 저장 스크립트 추가해야 함.
@@ -73,6 +119,21 @@ public class SaveManager : MonoBehaviour
         File.WriteAllText($"Assets/Resources/Data/player{i}.json",json);
         Debug.Log("Success");
         return;
+    }
+
+    public static void StudentSave(int i)
+    {
+        StudentData studentData = new StudentData();
+        string json = JsonUtility.ToJson(studentData, true);
+        File.WriteAllText($"Assets/Resources/Data/student{i}.json", json);
+        Debug.Log("Success");
+    }
+
+    public static void StudentLoad(int i)
+    {
+        var loadedJson = Resources.Load<TextAsset>($"Data\\student{i}");
+        StudentData studentData = JsonUtility.FromJson<StudentData>(loadedJson.ToString());
+        PlayerInfo.LoadStudentData(studentData.GetStudentData(),studentData.GetGroupNum());
     }
 
     private static string ProfessorSave(ProfessorSystem.Professor professor)
@@ -107,6 +168,14 @@ public class SaveManager : MonoBehaviour
 
         PlayerDataSave(i);
         //ProfessorSave(i);
+        StudentSave(i);
+
+    }
+
+    public static void LoadProcess()
+    {
+        int i = PlayerInfo.dataIndex;
+        PlayerDataLoad(i);
     }
 
     private void Awake()

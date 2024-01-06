@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using Unity.Jobs;
 using Unity.VisualScripting;
 using UnityEditor.Build.Content;
@@ -8,10 +9,18 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+public class jsonCheck
+{
+    public int check;
+}
+
 public class MainSceneUIManager : MonoBehaviour
 {
     static int index = 0;
     bool isOpen = false;
+    float time;
+    bool checkSave = false;
+    int check;
 
     public GameObject[] tabCanvas = new GameObject[4];
     string[] tabNameArr = new string[4] { "학원", "교수", "학생", "자산 관리" };
@@ -120,8 +129,14 @@ public class MainSceneUIManager : MonoBehaviour
     public void Save()
     {
         loading.SetActive(true);
+
         SaveManager.SaveProcess();
-        loading.SetActive(false);
+        var loadedJson = Resources.Load<TextAsset>($"Data\\jsonCheck");
+        jsonCheck jCheck = JsonUtility.FromJson<jsonCheck>(loadedJson.ToString());
+        check = ++jCheck.check;
+        string json = JsonUtility.ToJson(jCheck, true);
+        File.WriteAllText($"Assets/Resources/Data/jsonCheck.json", json);
+        checkSave = true;
     }
 
     public void Setting()
@@ -183,11 +198,27 @@ public class MainSceneUIManager : MonoBehaviour
             escMessage.SetActive(true);
             loading.SetActive(false);
             toTitleMessage.SetActive(false);
-            escMessage.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(SaveManager.SaveProcess);
+            escMessage.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(Save);
             escMessage.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(Setting);
             escMessage.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(TitleCheckMessage);
             escMessage.transform.GetChild(5).GetComponent<Button>().onClick.AddListener(CloseMessage);
 
+        }
+        if (checkSave)
+        {
+            time += Time.deltaTime;
+            if (time >= 1)
+            {
+                time = 0;
+                var loadedJson = Resources.Load<TextAsset>($"Data\\jsonCheck");
+                jsonCheck jCheck = JsonUtility.FromJson<jsonCheck>(loadedJson.ToString());
+                Debug.Log($"{jCheck.check}  {check}");
+                if(jCheck.check == check)
+                {
+                    loading.SetActive(false);
+                    checkSave = false;
+                }
+            }
         }
     }
 }
