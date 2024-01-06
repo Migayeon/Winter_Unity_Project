@@ -269,14 +269,36 @@ public static class SubjectTree
         return true;
     }
 
-    public static List<int> save()
+    public class SaveData
     {
-        string rst = String.Join(",", professorsLecture.Keys.Select(x => x.ToString()).ToArray()) + "/";
-        for (int i = 0; i < professorsLecture.Keys; i++)
-        {
+        public List<long> professorsId = new List<long>();
+    }
 
+    public static SaveData save()
+    {
+        
+        SaveData rst = new SaveData();
+        /*rst.professorsId = professorsLecture.Keys.ToArray().ToList();
+        string rst = String.Join(",", professorsLecture.Keys.Select(x => x.ToString()).ToArray()) + "/";
+        foreach (long i in professorsLecture.Keys)
+        {
+            for (int j = 0; j < professorsLecture[i].Count; j += 3)
+            {
+                rst += ((Convert.ToInt32(professorsLecture[i][j]) + Convert.ToInt32(professorsLecture[i][j + 1]) * 2 + Convert.ToInt32(professorsLecture[i][j + 2]) * 4)).ToString();
+            }
+            int startIdx = (professorsLecture[i].Count / 3) * 3;
+            int mul = 1;
+            int sum = 0;
+            for (int j = startIdx; j < professorsLecture[i].Count; j++)
+            {
+                sum += Convert.ToInt32(professorsLecture[i][j]) * mul;
+                mul *= 2;
+            }
+            rst += sum.ToString();
         }
         return subjectState.Select(x => (int)x).ToList<int>();
+        */
+        return rst;
     }
     public static void load(List<int> subjectState)
     {
@@ -299,6 +321,7 @@ public class SubjectInfo
     }
 }
 
+[System.Serializable]
 public class Subject
 {
     public const int MAGIC_THEORY = 0, MANA_TELE = 1, HAND_CRAFT = 2, ELEMENT = 3, CHANT_MAGIC = 4;
