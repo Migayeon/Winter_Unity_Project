@@ -116,13 +116,13 @@ public static class SubjectTree
             rst[idList[i]] = true;
         return rst;
     }
-    public static List<State> initSubjectStates(List<int> openedSubjectsId)
+    public static void initSubjectStates(List<int> openedSubjectsId)
     {
-        List<State> rst = new List<State>();
+        subjectState = new List<State>();
         for (int i = 0; i < subjectsCount; i++)
-            rst.Add(State.Closed);
+            subjectState.Add(State.Closed);
         for (int i = 0; i < openedSubjectsId.Count; i++)
-            rst[openedSubjectsId[i]] = State.Open;
+            subjectState[openedSubjectsId[i]] = State.Open;
         List<int> cntList = newCntList();
         List<bool> flatSearchList = flattenList(new List<int>());
         List<bool> isSameGroup = new List<bool>();
@@ -133,14 +133,14 @@ public static class SubjectTree
         {
             if (subjects[i].needCount == 0)
             {
-                if (rst[i] == State.Open)
+                if (subjectState[i] == State.Open)
                 {
                     searchQ.Enqueue(i);
                     flatSearchList[i] = true;
                 }
                 else
                 {
-                    rst[i] = State.ReadyToOpen;
+                    subjectState[i] = State.ReadyToOpen;
                 }
             }
         }
@@ -151,8 +151,8 @@ public static class SubjectTree
             for (int i = 0; i < next.Count; i++)
             {
                 int index = next[i];
-                rst[index] = State.ReadyToOpen;
-                if (--cntList[index] == 0 && rst[i] == State.Open)
+                subjectState[index] = State.ReadyToOpen;
+                if (--cntList[index] == 0 && subjectState[i] == State.Open)
                 {
                     searchQ.Enqueue(index);
                     flatSearchList[i] = true;
@@ -160,13 +160,12 @@ public static class SubjectTree
             }
             if (subjects[nowNodeId].subjectGroupId != DONT_HAVE_GROUP)
             {
-                if (!isSameGroup[subjects[nowNodeId].subjectGroupId] && rst[nowNodeId] == State.Open)
+                if (!isSameGroup[subjects[nowNodeId].subjectGroupId] && subjectState[nowNodeId] == State.Open)
                     isSameGroup[subjects[nowNodeId].subjectGroupId] = true;
                 else
-                    rst[nowNodeId] = State.Closed;
+                    subjectState[nowNodeId] = State.Closed;
             }
         }
-        return rst;
     }
     public static bool isVaildCurriculum(List<int> subjectsId)
     {
