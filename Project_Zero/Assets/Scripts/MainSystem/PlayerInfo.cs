@@ -21,4 +21,17 @@ public class PlayerInfo : MonoBehaviour
         public  string arcademyName;
     }
     */
+    public static int ProfessorCount()
+    {
+        return ProfessorList.Count;
+    } 
+    public static int StudentGroupCount()
+    {
+        int sum = 0;
+        foreach (var group in studentGroups)
+        {
+            sum += group[0].GetNumber() * 3;
+        }
+        return sum;
+    }
 }

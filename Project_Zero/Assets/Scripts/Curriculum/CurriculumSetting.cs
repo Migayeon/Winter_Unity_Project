@@ -106,6 +106,7 @@ public class CurriculumSetting : MonoBehaviour
             return;
         }
         NewCurriculum();
+        manager.GetComponent<CurriculumTreeDrawingManager>().drawTree(CurriculumList);
     }
 
     IEnumerator WarningMessage(string message)
