@@ -43,11 +43,14 @@ public static class SubjectTree
     public static List<Subject> subjects = new List<Subject>();
     public static SubjectInfo subjectsInfo;
     public static List<State> subjectState = new List<State>();
+    public static List<int> subjectStateNeedCnt = new List<int>();
+    public static Dictionary<long, List<bool>> professorsLecture = new Dictionary<long, List<bool>>();
     public static int subjectsCount = 0;
 
     public static void initSubjectsAndInfo()
     {
         subjects = new List<Subject>();
+        subjectStateNeedCnt = new List<int>();
         string loadJson = File.ReadAllText(INFO_PATH);
         subjectsInfo = JsonUtility.FromJson<SubjectInfo>(loadJson);
         subjectsCount = subjectsInfo.count;
@@ -56,6 +59,7 @@ public static class SubjectTree
             string subjectPath = Path.Combine(Application.dataPath, "Resources/Subjects/" + i.ToString() + ".json");
             loadJson = File.ReadAllText(subjectPath);
             subjects.Add(JsonUtility.FromJson<Subject>(loadJson));
+            subjectStateNeedCnt.Add(subjects[i].needCount);
         }
     }
 
@@ -65,32 +69,35 @@ public static class SubjectTree
     }
     public static void openSubject(int id)
     {
-        subjectState[id] = State.Open;
-        if (subjects[id].subjectGroupId != DONT_HAVE_GROUP) {
-            for (int i = 0; i < subjectsCount; i++)
-            {
-                if (subjects[i].subjectGroupId == subjects[id].subjectGroupId)
-                    subjectState[id] = State.Closed;
-            }
-        }
-        foreach (int nextNode in subjects[id].nextSubjects)
-        {
-            subjectState[nextNode] = State.ReadyToOpen;
-        }
-    }
-    public static void closeSubject(int id)
-    {
-        subjectState[id] = State.ReadyToOpen;
         if (subjects[id].subjectGroupId != DONT_HAVE_GROUP)
         {
             for (int i = 0; i < subjectsCount; i++)
             {
                 if (subjects[i].subjectGroupId == subjects[id].subjectGroupId)
-                    subjectState[id] = State.ReadyToOpen;
+                    subjectState[i] = State.Closed;
             }
         }
+        subjectState[id] = State.Open;
         foreach (int nextNode in subjects[id].nextSubjects)
         {
+            if (--subjectStateNeedCnt[nextNode] == 0)
+                subjectState[nextNode] = State.ReadyToOpen;
+        }
+    }
+    public static void closeSubject(int id)
+    {
+        if (subjects[id].subjectGroupId != DONT_HAVE_GROUP)
+        {
+            for (int i = 0; i < subjectsCount; i++)
+            {
+                if (subjects[i].subjectGroupId == subjects[id].subjectGroupId)
+                    subjectState[i] = State.ReadyToOpen;
+            }
+        }
+        subjectState[id] = State.ReadyToOpen;
+        foreach (int nextNode in subjects[id].nextSubjects)
+        {
+            subjectStateNeedCnt[nextNode]++;
             subjectState[nextNode] = State.Closed;
         }
     }
@@ -119,10 +126,16 @@ public static class SubjectTree
     public static void initSubjectStates(List<int> openedSubjectsId)
     {
         subjectState = new List<State>();
+        subjectStateNeedCnt = new List<int>();
         for (int i = 0; i < subjectsCount; i++)
             subjectState.Add(State.Closed);
         for (int i = 0; i < openedSubjectsId.Count; i++)
+        {
             subjectState[openedSubjectsId[i]] = State.Open;
+            subjectStateNeedCnt.Add(subjects[i].needCount);
+        }
+        for (int i = 0; i < subjectsCount; i++)
+            subjectState.Add(State.Closed);
         List<int> cntList = newCntList();
         List<bool> flatSearchList = flattenList(new List<int>());
         List<bool> isSameGroup = new List<bool>();
@@ -214,11 +227,57 @@ public static class SubjectTree
         return true;
     }
 
-    public static List<int> save()
+    public static void addProfessorAt(long professorId, int subjectId)
     {
-        return subjectState.Select(x => (int)x).ToList<int>();
+        if (professorsLecture.ContainsKey(professorId))
+            professorsLecture[professorId][subjectId] = true;
+        else
+        {
+            professorsLecture[professorId] = new List<bool>();
+            for (int i = 0; i < subjectsCount; i++)
+                professorsLecture[professorId].Add(i == subjectId);
+        }
+    }
+    public static void removeProfessor(long professorId)
+    {
+        professorsLecture.Remove(professorId);
+    }
+    public static void removeProfessorAt(long professorId, int subjectId)
+    {
+        if (professorsLecture.ContainsKey(professorId))
+        {
+            professorsLecture[professorId][subjectId] = false;
+            if (!professorsLecture[professorId].Contains(true))
+                professorsLecture.Remove(professorId);
+        }
+    }
+    public static bool canRemoveProfessor(long professorId, List<int> curriculum)
+    {
+        for (int subjectId = 0; subjectId < subjectsCount; subjectId++)
+        {
+            if (!curriculum.Contains(subjectId)) continue;
+            int sumProfessors = 0;
+            foreach (long otherProfessorId in professorsLecture.Keys)
+            {
+                if (professorsLecture[otherProfessorId][subjectId]) sumProfessors += 1;
+            }
+            if (professorsLecture[professorId][subjectId] && sumProfessors == 1)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
+    public static List<int> save()
+    {
+        string rst = String.Join(",", professorsLecture.Keys.Select(x => x.ToString()).ToArray()) + "/";
+        for (int i = 0; i < professorsLecture.Keys; i++)
+        {
+
+        }
+        return subjectState.Select(x => (int)x).ToList<int>();
+    }
     public static void load(List<int> subjectState)
     {
         initSubjectsAndInfo();
@@ -251,7 +310,7 @@ public class Subject
     public int subjectGroupId;
     public int root;
     public int needCount;
-
+    
     public Subject(int Id, int Tier, string Name, List<int> EnforceContents, List<int> NextSubjects, int SubjectGroupId, int Root, int NeedCount)
     {
         id = Id;
