@@ -44,7 +44,7 @@ public static class SubjectTree
     public static SubjectInfo subjectsInfo;
     public static List<State> subjectState = new List<State>();
     public static int subjectsCount = 0;
-    
+
     public static void initSubjectsAndInfo()
     {
         subjects = new List<Subject>();

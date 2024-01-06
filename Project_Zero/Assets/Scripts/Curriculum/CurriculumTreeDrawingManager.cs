@@ -96,7 +96,7 @@ public class CurriculumTreeDrawingManager : MonoBehaviour
         LineRenderer lr = oneLine.GetComponent<LineRenderer>();
         if (selected)
         {
-            lr.startColor = Color.green;
+            lr.startColor = new Color(2, 66, 9);
             lr.endColor = Color.yellow;
         }
         Vector2 diff = posA - posB;
@@ -133,7 +133,7 @@ public class CurriculumTreeDrawingManager : MonoBehaviour
             if (selected)
             {
                 LineRenderer lr = oneLine.GetComponent<LineRenderer>();
-                lr.startColor = Color.green;
+                lr.startColor = new Color(2, 66, 9);
                 lr.endColor = Color.yellow;
             }
         }
@@ -148,7 +148,7 @@ public class CurriculumTreeDrawingManager : MonoBehaviour
             if (selected)
             {
                 LineRenderer lr = oneLine.GetComponent<LineRenderer>();
-                lr.startColor = Color.green;
+                lr.startColor = new Color(2, 66, 9);
                 lr.endColor = Color.yellow;
             }
         }
@@ -203,7 +203,7 @@ public class CurriculumTreeDrawingManager : MonoBehaviour
             LineRenderer lr = oneLine.GetComponent<LineRenderer>();
             if (select)
             {
-                oneLine.GetComponent<LineRenderer>().startColor = Color.green;
+                oneLine.GetComponent<LineRenderer>().startColor = new Color(2, 66, 9);
                 oneLine.GetComponent<LineRenderer>().endColor = Color.yellow;
             }
             lr.positionCount = 4;

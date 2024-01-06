@@ -7,27 +7,24 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CurriculumInfoUIManager : MonoBehaviour
+public class CurriculumSubjectGetter : MonoBehaviour
 {
     [SerializeField]
-    private Transform subjectInfoUI;
+    private int defaultIndex;
     [SerializeField]
-    private Transform professorInfoUI;
+    private Transform[] subjectInfoUIList;
+    private Transform subjectInfoUI;
 
     private Transform subjectContentsUI;
     private Transform subjectNameUI;
-    private Transform professorContentsUI;
-    private Transform professorNameUI;
 
-    private void Start()
+    private void Awake()
     {
         SubjectTree.initSubjectsAndInfo();
 
+        subjectInfoUI = subjectInfoUIList[defaultIndex];
         subjectContentsUI = subjectInfoUI.GetChild(0).GetChild(0);
         subjectNameUI = subjectInfoUI.GetChild(1);
-
-        professorContentsUI = professorInfoUI.GetChild(0).GetChild(0);
-        professorNameUI = professorInfoUI.GetChild(1);
     }
     private void Update()
     {
@@ -41,12 +38,22 @@ public class CurriculumInfoUIManager : MonoBehaviour
             Subject subjectInfo = SubjectTree.getSubject(int.Parse(nowObj.name));
             subjectNameUI.GetComponent<TMP_Text>().text = subjectInfo.name;
             List<int> enforceInfo = subjectInfo.enforceContents;
-            subjectContentsUI.GetComponent<TMP_Text>().text =
-                $"{enforceInfo[0]}, {enforceInfo[1]}, {enforceInfo[2]}, {enforceInfo[3]}, {enforceInfo[4]}";
+            string tmpText = "";
+            for (int i = 0; i < enforceInfo.Count; i++)
+            {
+                if (enforceInfo[i] != 0)
+                    tmpText += SubjectTree.subjectsInfo.enforceTypeName[i] + " + " + enforceInfo[i] + "%\n";
+            }
+            subjectContentsUI.GetComponent<TMP_Text>().text = tmpText;
         }
         else
         {
             subjectInfoUI.gameObject.SetActive(false);
         }
+    }
+
+    public void setSubjectInfoUITransform(int mod)
+    {
+        subjectInfoUI = subjectInfoUIList[mod];
     }
 }
