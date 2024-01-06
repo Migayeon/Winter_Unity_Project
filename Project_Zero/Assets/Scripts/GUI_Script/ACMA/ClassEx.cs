@@ -15,6 +15,8 @@ public class ClassEx : MonoBehaviour
     public Text requiredProfessor;
     public Text requiredMarketA;
     public Text requiredMarketB;
+    public Text preProfessor;
+    public Text preStudent;
 
 
     static private int classAr = 5000;
@@ -51,7 +53,7 @@ public class ClassEx : MonoBehaviour
             
             GoodsManager.goodsAr -= officeAr;
             PlayerInfo.maxProfessor += num;
-            officeAr *= 2;  
+            officeAr *= 2;
             requiredProfessor.text = $"{officeAr}";
         }
 
