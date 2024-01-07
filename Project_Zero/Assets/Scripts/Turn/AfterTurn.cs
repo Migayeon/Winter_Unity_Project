@@ -79,7 +79,6 @@ public class AfterTurn : MonoBehaviour
         if(total_Result > 0)
         {
             totalResult.color = new Color(32f,131f,32f);
-            totalResult.text = "- " + totalResult.text;
         }
         else
         {
