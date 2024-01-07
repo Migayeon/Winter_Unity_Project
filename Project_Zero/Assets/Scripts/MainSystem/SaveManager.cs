@@ -34,17 +34,27 @@ public class PlayerData
 }
 public class ProfessorData
 {
-    private string[] professors;
+    private string[] professorData;
     private int professorNum;
 
-    public ProfessorSystem.Professor GetProfessor(int i) 
+    public ProfessorData() 
     {
-        /*
-         
-            코드 구현 (파싱)
-
-         */
-        return null;
+        int i = 0;
+        professorNum = PlayerInfo.ProfessorCount();
+        professorData = new string[professorNum];
+        foreach (ProfessorSystem.Professor professor in PlayerInfo.ProfessorList) 
+        {
+            professorData[i] = professor.ProfessorDataToString();
+            i++;
+        }
+        foreach (StudentGroup[] students in PlayerInfo.studentGroups)
+        {
+            foreach (StudentGroup student in students)
+            {
+                studentData[i] = student.StudentDataToString();
+                i++;
+            }
+        }
     }
 }
 public class StudentData

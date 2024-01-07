@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Xml.Serialization;
 
 public class ProfessorSystem : MonoBehaviour
 {
@@ -151,6 +152,47 @@ public class ProfessorSystem : MonoBehaviour
             }
             Debug.Log(temp);
             Debug.Log(string.Format("Salary: {0}", salary));
+        }
+
+        /* 추가한 내용 : 교수 데이터 string 형태로 리턴하는 함수 / string 형태를 읽어 교수를 형성하는 함수 */
+        public string ProfessorDataToString()
+        {
+            string data =
+                id.ToString() + '/' +
+                name + '/' +
+                tenure.ToString() + '/' +
+                type.ToString();
+
+            foreach (int i in stat)
+                data += '/' + i.ToString();
+
+            data += '/' + salary.ToString() + '/' + (away ? 1 : 0).ToString();
+
+            foreach (int i in subjects)
+                data += "/" + i.ToString();
+
+            return data;
+        }
+
+        public Professor (string data)
+        {
+            string[] dataList = data.Split("/");
+            id = int.Parse(dataList[0]);
+            name = dataList[1];
+            tenure = int.Parse(dataList[2]);
+            type = int.Parse(dataList[3]);
+            stat = new List<int>();
+            for (int i = 4; i < 10; i++)
+            {
+                stat.Add(int.Parse(dataList[i]));
+            }
+            salary = int.Parse(dataList[10]);
+            away = (dataList[11] == "1") ? true : false;
+            subjects = new List<int>();
+            for (int i = 12; i < dataList.Length; i++)
+            {
+                subjects.Add(int.Parse(dataList[i]));
+            }
         }
     }
     
