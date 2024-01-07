@@ -34,10 +34,10 @@ public class PlayerData
 }
 public class ProfessorData
 {
-    private string[] professorData;
-    private int professorNum;
+    public string[] professorData;
+    public int professorNum;
 
-    public ProfessorData() 
+    public void ProfessorDataSave() 
     {
         int i = 0;
         professorNum = PlayerInfo.ProfessorCount();
@@ -62,10 +62,10 @@ public class ProfessorData
 }
 public class StudentData
 {
-    private int groupNum;
-    private string[] studentData;
+    public int groupNum;
+    public string[] studentData;
 
-    public StudentData() 
+    public void StudentDataSave() 
     {
         int i = 0;
         groupNum = PlayerInfo.studentGroups.Count*3;
@@ -131,7 +131,7 @@ public class SaveManager : MonoBehaviour
         newSave.arcademyName = PlayerInfo.arcademyName;
 
         string json = JsonUtility.ToJson(newSave, true);
-        File.WriteAllText(path+"player"+i.ToString(),json);
+        File.WriteAllText(path + "player" + i.ToString(), json);
         Debug.Log("Success");
         return;
     }
@@ -139,6 +139,8 @@ public class SaveManager : MonoBehaviour
     public static void StudentSave(int i)
     {
         StudentData studentData = new StudentData();
+        studentData.StudentDataSave();
+        //Debug.Log();
         string json = JsonUtility.ToJson(studentData, true);
         File.WriteAllText(path + "student" + i.ToString(), json);
         Debug.Log("Success");
@@ -146,7 +148,7 @@ public class SaveManager : MonoBehaviour
 
     public static void StudentLoad(int i)
     {
-        string jsonData = File.ReadAllText(path + "player" + i.ToString());
+        string jsonData = File.ReadAllText(path + "student" + i.ToString());
         StudentData studentData = JsonUtility.FromJson<StudentData>(jsonData);
         PlayerInfo.LoadStudentData(studentData.GetStudentData(),studentData.GetGroupNum());
     }
@@ -154,6 +156,8 @@ public class SaveManager : MonoBehaviour
     private static void ProfessorSave(int i)
     {
         ProfessorData professorData = new ProfessorData();
+        professorData.ProfessorDataSave();
+        Debug.Log(professorData.GetProfessorData()[0]);
         string json = JsonUtility.ToJson(professorData, true);
         File.WriteAllText(path + "professor" + i.ToString(), json);
         Debug.Log("Success");

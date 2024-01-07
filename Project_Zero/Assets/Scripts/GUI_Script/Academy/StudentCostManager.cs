@@ -36,9 +36,6 @@ public class StudentCostManager : MonoBehaviour
                 costSum += student.GetCost() * student.GetAge();
             }
             GameObject studentInfo = Instantiate(infoPrefab, content);
-            Text info = studentInfo.transform.GetChild(0).GetComponent<Text>();
-            info.text = $"분반 : {div} , 총 수입 : {costSum}";
         }
-        
     }
 }

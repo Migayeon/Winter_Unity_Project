@@ -193,7 +193,7 @@ public class ProfessorSystem : MonoBehaviour
         public Professor (string data)
         {
             string[] dataList = data.Split("/");
-            id = int.Parse(dataList[0]);
+            id = long.Parse(dataList[0]);
             name = dataList[1];
             tenure = int.Parse(dataList[2]);
             type = int.Parse(dataList[3]);
