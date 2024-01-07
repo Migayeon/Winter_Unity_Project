@@ -313,6 +313,7 @@ public class CreateProfessor : ProfessorSystem
         Debug.Log("RetryProfessors");
         if (GoodsManager.goodsAr >= 50)
         {
+            GoodsManager.goodsAr -= 50;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
         else

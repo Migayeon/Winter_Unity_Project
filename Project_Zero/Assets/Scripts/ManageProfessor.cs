@@ -36,6 +36,9 @@ public class ManageProfessorTest : MonoBehaviour
 
     public TextMeshProUGUI ProfessorCountInfo;
 
+    public GameObject ProfessorAwayRefuseMessage;
+    public GameObject ProfessorFireRefuseMessage;
+
     public Button[] UpgradeButtons = new Button[6];
     public Button AwayButton;
     public Button FireButton;
@@ -55,6 +58,9 @@ public class ManageProfessorTest : MonoBehaviour
     void Start()
     {
         int ProfessorCount = PlayerInfo.ProfessorList.Count;
+
+        ProfessorAwayRefuseMessage.SetActive(false);
+        ProfessorFireRefuseMessage.SetActive(false);
         Debug.Log(ProfessorCount);
 
         ProfessorCountInfo.text = Convert.ToString(ProfessorCount);
@@ -219,13 +225,63 @@ public class ManageProfessorTest : MonoBehaviour
     public void ProfessorSendAway(ProfessorSystem.Professor ProfData)
     {
         Debug.Log("ProfessorSendAway");
-        //TODO
+        bool flag = true;
+        for (int i = 0; i < PlayerInfo.studentGroups.Count; ++i)
+        {
+            for (int j = 0; j < 3; ++j)
+            {
+                if (SubjectTree.canRemoveProfessor(ProfData.ProfessorGetID(), PlayerInfo.studentGroups[i][j].GetCurriculum()) == false)
+                {
+                    goto ExitLoop;
+                }
+            }
+        }
+    ExitLoop:
+        Debug.Log("ExitLoop Passed");
+        if (flag)
+        {
+            PlayerInfo.ProfessorList.RemoveAt(PlayerInfo.ProfessorList.FindIndex(x => x.ProfessorGetID() == ProfData.ProfessorGetID()));
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+        else
+        {
+            StartCoroutine(ShowMessageForLimitedTime(ProfessorAwayRefuseMessage));
+        }
     }
-
     public void FireProfessor(ProfessorSystem.Professor ProfData)
     {
         Debug.Log("FireProfessor");
-        //TODO
+        Debug.Log("COUNTS : " + PlayerInfo.studentGroups.Count);
+        bool flag = true;
+        for (int i = 0; i < PlayerInfo.studentGroups.Count; ++i)
+        {
+            for (int j = 0; j < 3; ++j)
+            {
+                if (SubjectTree.canRemoveProfessor(ProfData.ProfessorGetID(), PlayerInfo.studentGroups[i][j].GetCurriculum()) == false)
+                {
+                    goto ExitLoop;
+                }
+            }
+        }
+    ExitLoop:
+        Debug.Log("ExitLoop Passed");
+        Debug.Log("COUNTS : " + PlayerInfo.studentGroups.Count);
+        if (flag)
+        {
+            PlayerInfo.ProfessorList.RemoveAt(PlayerInfo.ProfessorList.FindIndex(x => x.ProfessorGetID() == ProfData.ProfessorGetID()));
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+        else
+        {
+            StartCoroutine(ShowMessageForLimitedTime(ProfessorFireRefuseMessage));
+            //ProfessorAwayRefuseMessage.enabled = true;
+        }
+    }
+    IEnumerator ShowMessageForLimitedTime(GameObject tt)
+    {
+        tt.SetActive(true);
+        yield return new WaitForSeconds(1.0f);
+        tt.SetActive(false);
     }
 }
 
