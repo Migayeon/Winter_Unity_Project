@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class ClassEx : MonoBehaviour
 {
+    public GameObject window;
+    public Text windowWord;
+    public Button checkUI;
 
     public Button ClassExp;
     public Button OfficeExp;
@@ -21,7 +24,9 @@ public class ClassEx : MonoBehaviour
     public Text requiredMarketD;
     public Text preProfessor;
     public Text preStudent;
-    int marketingturn = 3;
+    int marketingTurn = 3;
+
+
     static int duringMarketA = -10;
     static int duringMarketB = -10;
     static int duringMarketC = -10;
@@ -44,6 +49,9 @@ public class ClassEx : MonoBehaviour
         if (GoodsManager.goodsAr - classAr < 0)
         {
             Debug.Log("파산");
+            window.SetActive(true);
+            windowWord.text = "Ar가 부족합니다";
+            
         }
         else
         {
@@ -63,6 +71,8 @@ public class ClassEx : MonoBehaviour
         if (GoodsManager.goodsAr - officeAr < 0)
         {
             Debug.Log("파산");
+            window.SetActive(true);
+            windowWord.text = "Ar가 부족합니다";
         }
         else
         {
@@ -80,16 +90,22 @@ public class ClassEx : MonoBehaviour
     {
         int num = 10;
         
-        if (TurnManager.turn - duringMarketA < marketingturn)
+        if (TurnManager.turn - duringMarketA < marketingTurn)
         {
             Debug.Log("마케팅 진행중");
-            Debug.Log($"남은 턴 수 : {-TurnManager.turn + duringMarketA + marketingturn}");
+            Debug.Log($"남은 턴 수 : {-TurnManager.turn + duringMarketA + marketingTurn}");
+            window.SetActive(true);
+            //windowWord.text = $"";
         }
         else
         {
             if (GoodsManager.goodsAr - marA < 0)
             {
                 Debug.Log("파산");
+                windowWord.text = "Ar가 부족합니다";
+                window.SetActive(true);
+
+
             }
             else
             {
@@ -105,17 +121,20 @@ public class ClassEx : MonoBehaviour
     {
         int num = 10;
 
-        if(TurnManager.turn - duringMarketB < marketingturn)
+        if(TurnManager.turn - duringMarketB < marketingTurn)
         {
             Debug.Log("마케팅 진행중");
-            Debug.Log($"남은 턴 수 : {-TurnManager.turn + duringMarketB + marketingturn}");
+            Debug.Log($"남은 턴 수 : {-TurnManager.turn + duringMarketB + marketingTurn}");
         }
         else
         {
             if (GoodsManager.goodsAr - marB < 0)
             {
                 Debug.Log("파산");
-            }
+                window.SetActive(true);
+                windowWord.text = "Ar가 부족합니다";
+
+            }   
             else
             {
                 GoodsManager.goodsAr -= marB;
@@ -131,16 +150,19 @@ public class ClassEx : MonoBehaviour
     {
         int num = 10;
 
-        if (TurnManager.turn - duringMarketC < marketingturn)
+        if (TurnManager.turn - duringMarketC < marketingTurn)
         {
             Debug.Log("마케팅 진행중");
-            Debug.Log($"남은 턴 수 : {-TurnManager.turn + duringMarketC + marketingturn}");
+            Debug.Log($"남은 턴 수 : {-TurnManager.turn + duringMarketC + marketingTurn}");
         }
         else
         {
             if (GoodsManager.goodsAr - marC < 0)
             {
                 Debug.Log("파산");
+                windowWord.text = "Ar가 부족합니다";
+                window.SetActive(true);
+
             }
             else
             {
@@ -156,16 +178,19 @@ public class ClassEx : MonoBehaviour
     {
         int num = 10;
 
-        if (TurnManager.turn - duringMarketD < marketingturn)
+        if (TurnManager.turn - duringMarketD < marketingTurn)
         {
             Debug.Log("마케팅 진행중");
-            Debug.Log($"남은 턴 수 : {-TurnManager.turn + duringMarketD + marketingturn}");
+            Debug.Log($"남은 턴 수 : {-TurnManager.turn + duringMarketD + marketingTurn}");
         }
         else
         {
             if (GoodsManager.goodsAr - marD < 0)
             {
                 Debug.Log("파산");
+                windowWord.text = "Ar가 부족합니다";
+                window.SetActive(true);
+
             }
             else
             {
@@ -178,8 +203,16 @@ public class ClassEx : MonoBehaviour
         }
     }
 
+    public void checkUi()
+    {
+        window.SetActive(false);
+    }
+    
+
     private void Awake()
     {
+        
+
         int studentCount = PlayerInfo.StudentGroupCount();
         int professCount = PlayerInfo.ProfessorCount();
 
@@ -198,6 +231,9 @@ public class ClassEx : MonoBehaviour
         marketingB.onClick.AddListener(marketB);
         marketingC.onClick.AddListener(marketC);
         marketingD.onClick.AddListener(marketD);
+
+        checkUI.onClick.AddListener(checkUi);
+        window.SetActive(false);
         
 
 
