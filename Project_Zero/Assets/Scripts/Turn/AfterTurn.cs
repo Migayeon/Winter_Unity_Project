@@ -21,7 +21,6 @@ public class AfterTurn : MonoBehaviour
 
         // BeforeTurn 불러오기, 1턴 추가
         TurnManager.turn++;
-        GoodsUIUpdate.HideUI();
         SceneManager.LoadScene("Curriculum");
     }
 }
