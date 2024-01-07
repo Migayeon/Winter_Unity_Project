@@ -29,6 +29,8 @@ public class PlayerInfo : MonoBehaviour
         public  string arcademyName;
     }
     */
+
+    public static List<ProfessorSystem.Professor> RandomProfessorList = new List<ProfessorSystem.Professor>(3);
     public static int ProfessorCount()
     {
         return ProfessorList.Count;

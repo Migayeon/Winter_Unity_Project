@@ -6,6 +6,8 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 using Unity.VisualScripting;
+using System.Collections;
+using System.Linq;
 
 //WIP
 
@@ -188,6 +190,16 @@ public class CreateProfessor : ProfessorSystem
     }
     void Start()
     {
+        /*
+        if (PlayerInfo.RandomProfessorList.Any())
+        {
+
+        }
+        else
+        {
+
+        }
+        */
         if (PlayerInfo.ProfessorCount() == PlayerInfo.maxProfessor)
         {
             MaxProfessorsErrorObject.SetActive(true);

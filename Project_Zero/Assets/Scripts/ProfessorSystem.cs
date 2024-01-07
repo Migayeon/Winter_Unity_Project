@@ -17,8 +17,8 @@ public class ProfessorSystem : MonoBehaviour
         private List<int> stat = new List<int>(6); //professor stats
         private int salary;
         private bool away; //true = is away, false = is not away (able to teach)
+        private int awayTime;
         private List<int> subjects = new List<int>(); //List of subjects that the professor is teaching
-
         public static Dictionary<int, string> statlist = new Dictionary<int, string>(6)
         {
             {0, "lecture"},
@@ -44,6 +44,7 @@ public class ProfessorSystem : MonoBehaviour
             type = _type;
             stat = new List<int>(_stat);
             away = false;
+            awayTime = 0;
             //insert salary related issue  here
             ProfessorSetDefaultSalary();
         }
@@ -55,6 +56,7 @@ public class ProfessorSystem : MonoBehaviour
             type = _type;
             stat = new List<int>(_stat);
             away = false;
+            awayTime = 0;
             salary = _salary;
         }
         
@@ -77,6 +79,7 @@ public class ProfessorSystem : MonoBehaviour
         public bool ProfessorGetAwayStatus() { return away; }
         public int ProfessorGetSalary() { return salary; }
 
+        public int ProfessorGetAwayTime() { return awayTime; }
         public List<int> ProfessorGetSubjects() { return subjects; }
         public void ProfessorIncreaseTenure()
         {
@@ -87,11 +90,24 @@ public class ProfessorSystem : MonoBehaviour
             tenure += increaseValue;
         }
 
-        public void ProfessorSetAwayStatus(bool status)
+        public void ProfessorSetAwayStatus(bool status, int time)
+        {
+            away = status;
+            awayTime = time;
+        }
+        
+        public void ProfessorChangeAwayStatus(bool status)
         {
             away = status;
         }
-
+        public void ProfessorChangeAwayTime()
+        {
+            awayTime--;
+        }
+        public void ProfessorChangeAwayTime(int val)
+        {
+            awayTime -= val;
+        }
         public void ProfessorChangeStat(int idx, int changedValue)
         {
             stat[idx] = changedValue;

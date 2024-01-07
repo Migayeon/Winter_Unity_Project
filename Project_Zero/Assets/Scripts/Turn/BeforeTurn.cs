@@ -44,6 +44,18 @@ public class BeforeTurn : MonoBehaviour
         // 이벤트 가져온 이후 실제 환전 비율에 따라 가격 변환
         GoodsManager.exchangeRate = GoodsManager.exchangeRate + (int)((double)GoodsManager.exchangeRate * GoodsManager.exchangePercent / 100);
 
+        for (int i = 0; i < PlayerInfo.ProfessorCount(); ++i)
+        {
+            if (PlayerInfo.ProfessorList[i].ProfessorGetAwayTime() > 1)
+            {
+                PlayerInfo.ProfessorList[i].ProfessorChangeAwayTime();
+            }
+            else if (PlayerInfo.ProfessorList[i].ProfessorGetAwayTime() == 1)
+            {
+                PlayerInfo.ProfessorList[i].ProfessorChangeAwayTime();
+                PlayerInfo.ProfessorList[i].ProfessorChangeAwayStatus(false);
+            }
+        }
 
         // string temp = GenerateName(); //for testing
 

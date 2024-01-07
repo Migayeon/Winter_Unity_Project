@@ -55,8 +55,10 @@ public class ManageProfessorTest : MonoBehaviour
             {5, "영창"},
         };
 
+    public System.Random randomseed = new System.Random();
     void Start()
     {
+        
         int ProfessorCount = PlayerInfo.ProfessorList.Count;
 
         ProfessorAwayRefuseMessage.SetActive(false);
@@ -240,7 +242,7 @@ public class ManageProfessorTest : MonoBehaviour
         Debug.Log("ExitLoop Passed");
         if (flag)
         {
-            PlayerInfo.ProfessorList.RemoveAt(PlayerInfo.ProfessorList.FindIndex(x => x.ProfessorGetID() == ProfData.ProfessorGetID()));
+            PlayerInfo.ProfessorList[PlayerInfo.ProfessorList.FindIndex(x => x.ProfessorGetID() == ProfData.ProfessorGetID())].ProfessorSetAwayStatus(true, randomseed.Next(1, 3));
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
         else
