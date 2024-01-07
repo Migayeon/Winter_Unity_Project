@@ -47,14 +47,6 @@ public class ProfessorData
             professorData[i] = professor.ProfessorDataToString();
             i++;
         }
-        foreach (StudentGroup[] students in PlayerInfo.studentGroups)
-        {
-            foreach (StudentGroup student in students)
-            {
-                studentData[i] = student.StudentDataToString();
-                i++;
-            }
-        }
     }
 }
 public class StudentData
