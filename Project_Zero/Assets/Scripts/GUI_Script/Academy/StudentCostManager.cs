@@ -25,17 +25,10 @@ public class StudentCostManager : MonoBehaviour
         {
             Destroy(prevInfo.gameObject);
         }
-        int div;
-        int costSum;
         for (int i = 0; i<PlayerInfo.studentGroups.Count; i++)
         {
-            costSum = 0;
-            div = i + 1;
-            foreach (StudentGroup student in PlayerInfo.studentGroups[i])
-            {
-                costSum += student.GetCost() * student.GetAge();
-            }
             GameObject studentInfo = Instantiate(infoPrefab, content);
+            studentInfo.GetComponent<StudentCostUpdate>().ContentUpdate(i + 1);
         }
     }
 }

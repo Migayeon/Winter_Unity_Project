@@ -100,6 +100,7 @@ public class StudentGroup
             stat[i] += enforceType[i];
         }
         age++;
+        GoodsManager.goodsAr += cost * number;
         if (age == 8)
         {
             SelectTest();

@@ -269,8 +269,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 2.6
-  m_Text: "\uD559\uC0DD\uC218:        \uBA85\n\uD559\uC6D0\uBE44:        \uBA85\n\uCD1D\uC218\uC785:       
-    \uBA85"
+  m_Text: "\uD559\uC0DD\uC218:        \uBA85\n\uD559\uC6D0\uBE44:        Ar\n\uCD1D\uC218\uC785:       
+    Ar"
 --- !u!114 &3352309504498570223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -642,6 +642,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2567443490925487756}
   - component: {fileID: 8687186609092604517}
+  - component: {fileID: 6071946503005414694}
   m_Layer: 5
   m_Name: StudentInfo
   m_TagString: Untagged
@@ -678,6 +679,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5981993420775183947}
   m_CullTransparentMesh: 1
+--- !u!114 &6071946503005414694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5981993420775183947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c0f5e2ebb229154dafea64a0d394804, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  periodT: {fileID: 4340392980617902097}
+  numT: {fileID: 8704251397235247225}
+  costT: {fileID: 3079687799712642496}
+  costSumT: {fileID: 6906181855368148627}
 --- !u!1 &6228822712331741863
 GameObject:
   m_ObjectHideFlags: 0
