@@ -309,7 +309,7 @@ public class EventManager : MonoBehaviour
                         break;
                     case 2:
                         type = "명성 ";
-                        GoodsManager.goodsConstFame += Convert.ToInt32(amount);
+                        GoodsManager.GoodsConstFame += Convert.ToInt32(amount);
                         break;
                     case 3:
                         type = "무작위 학생 그룹 무작위 스탯 ";
@@ -343,7 +343,7 @@ public class EventManager : MonoBehaviour
                         break;
                     case 2:
                         type = "명성 ";
-                        GoodsManager.goodsConstFame *= Convert.ToInt32(amount);
+                        GoodsManager.GoodsConstFame *= Convert.ToInt32(amount);
                         break;
                     case 3:
                         type = "무작위 학생 그룹 무작위 스탯 ";
@@ -377,7 +377,7 @@ public class EventManager : MonoBehaviour
                         break;
                     case 2:
                         type = "명성 ";
-                        GoodsManager.goodsConstFame /= Convert.ToInt32(amount);
+                        GoodsManager.GoodsConstFame /= Convert.ToInt32(amount);
                         break;
                     case 3:
                         type = "무작위 학생 그룹 무작위 스탯 ";
