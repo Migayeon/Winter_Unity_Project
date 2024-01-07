@@ -18,8 +18,8 @@ public class ClassEx : MonoBehaviour
     public Text preProfessor;
     public Text preStudent;
     int marketingturn = 3;
-    int duringMarketA = -10;
-    int duringMarketB = -10;
+    static int duringMarketA = -10;
+    static int duringMarketB = -10;
 
 
 
@@ -75,6 +75,7 @@ public class ClassEx : MonoBehaviour
         if (TurnManager.turn - duringMarketA < marketingturn)
         {
             Debug.Log("마케팅 진행중");
+            Debug.Log($"남은 턴 수 : {-TurnManager.turn + duringMarketA + marketingturn}");
         }
         else
         {
@@ -99,6 +100,7 @@ public class ClassEx : MonoBehaviour
         if(TurnManager.turn - duringMarketB < marketingturn)
         {
             Debug.Log("마케팅 진행중");
+            Debug.Log($"남은 턴 수 : {-TurnManager.turn + duringMarketB + marketingturn}");
         }
         else
         {
