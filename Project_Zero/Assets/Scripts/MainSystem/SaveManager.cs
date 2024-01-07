@@ -47,6 +47,7 @@ public class ProfessorData
             professorData[i] = professor.ProfessorDataToString();
             i++;
         }
+        professorNum = i;
     }
 }
 public class StudentData

@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class TextUP : MonoBehaviour
 {
-    float speed = 0.03f;
-    void Update()
+    float speed = 0.01f;
+    void FixedUpdate()
     {
         transform.position = transform.position + new Vector3(0f, speed, 0f);
         if (Input.GetMouseButtonDown(0))
