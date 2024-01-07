@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class TextUP : MonoBehaviour
 {
-    float speed = 0.01f;
+    float speed = 0.03f;
     void FixedUpdate()
     {
         transform.position = transform.position + new Vector3(0f, speed, 0f);

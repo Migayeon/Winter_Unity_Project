@@ -49,6 +49,16 @@ public class ProfessorData
         }
         professorNum = i;
     }
+
+    public int GetProfessorNum()
+    {
+        return professorNum;
+    }
+
+    public string[] GetProfessorData()
+    {
+        return professorData;
+    }
 }
 public class StudentData
 {
@@ -141,20 +151,19 @@ public class SaveManager : MonoBehaviour
         PlayerInfo.LoadStudentData(studentData.GetStudentData(),studentData.GetGroupNum());
     }
 
-    private static string ProfessorSave(ProfessorSystem.Professor professor)
+    private static void ProfessorSave(int i)
     {
-        string information = 
-            professor.ProfessorGetID().ToString() + '/' +
-            professor.ProfessorGetName() + '/' +
-            professor.ProfessorGetTenureInTurns().ToString() + '/' +
-            professor.ProfessorGetType().ToString() + '/';
-        List<int> stat = professor.ProfessorGetStats();
-        foreach (int i in stat)
-            information += i.ToString() + '/';
-        information += professor.ProfessorGetSalary() + '/';
-        information += professor.ProfessorGetAwayStatus() ? "1" : "0";
+        ProfessorData professorData = new ProfessorData();
+        string json = JsonUtility.ToJson(professorData, true);
+        File.WriteAllText(path + "professor" + i.ToString(), json);
+        Debug.Log("Success");
+    }
 
-        return information;
+    public static void ProfessorLoad(int i)
+    {
+        string jsonData = File.ReadAllText(path + "professor" + i.ToString());
+        ProfessorData professorData = JsonUtility.FromJson<ProfessorData>(jsonData);
+        PlayerInfo.LoadProfessorData(professorData.GetProfessorData(), professorData.GetProfessorNum());
     }
 
     public static void SaveProcess()
