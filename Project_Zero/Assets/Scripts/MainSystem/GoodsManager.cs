@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -14,7 +15,14 @@ public class GoodsManager : MonoBehaviour
         get { return goodsConstFame; }
         set
         {
-            goodsConstFame = value < 10 ? 10 : value;
+            if (value < 10)
+            {
+                goodsConstFame = 10;
+            }
+            else
+            {
+                goodsConstFame = value;
+            }
         }
     }
     public static int goodsCalculatedEndedFame = 0;
@@ -25,13 +33,28 @@ public class GoodsManager : MonoBehaviour
     public static int exchangeRate = 500;
     public static int maxRate = 30;
     public static int minRate = -25;
-
+    private void CalculateEndedFame()
+    {
+        List<ProfessorSystem.Professor> pfList = PlayerInfo.ProfessorList;
+        short openSubjectNum = 0;
+        List<SubjectTree.State> openSubjectList = SubjectTree.subjectState;
+        for (int i=0;i<openSubjectList.Count;i++)
+        {
+            if (openSubjectList[i] == SubjectTree.State.Open)
+            {
+                openSubjectNum++;
+            }
+        }
+        
+    }
     void Start()
     {
         // json 저장 시스템 구현되면 try ~ except문으로 각 재화 초기화
     }
-    public static void UpdateUI()
+
+    void Update()
     {
         // UI 구현되면 각 UI text에 value값 대입
+
     }
 }
