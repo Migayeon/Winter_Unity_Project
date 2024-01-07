@@ -11,15 +11,21 @@ public class ClassEx : MonoBehaviour
     public Button OfficeExp;
     public Button marketingA;
     public Button marketingB;
+    public Button marketingC;
+    public Button marketingD;
     public Text requiredClass;
     public Text requiredProfessor;
     public Text requiredMarketA;
     public Text requiredMarketB;
+    public Text requiredMarketC;
+    public Text requiredMarketD;
     public Text preProfessor;
     public Text preStudent;
     int marketingturn = 3;
     static int duringMarketA = -10;
     static int duringMarketB = -10;
+    static int duringMarketC = -10;
+    static int duringMarketD = -10;
 
 
 
@@ -27,6 +33,8 @@ public class ClassEx : MonoBehaviour
     static private int officeAr = 5000;
     static private int marA = 5000;
     static private int marB = 10000;
+    static private int marC = 20000;
+    static private int marD = 40000;
 
 
     public void ClassExpan()
@@ -117,11 +125,58 @@ public class ClassEx : MonoBehaviour
                 duringMarketB = TurnManager.turn;
             }
         }
-        
-        
-        
     }
 
+    public void marketC()
+    {
+        int num = 10;
+
+        if (TurnManager.turn - duringMarketC < marketingturn)
+        {
+            Debug.Log("마케팅 진행중");
+            Debug.Log($"남은 턴 수 : {-TurnManager.turn + duringMarketC + marketingturn}");
+        }
+        else
+        {
+            if (GoodsManager.goodsAr - marC < 0)
+            {
+                Debug.Log("파산");
+            }
+            else
+            {
+                GoodsManager.goodsAr -= marC;
+                GoodsManager.goodsConstFame += num;
+                marC += 1000;
+                requiredMarketC.text = $"{marC}";
+                duringMarketC = TurnManager.turn;
+            }
+        }
+    }
+    public void marketD()
+    {
+        int num = 10;
+
+        if (TurnManager.turn - duringMarketD < marketingturn)
+        {
+            Debug.Log("마케팅 진행중");
+            Debug.Log($"남은 턴 수 : {-TurnManager.turn + duringMarketD + marketingturn}");
+        }
+        else
+        {
+            if (GoodsManager.goodsAr - marD < 0)
+            {
+                Debug.Log("파산");
+            }
+            else
+            {
+                GoodsManager.goodsAr -= marD;
+                GoodsManager.goodsConstFame += num;
+                marD += 1000;
+                requiredMarketD.text = $"{marD}";
+                duringMarketC = TurnManager.turn;
+            }
+        }
+    }
 
     private void Awake()
     {
@@ -135,10 +190,14 @@ public class ClassEx : MonoBehaviour
 
         requiredMarketA.text = $"{marA}";
         requiredMarketB.text = $"{marB}";
+        requiredMarketC.text = $"{marC}";
+        requiredMarketD.text = $"{marD}";
         ClassExp.onClick.AddListener(ClassExpan);
         OfficeExp.onClick.AddListener(OfficeExpan);
         marketingA.onClick.AddListener(marketA);
         marketingB.onClick.AddListener(marketB);
+        marketingC.onClick.AddListener(marketC);
+        marketingD.onClick.AddListener(marketD);
         
 
 
