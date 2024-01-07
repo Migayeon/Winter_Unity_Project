@@ -17,10 +17,16 @@ public class ClassEx : MonoBehaviour
     public Text requiredMarketB;
     public Text preProfessor;
     public Text preStudent;
+    int marketingturn = 3;
+    int duringMarketA = -10;
+    int duringMarketB = -10;
+
 
 
     static private int classAr = 5000;
     static private int officeAr = 5000;
+    static private int marA = 5000;
+    static private int marB = 10000;
 
 
     public void ClassExpan()
@@ -64,26 +70,77 @@ public class ClassEx : MonoBehaviour
 
     public void marketA()
     {
-
-
+        int num = 10;
+        
+        if (TurnManager.turn - duringMarketA < marketingturn)
+        {
+            Debug.Log("마케팅 진행중");
+        }
+        else
+        {
+            if (GoodsManager.goodsAr - marA < 0)
+            {
+                Debug.Log("파산");
+            }
+            else
+            {
+                GoodsManager.goodsAr -= marA;
+                GoodsManager.goodsConstFame += num;
+                marA += 1000;
+                requiredMarketA.text = $"{marA}";
+                duringMarketA = TurnManager.turn;
+            }
+        }
     }
     public void marketB()
     {
+        int num = 10;
 
+        if(TurnManager.turn - duringMarketB < marketingturn)
+        {
+            Debug.Log("마케팅 진행중");
+        }
+        else
+        {
+            if (GoodsManager.goodsAr - marB < 0)
+            {
+                Debug.Log("파산");
+            }
+            else
+            {
+                GoodsManager.goodsAr -= marB;
+                GoodsManager.goodsConstFame += num;
+                marB += 1000;
+                requiredMarketB.text = $"{marB}";
+                duringMarketB = TurnManager.turn;
+            }
+        }
+        
+        
+        
     }
 
 
     private void Awake()
     {
-        int count = PlayerInfo.StudentGroupCount();
+        int studentCount = PlayerInfo.StudentGroupCount();
         int professCount = PlayerInfo.ProfessorCount();
+
         requiredClass.text = $"{classAr}";
         requiredProfessor.text = $"{officeAr}";
-        preStudent.text = $"{count}/{PlayerInfo.maxStudent}";
+        preStudent.text = $"{studentCount}/{PlayerInfo.maxStudent}";
         preProfessor.text = $"{professCount}/{PlayerInfo.maxProfessor}";
+
+        requiredMarketA.text = $"{marA}";
+        requiredMarketB.text = $"{marB}";
         ClassExp.onClick.AddListener(ClassExpan);
-        
         OfficeExp.onClick.AddListener(OfficeExpan);
+        marketingA.onClick.AddListener(marketA);
+        marketingB.onClick.AddListener(marketB);
+        
+
+
+
     }
 
 
