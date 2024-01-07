@@ -46,13 +46,14 @@ public class StudentGroup
         age = int.Parse(dataArr[3]);
         cost = int.Parse(dataArr[4]);
         curriculum = new List<int>();
+        stat = new List<int>();
         for (int i = 5; i < 13; i++)
         {
             curriculum.Add(int.Parse(dataArr[i]));
         }
-        for (int i = 13; i < 17; i++)
+        for (int i = 13; i <= 17; i++)
         {
-            curriculum.Add(int.Parse(dataArr[i]));
+            stat.Add(int.Parse(dataArr[i]));
         }
     }
     public StudentGroup() { }
@@ -93,6 +94,9 @@ public class StudentGroup
         List<int> enforceType = subject.enforceContents;
         for (int i = 0; i < enforceType.Count; i++)
         {
+            Debug.Log(i);
+            Debug.Log(stat[i]);
+            Debug.Log(enforceType[i]);
             stat[i] += enforceType[i];
         }
         age++;

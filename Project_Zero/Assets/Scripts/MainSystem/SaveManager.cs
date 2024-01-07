@@ -196,6 +196,8 @@ public class SaveManager : MonoBehaviour
         PlayerDataLoad(i);
         ProfessorLoad(i);
         StudentLoad(i);
+        SubjectTree.initSubjectsAndInfo();
+        SubjectTree.initSubjectStates(new List<int>());
     }
 
     private void Awake()

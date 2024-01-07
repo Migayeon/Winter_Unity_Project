@@ -25,11 +25,17 @@ public class SavedataSceneManager : MonoBehaviour
         GoodsManager.goodsConstFame = 0;
         GoodsManager.goodsStudent = 0;
 
+        PlayerInfo.ProfessorList.Clear();
+        PlayerInfo.studentGroups.Clear();
+
+        SubjectTree.initSubjectsAndInfo();
+        SubjectTree.initSubjectStates(new List<int>());
         /*
          
         초기화할 내용 추가. 
 
          */
+
 
         SceneManager.LoadScene("Intro");
     }
