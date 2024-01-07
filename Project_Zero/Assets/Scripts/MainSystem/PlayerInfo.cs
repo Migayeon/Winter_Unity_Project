@@ -11,6 +11,11 @@ public class PlayerInfo : MonoBehaviour
     public static int maxStudent = 300; // 최대 학생 명수
     public static int maxProfessor = 30; // 최대 교수 명수
 
+    public static int nineSuccess;
+    public static int sevenSuccess;
+    public static int fiveSuccess;
+
+
     // 교수 리스트
     public static List<ProfessorSystem.Professor> ProfessorList = new List<ProfessorSystem.Professor>();
     // 학생 리스트 
@@ -50,6 +55,15 @@ public class PlayerInfo : MonoBehaviour
                 students[j] = new StudentGroup(data[3 * i + j]);
             }
             studentGroups.Add(students);
+        }
+    }
+
+    public static void LoadProfessorData(string[] data, int lim)
+    {
+        ProfessorList.Clear();
+        for(int i = 0;i < lim; i++)
+        {
+            ProfessorList.Add(new ProfessorSystem.Professor(data[i]));
         }
     }
 }
