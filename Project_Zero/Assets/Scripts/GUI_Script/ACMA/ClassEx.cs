@@ -6,20 +6,31 @@ using UnityEngine.UI;
 
 public class ClassEx : MonoBehaviour
 {
+    public GameObject window;
+    public Text windowWord;
+    public Button checkUI;
 
     public Button ClassExp;
     public Button OfficeExp;
     public Button marketingA;
     public Button marketingB;
+    public Button marketingC;
+    public Button marketingD;
     public Text requiredClass;
     public Text requiredProfessor;
     public Text requiredMarketA;
     public Text requiredMarketB;
+    public Text requiredMarketC;
+    public Text requiredMarketD;
     public Text preProfessor;
     public Text preStudent;
-    int marketingturn = 3;
+    int marketingTurn = 3;
+
+
     static int duringMarketA = -10;
     static int duringMarketB = -10;
+    static int duringMarketC = -10;
+    static int duringMarketD = -10;
 
 
 
@@ -27,6 +38,8 @@ public class ClassEx : MonoBehaviour
     static private int officeAr = 5000;
     static private int marA = 5000;
     static private int marB = 10000;
+    static private int marC = 20000;
+    static private int marD = 40000;
 
 
     public void ClassExpan()
@@ -36,6 +49,9 @@ public class ClassEx : MonoBehaviour
         if (GoodsManager.goodsAr - classAr < 0)
         {
             Debug.Log("파산");
+            window.SetActive(true);
+            windowWord.text = "Ar가 부족합니다";
+            
         }
         else
         {
@@ -55,6 +71,8 @@ public class ClassEx : MonoBehaviour
         if (GoodsManager.goodsAr - officeAr < 0)
         {
             Debug.Log("파산");
+            window.SetActive(true);
+            windowWord.text = "Ar가 부족합니다";
         }
         else
         {
@@ -72,16 +90,22 @@ public class ClassEx : MonoBehaviour
     {
         int num = 10;
         
-        if (TurnManager.turn - duringMarketA < marketingturn)
+        if (TurnManager.turn - duringMarketA < marketingTurn)
         {
             Debug.Log("마케팅 진행중");
-            Debug.Log($"남은 턴 수 : {-TurnManager.turn + duringMarketA + marketingturn}");
+            Debug.Log($"남은 턴 수 : {-TurnManager.turn + duringMarketA + marketingTurn}");
+            window.SetActive(true);
+            //windowWord.text = $"";
         }
         else
         {
             if (GoodsManager.goodsAr - marA < 0)
             {
                 Debug.Log("파산");
+                windowWord.text = "Ar가 부족합니다";
+                window.SetActive(true);
+
+
             }
             else
             {
@@ -97,17 +121,20 @@ public class ClassEx : MonoBehaviour
     {
         int num = 10;
 
-        if(TurnManager.turn - duringMarketB < marketingturn)
+        if(TurnManager.turn - duringMarketB < marketingTurn)
         {
             Debug.Log("마케팅 진행중");
-            Debug.Log($"남은 턴 수 : {-TurnManager.turn + duringMarketB + marketingturn}");
+            Debug.Log($"남은 턴 수 : {-TurnManager.turn + duringMarketB + marketingTurn}");
         }
         else
         {
             if (GoodsManager.goodsAr - marB < 0)
             {
                 Debug.Log("파산");
-            }
+                window.SetActive(true);
+                windowWord.text = "Ar가 부족합니다";
+
+            }   
             else
             {
                 GoodsManager.goodsAr -= marB;
@@ -117,14 +144,75 @@ public class ClassEx : MonoBehaviour
                 duringMarketB = TurnManager.turn;
             }
         }
-        
-        
-        
     }
 
+    public void marketC()
+    {
+        int num = 10;
+
+        if (TurnManager.turn - duringMarketC < marketingTurn)
+        {
+            Debug.Log("마케팅 진행중");
+            Debug.Log($"남은 턴 수 : {-TurnManager.turn + duringMarketC + marketingTurn}");
+        }
+        else
+        {
+            if (GoodsManager.goodsAr - marC < 0)
+            {
+                Debug.Log("파산");
+                windowWord.text = "Ar가 부족합니다";
+                window.SetActive(true);
+
+            }
+            else
+            {
+                GoodsManager.goodsAr -= marC;
+                GoodsManager.goodsConstFame += num;
+                marC += 1000;
+                requiredMarketC.text = $"{marC}";
+                duringMarketC = TurnManager.turn;
+            }
+        }
+    }
+    public void marketD()
+    {
+        int num = 10;
+
+        if (TurnManager.turn - duringMarketD < marketingTurn)
+        {
+            Debug.Log("마케팅 진행중");
+            Debug.Log($"남은 턴 수 : {-TurnManager.turn + duringMarketD + marketingTurn}");
+        }
+        else
+        {
+            if (GoodsManager.goodsAr - marD < 0)
+            {
+                Debug.Log("파산");
+                windowWord.text = "Ar가 부족합니다";
+                window.SetActive(true);
+
+            }
+            else
+            {
+                GoodsManager.goodsAr -= marD;
+                GoodsManager.goodsConstFame += num;
+                marD += 1000;
+                requiredMarketD.text = $"{marD}";
+                duringMarketC = TurnManager.turn;
+            }
+        }
+    }
+
+    public void checkUi()
+    {
+        window.SetActive(false);
+    }
+    
 
     private void Awake()
     {
+        
+
         int studentCount = PlayerInfo.StudentGroupCount();
         int professCount = PlayerInfo.ProfessorCount();
 
@@ -135,10 +223,17 @@ public class ClassEx : MonoBehaviour
 
         requiredMarketA.text = $"{marA}";
         requiredMarketB.text = $"{marB}";
+        requiredMarketC.text = $"{marC}";
+        requiredMarketD.text = $"{marD}";
         ClassExp.onClick.AddListener(ClassExpan);
         OfficeExp.onClick.AddListener(OfficeExpan);
         marketingA.onClick.AddListener(marketA);
         marketingB.onClick.AddListener(marketB);
+        marketingC.onClick.AddListener(marketC);
+        marketingD.onClick.AddListener(marketD);
+
+        checkUI.onClick.AddListener(checkUi);
+        window.SetActive(false);
         
 
 

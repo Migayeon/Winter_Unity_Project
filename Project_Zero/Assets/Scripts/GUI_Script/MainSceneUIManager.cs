@@ -189,6 +189,10 @@ public class MainSceneUIManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            escMessage.transform.GetChild(1).GetComponent<Button>().onClick.RemoveAllListeners();
+            escMessage.transform.GetChild(2).GetComponent<Button>().onClick.RemoveAllListeners();
+            escMessage.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
+            escMessage.transform.GetChild(5).GetComponent<Button>().onClick.RemoveAllListeners();
             Debug.Log("hi");
             escMessage.SetActive(true);
             loading.SetActive(false);
