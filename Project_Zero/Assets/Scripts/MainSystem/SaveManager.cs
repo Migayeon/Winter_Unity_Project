@@ -99,7 +99,7 @@ public class SaveManager : MonoBehaviour
         TurnManager.turn = playerData.turn;
         GoodsManager.goodsAr = playerData.ar;
         GoodsManager.goodsStone = playerData.stone;
-        GoodsManager.goodsFame = playerData.fame;
+        GoodsManager.goodsConstFame = playerData.fame;
         PlayerInfo.playerName = playerData.myName;
         PlayerInfo.arcademyName = playerData.arcademyName;
     }
@@ -110,7 +110,7 @@ public class SaveManager : MonoBehaviour
         newSave.turn = TurnManager.turn;
         newSave.ar = GoodsManager.goodsAr;
         newSave.stone = GoodsManager.goodsStone;
-        newSave.fame = GoodsManager.goodsFame;
+        newSave.fame = GoodsManager.goodsConstFame;
         //newSave.studentsNum = GoodsManager.goodsStudent;
         /*
          
