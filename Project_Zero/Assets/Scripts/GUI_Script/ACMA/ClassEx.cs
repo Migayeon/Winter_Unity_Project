@@ -41,6 +41,22 @@ public class ClassEx : MonoBehaviour
     static private int marC = 20000;
     static private int marD = 40000;
 
+    void bankRunPos()
+    {
+        Debug.Log("파산");
+        window.SetActive(true);
+        windowWord.rectTransform.localPosition = new Vector3(0, 4, 0);
+        windowWord.text = "Ar가 부족합니다";
+    }
+    void alreadyMarketing(int duringTurn)
+    {
+        Debug.Log("마케팅 진행중");
+        Debug.Log($"남은 턴 수 : {-TurnManager.turn + duringTurn + marketingTurn}");
+        windowWord.text = "이미 마케팅이 진행중입니다\n" +
+            $"남은 턴수 : {-TurnManager.turn + duringTurn + marketingTurn}";
+        window.SetActive(true);
+        windowWord.rectTransform.localPosition = new Vector3(0, 12, 0);
+    }
 
     public void ClassExpan()
     {
@@ -48,10 +64,7 @@ public class ClassEx : MonoBehaviour
         int count = PlayerInfo.ProfessorCount();
         if (GoodsManager.goodsAr - classAr < 0)
         {
-            Debug.Log("파산");
-            window.SetActive(true);
-            windowWord.text = "Ar가 부족합니다";
-            
+            bankRunPos();
         }
         else
         {
@@ -70,9 +83,7 @@ public class ClassEx : MonoBehaviour
         int professCount = PlayerInfo.ProfessorCount();
         if (GoodsManager.goodsAr - officeAr < 0)
         {
-            Debug.Log("파산");
-            window.SetActive(true);
-            windowWord.text = "Ar가 부족합니다";
+            bankRunPos();
         }
         else
         {
@@ -92,18 +103,13 @@ public class ClassEx : MonoBehaviour
         
         if (TurnManager.turn - duringMarketA < marketingTurn)
         {
-            Debug.Log("마케팅 진행중");
-            Debug.Log($"남은 턴 수 : {-TurnManager.turn + duringMarketA + marketingTurn}");
-            window.SetActive(true);
-            //windowWord.text = $"";
+            alreadyMarketing(duringMarketA);
         }
         else
         {
             if (GoodsManager.goodsAr - marA < 0)
             {
-                Debug.Log("파산");
-                windowWord.text = "Ar가 부족합니다";
-                window.SetActive(true);
+                bankRunPos();
 
 
             }
@@ -114,6 +120,7 @@ public class ClassEx : MonoBehaviour
                 marA += 1000;
                 requiredMarketA.text = $"{marA}";
                 duringMarketA = TurnManager.turn;
+
             }
         }
     }
@@ -123,17 +130,13 @@ public class ClassEx : MonoBehaviour
 
         if(TurnManager.turn - duringMarketB < marketingTurn)
         {
-            Debug.Log("마케팅 진행중");
-            Debug.Log($"남은 턴 수 : {-TurnManager.turn + duringMarketB + marketingTurn}");
+            alreadyMarketing(duringMarketB);
         }
         else
         {
             if (GoodsManager.goodsAr - marB < 0)
             {
-                Debug.Log("파산");
-                window.SetActive(true);
-                windowWord.text = "Ar가 부족합니다";
-
+                bankRunPos();
             }   
             else
             {
@@ -152,16 +155,13 @@ public class ClassEx : MonoBehaviour
 
         if (TurnManager.turn - duringMarketC < marketingTurn)
         {
-            Debug.Log("마케팅 진행중");
-            Debug.Log($"남은 턴 수 : {-TurnManager.turn + duringMarketC + marketingTurn}");
+            alreadyMarketing(duringMarketC);
         }
         else
         {
             if (GoodsManager.goodsAr - marC < 0)
             {
-                Debug.Log("파산");
-                windowWord.text = "Ar가 부족합니다";
-                window.SetActive(true);
+                bankRunPos();
 
             }
             else
@@ -180,16 +180,13 @@ public class ClassEx : MonoBehaviour
 
         if (TurnManager.turn - duringMarketD < marketingTurn)
         {
-            Debug.Log("마케팅 진행중");
-            Debug.Log($"남은 턴 수 : {-TurnManager.turn + duringMarketD + marketingTurn}");
+            alreadyMarketing(duringMarketD);
         }
         else
         {
             if (GoodsManager.goodsAr - marD < 0)
             {
-                Debug.Log("파산");
-                windowWord.text = "Ar가 부족합니다";
-                window.SetActive(true);
+                bankRunPos();
 
             }
             else
