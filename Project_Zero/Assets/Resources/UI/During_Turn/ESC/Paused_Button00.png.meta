@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e86a1400397bba342ae304e830b5317d
+guid: 9e6929aef0668194d80d2b06e26f93ba
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,13 +43,13 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 36
-  spriteBorder: {x: 214, y: 111, z: 214, w: 233}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -121,18 +121,84 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Paused_Button00_0
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 196
+        width: 94
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02590159a14df8641a2b6aa72b977feb
+      internalID: 171547269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paused_Button00_1
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 167
+        width: 94
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ddaa2c1db0ca7a48af3782d8106e84a
+      internalID: 955824909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paused_Button00_2
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 138
+        width: 94
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e55bd06fcc812c54a9c9d2cf404a1c69
+      internalID: -695395780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Paused_Button00_0: 171547269
+      Paused_Button00_1: 955824909
+      Paused_Button00_2: -695395780
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

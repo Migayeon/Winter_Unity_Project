@@ -1,9 +1,9 @@
 {
-    "turn": 1,
-    "ar": 20414,
+    "turn": 0,
+    "ar": 20000,
     "stone": 0,
     "studentsNum": 0,
-    "fame": 0,
-    "myName": "김동성",
-    "arcademyName": "SGCC"
+    "fame": 10,
+    "myName": "default",
+    "arcademyName": "default"
 }

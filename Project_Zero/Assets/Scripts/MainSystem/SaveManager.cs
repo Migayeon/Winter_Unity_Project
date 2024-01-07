@@ -181,8 +181,8 @@ public class SaveManager : MonoBehaviour
         PlayerPrefs.Save();
 
         PlayerDataSave(i);
-        //ProfessorSave(i);
-        //StudentSave(i);
+        ProfessorSave(i);
+        StudentSave(i);
 
     }
 
@@ -190,6 +190,8 @@ public class SaveManager : MonoBehaviour
     {
         int i = PlayerInfo.dataIndex;
         PlayerDataLoad(i);
+        ProfessorLoad(i);
+        StudentLoad(i);
     }
 
     private void Awake()
