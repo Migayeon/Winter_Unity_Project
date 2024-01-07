@@ -19,7 +19,6 @@ public class ProfessorSystem : MonoBehaviour
         private bool away; //true = is away, false = is not away (able to teach)
         private List<int> subjects = new List<int>(); //List of subjects that the professor is teaching
 
-
         public static Dictionary<int, string> statlist = new Dictionary<int, string>(6)
         {
             {0, "lecture"},
@@ -78,6 +77,7 @@ public class ProfessorSystem : MonoBehaviour
         public bool ProfessorGetAwayStatus() { return away; }
         public int ProfessorGetSalary() { return salary; }
 
+        public List<int> ProfessorGetSubjects() { return subjects; }
         public void ProfessorIncreaseTenure()
         {
             tenure++;
@@ -125,7 +125,7 @@ public class ProfessorSystem : MonoBehaviour
         }
         public void ProfessorRemoveSubject(int subjectID)
         {
-            bool RemoveCheck = subjects.Remove(subjectID);
+            subjects.Remove(subjectID);
         }
 
         public void UnityDebugLogProfessorInfo()

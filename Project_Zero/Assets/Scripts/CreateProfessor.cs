@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 //WIP
 
@@ -65,7 +66,7 @@ public class CreateProfessor : ProfessorSystem
     }
 
     public static Professor CreateNewProfessor(int num) // "static" keyword is included for testing purposes only (used in professor info management testing), may remove later
-    {
+    {   
         System.Random RandomGenerator = new System.Random();
         List<int> ProfessorRarityList = new List<int>(TotalRarity);
         for (int i = 0; i < UniqueProfessorRarity; ++i)
@@ -142,7 +143,7 @@ public class CreateProfessor : ProfessorSystem
     public GameObject ShowTextObject1, ShowTextObject2, ShowTextObject3;
     public GameObject ButtonClickObject;
     public GameObject HideTextObject;
-    public GameObject HideTextUIObject;
+    public GameObject MaxProfessorsErrorObject;
     public TextMeshProUGUI PickedProfessorName, PickedProfessorType, PickedProfessorStat, PickedProfessorSalary;
     public TextMeshProUGUI Professor1Name;
     public TextMeshProUGUI Professor1Type;
@@ -159,6 +160,7 @@ public class CreateProfessor : ProfessorSystem
 
     public TextMeshProUGUI RetryCostInfo;
     public TextMeshProUGUI RetryFailMessage;
+    public TextMeshProUGUI MaxProfessorsErrorMessage;
     
     public Dictionary<int, string> KoreanStatList = new Dictionary<int, string>(6)
         {
@@ -186,6 +188,18 @@ public class CreateProfessor : ProfessorSystem
     }
     void Start()
     {
+        if (PlayerInfo.ProfessorCount() == PlayerInfo.maxProfessor)
+        {
+            MaxProfessorsErrorObject.SetActive(true);
+            MaxProfessorsErrorMessage.text = string.Format("채용하고 있는 교수의 수의 최댓값은 {0}입니다", PlayerInfo.maxProfessor);
+            MaxProfessorsErrorMessage = MaxProfessorsErrorObject.GetComponent<TextMeshProUGUI>();
+            
+        }
+        else
+        {
+            MaxProfessorsErrorObject.SetActive(false);
+        }
+
         RetryCostInfo.enabled = true;
         RetryFailMessage.enabled = false;
         List<Professor> NewProfessors = new List<Professor>();
