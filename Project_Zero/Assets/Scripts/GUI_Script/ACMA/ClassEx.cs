@@ -69,6 +69,7 @@ public class ClassEx : MonoBehaviour
         else
         {
             GoodsManager.goodsAr -= classAr;
+            AfterTurn.academy_Cost -= classAr;
             classAr *= 2;
             PlayerInfo.maxStudent += num;
             requiredClass.text = $"{classAr}";
@@ -89,6 +90,7 @@ public class ClassEx : MonoBehaviour
         {
             
             GoodsManager.goodsAr -= officeAr;
+            AfterTurn.academy_Cost -= officeAr;
             PlayerInfo.maxProfessor += num;
             officeAr *= 2;
             requiredProfessor.text = $"{officeAr}";

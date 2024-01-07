@@ -65,6 +65,7 @@ public class StockManager : MonoBehaviour
     public void PurchaseStone()
     {
         GoodsManager.goodsAr -= GoodsManager.exchangeRate * purchaseAmount;
+        AfterTurn.magic_Cost -= GoodsManager.exchangeRate * purchaseAmount;
         GoodsManager.goodsStone += purchaseAmount;
         purchaseAmount = 0;
         DisableUI(checkPurchase);
@@ -90,6 +91,7 @@ public class StockManager : MonoBehaviour
     {
         GoodsManager.goodsStone -= saleAmount;
         GoodsManager.goodsAr += (int)(GoodsManager.exchangeRate * saleAmount * 0.97);
+        AfterTurn.magic_Rev += (int)(GoodsManager.exchangeRate * saleAmount * 0.97);
         saleAmount = 0;
         DisableUI(checkSale);
     }
