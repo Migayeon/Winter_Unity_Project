@@ -4,12 +4,8 @@ using UnityEngine;
 
 public class CHTestScript : MonoBehaviour
 {
-    // Start is called before the first frame update
-    /*
-    void Start()
+    private void Update()
     {
-        GoodsManager.GoodsConstFame -= 100;
-        Debug.Log(GoodsManager.goodsConstFame);
+        GoodsManager.CalculateEndedFame();
     }
-    */
 }

@@ -23,6 +23,7 @@ public class GoodsManager : MonoBehaviour
             {
                 goodsConstFame = value;
             }
+            CalculateEndedFame();
         }
     }
     public static int goodsCalculatedEndedFame = 0;
@@ -33,9 +34,17 @@ public class GoodsManager : MonoBehaviour
     public static int exchangeRate = 500;
     public static int maxRate = 30;
     public static int minRate = -25;
-    private void CalculateEndedFame()
+    public static void CalculateEndedFame()
     {
-        List<ProfessorSystem.Professor> pfList = PlayerInfo.ProfessorList;
+        int topPfNum = 3;
+        List<ProfessorSystem.Professor> pfSortedList = PlayerInfo.ProfessorList.OrderByDescending(x => x.ProfessorGetSalary()).ToList();
+        int topPfStatSum = 0;
+        if (pfSortedList.Count < 3){ topPfNum = pfSortedList.Count; }
+        else { topPfNum = 3; }
+        for (int i=0;i< topPfNum; i++)
+        {
+            topPfStatSum += pfSortedList[i].ProfessorGetSalary();
+        }
         short openSubjectNum = 0;
         List<SubjectTree.State> openSubjectList = SubjectTree.subjectState;
         for (int i=0;i<openSubjectList.Count;i++)
@@ -45,7 +54,15 @@ public class GoodsManager : MonoBehaviour
                 openSubjectNum++;
             }
         }
-        
+        if (topPfNum > 0)
+        {
+            goodsCalculatedEndedFame = ((topPfStatSum / topPfNum) * openSubjectNum) + GoodsConstFame;
+        }
+        else
+        {
+            goodsCalculatedEndedFame = GoodsConstFame;
+        }
+        Debug.Log($"명성: {goodsCalculatedEndedFame}");
     }
     void Start()
     {
