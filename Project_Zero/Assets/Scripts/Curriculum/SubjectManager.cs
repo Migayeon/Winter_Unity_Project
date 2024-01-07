@@ -44,6 +44,9 @@ public static class SubjectTree
     public static SubjectInfo subjectsInfo;
     public static List<State> subjectState = new List<State>();
     public static List<int> subjectStateNeedCnt = new List<int>();
+
+    public static List<int> studentInSubjectCnt = new List<int>();
+    public static List<int> professorInSubjectCnt = new List<int>();
     public static Dictionary<long, List<bool>> professorsLecture = new Dictionary<long, List<bool>>();
     public static int subjectsCount = 0;
 
@@ -63,9 +66,9 @@ public static class SubjectTree
         }
     }
 
-    public static State isSubjectOpen(int id)
+    public static bool isSubjectOpen(int id)
     {
-        return subjectState[id];
+        return subjectState[id] == State.Open;
     }
     public static void openSubject(int id)
     {
@@ -227,10 +230,25 @@ public static class SubjectTree
         return true;
     }
 
+    public static void addSubjectStudentCnt(List<int> curriculum)
+    {
+        foreach(int subjectId in curriculum)
+            studentInSubjectCnt[subjectId]++;
+    }
+
+    public static void removeSubjectStudentCnt(List<int> curriculum)
+    {
+        foreach (int subjectId in curriculum)
+            studentInSubjectCnt[subjectId]--;
+    }
+
     public static void addProfessorAt(long professorId, int subjectId)
     {
         if (professorsLecture.ContainsKey(professorId))
+        {
+            professorInSubjectCnt[subjectId]++;
             professorsLecture[professorId][subjectId] = true;
+        }
         else
         {
             professorsLecture[professorId] = new List<bool>();
@@ -241,11 +259,17 @@ public static class SubjectTree
     public static void removeProfessor(long professorId)
     {
         professorsLecture.Remove(professorId);
+        for (int subjectId = 0; subjectId < subjectsCount; subjectId++)
+        {
+            if (professorsLecture[professorId][subjectId])
+                professorInSubjectCnt[subjectId]--;
+        }
     }
     public static void removeProfessorAt(long professorId, int subjectId)
     {
         if (professorsLecture.ContainsKey(professorId))
         {
+            professorInSubjectCnt[subjectId]--;
             professorsLecture[professorId][subjectId] = false;
             if (!professorsLecture[professorId].Contains(true))
                 professorsLecture.Remove(professorId);
@@ -256,54 +280,64 @@ public static class SubjectTree
         for (int subjectId = 0; subjectId < subjectsCount; subjectId++)
         {
             if (!curriculum.Contains(subjectId)) continue;
-            int sumProfessors = 0;
-            foreach (long otherProfessorId in professorsLecture.Keys)
-            {
-                if (professorsLecture[otherProfessorId][subjectId]) sumProfessors += 1;
-            }
-            if (professorsLecture[professorId][subjectId] && sumProfessors == 1)
-            {
+            if (professorsLecture[professorId][subjectId] && professorInSubjectCnt[subjectId] == 1)
                 return false;
-            }
         }
+        return true;
+    }
+
+    public static bool canFreeProfessorInSubject(long professorId, int querySubjectId)
+    {
+        if (studentInSubjectCnt[querySubjectId] > 0 && professorsLecture[professorId][querySubjectId] && professorInSubjectCnt[querySubjectId] == 1)
+            return false;
         return true;
     }
 
     public class SaveData
     {
+        public int professorCnt = 0;
         public List<long> professorsId = new List<long>();
+        public List<string> lecturesId = new List<string>();
+        public List<int> subjectStates = new List<int>();
     }
 
-    public static SaveData save()
+    public static string save()
     {
-        
         SaveData rst = new SaveData();
-        /*rst.professorsId = professorsLecture.Keys.ToArray().ToList();
-        string rst = String.Join(",", professorsLecture.Keys.Select(x => x.ToString()).ToArray()) + "/";
+        rst.professorCnt = professorsLecture.Count;
+        rst.professorsId = professorsLecture.Keys.ToArray().ToList();
         foreach (long i in professorsLecture.Keys)
         {
-            for (int j = 0; j < professorsLecture[i].Count; j += 3)
-            {
-                rst += ((Convert.ToInt32(professorsLecture[i][j]) + Convert.ToInt32(professorsLecture[i][j + 1]) * 2 + Convert.ToInt32(professorsLecture[i][j + 2]) * 4)).ToString();
-            }
-            int startIdx = (professorsLecture[i].Count / 3) * 3;
+            rst.lecturesId.Add("");
+            for (int j = 0; j < subjectsCount; j += 3)
+                rst.lecturesId[(int) i] += ((Convert.ToInt32(professorsLecture[i][j]) + Convert.ToInt32(professorsLecture[i][j + 1]) * 2 + Convert.ToInt32(professorsLecture[i][j + 2]) * 4)).ToString();
+            int startIdx = (subjectsCount / 3) * 3;
             int mul = 1;
             int sum = 0;
-            for (int j = startIdx; j < professorsLecture[i].Count; j++)
+            for (int j = startIdx; j < subjectsCount; j++)
             {
                 sum += Convert.ToInt32(professorsLecture[i][j]) * mul;
                 mul *= 2;
             }
-            rst += sum.ToString();
+            rst.lecturesId[(int) i] += sum.ToString();
         }
-        return subjectState.Select(x => (int)x).ToList<int>();
-        */
-        return rst;
+        rst.subjectStates = subjectState.Select(s => (int) s).ToList();
+        return JsonUtility.ToJson(rst);
     }
-    public static void load(List<int> subjectState)
+
+    //아직 구현 안 됨
+    public static void load(string jsonContents)
     {
         initSubjectsAndInfo();
-        initSubjectStates(subjectState);
+        SaveData data = JsonUtility.FromJson<SaveData>(jsonContents);
+        for (int i = 0; i < data.professorCnt; i++)
+        {
+            for (int j = 0; j < data.lecturesId.Count; j++)
+            {
+
+            }
+        }
+        initSubjectStates(data.subjectStates);
     }
 }
 
