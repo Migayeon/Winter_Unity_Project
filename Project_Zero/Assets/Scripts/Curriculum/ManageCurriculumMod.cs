@@ -7,6 +7,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static ManageCurriculumMod;
+using static ProfessorSystem;
 
 public class ManageCurriculumMod : MonoBehaviour
 {
@@ -25,7 +27,6 @@ public class ManageCurriculumMod : MonoBehaviour
 
     private Transform professorContents;
     private Transform professorNameUI;
-    private bool isProfessorDetailOpen;
     private List<SelectButton> selectButtons = new List<SelectButton>();
 
     private Transform detailNameTransform;
@@ -35,6 +36,7 @@ public class ManageCurriculumMod : MonoBehaviour
     private Transform exitDetailButtonTransform;
 
     private int selectedSubjectId = -1;
+    private bool isProfessorDetailOpen = false;
 
     private void Awake()
     {
@@ -66,6 +68,7 @@ public class ManageCurriculumMod : MonoBehaviour
     }
     private void Update()
     {
+        if (isProfessorDetailOpen) return;
         if (!CurriculumSubjectGetter.selectFixed)
         {
             Vector2 mp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -93,16 +96,17 @@ public class ManageCurriculumMod : MonoBehaviour
         }
         else if (SubjectTree.subjectState[int.Parse(subject.name)] == SubjectTree.State.ReadyToOpen)
         {
-            subject.GetComponent<Image>().color = new Color(0.862f, 0.862f, 0.862f);
+            subject.GetComponent<Image>().color = new Color(1.0f, 1.0f, 1.0f);
         }
         else
         {
-            subject.GetComponent<Image>().color = new Color(0.588f, 0.588f, 0.588f);
+            subject.GetComponent<Image>().color = new Color(0.5f, 0.8f, 0.8f);
         }
     }
 
     public void SubjectClick(int clickedId)
     {
+        if (isProfessorDetailOpen) return;
         if (clickedId == selectedSubjectId)
         {
             CurriculumSubjectGetter.selectFixed = false;
@@ -125,6 +129,7 @@ public class ManageCurriculumMod : MonoBehaviour
 
     public void OpenSubjectButtonClicked()
     {
+        if (isProfessorDetailOpen) return;
         if (selectedSubjectId != -1)
         {
             SubjectTree.openSubject(selectedSubjectId);
@@ -162,59 +167,106 @@ public class ManageCurriculumMod : MonoBehaviour
             Destroy(child.gameObject);
     }
 
-    public SelectButton addProfessorSelectButton(ProfessorSystem.Professor professor, int subjecctId)
+    public SelectButton addProfessorSelectButton(ProfessorSystem.Professor professor, int subjectId, int index)
     {
         GameObject newSelectButton = Instantiate(professorSelectButtonPrefab, professorContents);
         Transform buttonTransform = newSelectButton.transform.GetChild(0);
         Transform professorName = buttonTransform.GetChild(0);
         Transform professorBusy = buttonTransform.GetChild(1);
-        Debug.Log(professor.ProfessorGetName());
         professorName.GetComponent<TMP_Text>().text = professor.ProfessorGetName();
         Button button = buttonTransform.GetComponent<Button>();
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(
             delegate
             {
-                subjectButtonClick(professor, subjecctId);
+                openDetail(professor, subjectId, index);
             }
         );
-        
-        //professorBusy.GetComponent<Text>().text = professor.ProfessorGetSubjects().Count.ToString();
+        updateSelectButtonAndColor(professorBusy, buttonTransform, professor, subjectId);
         return new SelectButton(professor, newSelectButton);
     }
 
-    public void initProfessorScroll(int subjecctId)
+    public void updateSelectButtonAndColor(Transform professorBusy, Transform buttonTransform, ProfessorSystem.Professor professor, int subjectId)
+    {
+        Button button = buttonTransform.GetComponent<Button>();
+        professorBusy.GetComponent<TMP_Text>().text = $"{professor.ProfessorGetSubjects().Count} / {getProfessorMaxAssignNum(professor)}";
+        if (professor.ProfessorGetSubjects().Count == getProfessorMaxAssignNum(professor) && !professor.ProfessorGetSubjects().Contains(subjectId))
+        {
+            buttonTransform.GetComponent<Image>().color = new Color(0.75f, 0.75f, 0.75f);
+            button.enabled = false;
+        }
+        if (!SubjectTree.canFreeProfessorInSubject(professor.ProfessorGetID(), subjectId))
+        {
+            buttonTransform.GetComponent<Image>().color = new Color(0.75f, 0.75f, 0.75f);
+            button.enabled = false;
+        }
+        if (professor.ProfessorGetAwayStatus() || (professor.ProfessorGetType() == 0 && SubjectTree.getSubject(subjectId).root != 0))
+        {
+            buttonTransform.GetComponent<Image>().color = new Color(0.75f, 0.75f, 0.75f);
+            button.enabled = false;
+        }
+        if (professor.ProfessorGetType() != 2 && SubjectTree.getSubject(subjectId).tier == 5)
+        {
+            buttonTransform.GetComponent<Image>().color = new Color(0.75f, 0.75f, 0.75f);
+            button.enabled = false;
+        }
+    }
+
+    public void updateProfessorSelectButton(int index)
+    {
+        GameObject targetSelectButton = selectButtons[index].buttonObject;
+        Transform buttonTransform = targetSelectButton.transform.GetChild(0);
+        Transform professorName = buttonTransform.GetChild(0);
+        Transform professorBusy = buttonTransform.GetChild(1);
+        updateSelectButtonAndColor(professorBusy, buttonTransform, selectButtons[index].professor, selectedSubjectId);
+    }
+
+    public void initProfessorScroll(int subjectId)
     {
         clearProfessorContents();
-        SelectButton tmp;
+        int index = 0;
         foreach (ProfessorSystem.Professor professor in PlayerInfo.ProfessorList)
         {
-            tmp = addProfessorSelectButton(professor, subjecctId);
-            selectButtons.Add(tmp);
+            selectButtons.Add(addProfessorSelectButton(professor, subjectId, index++));
         }
-        
     }
 
     public class SelectButton
     {
         public ProfessorSystem.Professor professor;
-        public GameObject button;
-        public SelectButton(ProfessorSystem.Professor professor, GameObject button)
+        public GameObject buttonObject;
+        public SelectButton(ProfessorSystem.Professor professor, GameObject buttonObject)
         {
             this.professor = professor;
-            this.button = button;
+            this.buttonObject = buttonObject;
         }
     }
-
-    public void openDetail(ProfessorSystem.Professor professor, int subjectId)
+    public int getProfessorMaxAssignNum(ProfessorSystem.Professor professor)
     {
+        int ProfessorMaxAssignNum = 3;
+        if (professor.ProfessorGetType() == 0)
+        {
+            ProfessorMaxAssignNum = 3;
+        }
+        else if (professor.ProfessorGetType() == 1)
+        {
+            ProfessorMaxAssignNum = 2;
+        }
+        else if (professor.ProfessorGetType() == 2)
+        {
+            ProfessorMaxAssignNum = 1;
+        }
+        return ProfessorMaxAssignNum;
+    }
+    public void openDetail(ProfessorSystem.Professor professor, int subjectId, int index)
+    {
+        if (isProfessorDetailOpen) return;
         CameraController.canMove = false;
         isProfessorDetailOpen = true;
         professorDetailUI.gameObject.SetActive(true);
         TMP_Text professorNameText = detailNameTransform.GetComponent<TMP_Text>();
-        TMP_Text infoText = detailInfoTransform.GetComponent<TMP_Text>();
         professorNameText.text = professor.ProfessorGetName();
-        infoText.text = "담당 과목 수 : 0 / 3";
+        changeDetailInfo(professor);
         Button exitButton = exitDetailButtonTransform.GetComponent<Button>();
         Button assignButton = assignButtonTransform.GetComponent<Button>();
         Button freeButton = freeButtonTransform.GetComponent<Button>();
@@ -225,29 +277,64 @@ public class ManageCurriculumMod : MonoBehaviour
         assignButton.onClick.AddListener(
             delegate
             {
-                subjectButtonClick(professor, subjectId);
+                assignButtonClick(professor, subjectId, index);
             }
         );
         freeButton.onClick.AddListener(
             delegate
             {
-                freeButtonClick(professor, subjectId);
+                freeButtonClick(professor, subjectId, index);
             }
         );
+        if (professor.ProfessorGetSubjects().Contains(subjectId))
+        {
+            assignButtonTransform.gameObject.SetActive(false);
+            freeButtonTransform.gameObject.SetActive(true);
+        }
+        else
+        {
+            assignButtonTransform.gameObject.SetActive(true);
+            freeButtonTransform.gameObject.SetActive(false);
+        }
     }
 
-    public void assignButtonClick(ProfessorSystem.Professor professor, int subjectId)
+    public void changeDetailInfo(ProfessorSystem.Professor professor)
+    {
+        TMP_Text infoText = detailInfoTransform.GetComponent<TMP_Text>();
+        int professorAbleToAssignNum = getProfessorMaxAssignNum(professor);
+        infoText.text = $"담당 과목 수 : {professor.ProfessorGetSubjects().Count} / {professorAbleToAssignNum}\n";
+        infoText.text += $"분류 : {professor.ProfessorGetTypeInString()} 교수\n";
+        infoText.text += $"유지비 : {professor.ProfessorGetSalary()} Ar\n";
+        List<int> professorStat = professor.ProfessorGetStats();
+        infoText.text += $"강의력 : {professorStat[0]}\n";
+        infoText.text += $"마법이론 : {professorStat[1]}\n";
+        infoText.text += $"마나감응 : {professorStat[2]}\n";
+        infoText.text += $"손재주 : {professorStat[3]}\n";
+        infoText.text += $"속성력 : {professorStat[4]}\n";
+        infoText.text += $"영창 마법력 : {professorStat[5]}";
+    }
+
+    public void assignButtonClick(ProfessorSystem.Professor professor, int subjectId, int index)
     {
         SubjectTree.addProfessorAt(professor.ProfessorGetID(), subjectId);
         professor.ProfessorAddSubject(subjectId);
+
+        changeDetailInfo(professor);
+        updateProfessorSelectButton(index);
+
+        assignButtonTransform.gameObject.SetActive(false);
+        freeButtonTransform.gameObject.SetActive(true);
     }
-    public void freeButtonClick(ProfessorSystem.Professor professor, int subjectId)
+    public void freeButtonClick(ProfessorSystem.Professor professor, int subjectId, int index)
     {
-        if (SubjectTree.canFreeProfessorInSubject(professor.ProfessorGetID(), subjectId))
-        {
-            SubjectTree.removeProfessorAt(professor.ProfessorGetID(), subjectId);
-            professor.ProfessorRemoveSubject(subjectId);
-        }
+        SubjectTree.removeProfessorAt(professor.ProfessorGetID(), subjectId);
+        professor.ProfessorRemoveSubject(subjectId);
+
+        changeDetailInfo(professor);
+        updateProfessorSelectButton(index);
+
+        assignButtonTransform.gameObject.SetActive(true);
+        freeButtonTransform.gameObject.SetActive(false);
     }
 
     public void closeButtonClick()
@@ -255,11 +342,5 @@ public class ManageCurriculumMod : MonoBehaviour
         CameraController.canMove = true;
         isProfessorDetailOpen = false;
         professorDetailUI.gameObject.SetActive(false);
-    }
-
-    public void subjectButtonClick(ProfessorSystem.Professor professor, int subjecctId)
-    {
-        if (!isProfessorDetailOpen)
-            openDetail(professor, subjecctId);
     }
 }

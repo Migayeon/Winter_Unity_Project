@@ -64,6 +64,13 @@ public static class SubjectTree
             subjects.Add(JsonUtility.FromJson<Subject>(loadJson));
             subjectStateNeedCnt.Add(subjects[i].needCount);
         }
+        studentInSubjectCnt = new List<int>();
+        professorInSubjectCnt = new List<int>();
+        for (int i = 0; i < subjectsCount; i++)
+        {
+            studentInSubjectCnt.Add(0);
+            professorInSubjectCnt.Add(0);
+        }
     }
 
     public static bool isSubjectOpen(int id)
@@ -183,6 +190,7 @@ public static class SubjectTree
             }
         }
     }
+
     public static bool isVaildCurriculum(List<int> subjectsId)
     {
         List<int> cntList = newCntList();
