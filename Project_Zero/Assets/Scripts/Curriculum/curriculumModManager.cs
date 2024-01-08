@@ -9,11 +9,21 @@ public class curriculumModManager : MonoBehaviour
     [SerializeField]
     private List<Transform> canvasList;
 
+    public static int c_mod = 0;
+
     void changeMod(int mod)
     {
         subjectGetterTransform.GetComponent<CurriculumSubjectGetter>().setMod(mod);
         for (int i = 0; i < canvasList.Count; i++)
-            canvasList[mod].gameObject.SetActive(mod == i);
+        {
+            canvasList[i].gameObject.SetActive(mod == i);
+        }
         
+    }
+
+    private void Start()
+    {
+        changeMod(c_mod);
+        Debug.Log("Test Done");
     }
 }

@@ -16,6 +16,13 @@ public class AfterTurn : MonoBehaviour
     public Text magicStoneCost;     // 마정석 구입 비용
     public Text totalResult;        // 총 결산
 
+    public Button nextTurn;
+    public void AfterTurnToBeforeTurn()
+    {
+        curriculumModManager.c_mod = 0;
+        SceneManager.LoadScene("Curriculum");
+    }
+
     int student_Rev;
     public static int magic_Rev = 0;
     int professor_Rev;
@@ -49,13 +56,13 @@ public class AfterTurn : MonoBehaviour
 
 
         // 교수 봉급 지급
-        professor_Cost = GoodsManager.goodsAr;
+        professor_Cost = -GoodsManager.goodsAr;
         foreach(ProfessorSystem.Professor professor in PlayerInfo.ProfessorList)
         {
             professor.ProfessorSetDefaultSalary();
             GoodsManager.goodsAr -= professor.ProfessorGetSalary();
         }
-        professor_Cost -= GoodsManager.goodsAr;
+        professor_Cost += GoodsManager.goodsAr;
 
         // 건물 증축시 비용 적용 완료... ( ClassEx.cs 참고 )
 
@@ -78,7 +85,7 @@ public class AfterTurn : MonoBehaviour
         totalResult.text = string.Format("{0:N0}", total_Result);
         if(total_Result > 0)
         {
-            totalResult.color = new Color(32f,131f,32f);
+            totalResult.color = new Color(32/255,131/255,32/255);
         }
         else
         {

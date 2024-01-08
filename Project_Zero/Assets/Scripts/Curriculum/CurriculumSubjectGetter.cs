@@ -11,6 +11,7 @@ public class CurriculumSubjectGetter : MonoBehaviour
 {
     [SerializeField]
     private int defaultIndex;
+
     [SerializeField]
     private Transform[] subjectInfoUIList;
     private Transform subjectInfoUI;
@@ -23,7 +24,7 @@ public class CurriculumSubjectGetter : MonoBehaviour
     private void Awake()
     {
         SubjectTree.initSubjectsAndInfo();
-        setMod(defaultIndex);
+        //setMod(defaultIndex);
     }
     private void Update()
     {
