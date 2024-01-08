@@ -31,6 +31,7 @@ public class PlayerInfo : MonoBehaviour
     */
 
     public static List<ProfessorSystem.Professor> RandomProfessorList = new List<ProfessorSystem.Professor>(3);
+    public static bool GenerateNewRandomProfessorList = true; //default value on startup (초기값)
     public static int ProfessorCount()
     {
         return ProfessorList.Count;

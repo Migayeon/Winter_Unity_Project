@@ -190,35 +190,44 @@ public class CreateProfessor : ProfessorSystem
     }
     void Start()
     {
-        /*
-        if (PlayerInfo.RandomProfessorList.Any())
-        {
-
-        }
-        else
-        {
-
-        }
-        */
         if (PlayerInfo.ProfessorCount() == PlayerInfo.maxProfessor)
         {
             MaxProfessorsErrorObject.SetActive(true);
             MaxProfessorsErrorMessage.text = string.Format("채용하고 있는 교수의 수의 최댓값은 {0}입니다", PlayerInfo.maxProfessor);
             MaxProfessorsErrorMessage = MaxProfessorsErrorObject.GetComponent<TextMeshProUGUI>();
-            
+
         }
         else
         {
             MaxProfessorsErrorObject.SetActive(false);
+            RetryCostInfo.enabled = true;
+            RetryFailMessage.enabled = false;
+
         }
 
-        RetryCostInfo.enabled = true;
-        RetryFailMessage.enabled = false;
         List<Professor> NewProfessors = new List<Professor>();
-        for (int i = 0; i < 3; ++i)
+
+        if (PlayerInfo.GenerateNewRandomProfessorList)
         {
-            NewProfessors.Add(CreateNewProfessor(i));
+            for (int i = 0; i < 3; ++i)
+            {
+                NewProfessors.Add(CreateNewProfessor(i));
+                PlayerInfo.RandomProfessorList.Add(NewProfessors[i]);
+            }
+            PlayerInfo.GenerateNewRandomProfessorList = false;
         }
+        else
+        {
+            for (int i = 0; i < 3; ++i)
+            {
+                Debug.Log("index error part");
+                Debug.Log("index : " + i);
+                Debug.Log(PlayerInfo.RandomProfessorList.Count);
+                NewProfessors.Add(PlayerInfo.RandomProfessorList[i]);
+            }
+
+        }
+
         Professor1Name.text = NewProfessors[0].ProfessorGetName();
         Professor2Name.text = NewProfessors[1].ProfessorGetName();
         Professor3Name.text = NewProfessors[2].ProfessorGetName();
@@ -340,6 +349,8 @@ public class CreateProfessor : ProfessorSystem
         if (GoodsManager.goodsAr >= 50)
         {
             GoodsManager.goodsAr -= 50;
+            PlayerInfo.RandomProfessorList.Clear();
+            PlayerInfo.GenerateNewRandomProfessorList = true;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
         else
