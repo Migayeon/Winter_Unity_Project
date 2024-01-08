@@ -324,6 +324,13 @@ public class EventManager : MonoBehaviour
                         type = "무작위 교수 스탯 ";
                         GoodsManager.goodsAr += Convert.ToInt32(amount); // 나중에 학생 스탯으로 변경
                         break;
+                    case 6:
+                        type = "마케팅 비용 ";
+                        ClassEx.marA -= 1000;
+                        ClassEx.marB -= 1000;
+                        ClassEx.marC -= 1000;
+                        ClassEx.marD -= 1000;
+                        break;
                     default:
                         break;
                 }

@@ -30,7 +30,9 @@ public class BeforeTurn : MonoBehaviour
         eventInfo = EventManager.GetEvent();
         if (eventInfo.Item2 == -1)
         {
-            SceneManager.LoadScene("Main");
+            eventTitle.text = "오늘은 평화로운 날입니다.";
+            eventContent.text = "아무 일도 일어나지 않았습니다.";
+            eventChanges.text = "";
         }
         else
         {

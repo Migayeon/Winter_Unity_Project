@@ -36,10 +36,10 @@ public class ClassEx : MonoBehaviour
 
     static private int classAr = 5000;
     static private int officeAr = 5000;
-    static private int marA = 5000;
-    static private int marB = 10000;
-    static private int marC = 20000;
-    static private int marD = 40000;
+    static public int marA = 5000;
+    static public int marB = 10000;
+    static public int marC = 20000;
+    static public int marD = 40000;
 
     void bankRunPos()
     {
@@ -118,7 +118,7 @@ public class ClassEx : MonoBehaviour
             else
             {
                 GoodsManager.goodsAr -= marA;
-                GoodsManager.goodsConstFame += num;
+                GoodsManager.GoodsConstFame += num;
                 marA += 1000;
                 requiredMarketA.text = $"{marA}";
                 duringMarketA = TurnManager.turn;
@@ -143,7 +143,7 @@ public class ClassEx : MonoBehaviour
             else
             {
                 GoodsManager.goodsAr -= marB;
-                GoodsManager.goodsConstFame += num;
+                GoodsManager.GoodsConstFame += num;
                 marB += 1000;
                 requiredMarketB.text = $"{marB}";
                 duringMarketB = TurnManager.turn;
@@ -169,7 +169,7 @@ public class ClassEx : MonoBehaviour
             else
             {
                 GoodsManager.goodsAr -= marC;
-                GoodsManager.goodsConstFame += num;
+                GoodsManager.GoodsConstFame += num;
                 marC += 1000;
                 requiredMarketC.text = $"{marC}";
                 duringMarketC = TurnManager.turn;
@@ -194,7 +194,7 @@ public class ClassEx : MonoBehaviour
             else
             {
                 GoodsManager.goodsAr -= marD;
-                GoodsManager.goodsConstFame += num;
+                GoodsManager.GoodsConstFame += num;
                 marD += 1000;
                 requiredMarketD.text = $"{marD}";
                 duringMarketC = TurnManager.turn;
