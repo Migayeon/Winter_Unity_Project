@@ -122,7 +122,10 @@ public class CurriculumSetting : MonoBehaviour
         coefficient = UnityEngine.Random.Range(9000, 12000);
         localMinimum = UnityEngine.Random.Range(320, 400);
         num = PlayerInfo.cost - localMinimum;
+        Debug.Log(num);
+        GoodsManager.CalculateEndedFame();
         num = (num * num) / coefficient * GoodsManager.goodsCalculatedEndedFame;
+        Debug.Log(num);
 
         SubjectTree.initSubjectsAndInfo();
 

@@ -46,7 +46,7 @@ public class AfterTurn : MonoBehaviour
                 group.CurriculumSequence();
             }
         }
-        student_Rev -= GoodsManager.goodsAr;
+        student_Rev = GoodsManager.goodsAr - student_Rev;
 
         // 마장석 구매 / 판매시 정산 완료. ( StockManager.cs 참고 )
 
