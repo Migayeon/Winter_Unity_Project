@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class curriculumModManager : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class curriculumModManager : MonoBehaviour
     [SerializeField]
     private List<Transform> canvasList;
 
-    public static int c_mod = 0;
+    private static int nowMod = 0;
 
     void changeMod(int mod)
     {
@@ -18,12 +19,21 @@ public class curriculumModManager : MonoBehaviour
         {
             canvasList[i].gameObject.SetActive(mod == i);
         }
-        
     }
 
-    private void Start()
+    private void Awake()
     {
-        changeMod(c_mod);
-        Debug.Log("Test Done");
+        changeMod(nowMod);
+    }
+
+    public static void loadCurriculumSceneWithMod(int mod)
+    {
+        nowMod = mod;
+        SceneManager.LoadScene("Curriculum");
+    }
+
+    public static void changeCurriculmMod(int mod)
+    {
+        nowMod = mod;
     }
 }

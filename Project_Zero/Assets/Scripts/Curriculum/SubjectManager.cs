@@ -4,13 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
-public class SubjectManager : MonoBehaviour
-{
-    public void Awake()
-    {
-        SubjectTree.initSubjectsAndInfo();
-    }
-}
 public static class SubjectTree
 {
     /* << Attributes >>
@@ -63,6 +56,10 @@ public static class SubjectTree
             subjects.Add(JsonUtility.FromJson<Subject>(loadJson));
             subjectStateNeedCnt.Add(subjects[i].needCount);
         }
+    }
+
+    public static void callOnlyOneTimeWhenGameStart()
+    {
         studentInSubjectCnt = new List<int>();
         professorInSubjectCnt = new List<int>();
         for (int i = 0; i < subjectsCount; i++)
@@ -287,16 +284,22 @@ public static class SubjectTree
         for (int subjectId = 0; subjectId < subjectsCount; subjectId++)
         {
             if (!curriculum.Contains(subjectId)) continue;
-            if (professorsLecture[professorId][subjectId] && professorInSubjectCnt[subjectId] == 1)
-                return false;
+            if (professorsLecture.ContainsKey(professorId))
+            {
+                if (professorsLecture[professorId][subjectId] && professorInSubjectCnt[subjectId] == 1)
+                    return false;
+            }
         }
         return true;
     }
 
     public static bool canFreeProfessorInSubject(long professorId, int querySubjectId)
     {
-        if (studentInSubjectCnt[querySubjectId] > 0 && professorsLecture[professorId][querySubjectId] && professorInSubjectCnt[querySubjectId] == 1)
-            return false;
+        if (professorsLecture.ContainsKey(professorId))
+        {
+            if (studentInSubjectCnt[querySubjectId] > 0 && professorsLecture[professorId][querySubjectId] && professorInSubjectCnt[querySubjectId] == 1)
+                return false;
+        }
         return true;
     }
 
@@ -319,6 +322,7 @@ public static class SubjectTree
         public List<int> subjectStates = new List<int>();
     }
 
+    //아직 테스트 안 됨
     public static string save()
     {
         SaveData rst = new SaveData();
@@ -354,10 +358,11 @@ public static class SubjectTree
         return JsonUtility.ToJson(rst);
     }
 
-    //아직 구현 안 됨
+    //아직 테스트 안 됨
     public static void load(string jsonContents)
     {
         initSubjectsAndInfo();
+        callOnlyOneTimeWhenGameStart();
         SaveData data = JsonUtility.FromJson<SaveData>(jsonContents);
         for (int i = 0; i < data.professorCnt; i++)
         {
@@ -377,11 +382,6 @@ public static class SubjectTree
             }
             professorsLecture[data.professorsId[i]] = lectureState;
         }
-        List<State> convertToState = new List<State>(3)
-        {
-            State.Closed, State.Open, State.ReadyToOpen,
-        };
-        subjectState = data.subjectStates.Select(x => convertToState[x]).ToList();
         initSubjectStates(data.subjectStates);
     }
 }

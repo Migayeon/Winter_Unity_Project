@@ -532,7 +532,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 7f563cb96934c2743b70c397c840cc87, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -1576,7 +1576,6 @@ GameObject:
   - component: {fileID: 2085245356}
   - component: {fileID: 2085245355}
   - component: {fileID: 2085245354}
-  - component: {fileID: 2085245353}
   m_Layer: 5
   m_Name: NextTurn
   m_TagString: Untagged
@@ -1604,19 +1603,6 @@ RectTransform:
   m_AnchoredPosition: {x: 742, y: -611}
   m_SizeDelta: {x: 250, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2085245353
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2085245351}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd4117217385e9948b08f2cdf88ca9cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetScene: Curriculum
 --- !u!114 &2085245354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1660,19 +1646,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2085245355}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2085245353}
-        m_TargetAssemblyTypeName: SceneChange, Assembly-CSharp
-        m_MethodName: ChangeScene
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &2085245355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1749,7 +1723,7 @@ MonoBehaviour:
   marketingCost: {fileID: 1279478742}
   magicStoneCost: {fileID: 684211849}
   totalResult: {fileID: 1682064014}
-  nextTurn: {fileID: 0}
+  nextTurn: {fileID: 2085245354}
 --- !u!4 &2092011097
 Transform:
   m_ObjectHideFlags: 0

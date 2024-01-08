@@ -127,8 +127,6 @@ public class CurriculumSetting : MonoBehaviour
         num = (num * num) / coefficient * GoodsManager.goodsCalculatedEndedFame;
         Debug.Log(num);
 
-        SubjectTree.initSubjectsAndInfo();
-
         warningMessage.enabled = false;
         foreach (var subject in subjectGameobject.transform.GetComponentsInChildren<Button>())
         {

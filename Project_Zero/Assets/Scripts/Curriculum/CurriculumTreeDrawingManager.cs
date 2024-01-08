@@ -19,7 +19,6 @@ public class CurriculumTreeDrawingManager : MonoBehaviour
     public List<List<int>> groupSubjects = new List<List<int>>();
     public void Start()
     {
-        SubjectTree.initSubjectsAndInfo();
         for (int i = 0; i < subjectsObject.childCount; i++)
             subjectTransform.Add(subjectsObject.GetChild(i));
         drawTree(new List<int>());

@@ -21,11 +21,6 @@ public class CurriculumSubjectGetter : MonoBehaviour
 
     public static bool selectFixed = false;
 
-    private void Awake()
-    {
-        SubjectTree.initSubjectsAndInfo();
-        //setMod(defaultIndex);
-    }
     private void Update()
     {
         if (subjectInfoUI == null) return;

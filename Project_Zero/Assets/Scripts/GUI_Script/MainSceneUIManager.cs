@@ -128,8 +128,7 @@ public class MainSceneUIManager : MonoBehaviour
 
     public void MoveToCurriculum(int mod)
     {
-        curriculumModManager.c_mod = mod;
-        SceneManager.LoadScene("Curriculum");
+        curriculumModManager.loadCurriculumSceneWithMod(mod);
     }
 
     public void Save()

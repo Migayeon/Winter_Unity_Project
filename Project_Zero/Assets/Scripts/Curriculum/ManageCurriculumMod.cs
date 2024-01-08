@@ -6,6 +6,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static ManageCurriculumMod;
 using static ProfessorSystem;
@@ -24,6 +25,8 @@ public class ManageCurriculumMod : MonoBehaviour
     private GameObject professorSelectButtonPrefab;
     [SerializeField]
     private Transform professorDetailUI;
+    [SerializeField]
+    private Transform goBackButtonTransform;
 
     private Transform professorContents;
     private Transform professorNameUI;
@@ -40,9 +43,6 @@ public class ManageCurriculumMod : MonoBehaviour
 
     private void Awake()
     {
-        SubjectTree.initSubjectsAndInfo();
-        SubjectTree.initSubjectStates(new List<int>());
-
         professorContents = professorInfoUI.GetChild(0).GetChild(0).GetChild(0).GetChild(0);
         professorNameUI = professorInfoUI.GetChild(1);
         detailNameTransform = professorDetailUI.GetChild(0).GetChild(0);
@@ -65,6 +65,12 @@ public class ManageCurriculumMod : MonoBehaviour
                 }
             );
         }
+        goBackButtonTransform.GetComponent<Button>().onClick.AddListener(
+            delegate
+            {
+                goBack();
+            }
+        );
     }
     private void Update()
     {
@@ -100,7 +106,7 @@ public class ManageCurriculumMod : MonoBehaviour
         }
         else
         {
-            subject.GetComponent<Image>().color = new Color(0.5f, 0.8f, 0.8f);
+            subject.GetComponent<Image>().color = new Color(0.8f, 0.8f, 0.8f);
         }
     }
 
@@ -342,5 +348,11 @@ public class ManageCurriculumMod : MonoBehaviour
         CameraController.canMove = true;
         isProfessorDetailOpen = false;
         professorDetailUI.gameObject.SetActive(false);
+    }
+
+    public void goBack()
+    {
+        if (isProfessorDetailOpen) return;
+        SceneManager.LoadScene("Main");
     }
 }
