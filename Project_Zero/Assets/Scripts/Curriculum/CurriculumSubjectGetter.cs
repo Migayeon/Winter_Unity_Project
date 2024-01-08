@@ -23,13 +23,11 @@ public class CurriculumSubjectGetter : MonoBehaviour
     private void Awake()
     {
         SubjectTree.initSubjectsAndInfo();
-
-        subjectInfoUI = subjectInfoUIList[defaultIndex];
-        subjectContentsUI = subjectInfoUI.GetChild(0).GetChild(0);
-        subjectNameUI = subjectInfoUI.GetChild(1);
+        setMod(defaultIndex);
     }
     private void Update()
     {
+        if (subjectInfoUI == null) return;
         if (!selectFixed)
         {
             Vector2 mp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -45,6 +43,20 @@ public class CurriculumSubjectGetter : MonoBehaviour
             {
                 subjectInfoUI.gameObject.SetActive(false);
             }
+        }
+    }
+    public void setMod(int mod)
+    {
+        if (subjectInfoUIList[mod] != null) {
+            subjectInfoUI = subjectInfoUIList[mod];
+            subjectContentsUI = subjectInfoUI.GetChild(0).GetChild(0);
+            subjectNameUI = subjectInfoUI.GetChild(1);
+        }
+        else
+        {
+            subjectInfoUI = null;
+            subjectContentsUI = null;
+            subjectNameUI = null;
         }
     }
 

@@ -39,7 +39,6 @@ public static class SubjectTree
     private const int DONT_HAVE_GROUP = 0;
     private const int NORMAL_ROOT = 0;
     private static string INFO_PATH = Path.Combine(Application.dataPath, "Resources/Subjects/subjectsInfo.json");
-    public static List<bool> professors = new List<bool>();
     public static List<Subject> subjects = new List<Subject>();
     public static SubjectInfo subjectsInfo;
     public static List<State> subjectState = new List<State>();
@@ -301,6 +300,17 @@ public static class SubjectTree
         return true;
     }
 
+    public static List<long> getProfesorListBySubjectId(int subjectId)
+    {
+        List<long> rst = new List<long>();
+        foreach (long professorId in professorsLecture.Keys)
+        {
+            if (professorsLecture[professorId][subjectId])
+                rst.Add(professorId);
+        }
+        return rst;
+    }
+
     public class SaveData
     {
         public int professorCnt = 0;
@@ -318,7 +328,7 @@ public static class SubjectTree
         {
             rst.lecturesId.Add("");
             for (int j = 0; j < subjectsCount; j += 3)
-                rst.lecturesId[(int) i] += ((Convert.ToInt32(professorsLecture[i][j]) + Convert.ToInt32(professorsLecture[i][j + 1]) * 2 + Convert.ToInt32(professorsLecture[i][j + 2]) * 4)).ToString();
+                rst.lecturesId[(int)i] += ((Convert.ToInt32(professorsLecture[i][j]) + Convert.ToInt32(professorsLecture[i][j + 1]) * 2 + Convert.ToInt32(professorsLecture[i][j + 2]) * 4)).ToString();
             int startIdx = (subjectsCount / 3) * 3;
             int mul = 1;
             int sum = 0;
@@ -327,9 +337,20 @@ public static class SubjectTree
                 sum += Convert.ToInt32(professorsLecture[i][j]) * mul;
                 mul *= 2;
             }
-            rst.lecturesId[(int) i] += sum.ToString();
+            rst.lecturesId[(int)i] += sum.ToString();
         }
-        rst.subjectStates = subjectState.Select(s => (int) s).ToList();
+        Dictionary<State, bool> convertToInt = new Dictionary<State, bool>(3)
+        {
+            {State.Closed, false},
+            {State.Open, true},
+            {State.ReadyToOpen, false}
+        };
+        List<bool> filter = subjectState.Select(s => convertToInt[s]).ToList();
+        for (int i = 0; i < subjectsCount; i++)
+        {
+            if (filter[i])
+                rst.subjectStates.Add(i);
+        }
         return JsonUtility.ToJson(rst);
     }
 
@@ -340,11 +361,27 @@ public static class SubjectTree
         SaveData data = JsonUtility.FromJson<SaveData>(jsonContents);
         for (int i = 0; i < data.professorCnt; i++)
         {
-            for (int j = 0; j < data.lecturesId.Count; j++)
+            List<bool> lectureState = new List<bool>();
+            for (int j = 0; j < subjectsCount / 3 + Convert.ToInt32(subjectsCount % 3); j++)
             {
-
+                int tmp = Convert.ToInt32(data.lecturesId[i][j]);
+                lectureState.Add((tmp & 1) == 1);
+                if ((tmp & 1) == 1) professorInSubjectCnt[j * 3] ++;
+                if (lectureState.Count == subjectsCount) break;
+                lectureState.Add((tmp & 2) == 1);
+                if ((tmp & 2) == 1) professorInSubjectCnt[j * 3 + 1]++;
+                if (lectureState.Count == subjectsCount) break;
+                lectureState.Add((tmp & 4) == 1);
+                if ((tmp & 4) == 1) professorInSubjectCnt[j * 3 + 2]++;
+                if (lectureState.Count == subjectsCount) break;
             }
+            professorsLecture[data.professorsId[i]] = lectureState;
         }
+        List<State> convertToState = new List<State>(3)
+        {
+            State.Closed, State.Open, State.ReadyToOpen,
+        };
+        subjectState = data.subjectStates.Select(x => convertToState[x]).ToList();
         initSubjectStates(data.subjectStates);
     }
 }
