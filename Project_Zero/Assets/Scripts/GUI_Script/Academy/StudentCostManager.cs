@@ -25,10 +25,14 @@ public class StudentCostManager : MonoBehaviour
         {
             Destroy(prevInfo.gameObject);
         }
+        for (int i = 0; i<PlayerInfo.graduateList.Count; i++)
+        {
+
+        }
         for (int i = 0; i<PlayerInfo.studentGroups.Count; i++)
         {
             GameObject studentInfo = Instantiate(infoPrefab, content);
-            studentInfo.GetComponent<StudentCostUpdate>().ContentUpdate(i + 1);
+            studentInfo.GetComponent<StudentCostUpdate>().CurrentContentUpdate(i + 1);
         }
     }
 }

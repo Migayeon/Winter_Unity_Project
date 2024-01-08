@@ -94,28 +94,19 @@ public class StudentGroup
         List<int> enforceType = subject.enforceContents;
         for (int i = 0; i < enforceType.Count; i++)
         {
-            Debug.Log(i);
-            Debug.Log(stat[i]);
-            Debug.Log(enforceType[i]);
             stat[i] += enforceType[i];
         }
         age++;
         GoodsManager.goodsAr += cost * number;
         if (age == 8)
         {
-            SelectTest();
-
+            Graduation();
             return;
         }
     }
 
-    public void SelectTest()
+    public void Graduation()
     {
-        /*
-         
-        시험 선택 함수. 
-
-         */
         foreach (int i in stat)
         {
             Debug.Log(i);

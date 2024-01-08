@@ -20,6 +20,8 @@ public class PlayerInfo : MonoBehaviour
     public static List<ProfessorSystem.Professor> ProfessorList = new List<ProfessorSystem.Professor>();
     // 학생 리스트 
     public static List<StudentGroup[]> studentGroups = new List<StudentGroup[]>();
+    // 졸업한 학생 데이터
+    public static List<string> graduateList = new List<string>();
 
     /*
     public class Player
