@@ -25,6 +25,8 @@ public class manaStoneGambleManager : MonoBehaviour
     public double selectedPower = 0;
     public static State isPlaying = State.None;
     [SerializeField]
+    private Transform gotoMenuBtn;
+    [SerializeField]
     private double increasePercent;
     [SerializeField]
     private GameObject startButtonObject, stopButtonObject, restartButtonObject,
@@ -44,6 +46,8 @@ public class manaStoneGambleManager : MonoBehaviour
         betInputField.SetActive(true);
         revenueDisplayObject.SetActive(false);
         startWarningDisplayObject.SetActive(false);
+        gotoMenuBtn.gameObject.SetActive(true);
+        isPlaying = State.None;
     }
 
     public void resetGame()
@@ -61,7 +65,8 @@ public class manaStoneGambleManager : MonoBehaviour
         restartButtonObject.SetActive(false);
         stopButtonObject.SetActive(false);
         betInputField.SetActive(true);
-        revenueDisplayObject.SetActive(false); 
+        revenueDisplayObject.SetActive(false);
+        gotoMenuBtn.gameObject.SetActive(true);
     }
 
     public void startGame()
@@ -85,6 +90,7 @@ public class manaStoneGambleManager : MonoBehaviour
             restartButtonObject.SetActive(false);
             stopButtonObject.SetActive(true);
             betInputField.SetActive(false);
+            gotoMenuBtn.gameObject.SetActive(false);
             revenueDisplayObject.SetActive(false);
         }
     }

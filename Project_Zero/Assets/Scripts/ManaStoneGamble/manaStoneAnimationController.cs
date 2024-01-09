@@ -26,6 +26,9 @@ public class manaStoneAnimationController : MonoBehaviour
         manaStoneRenderer = GetComponent<SpriteRenderer>();
         manaStoneAnimator = GetComponent<Animator>();
         originPos = new Vector2(originX, originY);
+        manaStoneAnimator.SetBool("start", false);
+        manaStoneAnimator.SetBool("die", false);
+        manaStoneAnimator.SetBool("none", true);
     }
 
     private void Update()
