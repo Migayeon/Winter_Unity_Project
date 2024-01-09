@@ -31,6 +31,7 @@ public class SavedataSceneManager : MonoBehaviour
         SubjectTree.initSubjectsAndInfo();
         SubjectTree.initSubjectStates(new List<int>());
         SubjectTree.callOnlyOneTimeWhenGameStart();
+
         /*
          
         초기화할 내용 추가. 

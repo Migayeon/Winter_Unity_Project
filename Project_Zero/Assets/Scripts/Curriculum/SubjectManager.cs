@@ -86,6 +86,7 @@ public static class SubjectTree
         subjectState[id] = State.Open;
         foreach (int nextNode in subjects[id].nextSubjects)
         {
+            Debug.Log(subjectStateNeedCnt.Count);
             if (--subjectStateNeedCnt[nextNode] == 0)
                 subjectState[nextNode] = State.ReadyToOpen;
         }
@@ -134,12 +135,12 @@ public static class SubjectTree
         subjectState = new List<State>();
         subjectStateNeedCnt = new List<int>();
         for (int i = 0; i < subjectsCount; i++)
-            subjectState.Add(State.Closed);
-        for (int i = 0; i < openedSubjectsId.Count; i++)
         {
-            subjectState[openedSubjectsId[i]] = State.Open;
+            subjectState.Add(State.Closed);
             subjectStateNeedCnt.Add(subjects[i].needCount);
         }
+        for (int i = 0; i < openedSubjectsId.Count; i++)
+            subjectState[openedSubjectsId[i]] = State.Open;
         for (int i = 0; i < subjectsCount; i++)
             subjectState.Add(State.Closed);
         List<int> cntList = newCntList();
