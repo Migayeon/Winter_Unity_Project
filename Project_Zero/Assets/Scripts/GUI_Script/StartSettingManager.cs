@@ -12,19 +12,24 @@ public class StartSettingManager : MonoBehaviour
 
     public void InputMyName()
     {
-        PlayerInfo.playerName = inputField.textComponent.text;
-        inputField.textComponent.text = "";
-        inputField.text = "";
-        confirmButton.onClick.RemoveAllListeners();
-        message.text = "아카데미의 이름을 정해주세요. (최대 8글자)";
-        confirmButton.onClick.AddListener(InputArcademyName);
+        if (inputField.textComponent.text.Length > 0)
+        {
+            PlayerInfo.playerName = inputField.textComponent.text;
+            inputField.textComponent.text = "";
+            inputField.text = "";
+            confirmButton.onClick.RemoveAllListeners();
+            message.text = "아카데미의 이름을 정해주세요. (최대 8글자)";
+            confirmButton.onClick.AddListener(InputArcademyName);
+        }
     }
 
     public void InputArcademyName()
     {
-        PlayerInfo.arcademyName = inputField.textComponent.text;
-        inputField.textComponent = null;
-        SceneManager.LoadScene("Tutorial");
+        if (inputField.textComponent.text.Length > 0) {
+            PlayerInfo.arcademyName = inputField.textComponent.text;
+            inputField.textComponent = null;
+            SceneManager.LoadScene("Tutorial");
+        }
     }
 
     private void Awake()

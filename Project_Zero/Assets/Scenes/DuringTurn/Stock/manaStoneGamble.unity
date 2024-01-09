@@ -289,7 +289,7 @@ MonoBehaviour:
   betAr: 0
   isCalculated: 0
   selectedPower: 0
-  increasePercent: 0
+  increasePercent: 30
   startButtonObject: {fileID: 1700651132}
   stopButtonObject: {fileID: 1411087636}
   restartButtonObject: {fileID: 552789623}

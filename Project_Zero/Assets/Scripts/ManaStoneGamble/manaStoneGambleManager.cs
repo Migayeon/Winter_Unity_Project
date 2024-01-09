@@ -15,12 +15,14 @@ public class manaStoneGambleManager : MonoBehaviour
         Selected,
         Die
     }
-    [HideInInspector] public int betAr = 0;
-    [HideInInspector] public bool isCalculated;
-    public static double maxPower = 13, minPower = 0.7;
+    [HideInInspector]
+    public int betAr = 0;
+    [HideInInspector]
+    public bool isCalculated;
+    public static double maxPower = 8, minPower = 1;
     public static double nowPower = 0;
     public static double stopPower = maxPower;
-    [SerializeField] public double selectedPower = 0;
+    public double selectedPower = 0;
     public static State isPlaying = State.None;
     [SerializeField]
     private double increasePercent;
@@ -91,8 +93,8 @@ public class manaStoneGambleManager : MonoBehaviour
     {
         selectedPower = nowPower;
         stopButtonObject.SetActive(false);
-        if (rand.NextDouble() < increasePercent / 100)
-            stopPower = Math.Max(stopPower * 1.2, maxPower);
+        if (rand.NextDouble() <= increasePercent / 100)
+            stopPower = Math.Min(stopPower * 1.2, maxPower);
         isPlaying = State.Selected;
         selectedPowerDisplayObject.SetActive(true);
         selectedPowerDisplay.text = String.Concat("× ", String.Format("{0:0.000}", (Math.Round(nowPower * 1000) / 1000).ToString()));

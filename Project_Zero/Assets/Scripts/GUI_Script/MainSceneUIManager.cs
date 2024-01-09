@@ -44,8 +44,8 @@ public class MainSceneUIManager : MonoBehaviour
         "GetProfessor",
         "Curriculum2",
         "Test_Section",
-        "manaStoneGamble",
-        "Stock" 
+        "Stock",
+        "manaStoneGamble"
     };
 
 
