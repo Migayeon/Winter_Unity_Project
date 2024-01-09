@@ -42,3 +42,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Ui
+    uniqueID: 762361313
+    locked: 0
+  - name: Contents
+    uniqueID: 158110147
+    locked: 0
+  - name: BG
+    uniqueID: 3806987809
+    locked: 0
