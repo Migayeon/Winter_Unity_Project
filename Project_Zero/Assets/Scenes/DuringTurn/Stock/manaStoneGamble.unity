@@ -391,7 +391,7 @@ MonoBehaviour:
   isCalculated: 0
   selectedPower: 0
   gotoMenuBtn: {fileID: 1027893487}
-  increasePercent: 30
+  increasePercent: 50
   startButtonObject: {fileID: 1700651132}
   stopButtonObject: {fileID: 1411087636}
   restartButtonObject: {fileID: 552789623}

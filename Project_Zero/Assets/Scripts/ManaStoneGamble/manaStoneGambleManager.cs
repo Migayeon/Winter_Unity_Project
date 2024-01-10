@@ -19,7 +19,7 @@ public class manaStoneGambleManager : MonoBehaviour
     public int betAr = 0;
     [HideInInspector]
     public bool isCalculated;
-    public static double maxPower = 8, minPower = 1;
+    public static double maxPower = 7, minPower = 0.2;
     public static double nowPower = 0;
     public static double stopPower = maxPower;
     public double selectedPower = 0;
@@ -69,6 +69,43 @@ public class manaStoneGambleManager : MonoBehaviour
         gotoMenuBtn.gameObject.SetActive(true);
     }
 
+    private double fastPow(double x, int a)
+    {
+        if (a == 0) return 1;
+        else if (a == 1) return x;
+        else
+        {
+            double tmp = fastPow(x, a / 2);
+            if (a % 2 == 1) return tmp * tmp * x;
+            return tmp * tmp;
+        }
+    }
+
+    public double betaIntFunc(double x)
+    {
+        // alpha = 2, beta = 5 인 베타함수를 0부터 x까지 적분한 값
+        // 기댓값 : 2/7, 분산 : 0.1
+        double tmp = fastPow(1 - x, 5);
+        return 5 * tmp * (1 - x) - 6 * tmp + 1;
+    }
+
+    public double getBetaRandom()
+    {
+        double y = rand.NextDouble();
+        double left = 0;
+        double right = 1;
+        double x;
+        while (true)
+        {
+            x = (left + right) / 2;
+            double tmp = betaIntFunc(x);
+            if (tmp < y) left = x;
+            else right = x;
+            if (Math.Abs(y - betaIntFunc(x)) < 0.001) break;
+        }
+        return x * (maxPower - minPower) + minPower;
+    }
+
     public void startGame()
     {
         if (betAr <= 0)
@@ -82,7 +119,7 @@ public class manaStoneGambleManager : MonoBehaviour
             betAr = (int)(betAr * 0.5);
             nowPower = 0;
             selectedPower = 0;
-            stopPower = rand.NextDouble() * (maxPower - minPower) + minPower;
+            stopPower = getBetaRandom();
             isPlaying = State.Playing;
             selectedPowerDisplayObject.SetActive(false);
             nowPowerDisplayObject.SetActive(true);
@@ -130,13 +167,13 @@ public class manaStoneGambleManager : MonoBehaviour
         {
             nowPower += (double) rand.Next(0, 30) / 1000;
             float reverseLogPower = 1 - (float)(Math.Log(nowPower + 1) / Math.Log(maxPower + 1));
-            nowPowerDisplay.color = new Color(200, 255 * reverseLogPower, 255 * reverseLogPower);
+            nowPowerDisplay.color = new Color(0.8f, reverseLogPower, reverseLogPower);
             nowPowerDisplay.fontSize = 36 + (int) (36 * (1 - reverseLogPower));
             if (nowPower >= stopPower)
             {
                 nowPower = stopPower;
                 stopButtonObject.SetActive(false);
-                nowPowerDisplay.color = new Color(200, 255, 255);
+                nowPowerDisplay.color = new Color(0.8f, 1, 1);
                 isPlaying = State.Die;
             }
             nowPowerDisplay.text = String.Concat("× ", String.Format("{0:0.000}", (Math.Round(nowPower * 1000) / 1000).ToString()));
@@ -148,7 +185,7 @@ public class manaStoneGambleManager : MonoBehaviour
             if (selectedPower < minPower)
             {
                 selectedPowerDisplayObject.SetActive(true);
-                selectedPowerDisplay.color = new Color(200, 255, 255);
+                selectedPowerDisplay.color = new Color(0.8f, 1, 1);
                 selectedPowerDisplay.text = "× 0";
             }
 
