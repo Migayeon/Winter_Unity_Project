@@ -167,13 +167,13 @@ public class manaStoneGambleManager : MonoBehaviour
         {
             nowPower += (double) rand.Next(0, 30) / 1000;
             float reverseLogPower = 1 - (float)(Math.Log(nowPower + 1) / Math.Log(maxPower + 1));
-            nowPowerDisplay.color = new Color(0.8f, reverseLogPower, reverseLogPower);
+            nowPowerDisplay.color = new Color(1, reverseLogPower, reverseLogPower);
             nowPowerDisplay.fontSize = 36 + (int) (36 * (1 - reverseLogPower));
             if (nowPower >= stopPower)
             {
                 nowPower = stopPower;
                 stopButtonObject.SetActive(false);
-                nowPowerDisplay.color = new Color(0.8f, 1, 1);
+                nowPowerDisplay.color = new Color(1, 1, 1);
                 isPlaying = State.Die;
             }
             nowPowerDisplay.text = String.Concat("× ", String.Format("{0:0.000}", (Math.Round(nowPower * 1000) / 1000).ToString()));
@@ -185,7 +185,7 @@ public class manaStoneGambleManager : MonoBehaviour
             if (selectedPower < minPower)
             {
                 selectedPowerDisplayObject.SetActive(true);
-                selectedPowerDisplay.color = new Color(0.8f, 1, 1);
+                selectedPowerDisplay.color = new Color(1, 1, 1);
                 selectedPowerDisplay.text = "× 0";
             }
 
