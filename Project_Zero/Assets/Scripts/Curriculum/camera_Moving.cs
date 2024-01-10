@@ -39,9 +39,9 @@ public class CameraController : MonoBehaviour
                         transform.position = new Vector3(transform.position.x, -4, -10);
                     if (transform.position.y < -24)
                         transform.position = new Vector3(transform.position.x, -24, -10);
-                    if (transform.position.x < -11)
+                    if (transform.position.x < 0)
                         transform.position = new Vector3(-11, transform.position.y, -10);
-                    if (transform.position.x > 16)
+                    if (transform.position.x > 28)
                         transform.position = new Vector3(16, transform.position.y, -10);
                 }
                 prevPoint = Input.mousePosition;
