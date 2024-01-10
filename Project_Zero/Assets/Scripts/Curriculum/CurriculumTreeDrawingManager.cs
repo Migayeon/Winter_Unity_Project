@@ -80,7 +80,7 @@ public class CurriculumTreeDrawingManager : MonoBehaviour
     }
     public GameObject drawCurveById(int startId, int endId, bool selected)
     {
-        GameObject oneLine = Instantiate(linePrefab, Vector2.zero, Quaternion.identity, linesTransform);
+        GameObject oneLine = Instantiate(linePrefab, new Vector3(0, 0, 10), Quaternion.identity, linesTransform);
         List<Vector2> pos = getPos(startId, endId, oneLine, selected);
         if (pos != null)
         {
@@ -114,7 +114,12 @@ public class CurriculumTreeDrawingManager : MonoBehaviour
         if (selected)
         {
             for (int i = 0; i < lr.positionCount; i++)
-                lr.SetPosition(i, new Vector3(lr.GetPosition(i).x, lr.GetPosition(i).y, -1));
+                lr.SetPosition(i, new Vector3(lr.GetPosition(i).x, lr.GetPosition(i).y, 9));
+        }
+        else
+        {
+            for (int i = 0; i < lr.positionCount; i++)
+                lr.SetPosition(i, new Vector3(lr.GetPosition(i).x, lr.GetPosition(i).y, 10));
         }
     }
     public List<Vector2> getPos(int startId, int endId, GameObject oneLine, bool selected)
@@ -161,8 +166,8 @@ public class CurriculumTreeDrawingManager : MonoBehaviour
 
     public class GroupBox
     {
-        public Vector2 P0 = Vector2.zero;
-        public Vector2 P1 = Vector2.zero;
+        public Vector3 P0 = new Vector3(0, 0, 10);
+        public Vector3 P1 = new Vector3(0, 0, 10);
         private bool isFirstTimeToEdit = true;
         public bool haveLineInput = false;
         public bool haveLineOutput = false;

@@ -17,10 +17,10 @@ public class jsonCheck
 public class MainSceneUIManager : MonoBehaviour
 {
     static int index = 0;
-    bool isOpen = false;
-    float time;
-    bool checkSave = false;
-    int check;
+    private bool isOpen = false;
+    private float time;
+    private bool checkSave = false;
+    private int check;
 
     public GameObject[] tabCanvas = new GameObject[4];
     string[] tabNameArr = new string[4] { "학원", "교수", "학생", "자산 관리" };
@@ -30,10 +30,6 @@ public class MainSceneUIManager : MonoBehaviour
     public Button selectOpenButton;
     public GameObject tabList;
     public Text tabName;
-
-    public GameObject escMessage;
-    public GameObject loading;
-    public GameObject toTitleMessage;
 
     public Button[] sceneButton = new Button[9];
     string[] sceneName = new string[9] // 연결된 scene 추가
@@ -131,45 +127,9 @@ public class MainSceneUIManager : MonoBehaviour
         curriculumModManager.loadCurriculumSceneWithMod(mod);
     }
 
-    public void Save()
-    {
-        loading.SetActive(true);
-        SaveManager.SaveProcess();
-        loading.SetActive(false);
-    }
-
-    public void Setting()
-    {
-        SettingManager.backPath = "Main";
-        MoveScene("Setting");
-    }
-
-    public void TitleCheckMessage()
-    {
-        toTitleMessage.SetActive(true);
-        toTitleMessage.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(delegate { MoveScene("Title"); });
-        toTitleMessage.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(NoTitleGo);
-    }
-
-    public void NoTitleGo()
-    {
-        toTitleMessage.SetActive(false);
-    }
-
-    public void CloseToTitleMessage()
-    {
-        toTitleMessage.SetActive(false);
-    }
-
-    public void CloseMessage()
-    {
-        escMessage.SetActive(false);
-    }
-
     private void Awake()
     {
         isOpen = true;
-        escMessage.SetActive(false);
         MoveTab(index);
         prevButton.onClick.AddListener(PrevTab);
         nextButton.onClick.AddListener(NextTab);
@@ -194,26 +154,6 @@ public class MainSceneUIManager : MonoBehaviour
                 int j = i;
                 sceneButton[i].onClick.AddListener(delegate { MoveScene(sceneName[j]); });
             }
-        }
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            escMessage.transform.GetChild(1).GetComponent<Button>().onClick.RemoveAllListeners();
-            escMessage.transform.GetChild(2).GetComponent<Button>().onClick.RemoveAllListeners();
-            escMessage.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
-            escMessage.transform.GetChild(5).GetComponent<Button>().onClick.RemoveAllListeners();
-            Debug.Log("hi");
-            escMessage.SetActive(true);
-            loading.SetActive(false);
-            toTitleMessage.SetActive(false);
-            escMessage.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(Save);
-            escMessage.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(Setting);
-            escMessage.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(TitleCheckMessage);
-            escMessage.transform.GetChild(5).GetComponent<Button>().onClick.AddListener(CloseMessage);
-
         }
     }
 }

@@ -27,6 +27,8 @@ public class ManageCurriculumMod : MonoBehaviour
     private Transform professorDetailUI;
     [SerializeField]
     private Transform goBackButtonTransform;
+    [SerializeField]
+    private ESC_Manager EscManger;
 
     private Transform professorContents;
     private Transform professorNameUI;
@@ -74,6 +76,7 @@ public class ManageCurriculumMod : MonoBehaviour
     }
     private void Update()
     {
+        if (EscManger.isPause) return;
         if (isProfessorDetailOpen) return;
         if (!CurriculumSubjectGetter.selectFixed)
         {
@@ -112,6 +115,7 @@ public class ManageCurriculumMod : MonoBehaviour
 
     public void SubjectClick(int clickedId)
     {
+        if (EscManger.isPause) return;
         if (isProfessorDetailOpen) return;
         if (clickedId == selectedSubjectId)
         {

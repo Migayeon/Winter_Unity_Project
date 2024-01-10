@@ -11,6 +11,8 @@ public class CurriculumSubjectGetter : MonoBehaviour
 {
     [SerializeField]
     private int defaultIndex;
+    [SerializeField]
+    private ESC_Manager ESC_Script;
 
     [SerializeField]
     private Transform[] subjectInfoUIList;
@@ -23,6 +25,7 @@ public class CurriculumSubjectGetter : MonoBehaviour
 
     private void Update()
     {
+        if (ESC_Script.isPause) return;
         if (subjectInfoUI == null) return;
         if (!selectFixed)
         {

@@ -1,9 +1,9 @@
 {
-    "turn": 4,
-    "ar": 13329,
+    "turn": 0,
+    "ar": 20000,
     "stone": 0,
     "studentsNum": 0,
     "fame": 10,
-    "myName": "a",
-    "arcademyName": "b"
+    "myName": "default",
+    "arcademyName": "default"
 }
