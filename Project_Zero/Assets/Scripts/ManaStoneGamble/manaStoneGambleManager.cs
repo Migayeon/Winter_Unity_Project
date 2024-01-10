@@ -19,7 +19,7 @@ public class manaStoneGambleManager : MonoBehaviour
     public int betAr = 0;
     [HideInInspector]
     public bool isCalculated;
-    public static double maxPower = 7, minPower = 0.2;
+    public static double maxPower = 6, minPower = 0.7;
     public static double nowPower = 0;
     public static double stopPower = maxPower;
     public double selectedPower = 0;
