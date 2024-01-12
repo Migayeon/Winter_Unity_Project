@@ -1,7 +1,7 @@
 {
     "id": 5,
     "tier": 2,
-    "name": "소환 주문",
+    "name": "기초 소환술",
     "enforceContents": [
         0,
         70,

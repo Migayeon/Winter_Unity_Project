@@ -3,26 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using UnityEngine;
 public static class SubjectTree
 {
-    /* << Attributes >>
-     *  - List<Subject> subjects : 과목들을 저장합니다.
-     *  - Dictionary<string, int> subjectsInfo : 전체적인 정보를 저장합니다.
-     *  - List<State> subjectState : 과목의 상태를 저장합니다. (닫힘, 열림, 준비됨)
-     *  
-     *  << Funtions >>
-     *  - void init() : 정보를 json파일로부터 불러옵니다.
-     *  
-     *  - bool isSubjectOpen(int id) : 강좌가 개설되어 있는 지 확인합니다.
-     *  - void openSubject(int id) : 강좌를 개설합니다.
-     *  - void closeSubject(int id) : 강좌를 폐쇄합니다.
-     *  - void changeSubjectState(int id) : 강좌 상태를 변경합니다.
-     *  
-     *  - List<int> getEnforceType(int id) : return EnforceType
-     *  
-     *  - bool isVaildCurriculum(List<int> subjectsId) : 해당 커리큘럼이 유효한 지 판단하여 반환합니다.
-     */
     public enum State
     {
         Closed,
@@ -33,6 +17,8 @@ public static class SubjectTree
     private const int NORMAL_ROOT = 0;
     private static string INFO_PATH = Path.Combine(Application.dataPath, "Resources/Subjects/subjectsInfo.json");
     public static List<Subject> subjects = new List<Subject>();
+    public static List<List<int>> subjectGroups = new List<List<int>>();
+
     public static SubjectInfo subjectsInfo;
     public static List<State> subjectState = new List<State>();
     public static List<int> subjectStateNeedCnt = new List<int>();
@@ -46,15 +32,27 @@ public static class SubjectTree
     {
         subjects = new List<Subject>();
         subjectStateNeedCnt = new List<int>();
+        subjectGroups = new List<List<int>>();
         string loadJson = File.ReadAllText(INFO_PATH);
         subjectsInfo = JsonUtility.FromJson<SubjectInfo>(loadJson);
         subjectsCount = subjectsInfo.count;
-        for (int i = 0; i < subjectsCount; i++)
+        for (int i = 0; i < subjectsInfo.groupCount + 1; i++)
+            subjectGroups.Add(new List<int>());
+        for (int subjectId = 0; subjectId < subjectsCount; subjectId++)
         {
-            string subjectPath = Path.Combine(Application.dataPath, "Resources/Subjects/" + i.ToString() + ".json");
+            string subjectPath = Path.Combine(Application.dataPath, "Resources/Subjects/" + subjectId.ToString() + ".json");
             loadJson = File.ReadAllText(subjectPath);
             subjects.Add(JsonUtility.FromJson<Subject>(loadJson));
-            subjectStateNeedCnt.Add(subjects[i].needCount);
+            subjectStateNeedCnt.Add(subjects[subjectId].needCount);
+            if (subjects[subjectId].subjectGroupId != DONT_HAVE_GROUP)
+            {
+                subjectGroups[subjects[subjectId].subjectGroupId].Add(subjectId);
+            }
+        }
+        for (int subjectId = 0; subjectId < subjectsCount; subjectId++)
+        {
+            foreach (int targetId in subjects[subjectId].nextSubjects)
+                subjects[targetId].mustFulfillSubjects.Add(subjectId);
         }
     }
 
@@ -315,6 +313,39 @@ public static class SubjectTree
         return rst;
     }
 
+    public static List<int> getCurriculumFor(int queryId)
+    {
+        List<int> rst = new List<int>();
+        List<bool> groupChecked = new List<bool>();
+        for (int i = 0; i < subjectsInfo.groupCount + 1; i++)
+            groupChecked.Add(false);
+        postOrder(queryId, ref rst, ref groupChecked);
+        return rst;
+    }
+
+    public static void postOrder(int queryId, ref List<int> result, ref List<bool> groupChecked)
+    {
+        List<int> nextNodes = subjects[queryId].mustFulfillSubjects;
+        if (subjects[queryId].subjectGroupId == DONT_HAVE_GROUP)
+        {
+            foreach (int subjectId in nextNodes)
+                postOrder(subjectId, ref result, ref groupChecked);
+            result.Add(queryId);
+        }
+        else
+        {
+            int groupId = subjects[queryId].subjectGroupId;
+            if (!groupChecked[groupId])
+            {
+                foreach (int subjectId in nextNodes)
+                    postOrder(subjectId, ref result, ref groupChecked);
+                groupChecked[groupId] = true;
+                List<int> nowGroup = subjectGroups[groupId];
+                result.Add(subjectGroups[groupId][new System.Random().Next(0, nowGroup.Count)]);
+            }
+        }
+    }
+
     public class SaveData
     {
         public int professorCnt = 0;
@@ -410,11 +441,12 @@ public class Subject
     public string name;
     public List<int> enforceContents;
     public List<int> nextSubjects;
+    public List<int> mustFulfillSubjects;
     public int subjectGroupId;
     public int root;
     public int needCount;
-    
-    public Subject(int Id, int Tier, string Name, List<int> EnforceContents, List<int> NextSubjects, int SubjectGroupId, int Root, int NeedCount)
+
+    public Subject(int Id, int Tier, string Name, List<int> EnforceContents, List<int> NextSubjects, int SubjectGroupId, int Root, int NeedCount, List<int> mustFulfillSubjects)
     {
         id = Id;
         tier = Tier;
@@ -424,5 +456,6 @@ public class Subject
         subjectGroupId = SubjectGroupId;
         root = Root;
         needCount = NeedCount;
+        this.mustFulfillSubjects = mustFulfillSubjects;
     }
 }

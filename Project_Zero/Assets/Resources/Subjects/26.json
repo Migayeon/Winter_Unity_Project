@@ -1,7 +1,7 @@
 {
     "id": 26,
     "tier": 5,
-    "name": "치유",
+    "name": "치유 마법",
     "enforceContents": [
         0,
         50,

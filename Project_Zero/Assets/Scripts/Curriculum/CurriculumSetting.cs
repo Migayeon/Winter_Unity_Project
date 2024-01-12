@@ -32,7 +32,8 @@ public class CurriculumSetting : MonoBehaviour
         }
         if (CurriculumList.Count == 8)
         {
-            StartCoroutine(WarningMessage("커리큘럼의 길이가 최대입니다."));
+            followCurriculum(i);
+            // StartCoroutine(WarningMessage("커리큘럼의 길이가 최대입니다."));
             return;
         }
         else
@@ -41,7 +42,10 @@ public class CurriculumSetting : MonoBehaviour
             if (!SubjectTree.isVaildCurriculum(CurriculumList))
             {
                 CurriculumList.Remove(i);
-                StartCoroutine(WarningMessage("해당 과목의 이수 조건을 만족하지 못했습니다."));
+                followCurriculum(i);
+                /* CurriculumList.Remove(i);
+                 * StartCoroutine(WarningMessage("해당 과목의 이수 조건을 만족하지 못했습니다."));
+                 */
                 return;
             }
             Image status = subjectGameobject.transform.GetChild(i).GetComponent<Image>();
@@ -51,6 +55,28 @@ public class CurriculumSetting : MonoBehaviour
             order.SetActive(true);
             manager.GetComponent<CurriculumTreeDrawingManager>().drawTree(CurriculumList);
         }
+    }
+
+    public void followCurriculum(int queryId)
+    {
+
+        for (int j = 0; j < CurriculumList.Count; j++)
+        {
+            Image statusImg = subjectGameobject.transform.GetChild(CurriculumList[j]).GetComponent<Image>();
+            statusImg.color = Color.white;
+            statusImg.transform.GetChild(0).gameObject.SetActive(false);
+        }
+        List<int> curriForClickedSubject = SubjectTree.getCurriculumFor(queryId);
+        CurriculumList = curriForClickedSubject;
+        for (int j = 0; j < curriForClickedSubject.Count; j++)
+        {
+            Image statusImg = subjectGameobject.transform.GetChild(CurriculumList[j]).GetComponent<Image>();
+            statusImg.color = Color.green;
+            GameObject orderGameObj = statusImg.transform.GetChild(0).gameObject;
+            orderGameObj.GetComponent<Text>().text = (j + 1).ToString();
+            orderGameObj.SetActive(true);
+        }
+        manager.GetComponent<CurriculumTreeDrawingManager>().drawTree(CurriculumList);
     }
 
     public void CurriculumCancel(int i)
