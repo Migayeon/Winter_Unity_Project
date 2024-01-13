@@ -21,6 +21,7 @@ public class TestCheckManager : MonoBehaviour
 
     public GameObject student;
     public Transform studentContent;
+    public StudentGroup currentSelectedGroup = null;
 
     List<info> infoList = new List<info>();
 
@@ -55,14 +56,17 @@ public class TestCheckManager : MonoBehaviour
                 studentInfo.transform.GetChild(1).GetComponent<Text>().text =
                     $"{8 - studentgroup.GetAge()}턴 뒤 시험";
                 Debug.Log("잘 됨");
-                studentInfo.GetComponent<Button>().onClick.AddListener(delegate { StudentClicked(studentgroup.GetStat()); });
+                studentInfo.GetComponent<Button>().onClick.AddListener(delegate { StudentClicked(studentgroup); });
             }
         }
     }
 
-    public void StudentClicked(List<int> stat)
+    public void StudentClicked(StudentGroup stg)
     {
         // [이론, 마나, 손재주, 원소, 영창]
+        currentSelectedGroup = stg;
+        // Debug.Log(currentSelectedGroup.GetDivision());
+        List<int> stat=stg.GetStat();
         int cnt = 0;
         
         GameObject[] gm = GameObject.FindGameObjectsWithTag("TestCase");
