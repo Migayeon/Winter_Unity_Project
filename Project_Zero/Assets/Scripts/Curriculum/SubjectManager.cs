@@ -52,7 +52,10 @@ public static class SubjectTree
         for (int subjectId = 0; subjectId < subjectsCount; subjectId++)
         {
             foreach (int targetId in subjects[subjectId].nextSubjects)
-                subjects[targetId].mustFulfillSubjects.Add(subjectId);
+            {
+                if (!subjects[targetId].mustFulfillSubjects.Contains(subjectId))
+                    subjects[targetId].mustFulfillSubjects.Add(subjectId);
+            }
         }
     }
 
