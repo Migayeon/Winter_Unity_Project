@@ -26,7 +26,7 @@ public class ManageCurriculumMod : MonoBehaviour
     [SerializeField]
     private Transform professorDetailUI;
     [SerializeField]
-    private Transform goBackButtonTransform;
+    private Button goBackButton;
     [SerializeField]
     private ESC_Manager EscManger;
 
@@ -67,7 +67,7 @@ public class ManageCurriculumMod : MonoBehaviour
                 }
             );
         }
-        goBackButtonTransform.GetComponent<Button>().onClick.AddListener(
+        goBackButton.onClick.AddListener(
             delegate
             {
                 goBack();
