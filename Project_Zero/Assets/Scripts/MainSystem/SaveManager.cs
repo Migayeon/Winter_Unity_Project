@@ -157,7 +157,7 @@ public class SaveManager : MonoBehaviour
     {
         ProfessorData professorData = new ProfessorData();
         professorData.ProfessorDataSave();
-        Debug.Log(professorData.GetProfessorData()[0]);
+        // Debug.Log(professorData.GetProfessorData()[0]);
         string json = JsonUtility.ToJson(professorData, true);
         File.WriteAllText(path + "professor" + i.ToString(), json);
         Debug.Log("Success");
