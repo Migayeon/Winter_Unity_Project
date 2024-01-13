@@ -23,6 +23,8 @@ public class PlayerInfo : MonoBehaviour
     // 졸업한 학생 데이터
     public static List<string> graduateList = new List<string>();
 
+    public static List<List<int>> UpgradeSkillIndex = new List<List<int>>();
+    public static List<List<int>> UpgradeSkillValue = new List<List<int>>();
     /*
     public class Player
     {
@@ -34,6 +36,7 @@ public class PlayerInfo : MonoBehaviour
 
     public static List<ProfessorSystem.Professor> RandomProfessorList = new List<ProfessorSystem.Professor>(3);
     public static bool GenerateNewRandomProfessorList = true; //default value on startup (초기값)
+    public static bool PickedRandomProfessor = false;
     public static int ProfessorCount()
     {
         return ProfessorList.Count;

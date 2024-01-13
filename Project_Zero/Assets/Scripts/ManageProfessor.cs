@@ -31,6 +31,11 @@ public class ManageProfessorTest : MonoBehaviour
     public TextMeshProUGUI ProfessorSalary;
     public TextMeshProUGUI ProfessorStat;
 
+    public TextMeshProUGUI UpgradeStatInfo1;
+    public TextMeshProUGUI UpgradeStatInfo2;
+    public TextMeshProUGUI UpgradeStatValue1;
+    public TextMeshProUGUI UpgradeStatValue2;
+
     public TextMeshProUGUI[] ProfessorInfo = new TextMeshProUGUI[5];
     public TextMeshProUGUI[] PopupText = new TextMeshProUGUI[6];
 
@@ -39,7 +44,7 @@ public class ManageProfessorTest : MonoBehaviour
     public GameObject ProfessorAwayRefuseMessage;
     public GameObject ProfessorFireRefuseMessage;
 
-    public Button[] UpgradeButtons = new Button[6];
+    public Button UpgradeButton1, UpgradeButton2;
     public Button AwayButton;
     public Button FireButton;
 
@@ -114,7 +119,7 @@ public class ManageProfessorTest : MonoBehaviour
         {
             ProfessorInfoButton.Add(ProfessorInfoObjects[i].GetComponent<Button>()); //add button
             int idx = i;
-            ProfessorInfoButton[i].onClick.AddListener(() => ShowInfoOnPopup(PlayerInfo.ProfessorList[idx])); //change later (from TempProfessorList to actual Player data list)
+            ProfessorInfoButton[i].onClick.AddListener(() => ShowInfoOnPopup(PlayerInfo.ProfessorList[idx], idx)); //change later (from TempProfessorList to actual Player data list)
             Debug.Log(ProfessorInfoButton.Count);
             // change index from 0 to (other variable)
             Debug.Log("CHECK");
@@ -161,7 +166,7 @@ public class ManageProfessorTest : MonoBehaviour
         Debug.Log("ReturnToMenu");
         SceneManager.LoadScene("Main");
     }
-    public void ShowInfoOnPopup(ProfessorSystem.Professor ProfData)
+    public void ShowInfoOnPopup(ProfessorSystem.Professor ProfData, int idx)
     {
         Debug.Log("ShowInfoOnPopup called");
         List<int> tempStatList = new List<int>(6);
@@ -198,20 +203,17 @@ public class ManageProfessorTest : MonoBehaviour
         }
         PopupText[5].text = PopupStatStr;
 
-        for (int i = 0; i < 6; ++i)
-        {
-            int idx = i;
-
-            UpgradeButtons[i].onClick.AddListener(() => UpgradeStats(idx));
-        }
+        int UpgradeIndex1 = PlayerInfo.UpgradeSkillIndex[idx][0];
+        int UpgradeIndex2 = PlayerInfo.UpgradeSkillIndex[idx][1];
+        UpgradeStatInfo1.text = KoreanStatList[UpgradeIndex1];
+        UpgradeStatInfo2.text = KoreanStatList[UpgradeIndex2];
+        UpgradeStatValue1.text = Convert.ToString(PlayerInfo.UpgradeSkillValue[idx][0]);
+        UpgradeStatValue2.text = Convert.ToString(PlayerInfo.UpgradeSkillValue[idx][1]);
+        UpgradeButton1.onClick.AddListener(() => UpgradeStats(UpgradeIndex1));
+        UpgradeButton2.onClick.AddListener(() => UpgradeStats(UpgradeIndex2));
         AwayButton.onClick.AddListener(() => ProfessorSendAway(ProfData));
         FireButton.onClick.AddListener(() => FireProfessor(ProfData));
-        {
-
-        }
         PopUpObject.SetActive(true);
-
-
     }
     public void RemovePopup()
     {
@@ -221,7 +223,8 @@ public class ManageProfessorTest : MonoBehaviour
 
     public void UpgradeStats(int StatIndex)
     {
-        Debug.Log("Button Click registered, index : " + StatIndex);
+        Debug.Log("UpgradeStats : " + StatIndex);
+        
     }
 
     public void ProfessorSendAway(ProfessorSystem.Professor ProfData)
@@ -238,7 +241,7 @@ public class ManageProfessorTest : MonoBehaviour
                 }
             }
         }
-    ExitLoop:
+        ExitLoop:
         Debug.Log("ExitLoop Passed");
         if (flag)
         {
@@ -265,7 +268,7 @@ public class ManageProfessorTest : MonoBehaviour
                 }
             }
         }
-    ExitLoop:
+        ExitLoop:
         Debug.Log("ExitLoop Passed");
         Debug.Log("COUNTS : " + PlayerInfo.studentGroups.Count);
         if (flag)

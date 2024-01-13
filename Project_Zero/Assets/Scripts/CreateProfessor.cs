@@ -9,10 +9,8 @@ using Unity.VisualScripting;
 using System.Collections;
 using System.Linq;
 
-//WIP
-
 public class CreateProfessor : ProfessorSystem
-{
+{    
     const int UniqueProfessorRarity = 5; //probability (edit later)
     const int BattleProfessorRarity = 15; //probability (edit later)
     const int TotalRarity = 100;
@@ -35,7 +33,7 @@ public class CreateProfessor : ProfessorSystem
             }
             if (row[1] != "")
             {
-            firstName.Add(row[1]);
+                firstName.Add(row[1]);
             }
         }
         ReadEnglishName.Close();
@@ -48,7 +46,7 @@ public class CreateProfessor : ProfessorSystem
             }
             if (row[1] != "")
             {
-            firstName.Add(row[1]);
+                firstName.Add(row[1]);
             }
         }
         ReadKoreanName.Close();
@@ -61,14 +59,14 @@ public class CreateProfessor : ProfessorSystem
         RandomFirstName = firstName[randomFirstNameIndex];
 
         finalRandomName = RandomLastName + " " + RandomFirstName;
-        
+
         //log for debug
         Debug.Log(string.Format("New random name created: {0}", finalRandomName));
         return finalRandomName;
     }
 
     public static Professor CreateNewProfessor(int num) // "static" keyword is included for testing purposes only (used in professor info management testing), may remove later
-    {   
+    {
         System.Random RandomGenerator = new System.Random();
         List<int> ProfessorRarityList = new List<int>(TotalRarity);
         for (int i = 0; i < UniqueProfessorRarity; ++i)
@@ -163,7 +161,7 @@ public class CreateProfessor : ProfessorSystem
     public TextMeshProUGUI RetryCostInfo;
     public TextMeshProUGUI RetryFailMessage;
     public TextMeshProUGUI MaxProfessorsErrorMessage;
-    
+
     public Dictionary<int, string> KoreanStatList = new Dictionary<int, string>(6)
         {
             {0, "강의력"},
@@ -173,11 +171,11 @@ public class CreateProfessor : ProfessorSystem
             {4, "속성력"},
             {5, "영창"},
         };
-   //public TextMeshProUGUI[,] ProfessorData = new TextMeshProUGUI[3,3];
-    
+    //public TextMeshProUGUI[,] ProfessorData = new TextMeshProUGUI[3,3];
+
     public string StatToString(List<int> stat)
     {
-        
+
         string temp = "";
         for (int j = 0; j < professorStats; ++j)
         {
@@ -188,8 +186,10 @@ public class CreateProfessor : ProfessorSystem
         }
         return temp;
     }
+
     void Start()
     {
+
         if (PlayerInfo.ProfessorCount() == PlayerInfo.maxProfessor)
         {
             MaxProfessorsErrorObject.SetActive(true);
@@ -220,8 +220,6 @@ public class CreateProfessor : ProfessorSystem
         {
             for (int i = 0; i < 3; ++i)
             {
-                Debug.Log("index error part");
-                Debug.Log("index : " + i);
                 Debug.Log(PlayerInfo.RandomProfessorList.Count);
                 NewProfessors.Add(PlayerInfo.RandomProfessorList[i]);
             }
@@ -287,7 +285,6 @@ public class CreateProfessor : ProfessorSystem
 
     public void PickProfessor1(Professor InsertProf)
     {
-        
         Debug.Log("PickProfessor1");
         PlayerInfo.ProfessorList.Add(InsertProf);
         /*
