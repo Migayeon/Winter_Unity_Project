@@ -15,7 +15,7 @@ public class CheckCurriculumManager : MonoBehaviour
         foreach (Transform sub in subject.GetComponent<Transform>())
         {
             Debug.Log(sub);
-            sub.GetComponent<Image>().color = Color.white;
+            sub.GetComponent<Image>().color = Color.gray;
             sub.GetChild(0).gameObject.SetActive(false);
         }
     }
@@ -35,7 +35,7 @@ public class CheckCurriculumManager : MonoBehaviour
         {
             Debug.Log(curriculum[i]);
             Transform sub = subject.GetChild(curriculum[i]);
-            sub.GetComponent<Image>().color = Color.yellow;
+            sub.GetComponent<Image>().color = Color.green;
             sub.GetChild(0).GetComponent<Text>().text = (i + 1).ToString();
             sub.GetChild(0).gameObject.SetActive(true);
         }

@@ -15,7 +15,6 @@ public class PlayerInfo : MonoBehaviour
     public static int sevenSuccess;
     public static int fiveSuccess;
 
-
     // 교수 리스트
     public static List<ProfessorSystem.Professor> ProfessorList = new List<ProfessorSystem.Professor>();
     // 학생 리스트 
