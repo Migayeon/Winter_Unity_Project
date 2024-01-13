@@ -63,6 +63,8 @@ public class StudentGroup
     private int number; // 학생 수
     private int age; // 공부 기간
     private int cost; // 학원비
+
+    private int exam = 0; // 볼 시험 종류(저장 구현해야함)
     private List<int> curriculum; // 커리큘럼
     private List<int> stat; // 스탯
 
@@ -71,6 +73,7 @@ public class StudentGroup
     public int GetNumber() { return number; }
     public int GetAge() { return age; }
     public int GetCost() { return cost; }
+    public int GetExam() {  return exam; }
     public List<int> GetCurriculum() { return curriculum; }
     public List<int> GetStat() { return stat; }
 
