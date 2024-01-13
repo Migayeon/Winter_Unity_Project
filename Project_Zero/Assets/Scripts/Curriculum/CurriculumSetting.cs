@@ -67,6 +67,10 @@ public class CurriculumSetting : MonoBehaviour
             statusImg.transform.GetChild(0).gameObject.SetActive(false);
         }
         List<int> curriForClickedSubject = SubjectTree.getCurriculumFor(queryId);
+        for (int i = 0; i < curriForClickedSubject.Count; i++)
+        {
+            print(curriForClickedSubject[i]);
+        }
         CurriculumList = curriForClickedSubject;
         for (int j = 0; j < curriForClickedSubject.Count; j++)
         {

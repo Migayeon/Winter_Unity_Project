@@ -9,12 +9,13 @@ public class InfoButton : MonoBehaviour
 {
     [SerializeField]
     private int id;
+    
     private Button infoButton;
     private string content;
     private string sceneName;
     private void Awake()
     {
-        infoButton = GetComponent<Button>();
+        infoButton = transform.GetChild(0).GetComponent<Button>();
         sceneName = SceneManager.GetActiveScene().name;
         content = InfoButtonManager.getContent(sceneName, id);
         infoButton.onClick.RemoveAllListeners();
