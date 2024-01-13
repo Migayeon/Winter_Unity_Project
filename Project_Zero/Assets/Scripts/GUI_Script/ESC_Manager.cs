@@ -13,10 +13,16 @@ public class ESC_Manager : MonoBehaviour
     [SerializeField]
     private GameObject loading;
     [SerializeField]
+    public Text loadingText;
+    [SerializeField]
+    public GameObject confirm;
+    [SerializeField]
     private GameObject toTitleMessage;
     private void Awake()
     {
         escMessage.SetActive(false);
+        loading.SetActive(false);
+        confirm.GetComponent<Button>().onClick.AddListener(delegate { loading.SetActive(false);} );
         escMessage.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(Save);
         escMessage.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(Setting);
         escMessage.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(TitleCheckMessage);
@@ -47,10 +53,15 @@ public class ESC_Manager : MonoBehaviour
 
     public void Save()
     {
+        confirm.SetActive(false);
+        loadingText.text = "저장중...\r\n잠시만 기다려주세요.";
         loading.SetActive(true);
         SaveManager.SaveProcess();
-        loading.SetActive(false);
+        //loading.SetActive(false);
+        loadingText.text = "저장 완료!";
+        confirm.SetActive(true);
     }
+
     public void Setting()
     {
         SettingManager.backPath = "Main";

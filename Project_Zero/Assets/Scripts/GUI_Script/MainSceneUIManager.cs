@@ -9,18 +9,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class jsonCheck
-{
-    public int check;
-}
-
 public class MainSceneUIManager : MonoBehaviour
 {
     static int index = 0;
     private bool isOpen = false;
-    private float time;
-    private bool checkSave = false;
-    private int check;
 
     public GameObject[] tabCanvas = new GameObject[4];
     string[] tabNameArr = new string[4] { "학원", "교수", "학생", "자산 관리" };

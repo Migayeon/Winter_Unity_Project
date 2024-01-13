@@ -10,7 +10,7 @@ public class StudentGroup
     //SubjectManager.SubjectTree s = new SubjectManager.SubjectTree();
     public StudentGroup(int div, int num, int c)
     {
-        period = TurnManager.turn;
+        period = TurnManager.turn - 1;
         division = div;
         number = num;
         age = 0;
