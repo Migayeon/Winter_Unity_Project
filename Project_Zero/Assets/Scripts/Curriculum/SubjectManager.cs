@@ -57,6 +57,13 @@ public static class SubjectTree
                     subjects[targetId].mustFulfillSubjects.Add(subjectId);
             }
         }
+        foreach (Subject subject in subjects)
+        {
+            for (int i = 0; i < subject.mustFulfillSubjects.Count; i++)
+            {
+                Debug.Log(subject.id.ToString() + " : " + subject.mustFulfillSubjects[i].ToString());
+            }
+        }
     }
 
     public static void callOnlyOneTimeWhenGameStart()
@@ -320,20 +327,25 @@ public static class SubjectTree
     {
         List<int> rst = new List<int>();
         List<bool> groupChecked = new List<bool>();
+        List<bool> visited = new List<bool>();
         for (int i = 0; i < subjectsInfo.groupCount + 1; i++)
             groupChecked.Add(false);
-        postOrder(queryId, ref rst, ref groupChecked);
+        for (int i = 0; i < subjectsCount; i++)
+            visited.Add(false);
+        postOrder(queryId, ref rst, ref groupChecked, ref visited, queryId);
         return rst;
     }
 
-    public static void postOrder(int queryId, ref List<int> result, ref List<bool> groupChecked)
+    public static void postOrder(int queryId, ref List<int> result, ref List<bool> groupChecked, ref List<bool> visited, int origin)
     {
+        if (visited[queryId]) return;
         List<int> nextNodes = subjects[queryId].mustFulfillSubjects;
         if (subjects[queryId].subjectGroupId == DONT_HAVE_GROUP)
         {
             foreach (int subjectId in nextNodes)
-                postOrder(subjectId, ref result, ref groupChecked);
+                postOrder(subjectId, ref result, ref groupChecked, ref visited, origin);
             result.Add(queryId);
+            visited[queryId] = true;
         }
         else
         {
@@ -341,10 +353,15 @@ public static class SubjectTree
             if (!groupChecked[groupId])
             {
                 foreach (int subjectId in nextNodes)
-                    postOrder(subjectId, ref result, ref groupChecked);
+                    postOrder(subjectId, ref result, ref groupChecked, ref visited, origin);
                 groupChecked[groupId] = true;
-                List<int> nowGroup = subjectGroups[groupId];
-                result.Add(subjectGroups[groupId][new System.Random().Next(0, nowGroup.Count)]);
+                visited[queryId] = true;
+                if (queryId != origin) {
+                    List<int> nowGroup = subjectGroups[groupId];
+                    result.Add(subjectGroups[groupId][new System.Random().Next(0, nowGroup.Count)]);
+                }
+                else
+                    result.Add(subjectGroups[groupId][origin]);
             }
         }
     }
