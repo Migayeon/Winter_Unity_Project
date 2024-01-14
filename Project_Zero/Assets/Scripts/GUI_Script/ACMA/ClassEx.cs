@@ -58,6 +58,13 @@ public class ClassEx : MonoBehaviour
         windowWord.rectTransform.localPosition = new Vector3(0, 12, 0);
     }
 
+    void magicStonePos()
+    {
+        window.SetActive(true);
+        windowWord.rectTransform.localPosition = new Vector3(0, 4, 0);
+        windowWord.text = "마정석이 부족합니다";
+    }
+
     public void ClassExpan()
     {
         int num = 50;
