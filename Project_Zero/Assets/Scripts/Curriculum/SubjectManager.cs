@@ -358,7 +358,13 @@ public static class SubjectTree
                 visited[queryId] = true;
                 if (queryId != origin) {
                     List<int> nowGroup = subjectGroups[groupId];
-                    result.Add(subjectGroups[groupId][new System.Random().Next(0, nowGroup.Count)]);
+                    List<int> tmp = new List<int>();
+                    for (int i = 0; i < nowGroup.Count; i++)
+                    {
+                        if (subjectState[nowGroup[i]] == State.Open)
+                            tmp.Add(nowGroup[i]);
+                    }
+                    result.Add(tmp[new System.Random().Next(0, tmp.Count)]);
                 }
                 else
                     result.Add(origin);

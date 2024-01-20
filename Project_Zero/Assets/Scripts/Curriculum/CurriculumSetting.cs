@@ -25,8 +25,20 @@ public class CurriculumSetting : MonoBehaviour
     private int coefficient;
     private bool isShift;
 
+    public enum returnState
+    {
+        haveClosedSubject,
+        overMaximum,
+        normal
+    }
+
     public void SubjectClick(int i)
     {
+        if (SubjectTree.subjectState[i] != SubjectTree.State.Open)
+        {
+            StartCoroutine(WarningMessage("아직 해금하지 않은 과목입니다."));
+            return;
+        }
         if (CurriculumList.Contains(i))
         {
             CurriculumCancel(i);
@@ -50,9 +62,14 @@ public class CurriculumSetting : MonoBehaviour
             if (!SubjectTree.isVaildCurriculum(CurriculumList))
             {
                 CurriculumList.Remove(i);
-                if (followCurriculum(i))
+                returnState tmp = followCurriculum(i);
+                if (tmp == returnState.overMaximum)
                 {
-                    StartCoroutine(WarningMessage("커리큘럼 길이가 최대가 되어 일부 하위 과목만 선택했습니다."));
+                    StartCoroutine(WarningMessage("커리큘럼 길이가 최대를 초과하여 일부 하위 과목만 선택했습니다."));
+                }
+                else if (tmp == returnState.haveClosedSubject)
+                {
+                    StartCoroutine(WarningMessage("아직 해금하지 않은 과목이 있습니다."));
                 }
                 /* CurriculumList.Remove(i);
                  * StartCoroutine(WarningMessage("해당 과목의 이수 조건을 만족하지 못했습니다."));
@@ -68,9 +85,9 @@ public class CurriculumSetting : MonoBehaviour
         }
     }
 
-    public bool followCurriculum(int queryId)
+    public returnState followCurriculum(int queryId)
     {
-        bool flag = false;
+        returnState flag = returnState.normal;
         for (int j = 0; j < CurriculumList.Count; j++)
         {
             Image statusImg = subjectGameobject.transform.GetChild(CurriculumList[j]).GetComponent<Image>();
@@ -78,23 +95,44 @@ public class CurriculumSetting : MonoBehaviour
             statusImg.transform.GetChild(0).gameObject.SetActive(false);
         }
         List<int> curriForClickedSubject = SubjectTree.getCurriculumFor(queryId);
-        if (isShift) {
+        if (isShift)
+        {
             for (int i = 0; i < curriForClickedSubject.Count; i++)
             {
                 if (!CurriculumList.Contains(curriForClickedSubject[i]))
                 {
                     if (CurriculumList.Count < 8)
+                    {
+                        if (SubjectTree.subjectState[curriForClickedSubject[i]] != SubjectTree.State.Open)
+                        {
+                            StartCoroutine(WarningMessage("아직 해금하지 않은 과목이 있습니다."));
+                            flag = returnState.haveClosedSubject;
+                            break;
+                        }
                         CurriculumList.Add(curriForClickedSubject[i]);
+                    }
                     else
                     {
-                        flag = true;
+                        flag = returnState.overMaximum;
                         break;
                     }
                 }
             }
         }
         else
-            CurriculumList = curriForClickedSubject;
+        {
+            CurriculumList = new List<int>();
+            for (int i = 0; i < curriForClickedSubject.Count; i++)
+            {
+                if (SubjectTree.subjectState[curriForClickedSubject[i]] != SubjectTree.State.Open)
+                {
+                    StartCoroutine(WarningMessage("아직 해금하지 않은 과목이 있습니다."));
+                    flag = returnState.haveClosedSubject;
+                    break;
+                }
+                CurriculumList.Add(curriForClickedSubject[i]);
+            }
+        }
         for (int j = 0; j < CurriculumList.Count; j++)
         {
             Image statusImg = subjectGameobject.transform.GetChild(CurriculumList[j]).GetComponent<Image>();
