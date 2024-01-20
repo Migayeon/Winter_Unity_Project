@@ -6,8 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [System.Serializable]
-
-class info
+class Info
 {
     public int testclass;
     public string testname;
@@ -23,7 +22,7 @@ public class TestCheckManager : MonoBehaviour
     public Transform studentContent;
     public StudentGroup currentSelectedGroup = null;
 
-    List<info> infoList = new List<info>();
+    List<Info> infoList = new List<Info>();
 
     // Start is called before the first frame update
     void Start()
@@ -33,7 +32,7 @@ public class TestCheckManager : MonoBehaviour
         {
             var loadedJson = Resources.Load<TextAsset>("TestCase/" + i.ToString());
             
-            info testInfo = JsonUtility.FromJson<info>(loadedJson.ToString());
+            Info testInfo = JsonUtility.FromJson<Info>(loadedJson.ToString());
             Debug.Log($"{testInfo.testclass}, {testInfo.testname}, {testInfo.require}");
             infoList.Add(testInfo);
 
