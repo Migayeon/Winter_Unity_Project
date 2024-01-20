@@ -20,6 +20,7 @@ public class CameraController : MonoBehaviour
             {
                 isAlt = false;
             }
+            isAlt = true;
 
             if (Input.GetMouseButton(0))
             {

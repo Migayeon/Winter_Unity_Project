@@ -361,7 +361,7 @@ public static class SubjectTree
                     result.Add(subjectGroups[groupId][new System.Random().Next(0, nowGroup.Count)]);
                 }
                 else
-                    result.Add(subjectGroups[groupId][origin]);
+                    result.Add(origin);
             }
         }
     }

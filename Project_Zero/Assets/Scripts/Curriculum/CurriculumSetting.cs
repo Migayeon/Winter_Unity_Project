@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -22,6 +23,7 @@ public class CurriculumSetting : MonoBehaviour
     private int num = 0;
     private int localMinimum;
     private int coefficient;
+    private bool isShift;
 
     public void SubjectClick(int i)
     {
@@ -32,8 +34,14 @@ public class CurriculumSetting : MonoBehaviour
         }
         if (CurriculumList.Count == 8)
         {
-            followCurriculum(i);
-            // StartCoroutine(WarningMessage("커리큘럼의 길이가 최대입니다."));
+            if (!isShift)
+            {
+                followCurriculum(i);
+            }
+            else
+            {
+                StartCoroutine(WarningMessage("커리큘럼의 길이가 최대입니다."));
+            }
             return;
         }
         else
@@ -42,7 +50,10 @@ public class CurriculumSetting : MonoBehaviour
             if (!SubjectTree.isVaildCurriculum(CurriculumList))
             {
                 CurriculumList.Remove(i);
-                followCurriculum(i);
+                if (followCurriculum(i))
+                {
+                    StartCoroutine(WarningMessage("커리큘럼 길이가 최대가 되어 일부 하위 과목만 선택했습니다."));
+                }
                 /* CurriculumList.Remove(i);
                  * StartCoroutine(WarningMessage("해당 과목의 이수 조건을 만족하지 못했습니다."));
                  */
@@ -57,9 +68,9 @@ public class CurriculumSetting : MonoBehaviour
         }
     }
 
-    public void followCurriculum(int queryId)
+    public bool followCurriculum(int queryId)
     {
-
+        bool flag = false;
         for (int j = 0; j < CurriculumList.Count; j++)
         {
             Image statusImg = subjectGameobject.transform.GetChild(CurriculumList[j]).GetComponent<Image>();
@@ -67,12 +78,24 @@ public class CurriculumSetting : MonoBehaviour
             statusImg.transform.GetChild(0).gameObject.SetActive(false);
         }
         List<int> curriForClickedSubject = SubjectTree.getCurriculumFor(queryId);
-        for (int i = 0; i < curriForClickedSubject.Count; i++)
-        {
-            print(curriForClickedSubject[i]);
+        if (isShift) {
+            for (int i = 0; i < curriForClickedSubject.Count; i++)
+            {
+                if (!CurriculumList.Contains(curriForClickedSubject[i]))
+                {
+                    if (CurriculumList.Count < 8)
+                        CurriculumList.Add(curriForClickedSubject[i]);
+                    else
+                    {
+                        flag = true;
+                        break;
+                    }
+                }
+            }
         }
-        CurriculumList = curriForClickedSubject;
-        for (int j = 0; j < curriForClickedSubject.Count; j++)
+        else
+            CurriculumList = curriForClickedSubject;
+        for (int j = 0; j < CurriculumList.Count; j++)
         {
             Image statusImg = subjectGameobject.transform.GetChild(CurriculumList[j]).GetComponent<Image>();
             statusImg.color = Color.green;
@@ -81,6 +104,7 @@ public class CurriculumSetting : MonoBehaviour
             orderGameObj.SetActive(true);
         }
         manager.GetComponent<CurriculumTreeDrawingManager>().drawTree(CurriculumList);
+        return flag;
     }
 
     public void CurriculumCancel(int i)
@@ -93,7 +117,7 @@ public class CurriculumSetting : MonoBehaviour
             Image status = subjectGameobject.transform.GetChild(subject).GetComponent<Image>();
             status.color = Color.white;
             status.transform.GetChild(0).gameObject.SetActive(false);
-            CurriculumList.RemoveAt(CurriculumList.Count-1);
+            CurriculumList.RemoveAt(CurriculumList.Count - 1);
             next = subject;
         }
         manager.GetComponent<CurriculumTreeDrawingManager>().drawTree(CurriculumList);
@@ -120,7 +144,7 @@ public class CurriculumSetting : MonoBehaviour
             $"  영창    : {stat[4]}";
     }
 
-    public void SaveCurriculum() 
+    public void SaveCurriculum()
     {
         if (CurriculumList.Count < 8)
         {
@@ -128,7 +152,7 @@ public class CurriculumSetting : MonoBehaviour
             return;
         }
         studentGroup[div - 1].SetCurriCulum(CurriculumList);
-        if(div == 3)
+        if (div == 3)
         {
             PlayerInfo.studentGroups.Add(studentGroup);
             //GoodsUIUpdate.ShowUI();
@@ -165,5 +189,12 @@ public class CurriculumSetting : MonoBehaviour
 
         NewCurriculum();
         next.onClick.AddListener(SaveCurriculum);
+    }
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
+            isShift = true;
+        if (Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.RightShift))
+            isShift = false;
     }
 }
