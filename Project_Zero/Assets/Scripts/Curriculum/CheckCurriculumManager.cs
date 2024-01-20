@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CheckCurriculumManager : MonoBehaviour
@@ -8,7 +9,8 @@ public class CheckCurriculumManager : MonoBehaviour
     public Transform scroll_content;
     public Transform subject;
     public GameObject s_prefab;
-
+    public Button backButton;
+    public CurriculumTreeDrawingManager drawingManager;
 
     public void InitCurriculum()
     {
@@ -39,11 +41,16 @@ public class CheckCurriculumManager : MonoBehaviour
             sub.GetChild(0).GetComponent<Text>().text = (i + 1).ToString();
             sub.GetChild(0).gameObject.SetActive(true);
         }
+        drawingManager.drawTree(curriculum);
     }
 
     private void Start()
     {
         InitCurriculum();
+        backButton.onClick.AddListener(delegate
+        {
+            SceneManager.LoadScene("Main");
+        });
         foreach (Transform button in scroll_content.GetComponentInChildren<Transform>())
         {
             Destroy(button.gameObject);

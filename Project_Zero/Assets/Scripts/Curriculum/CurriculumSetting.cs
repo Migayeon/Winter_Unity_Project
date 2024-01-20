@@ -216,8 +216,8 @@ public class CurriculumSetting : MonoBehaviour
         num = PlayerInfo.cost - localMinimum;
         Debug.Log(num);
         GoodsManager.CalculateEndedFame();
-        num = (num * num) / coefficient * GoodsManager.goodsCalculatedEndedFame;
-        Debug.Log(num);
+        num = Mathf.Max((num * num * GoodsManager.goodsCalculatedEndedFame) / coefficient, 3);
+        Debug.Log($"학생수 : {num}\n 명성 : {GoodsManager.goodsCalculatedEndedFame}");
 
         warningMessage.enabled = false;
         foreach (var subject in subjectGameobject.transform.GetComponentsInChildren<Button>())

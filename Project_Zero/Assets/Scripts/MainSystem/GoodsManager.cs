@@ -56,6 +56,8 @@ public class GoodsManager : MonoBehaviour
         }
         if (topPfNum > 0)
         {
+            Debug.Log("Im okay");
+            Debug.Log($"{topPfStatSum} , {topPfNum} , {openSubjectNum} ");
             goodsCalculatedEndedFame = ((topPfStatSum / topPfNum) * openSubjectNum) + GoodsConstFame;
         }
         else

@@ -2782,6 +2782,8 @@ MonoBehaviour:
   scroll_content: {fileID: 1010234760}
   subject: {fileID: 1949356029}
   s_prefab: {fileID: 6969057986318231558, guid: bb0b0b7288d53344dbaac71bb8253d04, type: 3}
+  backButton: {fileID: 1807174765}
+  drawingManager: {fileID: 1218256080}
 --- !u!1001 &527762238
 PrefabInstance:
   m_ObjectHideFlags: 0

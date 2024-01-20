@@ -22,7 +22,7 @@ public class SavedataSceneManager : MonoBehaviour
         TurnManager.turn = 1;
         GoodsManager.goodsAr = 20000;
         GoodsManager.goodsStone = 0;
-        GoodsManager.goodsConstFame = 0;
+        GoodsManager.goodsConstFame = 10;
         GoodsManager.goodsStudent = 0;
 
         PlayerInfo.ProfessorList.Clear();
