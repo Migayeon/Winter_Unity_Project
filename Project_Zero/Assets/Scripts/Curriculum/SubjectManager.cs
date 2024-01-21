@@ -413,7 +413,7 @@ public static class SubjectTree
             if (filter[i])
                 rst.subjectStates.Add(i);
         }
-        return JsonUtility.ToJson(rst);
+        return JsonUtility.ToJson(rst,true);
     }
 
     //아직 테스트 안 됨

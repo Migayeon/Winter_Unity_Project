@@ -211,12 +211,12 @@ public class CurriculumSetting : MonoBehaviour
 
     private void Awake()
     {
-        coefficient = UnityEngine.Random.Range(9000, 12000);
-        localMinimum = UnityEngine.Random.Range(320, 400);
+        coefficient = UnityEngine.Random.Range(8000, 10000);
+        localMinimum = UnityEngine.Random.Range(400, 500);
         num = PlayerInfo.cost - localMinimum;
         Debug.Log(num);
         GoodsManager.CalculateEndedFame();
-        num = Mathf.Max((num * num * GoodsManager.goodsCalculatedEndedFame) / coefficient, 3);
+        num = (num * num / coefficient) * (GoodsManager.goodsCalculatedEndedFame / 100);
         Debug.Log($"학생수 : {num}\n 명성 : {GoodsManager.goodsCalculatedEndedFame}");
 
         warningMessage.enabled = false;

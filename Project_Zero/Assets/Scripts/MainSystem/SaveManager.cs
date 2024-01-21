@@ -170,6 +170,21 @@ public class SaveManager : MonoBehaviour
         PlayerInfo.LoadProfessorData(professorData.GetProfessorData(), professorData.GetProfessorNum());
     }
 
+    public static void SubjectSave(int i)
+    {
+        string json = SubjectTree.save();
+        File.WriteAllText(path + "subject" + i.ToString(), json);
+        Debug.Log("SubjectSave");
+    }
+
+    public static void SubjectLoad(int i)
+    {
+        string jsonData = File.ReadAllText(path + "subject" + i.ToString());
+        SubjectTree.load(jsonData);
+        Debug.Log("Success");
+    }
+
+
     public static void SaveProcess()
     {
         int i = PlayerInfo.dataIndex;
@@ -187,7 +202,7 @@ public class SaveManager : MonoBehaviour
         PlayerDataSave(i);
         ProfessorSave(i);
         StudentSave(i);
-
+        //SubjectSave(i);
     }
 
     public static void LoadProcess()
@@ -196,6 +211,7 @@ public class SaveManager : MonoBehaviour
         PlayerDataLoad(i);
         ProfessorLoad(i);
         StudentLoad(i);
+        //SubjectLoad(i);
         SubjectTree.initSubjectsAndInfo();
         SubjectTree.initSubjectStates(new List<int>());
         SubjectTree.callOnlyOneTimeWhenGameStart();
