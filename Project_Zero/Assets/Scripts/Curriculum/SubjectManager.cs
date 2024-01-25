@@ -57,6 +57,7 @@ public static class SubjectTree
                     subjects[targetId].mustFulfillSubjects.Add(subjectId);
             }
         }
+        /*
         foreach (Subject subject in subjects)
         {
             for (int i = 0; i < subject.mustFulfillSubjects.Count; i++)
@@ -64,6 +65,7 @@ public static class SubjectTree
                 Debug.Log(subject.id.ToString() + " : " + subject.mustFulfillSubjects[i].ToString());
             }
         }
+        */
     }
 
     public static void callOnlyOneTimeWhenGameStart()
@@ -138,7 +140,7 @@ public static class SubjectTree
             rst[idList[i]] = true;
         return rst;
     }
-    public static void initSubjectStates(List<int> openedSubjectsId)
+    public static void initSubjectStates(List<int> openedSubjectsId = null)
     {
         subjectState = new List<State>();
         subjectStateNeedCnt = new List<int>();
@@ -380,26 +382,21 @@ public static class SubjectTree
         public List<int> subjectStates = new List<int>();
     }
 
-    //아직 테스트 안 됨
     public static string save()
     {
         SaveData rst = new SaveData();
         rst.professorCnt = professorsLecture.Count;
         rst.professorsId = professorsLecture.Keys.ToArray().ToList();
-        foreach (long i in professorsLecture.Keys)
+        for (int i = 0; i < professorsLecture.Keys.Count; i++)
         {
+            List<bool> teachingState = professorsLecture[professorsLecture.Keys.ToList<long>()[i]];
             rst.lecturesId.Add("");
             for (int j = 0; j < subjectsCount; j += 3)
-                rst.lecturesId[(int)i] += ((Convert.ToInt32(professorsLecture[i][j]) + Convert.ToInt32(professorsLecture[i][j + 1]) * 2 + Convert.ToInt32(professorsLecture[i][j + 2]) * 4)).ToString();
-            int startIdx = (subjectsCount / 3) * 3;
-            int mul = 1;
-            int sum = 0;
-            for (int j = startIdx; j < subjectsCount; j++)
-            {
-                sum += Convert.ToInt32(professorsLecture[i][j]) * mul;
-                mul *= 2;
-            }
-            rst.lecturesId[(int)i] += sum.ToString();
+                rst.lecturesId[i] += (
+                    Convert.ToInt32(teachingState[j + 2]) +
+                    Convert.ToInt32(teachingState[j + 1]) * 2 +
+                    Convert.ToInt32(teachingState[j]) * 4
+                    ).ToString();
         }
         Dictionary<State, bool> convertToInt = new Dictionary<State, bool>(3)
         {
@@ -407,7 +404,7 @@ public static class SubjectTree
             {State.Open, true},
             {State.ReadyToOpen, false}
         };
-        List<bool> filter = subjectState.Select(s => convertToInt[s]).ToList();
+        List<bool> filter = subjectState.Select(s => convertToInt[s]).ToList<bool>();
         for (int i = 0; i < subjectsCount; i++)
         {
             if (filter[i])
@@ -416,7 +413,6 @@ public static class SubjectTree
         return JsonUtility.ToJson(rst,true);
     }
 
-    //아직 테스트 안 됨
     public static void load(string jsonContents)
     {
         initSubjectsAndInfo();
@@ -425,16 +421,16 @@ public static class SubjectTree
         for (int i = 0; i < data.professorCnt; i++)
         {
             List<bool> lectureState = new List<bool>();
-            for (int j = 0; j < subjectsCount / 3 + Convert.ToInt32(subjectsCount % 3); j++)
+            for (int j = 0; j < Math.Ceiling((double) subjectsCount / 3); j++)
             {
                 int tmp = Convert.ToInt32(data.lecturesId[i][j]);
-                lectureState.Add((tmp & 1) == 1);
+                lectureState.Add((tmp & 4) == 1);
                 if ((tmp & 1) == 1) professorInSubjectCnt[j * 3] ++;
                 if (lectureState.Count == subjectsCount) break;
                 lectureState.Add((tmp & 2) == 1);
                 if ((tmp & 2) == 1) professorInSubjectCnt[j * 3 + 1]++;
                 if (lectureState.Count == subjectsCount) break;
-                lectureState.Add((tmp & 4) == 1);
+                lectureState.Add((tmp & 1) == 1);
                 if ((tmp & 4) == 1) professorInSubjectCnt[j * 3 + 2]++;
                 if (lectureState.Count == subjectsCount) break;
             }
