@@ -16,15 +16,21 @@ public class ClassEx : MonoBehaviour
     public Button marketingB;
     public Button marketingC;
     public Button marketingD;
-    public Text requiredClass;
-    public Text requiredProfessor;
+    public Text requiredClassAr;
+    public Text requiredClassMagicStone;
+    public Text requiredProfessorAr;
+    public Text requiredProfessorMagicStone;
     public Text requiredMarketA;
     public Text requiredMarketB;
     public Text requiredMarketC;
     public Text requiredMarketD;
     public Text preProfessor;
     public Text preStudent;
+    public Text howManyStudentIncrease;
+    public Text howManyProfessorIncrease;
     int marketingTurn = 3;
+    int numA = 50;
+    int numB = 5;
 
 
     static int duringMarketA = -10;
@@ -35,7 +41,9 @@ public class ClassEx : MonoBehaviour
 
 
     static private int classAr = 5000;
+    static private int classMagicStone = 10;
     static private int officeAr = 5000;
+    static private int officeMagicStone = 10;
     static public int marA = 5000;
     static public int marB = 10000;
     static public int marC = 20000;
@@ -67,19 +75,25 @@ public class ClassEx : MonoBehaviour
 
     public void ClassExpan()
     {
-        int num = 50;
+        
         int count = PlayerInfo.ProfessorCount();
         if (GoodsManager.goodsAr - classAr < 0)
         {
             bankRunPos();
+        }
+        else if(GoodsManager.goodsStone - classMagicStone < 0)
+        {
+            magicStonePos();
         }
         else
         {
             GoodsManager.goodsAr -= classAr;
             AfterTurn.academy_Cost -= classAr;
             classAr *= 2;
-            PlayerInfo.maxStudent += num;
-            requiredClass.text = $"{classAr}";
+            classMagicStone += 5;
+            PlayerInfo.maxStudent += numA;
+            requiredClassMagicStone.text = $"마정석{classMagicStone}개 필요";
+            requiredClassAr.text = $"{classAr}Ar 필요";
             preStudent.text = $"{count}/{PlayerInfo.maxStudent}";
         }
     }
@@ -87,20 +101,26 @@ public class ClassEx : MonoBehaviour
     public void OfficeExpan()
     {
         
-        int num = 50;
+        
         int professCount = PlayerInfo.ProfessorCount();
         if (GoodsManager.goodsAr - officeAr < 0)
         {
             bankRunPos();
+        }
+        else if (GoodsManager.goodsStone - officeMagicStone < 0)
+        {
+            magicStonePos();
         }
         else
         {
             
             GoodsManager.goodsAr -= officeAr;
             AfterTurn.academy_Cost -= officeAr;
-            PlayerInfo.maxProfessor += num;
+            PlayerInfo.maxProfessor += numB;
             officeAr *= 2;
-            requiredProfessor.text = $"{officeAr}";
+            classMagicStone += 5;
+            requiredProfessorAr.text = $"{officeAr}Ar 필요";
+            requiredClassMagicStone.text = $"마정석{classMagicStone}개 필요";
             preProfessor.text = $"{professCount}/{PlayerInfo.maxProfessor}";
         }
 
@@ -127,7 +147,7 @@ public class ClassEx : MonoBehaviour
                 GoodsManager.goodsAr -= marA;
                 GoodsManager.GoodsConstFame += num;
                 marA += 1000;
-                requiredMarketA.text = $"{marA}";
+                requiredMarketA.text = $"{marA}Ar 필요";
                 duringMarketA = TurnManager.turn;
 
             }
@@ -152,7 +172,7 @@ public class ClassEx : MonoBehaviour
                 GoodsManager.goodsAr -= marB;
                 GoodsManager.GoodsConstFame += num;
                 marB += 1000;
-                requiredMarketB.text = $"{marB}";
+                requiredMarketB.text = $"{marB}Ar 필요";
                 duringMarketB = TurnManager.turn;
             }
         }
@@ -178,7 +198,7 @@ public class ClassEx : MonoBehaviour
                 GoodsManager.goodsAr -= marC;
                 GoodsManager.GoodsConstFame += num;
                 marC += 1000;
-                requiredMarketC.text = $"{marC}";
+                requiredMarketC.text = $"{marC}Ar 필요";
                 duringMarketC = TurnManager.turn;
             }
         }
@@ -203,7 +223,7 @@ public class ClassEx : MonoBehaviour
                 GoodsManager.goodsAr -= marD;
                 GoodsManager.GoodsConstFame += num;
                 marD += 1000;
-                requiredMarketD.text = $"{marD}";
+                requiredMarketD.text = $"{marD}Ar 필요";
                 duringMarketC = TurnManager.turn;
             }
         }
@@ -222,15 +242,19 @@ public class ClassEx : MonoBehaviour
         int studentCount = PlayerInfo.StudentGroupCount();
         int professCount = PlayerInfo.ProfessorCount();
 
-        requiredClass.text = $"{classAr}";
-        requiredProfessor.text = $"{officeAr}";
-        preStudent.text = $"{studentCount}/{PlayerInfo.maxStudent}";
-        preProfessor.text = $"{professCount}/{PlayerInfo.maxProfessor}";
+        requiredClassAr.text = $"{classAr}Ar 필요";
+        requiredClassMagicStone.text = $"마정석{classMagicStone}개 필요";
+        requiredProfessorAr.text = $"{officeAr}Ar 필요";
+        requiredProfessorMagicStone.text = $"마정석{officeMagicStone}개 필요";
+        preStudent.text = $"{studentCount}/{PlayerInfo.maxStudent}명";
+        preProfessor.text = $"{professCount}/{PlayerInfo.maxProfessor}명";
+        howManyStudentIncrease.text = $"최대 학생수가 {numA}만큼 증가합니다.";
+        howManyProfessorIncrease.text = $"최대 교수수가 {numB}만큼 증가합니다.";
 
-        requiredMarketA.text = $"{marA}";
-        requiredMarketB.text = $"{marB}";
-        requiredMarketC.text = $"{marC}";
-        requiredMarketD.text = $"{marD}";
+        requiredMarketA.text = $"{marA}Ar 필요";
+        requiredMarketB.text = $"{marB}Ar 필요";
+        requiredMarketC.text = $"{marC}Ar 필요";
+        requiredMarketD.text = $"{marD}Ar 필요";
         ClassExp.onClick.AddListener(ClassExpan);
         OfficeExp.onClick.AddListener(OfficeExpan);
         marketingA.onClick.AddListener(marketA);
