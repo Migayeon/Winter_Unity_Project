@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerInfo : MonoBehaviour
@@ -11,9 +12,9 @@ public class PlayerInfo : MonoBehaviour
     public static int maxStudent = 300; // 최대 학생 명수
     public static int maxProfessor = 30; // 최대 교수 명수
 
-    public static int nineSuccess;
-    public static int sevenSuccess;
-    public static int fiveSuccess;
+    public static int nineSuccess = 0;
+    public static int sevenSuccess = 0;
+    public static int fiveSuccess = 0;
 
     // 교수 리스트
     public static List<ProfessorSystem.Professor> ProfessorList = new List<ProfessorSystem.Professor>();
@@ -42,7 +43,15 @@ public class PlayerInfo : MonoBehaviour
     {
         return ProfessorList.Count;
     } 
-
+    public static int GraduatedStudentTotalNum()
+    {
+        int total = 0;
+        foreach (var group in graduatedGroups)
+        {
+            total += group.GetNumber();
+        }
+        return total;
+    }
     public static int StudentGroupCount()
     {
         int sum = 0;

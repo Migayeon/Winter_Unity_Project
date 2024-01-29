@@ -57,8 +57,34 @@ public class AfterTurn : MonoBehaviour
         // 커리큘럼 마친 학생들 시험 보게 하기
         foreach (StudentGroup grd in PlayerInfo.graduatedGroups)
         {
-            float possibility = TestCheckManager.CheckPossiblity(grd, grd.GetExam());
-            Debug.Log(possibility);
+            int possibility = TestCheckManager.CheckPossiblity(grd, grd.GetExam());
+            int passed = 0;
+            for (int i = 0; i < grd.GetNumber(); i++)   // 각 학생별로 합격 여부 계산
+            {
+                int num = Random.Range(1, 100);
+                if (num > possibility) { }
+                else
+                {
+                    if (grd.GetExam() < 6)
+                    {
+                        PlayerInfo.nineSuccess++;
+                        passed++;                    }
+                    else if (grd.GetExam() < 12)
+                    {
+                        PlayerInfo.sevenSuccess++;
+                        passed++;
+                    }
+                    else if (grd.GetExam() < 15)
+                    {
+                        PlayerInfo.fiveSuccess++;
+                        passed++;
+                    }
+                    else Debug.Log("Error In Test");
+                }
+            }
+            grd.SetPassedNum(passed);
+            Debug.Log($"{grd.GetPeriod()}기 {grd.GetDivision()}분반 합격자 수 " +
+                $"{grd.GetPassedNum()}/{grd.GetNumber()}");
         }
 
         // 마장석 구매 / 판매시 정산 완료. ( StockManager.cs 참고 )

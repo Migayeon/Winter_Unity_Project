@@ -95,7 +95,7 @@ public class TestCheckManager : MonoBehaviour
             UpdateButtonText();
         }
     }
-    public static float CheckPossiblity(StudentGroup stg, int exam)
+    public static int CheckPossiblity(StudentGroup stg, int exam)
     {
         float possibility = 0;
         List<int> stat = stg.GetStat();
@@ -124,7 +124,7 @@ public class TestCheckManager : MonoBehaviour
             possibility += 10;
             possibility += Mathf.Log(stat[4] - infoList[exam].require[4]) * 2;
         }
-        return possibility;
+        return (int)(possibility + 0.5f);
     }
     public void StudentButtonClicked(GameObject obj) 
     { 
@@ -136,7 +136,7 @@ public class TestCheckManager : MonoBehaviour
         currentSelectedStudentButton.transform.GetChild(0).GetComponent<Text>().text =
             $"{currentSelectedGroup.GetPeriod()}기 {currentSelectedGroup.GetDivision()}분반";
         currentSelectedStudentButton.transform.GetChild(1).GetComponent<Text>().text =
-            $"{8 - currentSelectedGroup.GetAge()}턴 뒤 {infoList[currentSelectedGroup.GetExam()].testname}시험";
+            $"{8 - currentSelectedGroup.GetAge()}턴 뒤 {infoList[currentSelectedGroup.GetExam()].testname} 시험";
     }
     public void StudentClicked(StudentGroup stg)
     {
@@ -148,7 +148,7 @@ public class TestCheckManager : MonoBehaviour
         GameObject[] gm = GameObject.FindGameObjectsWithTag("TestCase");
         foreach(GameObject g in gm)
         {
-            float possibility = CheckPossiblity(stg, cnt);
+            int possibility = CheckPossiblity(stg, cnt);
 
             var loadedSprite1 = Resources.Load<Sprite>("UI/Test_Section/" + "0to20");
             var loadedSprite2 = Resources.Load<Sprite>("UI/Test_Section/" + "20to40");
