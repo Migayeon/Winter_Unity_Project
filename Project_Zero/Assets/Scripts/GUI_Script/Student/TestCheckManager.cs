@@ -22,6 +22,8 @@ public class TestCheckManager : MonoBehaviour
     public Transform studentContent;
     public StudentGroup currentSelectedGroup = null;
 
+    private GameObject[] testButton = new GameObject[16];
+
     List<Info> infoList = new List<Info>();
 
     // Start is called before the first frame update
@@ -38,10 +40,10 @@ public class TestCheckManager : MonoBehaviour
 
             var loadedSprite = Resources.Load<Sprite>("UI/Test_Section/" + testInfo.testclass.ToString());
             Debug.Log(testInfo.testclass.ToString());
-            GameObject test = Instantiate(testcase, testContent);
+            testButton[i] = Instantiate(testcase, testContent);
 
-            test.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = testInfo.testname;
-            test.transform.GetChild(2).GetComponent<Image>().sprite = loadedSprite;
+            testButton[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = testInfo.testname;
+            testButton[i].transform.GetChild(2).GetComponent<Image>().sprite = loadedSprite;
         }
 
         for (int i = 0; i<PlayerInfo.studentGroups.Count; i++)

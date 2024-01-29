@@ -74,6 +74,5 @@ public class GoodsManager : MonoBehaviour
     void Update()
     {
         // UI 구현되면 각 UI text에 value값 대입
-
     }
 }
