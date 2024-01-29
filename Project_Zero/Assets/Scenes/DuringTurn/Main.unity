@@ -307,6 +307,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueUI: {fileID: 1364610382}
+  dialogueButton: {fileID: 1692381854}
   character: {fileID: 452521257}
   message: {fileID: 1498808986}
 --- !u!1 &249353866
