@@ -88,6 +88,7 @@ public class ClassEx : MonoBehaviour
         else
         {
             GoodsManager.goodsAr -= classAr;
+            GoodsManager.goodsStone -= classMagicStone;
             AfterTurn.academy_Cost -= classAr;
             classAr *= 2;
             classMagicStone += 5;
@@ -115,6 +116,7 @@ public class ClassEx : MonoBehaviour
         {
             
             GoodsManager.goodsAr -= officeAr;
+            GoodsManager.goodsStone -= officeMagicStone;
             AfterTurn.academy_Cost -= officeAr;
             PlayerInfo.maxProfessor += numB;
             officeAr *= 2;
