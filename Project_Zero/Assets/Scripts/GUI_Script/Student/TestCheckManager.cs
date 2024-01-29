@@ -53,8 +53,6 @@ public class TestCheckManager : MonoBehaviour
             testButton[i].transform.GetChild(2).GetComponent<Image>().sprite = loadedSprite;
             int j = i;
             testButton[i].GetComponent<Button>().onClick.AddListener(delegate { TestClicked(j); });
-            GameObject k = testButton[i];
-            testButton[i].GetComponent<Button>().onClick.AddListener(delegate { StudentButtonClicked(k); });
         }
 
         for (int i = 0; i<PlayerInfo.studentGroups.Count; i++)
@@ -68,6 +66,8 @@ public class TestCheckManager : MonoBehaviour
                 studentInfo.transform.GetChild(1).GetComponent<Text>().text =
                     $"{8 - studentgroup.GetAge()}턴 뒤 {infoList[studentgroup.GetExam()].testname}시험";
                 studentInfo.GetComponent<Button>().onClick.AddListener(delegate { StudentClicked(studentgroup); });
+                GameObject k = studentInfo;
+                studentInfo.GetComponent<Button>().onClick.AddListener(delegate { StudentButtonClicked(k); });
             }
         }
     }
@@ -89,8 +89,11 @@ public class TestCheckManager : MonoBehaviour
     }
     public void ConfirmTest()
     {
-        currentSelectedGroup.SetExam(currentSelectedTest);
-        UpdateButtonText();
+        if (currentSelectedStudentButton != null && currentSelectedGroup != null) 
+        {
+            currentSelectedGroup.SetExam(currentSelectedTest);
+            UpdateButtonText();
+        }
     }
     public static float CheckPossiblity(StudentGroup stg, int exam)
     {
@@ -123,7 +126,11 @@ public class TestCheckManager : MonoBehaviour
         }
         return possibility;
     }
-    public void StudentButtonClicked(GameObject obj) { currentSelectedStudentButton = obj; }
+    public void StudentButtonClicked(GameObject obj) 
+    { 
+        currentSelectedStudentButton = obj; 
+        Debug.Log(currentSelectedStudentButton.name);
+    }
     public void UpdateButtonText()
     {
         currentSelectedStudentButton.transform.GetChild(0).GetComponent<Text>().text =
