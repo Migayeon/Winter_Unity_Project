@@ -13,6 +13,10 @@ using UnityEngine.SceneManagement;
 public class ManageProfessorTest : MonoBehaviour
 {
     public const int ProfessorAwayTime = 3;
+
+    //min, max values for the "upgrade professor by how much" question (random generation)
+    public const int ProfessorUpgradeValueMinimum = 50;
+    public const int ProfessorUpgradeValueMaximum = 200;
     
     public GameObject ReferencePrefab; //reference Prefab (ProfessorInfo file)
     public GameObject content; //GameObject for spawning new instances of the reference prefab
@@ -157,6 +161,29 @@ public class ManageProfessorTest : MonoBehaviour
             }
             ProfessorInfo[3].text = tempStatStr;
             ProfessorInfo[4].text = "급여 : " + Convert.ToString(PlayerInfo.ProfessorList[i].ProfessorGetSalary());
+
+            //generate random skill indexes and delta values
+            /* TODO
+             * This part currently does not seem to work (no idea why)
+             * will fix later
+             */
+            int index1 = 0, index2 = 0;
+            while (index1 == index2)
+            {
+                index1 = randomseed.Next(0, 6);
+                index2 = randomseed.Next(0, 6);
+            }
+            List<int> TempListIndex = new List<int>(2);
+            List<int> TempListValue = new List<int>(2);
+            TempListIndex.Add(Math.Min(index1, index2));
+            TempListIndex.Add(Math.Max(index1, index2));
+            PlayerInfo.UpgradeSkillIndex[i] = TempListIndex;
+            TempListIndex.Clear();
+
+            TempListValue.Add(randomseed.Next(ProfessorUpgradeValueMinimum, ProfessorUpgradeValueMaximum + 1));
+            TempListValue.Add(randomseed.Next(ProfessorUpgradeValueMinimum, ProfessorUpgradeValueMaximum + 1));
+            PlayerInfo.UpgradeSkillValue[i] = TempListValue;
+            TempListValue.Clear();
         }
         ReturnButton.onClick.AddListener(ReturnToMenu);
     }
@@ -203,6 +230,8 @@ public class ManageProfessorTest : MonoBehaviour
         }
         PopupText[5].text = PopupStatStr;
 
+        Debug.Log("Index : " + idx);
+        Debug.Log("List Length : " + PlayerInfo.UpgradeSkillIndex.Count);
         Debug.Log(PlayerInfo.UpgradeSkillIndex[idx][0]);
         Debug.Log(PlayerInfo.UpgradeSkillIndex[idx][1]);
         int UpgradeIndex1 = PlayerInfo.UpgradeSkillIndex[idx][0];

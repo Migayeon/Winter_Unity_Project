@@ -16,7 +16,49 @@ using System.Linq;
 // 2. UI rework & overhaul
 // 3. Code documentation
 
-
+/*
+ * On first entry (in current turn) -> free roll
+ * when picked, show professor and lock all other buttons except [Go Back to Menu] and [Reroll]
+ * 
+ * if user returns to menu then comes back again, and is NOT first roll
+ * -> idea 1: show previously picked professor data
+ * -> idea 2: show blank professor slots with buttons not active except for [Reroll]
+ * preferably idea 1, but if it doesn't work we can revert to 2.
+ * 
+ * else -> create new professors (first roll)
+ * 
+ *
+ * <Enter Scene>
+ * if (First Roll)
+ * {
+ *      generate three new professors
+ *      store currently generate data (so that it can be reshown if user goes back to main menu then comes back again)
+ *      
+ *      if (Player selects professor)
+ *      {
+ *          send data to PlayerInfo
+ *          store selected professor data (so that it can be shown again if player goes to main menu then comes back)
+ *          
+ *          if (player selects prof)
+ *          {
+ *          ...
+ *      }
+ * }
+ * else
+ * {
+ *      if (player had selected before)
+ *      {
+ *          show info of previously selected professor
+ *      }
+ *      else
+ *      {
+ *          ...
+ *      }
+ * }
+ * 
+ * ISSUE: FLOWCHART IS A BIT TOO COMPLICATED!
+ * ***: try completely rewriting the code at some point for better readability and stuff
+ */
 public class CreateProfessor : ProfessorSystem
 {    
     const int UniqueProfessorRarity = 5; //probability (edit later)
