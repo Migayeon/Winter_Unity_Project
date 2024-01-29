@@ -151,6 +151,9 @@ public static class SubjectTree
         }
         for (int i = 0; i < subjectsCount; i++)
             subjectState.Add(State.Closed);
+        subjectState[0] = State.ReadyToOpen;
+        subjectState[1] = State.ReadyToOpen;
+        subjectState[4] = State.ReadyToOpen;
         for (int i = 0; i < openedSubjectsId.Count; i++)
             openSubject(openedSubjectsId[i]);
     }
