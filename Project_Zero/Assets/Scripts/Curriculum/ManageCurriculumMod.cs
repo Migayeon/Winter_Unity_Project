@@ -54,6 +54,8 @@ public class ManageCurriculumMod : MonoBehaviour
         exitDetailButtonTransform = professorDetailUI.GetChild(1);
 
         professorDetailUI.gameObject.SetActive(false);
+        professorDetailUI.gameObject.SetActive(false);
+        OpenSubjectButton.gameObject.SetActive(false);
 
         foreach (Transform subject in subjectGameObject.GetComponentInChildren<Transform>())
             setColor(subject);

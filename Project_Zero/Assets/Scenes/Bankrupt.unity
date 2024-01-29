@@ -1082,7 +1082,7 @@ MonoBehaviour:
   height: 800
   floor: -460
   startTime: 0
-  bounceRate: 0.98
+  bounceRate: 0.9
 --- !u!1 &2062020821
 GameObject:
   m_ObjectHideFlags: 0

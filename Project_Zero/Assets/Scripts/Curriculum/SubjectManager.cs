@@ -28,6 +28,8 @@ public static class SubjectTree
     public static Dictionary<long, List<bool>> professorsLecture = new Dictionary<long, List<bool>>();
     public static int subjectsCount = 0;
 
+    public static int openSubjectCnt = 0;
+
     public static void initSubjectsAndInfo()
     {
         subjects = new List<Subject>();
@@ -94,6 +96,7 @@ public static class SubjectTree
             }
         }
         subjectState[id] = State.Open;
+        openSubjectCnt++;
         foreach (int nextNode in subjects[id].nextSubjects)
         {
             Debug.Log(subjectStateNeedCnt.Count);
@@ -112,6 +115,7 @@ public static class SubjectTree
             }
         }
         subjectState[id] = State.ReadyToOpen;
+        openSubjectCnt--;
         foreach (int nextNode in subjects[id].nextSubjects)
         {
             subjectStateNeedCnt[nextNode]++;
