@@ -53,6 +53,12 @@ public class DialogueSystem : MonoBehaviour
 
             dialogueString = dialogue.message[dialogueIndex].Split(":");
             character.text = dialogueString[0];
+            if (dialogueString[0] == "&E")
+            {
+                isNowAnimation = true;
+                dialogueIndex++;
+                return;
+            }
             StartCoroutine(DialogueAnimation(dialogueString[1]));
             dialogueIndex++;
         }
@@ -77,6 +83,10 @@ public class DialogueSystem : MonoBehaviour
             dialogueUI.SetActive(true);
             dialogueButton.onClick.AddListener(DialogueProcess);
             DialogueProcess();
+        }
+        else
+        {
+            dialogueUI.SetActive(false);
         }
     }
 }
