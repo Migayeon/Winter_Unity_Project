@@ -202,7 +202,7 @@ public class SaveManager : MonoBehaviour
         PlayerDataSave(i);
         ProfessorSave(i);
         StudentSave(i);
-        //SubjectSave(i);
+        SubjectSave(i);
     }
 
     public static void LoadProcess()
@@ -211,10 +211,10 @@ public class SaveManager : MonoBehaviour
         PlayerDataLoad(i);
         ProfessorLoad(i);
         StudentLoad(i);
-        //SubjectLoad(i);
         SubjectTree.initSubjectsAndInfo();
         SubjectTree.initSubjectStates(new List<int>());
         SubjectTree.callOnlyOneTimeWhenGameStart();
+        SubjectLoad(i);
     }
 
     private void Awake()

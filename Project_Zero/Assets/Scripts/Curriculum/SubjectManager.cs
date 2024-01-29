@@ -140,7 +140,7 @@ public static class SubjectTree
             rst[idList[i]] = true;
         return rst;
     }
-    public static void initSubjectStates(List<int> openedSubjectsId = null)
+    public static void initSubjectStates(List<int> openedSubjectsId)
     {
         subjectState = new List<State>();
         subjectStateNeedCnt = new List<int>();
@@ -156,7 +156,7 @@ public static class SubjectTree
         List<int> cntList = newCntList();
         List<bool> flatSearchList = flattenList(new List<int>());
         List<bool> isSameGroup = new List<bool>();
-        for (int i = 0; i < subjectsInfo.groupCount; i++)
+        for (int i = 0; i < subjectsInfo.groupCount + 1; i++)
             isSameGroup.Add(false);
         Queue<int> searchQ = new Queue<int>();
         for (int i = 0; i < subjectsCount; i++)
