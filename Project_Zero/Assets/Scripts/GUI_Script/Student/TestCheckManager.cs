@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [System.Serializable]
-class Info
+public class Info
 {
     public int testclass;
     public string testname;
@@ -23,12 +23,14 @@ public class TestCheckManager : MonoBehaviour
 
     public GameObject student;
     public Transform studentContent;
+
+    private GameObject currentSelectedStudentButton = null;
     public StudentGroup currentSelectedGroup = null;
     private int currentSelectedTest = -1;
 
     private GameObject[] testButton = new GameObject[15];
     private Info[] testInfo = new Info[15];
-    List<Info> infoList = new List<Info>();
+    public static List<Info> infoList = new List<Info>();
 
     // Start is called before the first frame update
     void Start()
@@ -51,6 +53,8 @@ public class TestCheckManager : MonoBehaviour
             testButton[i].transform.GetChild(2).GetComponent<Image>().sprite = loadedSprite;
             int j = i;
             testButton[i].GetComponent<Button>().onClick.AddListener(delegate { TestClicked(j); });
+            GameObject k = testButton[i];
+            testButton[i].GetComponent<Button>().onClick.AddListener(delegate { StudentButtonClicked(k); });
         }
 
         for (int i = 0; i<PlayerInfo.studentGroups.Count; i++)
@@ -62,8 +66,7 @@ public class TestCheckManager : MonoBehaviour
                 studentInfo.transform.GetChild(0).GetComponent<Text>().text =
                     $"{studentgroup.GetPeriod()}기 {studentgroup.GetDivision()}분반";
                 studentInfo.transform.GetChild(1).GetComponent<Text>().text =
-                    $"{8 - studentgroup.GetAge()}턴 뒤 시험";
-                Debug.Log("잘 됨");
+                    $"{8 - studentgroup.GetAge()}턴 뒤 {infoList[studentgroup.GetExam()].testname}시험";
                 studentInfo.GetComponent<Button>().onClick.AddListener(delegate { StudentClicked(studentgroup); });
             }
         }
@@ -87,45 +90,58 @@ public class TestCheckManager : MonoBehaviour
     public void ConfirmTest()
     {
         currentSelectedGroup.SetExam(currentSelectedTest);
+        UpdateButtonText();
+    }
+    public static float CheckPossiblity(StudentGroup stg, int exam)
+    {
+        float possibility = 0;
+        List<int> stat = stg.GetStat();
+        if (stat[0] > infoList[exam].require[0])
+        {
+            possibility += 10;
+            possibility += Mathf.Log(stat[0] - infoList[exam].require[0]) * 2;
+        }
+        if (stat[1] > infoList[exam].require[1])
+        {
+            possibility += 10;
+            possibility += Mathf.Log(stat[1] - infoList[exam].require[1]) * 2;
+        }
+        if (stat[2] > infoList[exam].require[2])
+        {
+            possibility += 10;
+            possibility += Mathf.Log(stat[2] - infoList[exam].require[2]) * 2;
+        }
+        if (stat[3] > infoList[exam].require[3])
+        {
+            possibility += 10;
+            possibility += Mathf.Log(stat[3] - infoList[exam].require[3]) * 2;
+        }
+        if (stat[4] > infoList[exam].require[4])
+        {
+            possibility += 10;
+            possibility += Mathf.Log(stat[4] - infoList[exam].require[4]) * 2;
+        }
+        return possibility;
+    }
+    public void StudentButtonClicked(GameObject obj) { currentSelectedStudentButton = obj; }
+    public void UpdateButtonText()
+    {
+        currentSelectedStudentButton.transform.GetChild(0).GetComponent<Text>().text =
+            $"{currentSelectedGroup.GetPeriod()}기 {currentSelectedGroup.GetDivision()}분반";
+        currentSelectedStudentButton.transform.GetChild(1).GetComponent<Text>().text =
+            $"{8 - currentSelectedGroup.GetAge()}턴 뒤 {infoList[currentSelectedGroup.GetExam()].testname}시험";
     }
     public void StudentClicked(StudentGroup stg)
     {
         // [이론, 마나, 손재주, 원소, 영창]
         currentSelectedGroup = stg;
         // Debug.Log(currentSelectedGroup.GetDivision());
-        List<int> stat=stg.GetStat();
         int cnt = 0;
         
         GameObject[] gm = GameObject.FindGameObjectsWithTag("TestCase");
         foreach(GameObject g in gm)
         {
-            float possibility = 0;
-            Debug.Log(stat[0]);
-            if (stat[0] > infoList[cnt].require[0])
-            {
-                possibility += 10;
-                possibility += Mathf.Log(stat[0] - infoList[cnt].require[0]) * 2;
-            }
-            if (stat[1] > infoList[cnt].require[1])
-            {
-                possibility += 10;
-                possibility += Mathf.Log(stat[1] - infoList[cnt].require[1]) * 2;
-            }
-            if (stat[2] > infoList[cnt].require[2])
-            {
-                possibility += 10;
-                possibility += Mathf.Log(stat[2] - infoList[cnt].require[2]) * 2;
-            }
-            if (stat[3] > infoList[cnt].require[3])
-            {
-                possibility += 10;
-                possibility += Mathf.Log(stat[3] - infoList[cnt].require[3]) * 2;
-            }
-            if (stat[4] > infoList[cnt].require[4])
-            {
-                possibility += 10;
-                possibility += Mathf.Log(stat[4] - infoList[cnt].require[4]) * 2;
-            }
+            float possibility = CheckPossiblity(stg, cnt);
 
             var loadedSprite1 = Resources.Load<Sprite>("UI/Test_Section/" + "0to20");
             var loadedSprite2 = Resources.Load<Sprite>("UI/Test_Section/" + "20to40");

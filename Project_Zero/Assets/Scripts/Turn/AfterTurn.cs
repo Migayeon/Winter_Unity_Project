@@ -54,6 +54,13 @@ public class AfterTurn : MonoBehaviour
         }
         student_Rev = GoodsManager.goodsAr - student_Rev;
 
+        // 커리큘럼 마친 학생들 시험 보게 하기
+        foreach (StudentGroup grd in PlayerInfo.graduatedGroups)
+        {
+            float possibility = TestCheckManager.CheckPossiblity(grd, grd.GetExam());
+            Debug.Log(possibility);
+        }
+
         // 마장석 구매 / 판매시 정산 완료. ( StockManager.cs 참고 )
 
 
