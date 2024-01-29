@@ -300,6 +300,9 @@ ex) A교수 속성1, 속성3 / B교수 속성5, 속성6
 - 강화 버튼 & UI
 - 강화 성공 메세지
 - 강화 데이터 전송&수정
+
+버그 todo:
+- (suggestion) change GetComponentInChildren to GetComponent
 */
 
 /*
