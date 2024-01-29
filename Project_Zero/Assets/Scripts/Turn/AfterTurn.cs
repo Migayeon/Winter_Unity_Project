@@ -142,7 +142,7 @@ public class AfterTurn : MonoBehaviour
         }
 
         // 학생 졸업 결산창
-        if (toBeGraduated.Count < 0)
+        if (toBeGraduated.Count <= 0)
         {
             pageTwo.transform.GetChild(1).gameObject.SetActive(true);
             pageTwo.transform.GetChild(2).gameObject.SetActive(false);
@@ -172,6 +172,12 @@ public class AfterTurn : MonoBehaviour
         magic_Cost = 0;
         total_Result = 0;
 
+        // 졸업생 리스트에 학생 그룹 추가 + 명성 갱신
+        foreach (StudentGroup grd in toBeGraduated)
+        {
+            PlayerInfo.graduatedGroups.Add(grd);
+        }
+        GoodsManager.CalculateEndedFame();
         // BeforeTurn 불러오기, 1턴 추가
         TurnManager.turn++;
         //SceneManager.LoadScene("Curriculum");

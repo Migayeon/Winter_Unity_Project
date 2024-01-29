@@ -36,6 +36,14 @@ public class GoodsManager : MonoBehaviour
     public static int minRate = -25;
     public static void CalculateEndedFame()
     {
+        int passedRatio = 1;
+        if (PlayerInfo.GraduatedStudentTotalNum() > 0)
+        {
+            passedRatio = ((PlayerInfo.nineSuccess +
+            2 * PlayerInfo.sevenSuccess * PlayerInfo.sevenSuccess + 10 * PlayerInfo.fiveSuccess * PlayerInfo.fiveSuccess
+            / PlayerInfo.GraduatedStudentTotalNum()));
+        }
+        Debug.Log(passedRatio);
         int topPfNum = 3;
         List<ProfessorSystem.Professor> pfSortedList = PlayerInfo.ProfessorList.OrderByDescending(x => x.ProfessorGetSalary()).ToList();
         int topPfStatSum = 0;
@@ -58,21 +66,12 @@ public class GoodsManager : MonoBehaviour
         {
             Debug.Log("Im okay");
             Debug.Log($"{topPfStatSum} , {topPfNum} , {openSubjectNum} ");
-            goodsCalculatedEndedFame = ((topPfStatSum / topPfNum) * openSubjectNum) + GoodsConstFame;
+            goodsCalculatedEndedFame = ((topPfStatSum / topPfNum)/10) + openSubjectNum + passedRatio + GoodsConstFame;
         }
         else
         {
-            goodsCalculatedEndedFame = GoodsConstFame;
+            goodsCalculatedEndedFame = GoodsConstFame + passedRatio;
         }
         Debug.Log($"명성: {goodsCalculatedEndedFame}");
-    }
-    void Start()
-    {
-        // json 저장 시스템 구현되면 try ~ except문으로 각 재화 초기화
-    }
-
-    void Update()
-    {
-        // UI 구현되면 각 UI text에 value값 대입
     }
 }
