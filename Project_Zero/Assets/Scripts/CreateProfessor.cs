@@ -157,7 +157,7 @@ public class CreateProfessor : ProfessorSystem
     public Button PickProfessor3Button;
     public Button RetryProfessorsButton;
     public Button ReturnMenuButton;
-    public GameObject ShowTextObject1, ShowTextObject2, ShowTextObject3;
+    public GameObject ProfessorObject1, ProfessorObject2, ProfessorObject3;
     public GameObject ButtonClickObject;
     public GameObject HideTextObject;
     public GameObject MaxProfessorsErrorObject;
@@ -224,6 +224,7 @@ public class CreateProfessor : ProfessorSystem
 
         List<Professor> NewProfessors = new List<Professor>();
 
+        //Check to prevent "getaround" for paying for rerolls
         if (PlayerInfo.GenerateNewRandomProfessorList)
         {
             for (int i = 0; i < 3; ++i)
@@ -286,32 +287,37 @@ public class CreateProfessor : ProfessorSystem
         ReturnMenuButton.onClick.AddListener(ReturnMenu);
 
         HideTextObject.SetActive(false);
-        Professor1Name = ShowTextObject1.GetComponentInChildren<TextMeshProUGUI>();
-        Professor2Name = ShowTextObject2.GetComponentInChildren<TextMeshProUGUI>();
-        Professor3Name = ShowTextObject3.GetComponentInChildren<TextMeshProUGUI>();
-        Professor1Type = ShowTextObject1.GetComponentInChildren<TextMeshProUGUI>();
-        Professor2Type = ShowTextObject2.GetComponentInChildren<TextMeshProUGUI>();
-        Professor3Type = ShowTextObject3.GetComponentInChildren<TextMeshProUGUI>();
-        Professor1Stat = ShowTextObject1.GetComponentInChildren<TextMeshProUGUI>();
-        Professor2Stat = ShowTextObject2.GetComponentInChildren<TextMeshProUGUI>();
-        Professor3Stat = ShowTextObject3.GetComponentInChildren<TextMeshProUGUI>();
-        Professor1Salary = ShowTextObject1.GetComponentInChildren<TextMeshProUGUI>();
-        Professor2Salary = ShowTextObject2.GetComponentInChildren<TextMeshProUGUI>();
-        Professor3Salary = ShowTextObject3.GetComponentInChildren<TextMeshProUGUI>();
+        Professor1Name = Professor1Name.GetComponent<TextMeshProUGUI>();
+        Professor1Type = Professor1Type.GetComponent<TextMeshProUGUI>();
+        Professor1Stat = Professor1Stat.GetComponent<TextMeshProUGUI>();
+        Professor1Salary = Professor1Salary.GetComponent<TextMeshProUGUI>();
+
+        Professor2Name = Professor2Name.GetComponent<TextMeshProUGUI>();
+        Professor2Type = Professor2Type.GetComponent<TextMeshProUGUI>();
+        Professor2Stat = Professor2Stat.GetComponent<TextMeshProUGUI>();
+        Professor2Salary = Professor2Salary.GetComponent<TextMeshProUGUI>();
+
+        Professor3Name = Professor3Name.GetComponent<TextMeshProUGUI>();
+        Professor3Type = Professor3Type.GetComponent<TextMeshProUGUI>();
+        Professor3Stat = Professor3Stat.GetComponent<TextMeshProUGUI>();
+        Professor3Salary = Professor3Salary.GetComponent<TextMeshProUGUI>();
+
+        
     }
 
     public void PickProfessor1(Professor InsertProf)
     {
         Debug.Log("PickProfessor1");
         PlayerInfo.ProfessorList.Add(InsertProf);
-        Professor1Name.text = "t";
+        Professor1Name.text = "채용 완료";
         Professor1Name.ForceMeshUpdate();
-        Professor1Type.text = "t";
+        Professor1Type.text = "";
         Professor1Type.ForceMeshUpdate();
-        Professor1Stat.text = "t";
+        Professor1Stat.text = "";
         Professor1Stat.ForceMeshUpdate();
-        Professor1Salary.text = "t";
+        Professor1Salary.text = "";
         Professor1Salary.ForceMeshUpdate();
+        PickProfessor1Button.enabled = false;
         Debug.Log(Professor1Name.text);
         Debug.Log(Professor1Type.text);
         Debug.Log(Professor1Stat.text);
@@ -332,6 +338,19 @@ public class CreateProfessor : ProfessorSystem
     {
         Debug.Log("PickProfessor2");
         PlayerInfo.ProfessorList.Add(InsertProf);
+        Professor2Name.text = "채용 완료";
+        Professor2Name.ForceMeshUpdate();
+        Professor2Type.text = "";
+        Professor2Type.ForceMeshUpdate();
+        Professor2Stat.text = "";
+        Professor2Stat.ForceMeshUpdate();
+        Professor2Salary.text = "";
+        Professor2Salary.ForceMeshUpdate();
+        PickProfessor2Button.enabled = false;
+        Debug.Log(Professor1Name.text);
+        Debug.Log(Professor1Type.text);
+        Debug.Log(Professor1Stat.text);
+        Debug.Log(Professor1Salary.text);
         PickedProfessorName.text = InsertProf.ProfessorGetName();
         PickedProfessorType.text = InsertProf.ProfessorGetTypeInString();
         PickedProfessorStat.text = StatToString(InsertProf.ProfessorGetStats());
@@ -342,6 +361,19 @@ public class CreateProfessor : ProfessorSystem
     {
         Debug.Log("PickProfessor3");
         PlayerInfo.ProfessorList.Add(InsertProf);
+        Professor3Name.text = "채용 완료";
+        Professor3Name.ForceMeshUpdate();
+        Professor3Type.text = "";
+        Professor3Type.ForceMeshUpdate();
+        Professor3Stat.text = "";
+        Professor3Stat.ForceMeshUpdate();
+        Professor3Salary.text = "";
+        Professor3Salary.ForceMeshUpdate();
+        PickProfessor3Button.enabled = false;
+        Debug.Log(Professor1Name.text);
+        Debug.Log(Professor1Type.text);
+        Debug.Log(Professor1Stat.text);
+        Debug.Log(Professor1Salary.text);
         PickedProfessorName.text = InsertProf.ProfessorGetName();
         PickedProfessorType.text = InsertProf.ProfessorGetTypeInString();
         PickedProfessorStat.text = StatToString(InsertProf.ProfessorGetStats());
