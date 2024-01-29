@@ -107,11 +107,11 @@ public class ManageCurriculumMod : MonoBehaviour
         }
         else if (SubjectTree.subjectState[int.Parse(subject.name)] == SubjectTree.State.ReadyToOpen)
         {
-            subject.GetComponent<Image>().color = new Color(1.0f, 1.0f, 1.0f);
+            subject.GetComponent<Image>().color = new Color(0.4f, 0.9f, 0.7f);
         }
         else
         {
-            subject.GetComponent<Image>().color = new Color(0.8f, 0.8f, 0.8f);
+            subject.GetComponent<Image>().color = new Color(0.3f, 0.3f, 0.3f);
         }
     }
 

@@ -9390,7 +9390,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89fbf0c95bd9fe44b90bcbe83a9a9268, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panel: {fileID: 269250470}
   professorInfoUI: {fileID: 130373390}
   OpenSubjectButton: {fileID: 2141914936}
   subjectGameObject: {fileID: 1949356028}
@@ -9415,7 +9414,7 @@ GameObject:
   - component: {fileID: 2037261554}
   - component: {fileID: 2037261553}
   m_Layer: 0
-  m_Name: faceHoldingBackTear
+  m_Name: Migayeon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

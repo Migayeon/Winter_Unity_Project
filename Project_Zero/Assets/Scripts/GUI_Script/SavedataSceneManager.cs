@@ -32,6 +32,10 @@ public class SavedataSceneManager : MonoBehaviour
         SubjectTree.initSubjectStates(new List<int>());
         SubjectTree.callOnlyOneTimeWhenGameStart();
 
+        for (int idx = 0; idx < 8; idx++)
+        {
+            SubjectTree.openSubject(idx);
+        }
         /*
          
         초기화할 내용 추가. 
