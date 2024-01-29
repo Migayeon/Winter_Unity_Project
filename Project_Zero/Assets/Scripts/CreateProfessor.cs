@@ -143,6 +143,8 @@ public class CreateProfessor : ProfessorSystem
 
     }
 
+//TODO: clean up TextMeshProUGUI assets (use arrays)
+
     public Button PickProfessor1Button;
     public Button PickProfessor2Button;
     public Button PickProfessor3Button;
