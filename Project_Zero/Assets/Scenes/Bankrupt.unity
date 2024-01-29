@@ -134,8 +134,9 @@ GameObject:
   - component: {fileID: 415162617}
   - component: {fileID: 415162619}
   - component: {fileID: 415162618}
+  - component: {fileID: 415162620}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: "\uD30C"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -157,7 +158,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -330, y: -0.000015259}
+  m_AnchoredPosition: {x: -330, y: 890}
   m_SizeDelta: {x: 333, y: 333}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &415162618
@@ -257,6 +258,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 415162616}
   m_CullTransparentMesh: 1
+--- !u!114 &415162620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 415162616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 995a9a054297b7946a6b10b41a3a4b85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  height: 890
+  startTime: 0
 --- !u!1 &525474726
 GameObject:
   m_ObjectHideFlags: 0
@@ -268,8 +283,9 @@ GameObject:
   - component: {fileID: 525474727}
   - component: {fileID: 525474729}
   - component: {fileID: 525474728}
+  - component: {fileID: 525474730}
   m_Layer: 5
-  m_Name: Text (TMP) (2)
+  m_Name: '!'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -291,7 +307,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 336, y: -1.819e-12}
+  m_AnchoredPosition: {x: 336, y: 890}
   m_SizeDelta: {x: 333, y: 333}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &525474728
@@ -391,6 +407,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 525474726}
   m_CullTransparentMesh: 1
+--- !u!114 &525474730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 525474726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 995a9a054297b7946a6b10b41a3a4b85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  height: 890
+  startTime: 20
 --- !u!1 &731892643
 GameObject:
   m_ObjectHideFlags: 0
@@ -562,8 +592,9 @@ GameObject:
   - component: {fileID: 1302980670}
   - component: {fileID: 1302980672}
   - component: {fileID: 1302980671}
+  - component: {fileID: 1302980673}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: "\uC0B0"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -585,7 +616,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3, y: -1.819e-12}
+  m_AnchoredPosition: {x: 3, y: 890}
   m_SizeDelta: {x: 333, y: 333}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1302980671
@@ -685,6 +716,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1302980669}
   m_CullTransparentMesh: 1
+--- !u!114 &1302980673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1302980669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 995a9a054297b7946a6b10b41a3a4b85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  height: 890
+  startTime: 10
 --- !u!1 &1570429538
 GameObject:
   m_ObjectHideFlags: 0
@@ -697,7 +742,7 @@ GameObject:
   - component: {fileID: 1570429541}
   - component: {fileID: 1570429540}
   m_Layer: 5
-  m_Name: Image
+  m_Name: bg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -719,7 +764,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1920, y: 1440}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1570429540
