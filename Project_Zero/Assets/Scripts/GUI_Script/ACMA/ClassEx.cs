@@ -224,7 +224,7 @@ public class ClassEx : MonoBehaviour
                 GoodsManager.GoodsConstFame += num;
                 marD += 1000;
                 requiredMarketD.text = $"{marD}Ar 필요";
-                duringMarketC = TurnManager.turn;
+                duringMarketD = TurnManager.turn;
             }
         }
     }
