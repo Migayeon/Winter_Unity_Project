@@ -8,7 +8,12 @@ public class BankruptDrop : MonoBehaviour
     [SerializeField]
     private int height;
     [SerializeField]
+    private float floor;
+    [SerializeField]
     private int startTime;
+    [SerializeField]
+    private float bounceRate;
+    private bool inFloor = false;
     private float speed = 0;
     private void FixedUpdate()
     {
@@ -17,13 +22,20 @@ public class BankruptDrop : MonoBehaviour
             startTime--; 
             return;
         }
-        transform.position += new Vector3(0f, speed, 0f);
-        if (transform.position.y <= 0)
-            speed = - speed * 0.85f;
-        if (transform.position.y <= 0 && speed < 0.1f)
+        if (inFloor)
         {
-            speed = 0f;
-            transform.position = new Vector3(transform.position.x, speed, 0f);
+            return;
+        }
+        transform.position += new Vector3(0f, speed, 0f);
+        if (transform.position.y <= floor / 144)
+        {
+            speed = - speed * bounceRate;
+        }
+        if (transform.position.y <= floor / 144 && speed < 0.01f / 144)
+        {
+            speed = 0;
+            transform.position = new Vector3(transform.position.x, floor / 144, 0f);
+            inFloor = true;
         }
         else
             speed -= 0.02f;
