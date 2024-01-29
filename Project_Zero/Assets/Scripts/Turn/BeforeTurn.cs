@@ -83,6 +83,7 @@ public class BeforeTurn : MonoBehaviour
             templist.Add(Math.Min(randomindex[0], randomindex[1])); //smaller index first
             templist.Add(Math.Max(randomindex[0], randomindex[1])); //larger index later
             PlayerInfo.UpgradeSkillIndex.Add(templist);
+            templist.Clear();
         }
 
         //generate random upgrade values
@@ -94,6 +95,7 @@ public class BeforeTurn : MonoBehaviour
             templist.Add(randomvalue[0]);
             templist.Add(randomvalue[1]);
             PlayerInfo.UpgradeSkillValue.Add(templist);
+            templist.Clear();
         }
 
         // string temp = GenerateName(); //for testing

@@ -168,7 +168,7 @@ public class ManageProfessorTest : MonoBehaviour
     }
     public void ShowInfoOnPopup(ProfessorSystem.Professor ProfData, int idx)
     {
-        Debug.Log("ShowInfoOnPopup called");
+        Debug.Log("ShowInfoOnPopup called : " + idx);
         List<int> tempStatList = new List<int>(6);
         ExitPopupButton.onClick.AddListener(RemovePopup);
         PopupText = PopUpObject.GetComponentsInChildren<TextMeshProUGUI>();
@@ -203,6 +203,8 @@ public class ManageProfessorTest : MonoBehaviour
         }
         PopupText[5].text = PopupStatStr;
 
+        Debug.Log(PlayerInfo.UpgradeSkillIndex[idx][0]);
+        Debug.Log(PlayerInfo.UpgradeSkillIndex[idx][1]);
         int UpgradeIndex1 = PlayerInfo.UpgradeSkillIndex[idx][0];
         int UpgradeIndex2 = PlayerInfo.UpgradeSkillIndex[idx][1];
         UpgradeStatInfo1.text = KoreanStatList[UpgradeIndex1];

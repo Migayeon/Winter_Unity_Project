@@ -73,6 +73,13 @@ public class CreateProfessor : ProfessorSystem
         return finalRandomName;
     }
 
+    public IEnumerator ShowMessageForLimitedTime(GameObject tt)
+    {
+        tt.SetActive(true);
+        yield return new WaitForSeconds(3.0f);
+        tt.SetActive(false);
+    }
+
     public static Professor CreateNewProfessor(int num) // "static" keyword is included for testing purposes only (used in professor info management testing), may remove later
     {
         System.Random RandomGenerator = new System.Random();
@@ -297,19 +304,23 @@ public class CreateProfessor : ProfessorSystem
     {
         Debug.Log("PickProfessor1");
         PlayerInfo.ProfessorList.Add(InsertProf);
+        Professor1Name.text = "Professor1Name";
+        Professor1Name.ForceMeshUpdate(false, true);
+        Professor1Type.text = "Professor1Type";
+        Professor1Type.ForceMeshUpdate(false, true);
+        Professor1Stat.text = "Professor1Stat";
+        Professor1Stat.ForceMeshUpdate(false, true);
+        Professor1Salary.text = "Professor1Salary";
+        Professor1Salary.ForceMeshUpdate(false, true);
+        Debug.Log(Professor1Name.text);
+        Debug.Log(Professor1Type.text);
+        Debug.Log(Professor1Stat.text);
+        Debug.Log(Professor1Salary.text);
         /*
         Professor1Name.ForceMeshUpdate(true);
-        Professor2Name.ForceMeshUpdate(true);
-        Professor3Name.ForceMeshUpdate(true);
         Professor1Type.ForceMeshUpdate(true);
-        Professor2Type.ForceMeshUpdate(true);
-        Professor3Type.ForceMeshUpdate(true);
         Professor1Stat.ForceMeshUpdate(true);
-        Professor2Stat.ForceMeshUpdate(true);
-        Professor3Stat.ForceMeshUpdate(true);
         Professor1Salary.ForceMeshUpdate(true);
-        Professor2Salary.ForceMeshUpdate(true);
-        Professor3Salary.ForceMeshUpdate(true);
         */
         PickedProfessorName.text = InsertProf.ProfessorGetName();
         PickedProfessorType.text = InsertProf.ProfessorGetTypeInString();
@@ -319,7 +330,8 @@ public class CreateProfessor : ProfessorSystem
         PickedProfessorType = HideTextObject.GetComponentInChildren<TextMeshProUGUI>();
         PickedProfessorStat = HideTextObject.GetComponentInChildren<TextMeshProUGUI>();
         PickedProfessorSalary = HideTextObject.GetComponentInChildren<TextMeshProUGUI>();
-        HideTextObject.SetActive(true);
+        ShowMessageForLimitedTime(HideTextObject);
+
     }
         public void PickProfessor2(Professor InsertProf)
     {
