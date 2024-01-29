@@ -304,14 +304,14 @@ public class CreateProfessor : ProfessorSystem
     {
         Debug.Log("PickProfessor1");
         PlayerInfo.ProfessorList.Add(InsertProf);
-        Professor1Name.text = "Professor1Name";
-        Professor1Name.ForceMeshUpdate(false, true);
-        Professor1Type.text = "Professor1Type";
-        Professor1Type.ForceMeshUpdate(false, true);
-        Professor1Stat.text = "Professor1Stat";
-        Professor1Stat.ForceMeshUpdate(false, true);
-        Professor1Salary.text = "Professor1Salary";
-        Professor1Salary.ForceMeshUpdate(false, true);
+        Professor1Name.text = "t";
+        Professor1Name.ForceMeshUpdate();
+        Professor1Type.text = "t";
+        Professor1Type.ForceMeshUpdate();
+        Professor1Stat.text = "t";
+        Professor1Stat.ForceMeshUpdate();
+        Professor1Salary.text = "t";
+        Professor1Salary.ForceMeshUpdate();
         Debug.Log(Professor1Name.text);
         Debug.Log(Professor1Type.text);
         Debug.Log(Professor1Stat.text);
@@ -326,12 +326,7 @@ public class CreateProfessor : ProfessorSystem
         PickedProfessorType.text = InsertProf.ProfessorGetTypeInString();
         PickedProfessorStat.text = StatToString(InsertProf.ProfessorGetStats());
         PickedProfessorSalary.text = "월급 : " + Convert.ToString(InsertProf.ProfessorGetSalary());
-        PickedProfessorName = HideTextObject.GetComponentInChildren<TextMeshProUGUI>();
-        PickedProfessorType = HideTextObject.GetComponentInChildren<TextMeshProUGUI>();
-        PickedProfessorStat = HideTextObject.GetComponentInChildren<TextMeshProUGUI>();
-        PickedProfessorSalary = HideTextObject.GetComponentInChildren<TextMeshProUGUI>();
-        ShowMessageForLimitedTime(HideTextObject);
-
+        StartCoroutine(ShowMessageForLimitedTime(HideTextObject));
     }
         public void PickProfessor2(Professor InsertProf)
     {
@@ -341,12 +336,7 @@ public class CreateProfessor : ProfessorSystem
         PickedProfessorType.text = InsertProf.ProfessorGetTypeInString();
         PickedProfessorStat.text = StatToString(InsertProf.ProfessorGetStats());
         PickedProfessorSalary.text = "월급 : " + Convert.ToString(InsertProf.ProfessorGetSalary());
-        PickedProfessorName = HideTextObject.GetComponentInChildren<TextMeshProUGUI>();
-        PickedProfessorType = HideTextObject.GetComponentInChildren<TextMeshProUGUI>();
-        PickedProfessorStat = HideTextObject.GetComponentInChildren<TextMeshProUGUI>();
-        PickedProfessorSalary = HideTextObject.GetComponentInChildren<TextMeshProUGUI>();
-        HideTextObject.SetActive(true);
-
+        StartCoroutine(ShowMessageForLimitedTime(HideTextObject));
     }
     public void PickProfessor3(Professor InsertProf)
     {
@@ -356,11 +346,8 @@ public class CreateProfessor : ProfessorSystem
         PickedProfessorType.text = InsertProf.ProfessorGetTypeInString();
         PickedProfessorStat.text = StatToString(InsertProf.ProfessorGetStats());
         PickedProfessorSalary.text = "월급 : " + Convert.ToString(InsertProf.ProfessorGetSalary());
-        PickedProfessorName = HideTextObject.GetComponentInChildren<TextMeshProUGUI>();
-        PickedProfessorType = HideTextObject.GetComponentInChildren<TextMeshProUGUI>();
-        PickedProfessorStat = HideTextObject.GetComponentInChildren<TextMeshProUGUI>();
-        PickedProfessorSalary = HideTextObject.GetComponentInChildren<TextMeshProUGUI>();
-        HideTextObject.SetActive(true);
+        StartCoroutine(ShowMessageForLimitedTime(HideTextObject));
+
     }
     public void RetryProfessors()
     {

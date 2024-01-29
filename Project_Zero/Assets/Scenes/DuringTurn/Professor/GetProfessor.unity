@@ -494,7 +494,7 @@ GameObject:
   - component: {fileID: 120196414}
   - component: {fileID: 120196413}
   m_Layer: 5
-  m_Name: ProfessorType
+  m_Name: ProfessorType1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -539,7 +539,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC720\uB2C8\uD06C"
+  m_text: ScriptNotWorking
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 44eb8a67d6796c64daba0ad6ad92e083, type: 2}
   m_sharedMaterial: {fileID: -7021295895467656447, guid: 44eb8a67d6796c64daba0ad6ad92e083, type: 2}
@@ -628,7 +628,7 @@ GameObject:
   - component: {fileID: 127482880}
   - component: {fileID: 127482879}
   m_Layer: 5
-  m_Name: ProfessorStats
+  m_Name: ProfessorStats3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1272,7 +1272,7 @@ GameObject:
   - component: {fileID: 329495116}
   - component: {fileID: 329495115}
   m_Layer: 5
-  m_Name: ProfessorName
+  m_Name: ProfessorName3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1752,7 +1752,7 @@ GameObject:
   - component: {fileID: 502507793}
   - component: {fileID: 502507792}
   m_Layer: 5
-  m_Name: ProfessorSalary
+  m_Name: ProfessorSalary3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2247,7 +2247,7 @@ GameObject:
   - component: {fileID: 821171123}
   - component: {fileID: 821171122}
   m_Layer: 5
-  m_Name: ProfessoType
+  m_Name: ProfessoType3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2590,7 +2590,7 @@ GameObject:
   - component: {fileID: 886965590}
   - component: {fileID: 886965589}
   m_Layer: 5
-  m_Name: ProfessorStats
+  m_Name: ProfessorStats1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2635,7 +2635,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: test
+  m_text: ScriptNotWorking
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 44eb8a67d6796c64daba0ad6ad92e083, type: 2}
   m_sharedMaterial: {fileID: -7021295895467656447, guid: 44eb8a67d6796c64daba0ad6ad92e083, type: 2}
@@ -2992,7 +2992,7 @@ GameObject:
   - component: {fileID: 1148137350}
   - component: {fileID: 1148137349}
   m_Layer: 5
-  m_Name: ProfessorSalary
+  m_Name: ProfessorSalary1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3037,7 +3037,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: test
+  m_text: ScriptNotWorking
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 44eb8a67d6796c64daba0ad6ad92e083, type: 2}
   m_sharedMaterial: {fileID: -7021295895467656447, guid: 44eb8a67d6796c64daba0ad6ad92e083, type: 2}
@@ -3671,7 +3671,7 @@ GameObject:
   - component: {fileID: 1322431144}
   - component: {fileID: 1322431143}
   m_Layer: 5
-  m_Name: ProfessorSalary
+  m_Name: ProfessorSalary2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3926,7 +3926,7 @@ GameObject:
   - component: {fileID: 1491737282}
   - component: {fileID: 1491737281}
   m_Layer: 5
-  m_Name: ProfessorStats
+  m_Name: ProfessorStats2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4328,7 +4328,7 @@ GameObject:
   - component: {fileID: 1588096901}
   - component: {fileID: 1588096900}
   m_Layer: 5
-  m_Name: ProfessorName
+  m_Name: ProfessorName1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4373,7 +4373,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: test
+  m_text: ScriptNotWorking
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 44eb8a67d6796c64daba0ad6ad92e083, type: 2}
   m_sharedMaterial: {fileID: -7021295895467656447, guid: 44eb8a67d6796c64daba0ad6ad92e083, type: 2}
@@ -4400,7 +4400,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 57.9
   m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -4583,7 +4583,7 @@ GameObject:
   - component: {fileID: 1666871478}
   - component: {fileID: 1666871477}
   m_Layer: 5
-  m_Name: ProfessorName
+  m_Name: ProfessorName2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5357,7 +5357,7 @@ GameObject:
   - component: {fileID: 2000244250}
   - component: {fileID: 2000244249}
   m_Layer: 5
-  m_Name: ProfessoType
+  m_Name: ProfessoType2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
