@@ -1,0 +1,14 @@
+{
+    "professorCnt": 1,
+    "professorsId": [
+        202401291032560
+    ],
+    "lecturesId": [
+        "1000000000"
+    ],
+    "subjectStates": [
+        0,
+        2,
+        8
+    ]
+}

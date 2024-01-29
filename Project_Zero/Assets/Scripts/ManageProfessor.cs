@@ -295,6 +295,14 @@ public class ManageProfessorTest : MonoBehaviour
 - 매 턴마다 모든 교슈의 속성 중 랜덤으로 2개를 강화 가능
 ex) A교수 속성1, 속성3 / B교수 속성5, 속성6
 
+구현 todo:
+- 속성 랜덤 2개 선택
+- 강화 버튼 & UI
+- 강화 성공 메세지
+- 강화 데이터 전송&수정
+
+버그 todo:
+- (suggestion) change GetComponentInChildren to GetComponent
 */
 
 /*

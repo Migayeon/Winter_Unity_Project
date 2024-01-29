@@ -140,7 +140,7 @@ public static class SubjectTree
             rst[idList[i]] = true;
         return rst;
     }
-    public static void initSubjectStates(List<int> openedSubjectsId = null)
+    public static void initSubjectStates(List<int> openedSubjectsId)
     {
         subjectState = new List<State>();
         subjectStateNeedCnt = new List<int>();
@@ -149,53 +149,10 @@ public static class SubjectTree
             subjectState.Add(State.Closed);
             subjectStateNeedCnt.Add(subjects[i].needCount);
         }
-        for (int i = 0; i < openedSubjectsId.Count; i++)
-            subjectState[openedSubjectsId[i]] = State.Open;
         for (int i = 0; i < subjectsCount; i++)
             subjectState.Add(State.Closed);
-        List<int> cntList = newCntList();
-        List<bool> flatSearchList = flattenList(new List<int>());
-        List<bool> isSameGroup = new List<bool>();
-        for (int i = 0; i < subjectsInfo.groupCount; i++)
-            isSameGroup.Add(false);
-        Queue<int> searchQ = new Queue<int>();
-        for (int i = 0; i < subjectsCount; i++)
-        {
-            if (subjects[i].needCount == 0)
-            {
-                if (subjectState[i] == State.Open)
-                {
-                    searchQ.Enqueue(i);
-                    flatSearchList[i] = true;
-                }
-                else
-                {
-                    subjectState[i] = State.ReadyToOpen;
-                }
-            }
-        }
-        while (searchQ.Count > 0)
-        {
-            int nowNodeId = searchQ.Dequeue();
-            List<int> next = subjects[nowNodeId].nextSubjects;
-            for (int i = 0; i < next.Count; i++)
-            {
-                int index = next[i];
-                subjectState[index] = State.ReadyToOpen;
-                if (--cntList[index] == 0 && subjectState[i] == State.Open)
-                {
-                    searchQ.Enqueue(index);
-                    flatSearchList[i] = true;
-                }
-            }
-            if (subjects[nowNodeId].subjectGroupId != DONT_HAVE_GROUP)
-            {
-                if (!isSameGroup[subjects[nowNodeId].subjectGroupId] && subjectState[nowNodeId] == State.Open)
-                    isSameGroup[subjects[nowNodeId].subjectGroupId] = true;
-                else
-                    subjectState[nowNodeId] = State.Closed;
-            }
-        }
+        for (int i = 0; i < openedSubjectsId.Count; i++)
+            openSubject(openedSubjectsId[i]);
     }
 
     public static bool isVaildCurriculum(List<int> subjectsId)
@@ -398,17 +355,13 @@ public static class SubjectTree
                     Convert.ToInt32(teachingState[j]) * 4
                     ).ToString();
         }
-        Dictionary<State, bool> convertToInt = new Dictionary<State, bool>(3)
-        {
-            {State.Closed, false},
-            {State.Open, true},
-            {State.ReadyToOpen, false}
-        };
-        List<bool> filter = subjectState.Select(s => convertToInt[s]).ToList<bool>();
         for (int i = 0; i < subjectsCount; i++)
         {
-            if (filter[i])
+            if (subjectState[i] == State.Open)
+            {
                 rst.subjectStates.Add(i);
+                Debug.Log(i);
+            }
         }
         return JsonUtility.ToJson(rst,true);
     }

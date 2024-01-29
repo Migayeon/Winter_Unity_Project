@@ -1,9 +1,9 @@
 {
     "turn": 1,
-    "ar": 20000,
+    "ar": 19950,
     "stone": 0,
     "studentsNum": 0,
-    "fame": 0,
+    "fame": 10,
     "myName": "이명박",
     "arcademyName": "시대인재"
 }
