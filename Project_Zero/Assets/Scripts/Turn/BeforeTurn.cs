@@ -23,6 +23,9 @@ public class BeforeTurn : MonoBehaviour
 
     public System.Random randomseed = new System.Random();
 
+    public static bool ProfessorCreateFirstTime; //static bool value storing if the current roll should be a 'first roll'
+                                                 // -> player do not need to pay for a roll
+
     void Start()
     {
         // 오르<->마정석 환전 비율 변환
@@ -100,5 +103,7 @@ public class BeforeTurn : MonoBehaviour
 
         // string temp = GenerateName(); //for testing
 
+
+        ProfessorCreateFirstTime = true; //initialize as true (will get free roll)
     }
 }

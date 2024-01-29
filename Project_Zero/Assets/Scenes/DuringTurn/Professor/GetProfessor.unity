@@ -4838,9 +4838,9 @@ MonoBehaviour:
   PickProfessor3Button: {fileID: 282734004}
   RetryProfessorsButton: {fileID: 959426806}
   ReturnMenuButton: {fileID: 179913110}
-  ShowTextObject1: {fileID: 496231068}
-  ShowTextObject2: {fileID: 1090927935}
-  ShowTextObject3: {fileID: 993197918}
+  ProfessorObject1: {fileID: 496231068}
+  ProfessorObject2: {fileID: 1090927935}
+  ProfessorObject3: {fileID: 993197918}
   ButtonClickObject: {fileID: 1766734986}
   HideTextObject: {fileID: 550627167}
   MaxProfessorsErrorObject: {fileID: 2009280474}
@@ -4863,6 +4863,7 @@ MonoBehaviour:
   RetryCostInfo: {fileID: 1568705134}
   RetryFailMessage: {fileID: 378777721}
   MaxProfessorsErrorMessage: {fileID: 2133931200}
+  ProfessorPickedStatus: 000000
 --- !u!1 &1829555156
 GameObject:
   m_ObjectHideFlags: 0
