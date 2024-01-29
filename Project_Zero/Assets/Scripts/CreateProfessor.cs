@@ -9,6 +9,14 @@ using Unity.VisualScripting;
 using System.Collections;
 using System.Linq;
 
+// TODO list for ProfessorSystem
+
+// 1. BUGFIX
+// (try) changing GetComponentInChildren to GetComponent
+// 2. UI rework & overhaul
+// 3. Code documentation
+
+
 public class CreateProfessor : ProfessorSystem
 {    
     const int UniqueProfessorRarity = 5; //probability (edit later)
