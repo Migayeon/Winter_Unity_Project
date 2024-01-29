@@ -28,6 +28,7 @@ public class CurriculumSetting : MonoBehaviour
     public enum returnState
     {
         haveClosedSubject,
+        noProfessor,
         overMaximum,
         normal
     }
@@ -37,6 +38,11 @@ public class CurriculumSetting : MonoBehaviour
         if (SubjectTree.subjectState[i] != SubjectTree.State.Open)
         {
             StartCoroutine(WarningMessage("아직 해금하지 않은 과목입니다."));
+            return;
+        }
+        else if (SubjectTree.professorInSubjectCnt[i] == 0)
+        {
+            StartCoroutine(WarningMessage("교수를 배치하지 않은 과목입니다."));
             return;
         }
         if (CurriculumList.Contains(i))
@@ -109,6 +115,12 @@ public class CurriculumSetting : MonoBehaviour
                             flag = returnState.haveClosedSubject;
                             break;
                         }
+                        if (SubjectTree.professorInSubjectCnt[curriForClickedSubject[i]] != 0)
+                        {
+                            StartCoroutine(WarningMessage("아직 교수를 배치하지 않은 과목이 있습니다."));
+                            flag = returnState.noProfessor;
+                            break;
+                        }
                         CurriculumList.Add(curriForClickedSubject[i]);
                     }
                     else
@@ -128,6 +140,12 @@ public class CurriculumSetting : MonoBehaviour
                 {
                     StartCoroutine(WarningMessage("아직 해금하지 않은 과목이 있습니다."));
                     flag = returnState.haveClosedSubject;
+                    break;
+                }
+                if (SubjectTree.professorInSubjectCnt[curriForClickedSubject[i]] != 0)
+                {
+                    StartCoroutine(WarningMessage("아직 교수를 배치하지 않은 과목이 있습니다."));
+                    flag = returnState.noProfessor;
                     break;
                 }
                 CurriculumList.Add(curriForClickedSubject[i]);

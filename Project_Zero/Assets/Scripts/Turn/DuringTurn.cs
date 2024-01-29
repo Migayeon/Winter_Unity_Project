@@ -6,13 +6,19 @@ using UnityEngine.UI;
 
 public class DuringTurn : MonoBehaviour
 {
-    public Button endTurn;
-    void Awake()
+    [SerializeField]
+    private Button endTurn;
+    private void Awake()
     {
         endTurn.onClick.AddListener(EndTurn);
     }
 
-    public void EndTurn()
+    private void Update()
+    {
+        endTurn.gameObject.SetActive(SubjectTree.professorManagingSubjectCnt >= 8);
+    }
+
+    private void EndTurn()
     {
         SceneManager.LoadScene("AfterTurn");
     }

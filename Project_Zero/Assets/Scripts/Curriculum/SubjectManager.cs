@@ -29,6 +29,7 @@ public static class SubjectTree
     public static int subjectsCount = 0;
 
     public static int openSubjectCnt = 0;
+    public static int professorManagingSubjectCnt = 0;
 
     public static void initSubjectsAndInfo()
     {
@@ -59,15 +60,6 @@ public static class SubjectTree
                     subjects[targetId].mustFulfillSubjects.Add(subjectId);
             }
         }
-        /*
-        foreach (Subject subject in subjects)
-        {
-            for (int i = 0; i < subject.mustFulfillSubjects.Count; i++)
-            {
-                Debug.Log(subject.id.ToString() + " : " + subject.mustFulfillSubjects[i].ToString());
-            }
-        }
-        */
     }
 
     public static void callOnlyOneTimeWhenGameStart()
@@ -99,7 +91,6 @@ public static class SubjectTree
         openSubjectCnt++;
         foreach (int nextNode in subjects[id].nextSubjects)
         {
-            Debug.Log(subjectStateNeedCnt.Count);
             if (--subjectStateNeedCnt[nextNode] == 0)
                 subjectState[nextNode] = State.ReadyToOpen;
         }
@@ -226,6 +217,8 @@ public static class SubjectTree
         if (professorsLecture.ContainsKey(professorId))
         {
             professorInSubjectCnt[subjectId]++;
+            if (professorInSubjectCnt[subjectId] == 1)
+                professorManagingSubjectCnt++;
             professorsLecture[professorId][subjectId] = true;
         }
         else
@@ -233,6 +226,9 @@ public static class SubjectTree
             professorsLecture[professorId] = new List<bool>();
             for (int i = 0; i < subjectsCount; i++)
                 professorsLecture[professorId].Add(i == subjectId);
+            professorInSubjectCnt[subjectId]++;
+            if (professorInSubjectCnt[subjectId] == 1)
+                professorManagingSubjectCnt++;
         }
     }
     public static void removeProfessor(long professorId)
@@ -241,7 +237,11 @@ public static class SubjectTree
         for (int subjectId = 0; subjectId < subjectsCount; subjectId++)
         {
             if (professorsLecture[professorId][subjectId])
+            {
                 professorInSubjectCnt[subjectId]--;
+                if (professorInSubjectCnt[subjectId] == 0)
+                    professorManagingSubjectCnt--;
+            }
         }
     }
     public static void removeProfessorAt(long professorId, int subjectId)
@@ -249,6 +249,8 @@ public static class SubjectTree
         if (professorsLecture.ContainsKey(professorId))
         {
             professorInSubjectCnt[subjectId]--;
+            if (professorInSubjectCnt[subjectId] == 0)
+                professorManagingSubjectCnt--;
             professorsLecture[professorId][subjectId] = false;
             if (!professorsLecture[professorId].Contains(true))
                 professorsLecture.Remove(professorId);
@@ -360,16 +362,16 @@ public static class SubjectTree
                     Convert.ToInt32(teachingState[j + 2]) +
                     Convert.ToInt32(teachingState[j + 1]) * 2 +
                     Convert.ToInt32(teachingState[j]) * 4
-                    ).ToString();
+                ).ToString();
         }
-        for (int i = 0; i < subjectsCount; i++)
+        /*for (int i = 0; i < subjectsCount; i++)
         {
             if (subjectState[i] == State.Open)
             {
                 rst.subjectStates.Add(i);
                 Debug.Log(i);
             }
-        }
+        }*/
         return JsonUtility.ToJson(rst,true);
     }
 
