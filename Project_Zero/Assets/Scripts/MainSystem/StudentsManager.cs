@@ -64,7 +64,7 @@ public class StudentGroup
     private int age; // 공부 기간
     private int cost; // 학원비
 
-    private int exam = 0; // 볼 시험 종류(저장 구현해야함)
+    private int exam = -1; // 볼 시험 종류(저장 구현해야함)
     private List<int> curriculum; // 커리큘럼
     private List<int> stat; // 스탯
 
@@ -82,7 +82,10 @@ public class StudentGroup
         curriculum = newCurri;
         return;
     }
-
+    public void SetExam(int idx)
+    {
+        exam = idx;
+    }
     public void RandomStatUp()
     {
         for (int i = 0; i < 10; i++)

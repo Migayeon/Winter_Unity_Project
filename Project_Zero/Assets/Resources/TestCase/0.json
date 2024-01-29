@@ -1,0 +1,5 @@
+{
+    "testclass" : 9,
+    "testname" : "군무직",
+    "require" : [40, 40, 40, 40, 40]
+}

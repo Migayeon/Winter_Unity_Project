@@ -1,5 +1,5 @@
 {
-    "testclass" : 9,
-    "testname" : "행정직",
-    "require" : [40, 20, 40, 20, 20]
+    "testclass" : 7,
+    "testname" : "왕실정보원",
+    "require" : [80, 80, 80, 80, 80]
 }

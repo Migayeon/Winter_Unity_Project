@@ -366,11 +366,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1420583988}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -50}
-  m_SizeDelta: {x: 800, y: 100}
-  m_Pivot: {x: 0.5, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 50}
+  m_SizeDelta: {x: 800, y: 400}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &139876961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -418,10 +418,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 80
+  m_fontSize: 72
   m_fontSizeBase: 80
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -992,7 +992,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 321516018}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1420583987}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &321516018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1113,7 +1125,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 345951387}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1420583987}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &345951387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2600,6 +2624,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4290d7cf8f5f454384181c4373203b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  realExam: {fileID: 1420583987}
   testcase: {fileID: 6804849818247053383, guid: 55553c0adb9d1824abe3d12dcda80e02, type: 3}
   testContent: {fileID: 533400800}
   student: {fileID: 4775270921532496733, guid: 234d4b228f463754282734f6b817eca7, type: 3}

@@ -1,5 +1,5 @@
 {
-    "testclass" : 7,
-    "testname" : "마법공학직",
-    "require" : [80, 20, 100, 0, 0]
+    "testclass" : 5,
+    "testname" : "재경직",
+    "require" : [120, 30, 30, 30, 30]
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,35 +16,41 @@ class Info
 
 public class TestCheckManager : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject realExam;
     public GameObject testcase;
     public Transform testContent;
 
     public GameObject student;
     public Transform studentContent;
     public StudentGroup currentSelectedGroup = null;
+    private int currentSelectedTest = -1;
 
-    private GameObject[] testButton = new GameObject[16];
-
+    private GameObject[] testButton = new GameObject[15];
+    private Info[] testInfo = new Info[15];
     List<Info> infoList = new List<Info>();
 
     // Start is called before the first frame update
     void Start()
     {
+        realExam.SetActive(false);
         //Instantiate(prefab);
-        for (int i = 1; i < 16; i++)
+        for (int i = 0; i < 15; i++)
         {
             var loadedJson = Resources.Load<TextAsset>("TestCase/" + i.ToString());
-            
-            Info testInfo = JsonUtility.FromJson<Info>(loadedJson.ToString());
-            Debug.Log($"{testInfo.testclass}, {testInfo.testname}, {testInfo.require}");
-            infoList.Add(testInfo);
 
-            var loadedSprite = Resources.Load<Sprite>("UI/Test_Section/" + testInfo.testclass.ToString());
-            Debug.Log(testInfo.testclass.ToString());
+            testInfo[i] = JsonUtility.FromJson<Info>(loadedJson.ToString());
+            Debug.Log($"{testInfo[i].testclass}, {testInfo[i].testname}, {testInfo[i].require}");
+            infoList.Add(testInfo[i]);
+
+            var loadedSprite = Resources.Load<Sprite>("UI/Test_Section/" + testInfo[i].testclass.ToString());
+            Debug.Log(testInfo[i].testclass.ToString());
             testButton[i] = Instantiate(testcase, testContent);
 
-            testButton[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = testInfo.testname;
+            testButton[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = testInfo[i].testname;
             testButton[i].transform.GetChild(2).GetComponent<Image>().sprite = loadedSprite;
+            int j = i;
+            testButton[i].GetComponent<Button>().onClick.AddListener(delegate { TestClicked(j); });
         }
 
         for (int i = 0; i<PlayerInfo.studentGroups.Count; i++)
@@ -61,7 +68,26 @@ public class TestCheckManager : MonoBehaviour
             }
         }
     }
+    public void TestClicked(int idx)
+    {
+        realExam.SetActive(true);
+        if (currentSelectedGroup != null) 
+        {
+            currentSelectedTest = idx;
+            realExam.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text =
+                $"{currentSelectedGroup.GetPeriod()}기 {currentSelectedGroup.GetDivision()}분반" +
+                $"\n\"{testInfo[idx].testname}\"시험을 \n보도록 하겠습니까?";
+        }
+        else
+        {
+            realExam.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "학생 그룹을 선택해 주세요";
+        }
 
+    }
+    public void ConfirmTest()
+    {
+        currentSelectedGroup.SetExam(currentSelectedTest);
+    }
     public void StudentClicked(StudentGroup stg)
     {
         // [이론, 마나, 손재주, 원소, 영창]
