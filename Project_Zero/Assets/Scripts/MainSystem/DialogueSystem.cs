@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class DialogueSystem : MonoBehaviour
 {
-    public static string situation = "Tutorial";// = null;
+    public static string situation = null;
     public GameObject dialogueUI;
     public Button dialogueButton;
     public Text character;
