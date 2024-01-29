@@ -99,6 +99,10 @@ public class TestCheckManager : MonoBehaviour
     {
         float possibility = 0;
         List<int> stat = stg.GetStat();
+        foreach (int k in stat)
+        {
+            Debug.Log($"스탯: {k}");
+        }
         if (stat[0] > infoList[exam].require[0])
         {
             possibility += 10;
@@ -129,7 +133,6 @@ public class TestCheckManager : MonoBehaviour
     public void StudentButtonClicked(GameObject obj) 
     { 
         currentSelectedStudentButton = obj; 
-        Debug.Log(currentSelectedStudentButton.name);
     }
     public void UpdateButtonText()
     {
