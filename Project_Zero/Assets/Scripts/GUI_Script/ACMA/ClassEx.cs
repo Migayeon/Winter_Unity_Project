@@ -76,7 +76,7 @@ public class ClassEx : MonoBehaviour
     public void ClassExpan()
     {
         
-        int count = PlayerInfo.ProfessorCount();
+        int count = PlayerInfo.StudentGroupCount();
         if (GoodsManager.goodsAr - classAr < 0)
         {
             bankRunPos();
@@ -94,7 +94,7 @@ public class ClassEx : MonoBehaviour
             PlayerInfo.maxStudent += numA;
             requiredClassMagicStone.text = $"마정석{classMagicStone}개 필요";
             requiredClassAr.text = $"{classAr}Ar 필요";
-            preStudent.text = $"{count}/{PlayerInfo.maxStudent}";
+            preStudent.text = $"{count}/{PlayerInfo.maxStudent}명";
         }
     }
 
@@ -121,7 +121,7 @@ public class ClassEx : MonoBehaviour
             classMagicStone += 5;
             requiredProfessorAr.text = $"{officeAr}Ar 필요";
             requiredClassMagicStone.text = $"마정석{classMagicStone}개 필요";
-            preProfessor.text = $"{professCount}/{PlayerInfo.maxProfessor}";
+            preProfessor.text = $"{professCount}/{PlayerInfo.maxProfessor}명";
         }
 
     }
