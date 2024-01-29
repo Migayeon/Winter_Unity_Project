@@ -41,7 +41,7 @@ public class TestCheckManager : MonoBehaviour
     }
     void Start()
     {
-        if (infoList.Count < 0) InitTestInfo();
+        if (infoList.Count <= 0) InitTestInfo();
         realExam.SetActive(false);
         //Instantiate(prefab);
         for (int i = 0; i < 15; i++)

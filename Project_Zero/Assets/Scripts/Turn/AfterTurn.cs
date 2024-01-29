@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -141,8 +142,30 @@ public class AfterTurn : MonoBehaviour
         }
 
         // 학생 졸업 결산창
-
-
+        if (toBeGraduated.Count < 0)
+        {
+            pageTwo.transform.GetChild(1).gameObject.SetActive(true);
+            pageTwo.transform.GetChild(2).gameObject.SetActive(false);
+        }
+        else
+        {
+            pageTwo.transform.GetChild(1).gameObject.SetActive(false);
+            pageTwo.transform.GetChild(2).gameObject.SetActive(true);
+            int count = 0;
+            foreach (StudentGroup group in toBeGraduated)
+            {
+                pageTwo.transform.GetChild(2).GetChild(count).GetChild(0).
+                    GetComponent<TextMeshProUGUI>().text =
+                    $"{group.GetPeriod()}기 {group.GetDivision()}반";
+                pageTwo.transform.GetChild(2).GetChild(count).GetChild(1).
+                    GetComponent<TextMeshProUGUI>().text =
+                    $"{TestCheckManager.infoList[group.GetExam()].testname}";
+                pageTwo.transform.GetChild(2).GetChild(count).GetChild(2).
+                    GetComponent<TextMeshProUGUI>().text =
+                    $"{group.GetPassedNum()} / {group.GetNumber()}";
+                count++;
+            }
+        }
         // 정산용 변수 초기화
         magic_Rev = 0;
         academy_Cost = 0;
