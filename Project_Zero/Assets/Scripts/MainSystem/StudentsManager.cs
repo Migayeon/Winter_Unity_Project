@@ -100,7 +100,7 @@ public class StudentGroup
         }
     }
 
-    public void CurriculumSequence()
+    public bool CurriculumSequence()
     {
         Subject subject = SubjectTree.getSubject(curriculum[age]);
         List<int> enforceType = subject.enforceContents;
@@ -110,16 +110,8 @@ public class StudentGroup
         }
         age++;
         GoodsManager.goodsAr += cost * number;
-        if (age == 8)
-        {
-            Graduation();
-            return;
-        }
-    }
-
-    public void Graduation()
-    {
-        PlayerInfo.graduatedGroups.Add(this);
+        if (age == 8) return false;
+        return true;
     }
 
     public string StudentDataToString()

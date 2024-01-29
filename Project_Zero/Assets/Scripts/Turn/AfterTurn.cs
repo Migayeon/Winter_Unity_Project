@@ -16,6 +16,13 @@ public class AfterTurn : MonoBehaviour
     public Text magicStoneCost;     // 마정석 구입 비용
     public Text totalResult;        // 총 결산
 
+    [SerializeField]
+    GameObject pageOne;
+    [SerializeField]
+    GameObject pageTwo;
+
+    public List<StudentGroup> toBeGraduated;
+
     public Button nextTurn;
     public void AfterTurnToBeforeTurn()
     {
@@ -30,10 +37,14 @@ public class AfterTurn : MonoBehaviour
     int marketing_Cost;
     public static int magic_Cost = 0;
     int total_Result;
-
+    bool isGraduated;
 
     void Awake()
-    { 
+    {
+        isGraduated = false;
+        pageOne.SetActive(true);
+        pageTwo.SetActive(false);
+        toBeGraduated = new List<StudentGroup>();
         // 각종 재화 변동 필요함...
 
         // 학생들 커리큘럼 진행
@@ -49,42 +60,40 @@ public class AfterTurn : MonoBehaviour
         {
             foreach (StudentGroup group in period)
             {
-                group.CurriculumSequence();
+                bool check = group.CurriculumSequence();
+                if (check == false)
+                {
+                    toBeGraduated.Add(group);
+                    isGraduated = true;
+                }
             }
         }
+        if (isGraduated == true) PlayerInfo.studentGroups.RemoveAt(0);
         student_Rev = GoodsManager.goodsAr - student_Rev;
 
         // 커리큘럼 마친 학생들 시험 보게 하기
-        foreach (StudentGroup grd in PlayerInfo.graduatedGroups)
+        if (toBeGraduated!= null)
         {
-            int possibility = TestCheckManager.CheckPossiblity(grd, grd.GetExam());
-            int passed = 0;
-            for (int i = 0; i < grd.GetNumber(); i++)   // 각 학생별로 합격 여부 계산
+            foreach (StudentGroup grd in toBeGraduated)
             {
-                int num = Random.Range(1, 100);
-                if (num > possibility) { }
-                else
+                Debug.Log(grd.GetExam());
+                int possibility = TestCheckManager.CheckPossiblity(grd, grd.GetExam());
+                int passed = 0;
+                for (int i = 0; i < grd.GetNumber(); i++)   // 각 학생별로 합격 여부 계산
                 {
-                    if (grd.GetExam() < 6)
-                    {
-                        PlayerInfo.nineSuccess++;
-                        passed++;                    }
-                    else if (grd.GetExam() < 12)
-                    {
-                        PlayerInfo.sevenSuccess++;
-                        passed++;
-                    }
-                    else if (grd.GetExam() < 15)
-                    {
-                        PlayerInfo.fiveSuccess++;
-                        passed++;
-                    }
-                    else Debug.Log("Error In Test");
+                    int num = Random.Range(1, 100);
+                    if (num > possibility) continue;
+                    else passed++;
                 }
+                if (grd.GetExam() < 6) PlayerInfo.nineSuccess += passed;
+                else if (grd.GetExam() < 12) PlayerInfo.sevenSuccess += passed;
+                else if (grd.GetExam() < 15) PlayerInfo.fiveSuccess += passed;
+                else Debug.Log("Error In Test");
+
+                grd.SetPassedNum(passed);
+                Debug.Log($"{grd.GetPeriod()}기 {grd.GetDivision()}분반 합격자 수 " +
+                    $"{grd.GetPassedNum()}/{grd.GetNumber()}");
             }
-            grd.SetPassedNum(passed);
-            Debug.Log($"{grd.GetPeriod()}기 {grd.GetDivision()}분반 합격자 수 " +
-                $"{grd.GetPassedNum()}/{grd.GetNumber()}");
         }
 
         // 마장석 구매 / 판매시 정산 완료. ( StockManager.cs 참고 )
@@ -130,6 +139,8 @@ public class AfterTurn : MonoBehaviour
         {
             totalResult.color = Color.red;
         }
+
+        // 학생 졸업 결산창
 
 
         // 정산용 변수 초기화

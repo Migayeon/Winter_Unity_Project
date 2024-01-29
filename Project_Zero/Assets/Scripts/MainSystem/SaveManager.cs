@@ -215,6 +215,7 @@ public class SaveManager : MonoBehaviour
         SubjectTree.initSubjectStates(new List<int>());
         SubjectTree.callOnlyOneTimeWhenGameStart();
         SubjectLoad(i);
+        TestCheckManager.InitTestInfo();
     }
 
     private void Awake()
