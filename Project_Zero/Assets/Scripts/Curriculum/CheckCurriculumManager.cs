@@ -8,6 +8,8 @@ public class CheckCurriculumManager : MonoBehaviour
 {
     public Transform scroll_content;
     public Transform subject;
+    public Transform numStat;
+    public Transform periodDiv;
     public GameObject s_prefab;
     public Button backButton;
     public CurriculumTreeDrawingManager drawingManager;
@@ -44,9 +46,23 @@ public class CheckCurriculumManager : MonoBehaviour
         drawingManager.drawTree(curriculum);
     }
 
+    public void ShowStat(int period, int div, int num, List<int> stat)
+    {
+        periodDiv.parent.gameObject.SetActive(true);
+
+        periodDiv.GetChild(0).GetComponent<Text>().text = period.ToString();
+        periodDiv.GetChild(1).GetComponent<Text>().text = div.ToString();
+        numStat.GetChild(0).GetComponent<Text>().text = num.ToString();
+        for (int i = 1; i<= stat.Count; i++)
+        {
+            numStat.GetChild(i).GetComponent<Text>().text = stat[i-1].ToString();
+        }
+    }
+
     private void Start()
     {
         InitCurriculum();
+        periodDiv.parent.gameObject.SetActive(false);
         backButton.onClick.AddListener(delegate
         {
             SceneManager.LoadScene("Main");
@@ -64,6 +80,7 @@ public class CheckCurriculumManager : MonoBehaviour
                 newStudent.GetComponent<Button>().onClick.AddListener(delegate
                 {
                     ShowCurriculum(student.GetCurriculum(),student.GetAge());
+                    ShowStat(student.GetPeriod(), student.GetDivision(), student.GetNumber(), student.GetStat());
                 });
             }
         }
