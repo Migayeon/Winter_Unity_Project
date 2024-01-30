@@ -352,7 +352,7 @@ public static class SubjectTree
         {
             KeyValuePair<int, bool> tmp = new KeyValuePair<int, bool>(id, professorInSubjectCnt[id] != 0);
             q.Enqueue(tmp);
-            filter[id] = professorInSubjectCnt[id] != 0;
+            filter[id] = (professorInSubjectCnt[id] != 0);
         }
         while (q.Count != 0)
         {
