@@ -151,6 +151,7 @@ public class ManageCurriculumMod : MonoBehaviour
                     setColor(subject);
             selectedSubjectId = clickedId;
             selectFixed = true;
+            setSubjectInfo(clickedId);
             setUI(clickedId);
             subjectGameObject.transform.GetChild(selectedSubjectId).GetComponent<Image>().color = Color.green;
         }
