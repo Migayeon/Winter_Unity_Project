@@ -60,14 +60,17 @@ public class TestCheckManager : MonoBehaviour
             for (int j = 0; j < 3; j++)
             {
                 StudentGroup studentgroup = PlayerInfo.studentGroups[i][j];
-                GameObject studentInfo = Instantiate(student, studentContent);
-                studentInfo.transform.GetChild(0).GetComponent<Text>().text =
-                    $"{studentgroup.GetPeriod()}기 {studentgroup.GetDivision()}분반";
-                studentInfo.transform.GetChild(1).GetComponent<Text>().text =
-                    $"{8 - studentgroup.GetAge()}턴 뒤 {infoList[studentgroup.GetExam()].testname}시험";
-                studentInfo.GetComponent<Button>().onClick.AddListener(delegate { StudentClicked(studentgroup); });
-                GameObject k = studentInfo;
-                studentInfo.GetComponent<Button>().onClick.AddListener(delegate { StudentButtonClicked(k); });
+                if (studentgroup.GetNumber() > 0)
+                {
+                    GameObject studentInfo = Instantiate(student, studentContent);
+                    studentInfo.transform.GetChild(0).GetComponent<Text>().text =
+                        $"{studentgroup.GetPeriod()}기 {studentgroup.GetDivision()}분반";
+                    studentInfo.transform.GetChild(1).GetComponent<Text>().text =
+                        $"{8 - studentgroup.GetAge()}턴 뒤 {infoList[studentgroup.GetExam()].testname}시험";
+                    studentInfo.GetComponent<Button>().onClick.AddListener(delegate { StudentClicked(studentgroup); });
+                    GameObject k = studentInfo;
+                    studentInfo.GetComponent<Button>().onClick.AddListener(delegate { StudentButtonClicked(k); });
+                }
             }
         }
     }
