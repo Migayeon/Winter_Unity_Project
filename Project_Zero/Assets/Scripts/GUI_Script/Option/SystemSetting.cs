@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SystemSetting : MonoBehaviour
@@ -23,6 +24,7 @@ public class SystemSetting : MonoBehaviour
         message.SetActive(false);
 
         PlayerPrefs.DeleteAll();
+        SceneManager.LoadScene("Title");
         /*
           
             json 파일 초기화 구현
