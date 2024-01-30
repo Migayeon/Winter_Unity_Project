@@ -75,13 +75,17 @@ public class CheckCurriculumManager : MonoBehaviour
         {
             foreach (StudentGroup student in studentGroups)
             {
-                GameObject newStudent = Instantiate(s_prefab,scroll_content);
-                newStudent.transform.GetChild(0).GetComponent<Text>().text = $"{student.GetPeriod()}기 {student.GetDivision()}분반";
-                newStudent.GetComponent<Button>().onClick.AddListener(delegate
+                if(student.GetNumber() > 0) 
                 {
-                    ShowCurriculum(student.GetCurriculum(),student.GetAge());
-                    ShowStat(student.GetPeriod(), student.GetDivision(), student.GetNumber(), student.GetStat());
-                });
+                    GameObject newStudent = Instantiate(s_prefab, scroll_content);
+                    newStudent.transform.GetChild(0).GetComponent<Text>().text = $"{student.GetPeriod()}기 {student.GetDivision()}분반";
+                    newStudent.GetComponent<Button>().onClick.AddListener(delegate
+                    {
+                        ShowCurriculum(student.GetCurriculum(), student.GetAge());
+                        ShowStat(student.GetPeriod(), student.GetDivision(), student.GetNumber(), student.GetStat());
+                    });
+                }
+                
             }
         }
     }
