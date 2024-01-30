@@ -356,12 +356,12 @@ public static class SubjectTree
         }
         while (q.Count != 0)
         {
-            KeyValuePair<int, bool> subjectInfo = q.Dequeue();
-            if (!subjectInfo.Value)
-                filter[subjectInfo.Key] = false;
-            foreach (int nextSubjectId in subjects[subjectInfo.Key].nextSubjects)
+            KeyValuePair<int, bool> subjectIdAble = q.Dequeue();
+            if (!subjectIdAble.Value)
+                filter[subjectIdAble.Key] = false;
+            foreach (int nextSubjectId in subjects[subjectIdAble.Key].nextSubjects)
             {
-                KeyValuePair<int, bool> tmp = new KeyValuePair<int, bool>(nextSubjectId, subjectInfo.Value);
+                KeyValuePair<int, bool> tmp = new KeyValuePair<int, bool>(nextSubjectId, subjectIdAble.Value);
                 q.Enqueue(tmp);
             }
         }
@@ -369,8 +369,10 @@ public static class SubjectTree
         for (int i = 0; i < subjectsCount; i++)
         {
             if (filter[i])
+            {
                 rst++;
                 Debug.Log(i.ToString() + " : " + filter[i].ToString());
+            }
         }
         return rst >= 8;
     }
@@ -421,13 +423,13 @@ public static class SubjectTree
             {
                 int tmp = Convert.ToInt32(data.lecturesId[i][j]);
                 lectureState.Add((tmp & 4) == 1);
-                if ((tmp & 1) == 1) professorInSubjectCnt[j * 3] ++;
+                if ((tmp & 4) == 1) professorInSubjectCnt[j * 3] ++;
                 if (lectureState.Count == subjectsCount) break;
                 lectureState.Add((tmp & 2) == 1);
                 if ((tmp & 2) == 1) professorInSubjectCnt[j * 3 + 1]++;
                 if (lectureState.Count == subjectsCount) break;
                 lectureState.Add((tmp & 1) == 1);
-                if ((tmp & 4) == 1) professorInSubjectCnt[j * 3 + 2]++;
+                if ((tmp & 1) == 1) professorInSubjectCnt[j * 3 + 2]++;
                 if (lectureState.Count == subjectsCount) break;
             }
             professorsLecture[data.professorsId[i]] = lectureState;
