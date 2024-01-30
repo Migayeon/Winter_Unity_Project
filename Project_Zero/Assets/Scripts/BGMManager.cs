@@ -13,7 +13,7 @@ public class BGMManager : MonoBehaviour
     {
         { "CHTest", "reminiscence" },
         { "Title", "start" },
-        { "SaveData","start" },
+        { "Savedata","start" },
         { "Intro", "opening" },
         { "Main", "Creep" },
         {"Setting","reminiscence" }
@@ -25,12 +25,24 @@ public class BGMManager : MonoBehaviour
     {
         if (instance == null) instance = this;
         else Destroy(this.gameObject);
-
+        //Debug.Log(sceneName);
         audioSource = GetComponent<AudioSource>();
         currentBGM = audioSource.clip.name;
         DontDestroyOnLoad(gameObject);
-
-        scene = SceneManager.GetActiveScene();
+        
+        /*
+        string BGMname = "";
+        try
+        {
+            BGMname = sceneBGM[sceneName];
+        }
+        catch { }
+        SetBGM(BGMname);
+        */
+    }
+    private void LoadedSceneEvent(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log(scene.name);
         string BGMname = "";
         try
         {
@@ -39,6 +51,11 @@ public class BGMManager : MonoBehaviour
         catch { }
         SetBGM(BGMname);
     }
+    private void Start()
+    {
+        SceneManager.sceneLoaded += LoadedSceneEvent;
+    }
+
     public static void SetBGM(string name)
     {
         if (currentBGM == name)
