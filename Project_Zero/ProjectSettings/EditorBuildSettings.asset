@@ -56,4 +56,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Intro/Intro.unity
     guid: df20ff9f7c6e9e14b8f8b24bb732ced9
+  - enabled: 1
+    path: Assets/Scenes/Title/Achievement.unity
+    guid: 1f921c2d03c607a4ead33911fa8063b8
   m_configObjects: {}

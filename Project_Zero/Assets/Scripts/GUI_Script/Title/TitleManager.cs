@@ -38,6 +38,8 @@ public class TitleManager : MonoBehaviour
     private Button yesButton, noButton, xButton;
     public GameObject exitMessage;
     public GameObject warningMessage;
+    [SerializeField]
+    private Button achievementButton;
 
     public void NewGameStart() // 새로운 게임 시작
     {
@@ -60,8 +62,6 @@ public class TitleManager : MonoBehaviour
             SavedataSceneManager.workType = "Load";
             SceneManager.LoadScene("Savedata");
         } 
-
-        // return true;
     }
 
     public void CloseWarning() 
@@ -101,6 +101,11 @@ public class TitleManager : MonoBehaviour
         exitMessage.SetActive(false);
     }
 
+    private void turnToAchievementAScene()
+    {
+        SceneManager.LoadScene("Achievement");
+    }
+
     private void Awake()
     {
         // 버튼 별로 함수 할당
@@ -108,6 +113,7 @@ public class TitleManager : MonoBehaviour
         continueGame.onClick.AddListener(ContinueGame);
         gameOption.onClick.AddListener(OpenOption);
         exitGame.onClick.AddListener(ExitGame);
+        achievementButton.onClick.AddListener(turnToAchievementAScene);
 
         // UI 기본 설정
         exitMessage.SetActive(false);
