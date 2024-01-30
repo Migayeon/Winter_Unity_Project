@@ -7,7 +7,7 @@ public class DialogueSystem : MonoBehaviour
 {
     public static string situation = null;
     public GameObject dialogueUI;
-    public Button dialogueButton;
+    public GameObject endMark;
     public Text character;
     public Text message;
     public Image imageUI;
@@ -34,6 +34,7 @@ public class DialogueSystem : MonoBehaviour
             yield return new WaitForSeconds(0.05f);
         }
         isNowAnimation = false;
+        endMark.SetActive(true);
     }
 
     private void DialogueProcess()
@@ -43,9 +44,11 @@ public class DialogueSystem : MonoBehaviour
             StopAllCoroutines();
             message.text = dialogueString[1];
             isNowAnimation = false;
+            endMark.SetActive(true);
         }
         else
         {
+            endMark.SetActive(false);
             if (dialogueIndex == dialogueLength)
             {
                 CloseDialogue();
@@ -110,7 +113,7 @@ public class DialogueSystem : MonoBehaviour
     private void CloseDialogue()
     {
         dialogueUI.SetActive(false);
-        dialogueButton.onClick.RemoveAllListeners();
+        dialogueUI.GetComponent<Button>().onClick.RemoveAllListeners();
         situation = null;
     }
 
@@ -125,7 +128,7 @@ public class DialogueSystem : MonoBehaviour
             dialogueIndex = 0;
             isNowAnimation = false;
             dialogueUI.SetActive(true);
-            dialogueButton.onClick.AddListener(DialogueProcess);
+            dialogueUI.GetComponent<Button>().onClick.AddListener(DialogueProcess);
             DialogueProcess();
         }
         else
