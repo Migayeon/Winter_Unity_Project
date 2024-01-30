@@ -60,7 +60,9 @@ public class PlayerInfo : MonoBehaviour
         int sum = 0;
         foreach (var group in studentGroups)
         {
-            sum += group[0].GetNumber() * 3;
+            sum += group[0].GetNumber();
+            sum += group[1].GetNumber();
+            sum += group[2].GetNumber();
         }
         return sum;
     }

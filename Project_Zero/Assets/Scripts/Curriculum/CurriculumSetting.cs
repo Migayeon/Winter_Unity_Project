@@ -21,6 +21,7 @@ public class CurriculumSetting : MonoBehaviour
 
     private int div = 0;
     private int num = 0;
+    private int sum = 0;
     private int localMinimum;
     private int coefficient;
     private bool isShift;
@@ -181,7 +182,10 @@ public class CurriculumSetting : MonoBehaviour
 
     public void NewCurriculum()
     {
-        CurriculumList = new List<int>();
+        if (num + PlayerInfo.StudentGroupCount() + sum > PlayerInfo.maxStudent) 
+        {
+            num = Mathf.Max(0, PlayerInfo.maxStudent + sum - PlayerInfo.StudentGroupCount());
+        }
         div++;
         studentGroup[div - 1] = new StudentGroup(div, num, PlayerInfo.cost);
         foreach (var subject in subjectGameobject.transform.GetComponentsInChildren<Button>())
@@ -189,15 +193,41 @@ public class CurriculumSetting : MonoBehaviour
             subject.image.color = Color.white;
             subject.transform.GetChild(0).gameObject.SetActive(false);
         }
-        List<int> stat = studentGroup[div - 1].GetStat();
-        infoMessage.text = $"그룹{div}\r\n\r\n" +
-            $"인원 수 : {num}명\r\n\r\n" +
-            "Stat\r\n" +
-            $"마법 이론 : {stat[0]} \r\n" +
-            $"마나 감응 : {stat[1]}\r\n" +
-            $" 손재주   : {stat[2]}\r\n" +
-            $" 속성력   : {stat[3]}\r\n" +
-            $"  영창    : {stat[4]}";
+        CurriculumList = new List<int>();
+        if (num > 0)
+        {
+            List<int> stat = studentGroup[div - 1].GetStat();
+            infoMessage.text = $"그룹{div}\r\n\r\n" +
+                $"인원 수 : {num}명\r\n\r\n" +
+                "Stat\r\n" +
+                $"마법 이론 : {stat[0]} \r\n" +
+                $"마나 감응 : {stat[1]}\r\n" +
+                $" 손재주   : {stat[2]}\r\n" +
+                $" 속성력   : {stat[3]}\r\n" +
+                $"  영창    : {stat[4]}";
+        }
+        else
+        {
+            foreach (var subject in subjectGameobject.transform.GetComponentsInChildren<Button>())
+            {
+                subject.onClick.RemoveAllListeners();
+            }
+            next.onClick.RemoveAllListeners();
+            next.onClick.AddListener(SkipCurriculum);
+            infoMessage.text = $"그룹{div}\r\n\r\n" +
+                $"인원 수 : {num}명\r\n\r\n" +
+                "Stat\r\n" +
+                "\r\n" +
+                "해당 분반에 학생이 없습니다\r\n" +
+                "\r\n" +
+                "커리큘럼을 분배할 수 없습니다\r\n"+
+                "다음 버튼을 눌러주세요";
+        }
+        
+        
+        
+        
+        sum += num;
     }
 
     public void SaveCurriculum()
@@ -219,6 +249,19 @@ public class CurriculumSetting : MonoBehaviour
         manager.GetComponent<CurriculumTreeDrawingManager>().drawTree(CurriculumList);
     }
 
+    public void SkipCurriculum()
+    {
+        if (div == 3)
+        {
+            PlayerInfo.studentGroups.Add(studentGroup);
+            //GoodsUIUpdate.ShowUI();
+            SceneManager.LoadScene("BeforeTurn");
+            return;
+        }
+        NewCurriculum();
+        manager.GetComponent<CurriculumTreeDrawingManager>().drawTree(CurriculumList);
+    }
+
     IEnumerator WarningMessage(string message)
     {
         warningMessage.text = message;
@@ -229,14 +272,13 @@ public class CurriculumSetting : MonoBehaviour
 
     private void Awake()
     {
+        sum = 0;
         coefficient = UnityEngine.Random.Range(8000, 10000);
         localMinimum = UnityEngine.Random.Range(400, 500);
         num = PlayerInfo.cost - localMinimum;
-        Debug.Log(num);
         GoodsManager.CalculateEndedFame();
         num = (num * num / coefficient) * (GoodsManager.goodsCalculatedEndedFame / 100);
-        Debug.Log($"학생수 : {num}\n 명성 : {GoodsManager.goodsCalculatedEndedFame}");
-
+        //Debug.Log($"학생수 : {num}\n 명성 : {GoodsManager.goodsCalculatedEndedFame}");
         warningMessage.enabled = false;
         foreach (var subject in subjectGameobject.transform.GetComponentsInChildren<Button>())
         {
