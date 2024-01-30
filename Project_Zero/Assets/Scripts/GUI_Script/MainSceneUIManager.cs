@@ -22,6 +22,8 @@ public class MainSceneUIManager : MonoBehaviour
     public Button selectOpenButton;
     public GameObject tabList;
     public Text tabName;
+    public Text turn;
+    public Text fame;
 
     public Button[] sceneButton = new Button[9];
     string[] sceneName = new string[9] // 연결된 scene 추가
@@ -121,6 +123,9 @@ public class MainSceneUIManager : MonoBehaviour
 
     private void Awake()
     {
+        turn.text = TurnManager.turn.ToString();
+        GoodsManager.CalculateEndedFame();
+        fame.text = GoodsManager.goodsCalculatedEndedFame.ToString();
         isOpen = true;
         MoveTab(index);
         prevButton.onClick.AddListener(PrevTab);

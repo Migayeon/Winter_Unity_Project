@@ -150,6 +150,7 @@ public class DialogueSystem : MonoBehaviour
         else
         {
             dialogueUI.SetActive(false);
+            imageUI.gameObject.SetActive(false);
         }
     }
 }
