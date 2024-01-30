@@ -68,23 +68,27 @@ public class StockManager : MonoBehaviour
         AfterTurn.magic_Cost -= GoodsManager.exchangeRate * purchaseAmount;
         GoodsManager.goodsStone += purchaseAmount;
         purchaseAmount = 0;
+        purchaseAmountText.text = purchaseAmount.ToString();
         DisableUI(checkPurchase);
     }
     public void AddPurchaseAmount(int amount)
     {
-        if (purchaseAmount + amount < 0)
+        if (GoodsManager.goodsAr >= 0)
         {
-            purchaseAmount = 0;
+            if (purchaseAmount + amount < 0)
+            {
+                purchaseAmount = 0;
+            }
+            else if (purchaseAmount + amount > GoodsManager.goodsAr / GoodsManager.exchangeRate)
+            {
+                purchaseAmount = GoodsManager.goodsAr / GoodsManager.exchangeRate;
+            }
+            else
+            {
+                purchaseAmount += amount;
+            }
+            purchaseAmountText.text = purchaseAmount.ToString();
         }
-        else if (purchaseAmount + amount > GoodsManager.goodsAr / GoodsManager.exchangeRate) 
-        {
-            purchaseAmount = GoodsManager.goodsAr / GoodsManager.exchangeRate;
-        }
-        else
-        {
-            purchaseAmount += amount;
-        }
-        purchaseAmountText.text = purchaseAmount.ToString();
     }
     // 판매 관련 함수
     public void SaleStone()
@@ -93,23 +97,27 @@ public class StockManager : MonoBehaviour
         GoodsManager.goodsAr += (int)(GoodsManager.exchangeRate * saleAmount * 0.97);
         AfterTurn.magic_Rev += (int)(GoodsManager.exchangeRate * saleAmount * 0.97);
         saleAmount = 0;
+        saleAmountText.text = saleAmount.ToString();
         DisableUI(checkSale);
     }
     public void AddSaleAmount(int amount)
     {
-        if (saleAmount + amount < 0)
+        if (GoodsManager.goodsStone >= 0)
         {
-            saleAmount = 0;
+            if (saleAmount + amount < 0)
+            {
+                saleAmount = 0;
+            }
+            else if (saleAmount + amount > GoodsManager.goodsStone)
+            {
+                saleAmount = GoodsManager.goodsStone;
+            }
+            else
+            {
+                saleAmount += amount;
+            }
+            saleAmountText.text = saleAmount.ToString();
+            expectArAmount.text = $"아르 획득량: {(int)(GoodsManager.exchangeRate * saleAmount * 0.97)}";
         }
-        else if (saleAmount + amount > GoodsManager.goodsStone)
-        {
-            saleAmount = GoodsManager.goodsStone;
-        }
-        else
-        {
-            saleAmount += amount;
-        }
-        saleAmountText.text = saleAmount.ToString();
-        expectArAmount.text = $"아르 획득량: {(int)(GoodsManager.exchangeRate * saleAmount * 0.97)}";
     }
 }

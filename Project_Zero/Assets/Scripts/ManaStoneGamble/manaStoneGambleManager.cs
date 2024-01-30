@@ -155,7 +155,15 @@ public class manaStoneGambleManager : MonoBehaviour
         if (betAr > GoodsManager.goodsAr)
         {
             betAr = (int)(GoodsManager.goodsAr);
-            betInputField.GetComponent<TMP_InputField>().text = GoodsManager.goodsAr.ToString();
+            if (GoodsManager.goodsAr > 0)
+            {
+                betInputField.GetComponent<TMP_InputField>().text = GoodsManager.goodsAr.ToString();
+            }
+            else
+            {
+                betAr = 0;
+                betInputField.GetComponent<TMP_InputField>().text = "0";
+            }
         }
         
     }
