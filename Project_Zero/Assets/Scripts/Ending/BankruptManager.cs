@@ -1,18 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public class NewBehaviourScript : MonoBehaviour
+public class BankruptManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    private Button menuButton;
+    private void Start()
     {
-        
+        menuButton.onClick.RemoveAllListeners();
+        menuButton.onClick.AddListener(TurnToMenu);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void TurnToMenu()
     {
-        
+        SceneManager.LoadScene("Title");
     }
 }

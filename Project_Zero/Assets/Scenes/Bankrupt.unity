@@ -598,7 +598,7 @@ GameObject:
   - component: {fileID: 1122036940}
   - component: {fileID: 1122036941}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: BankruptManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -631,6 +631,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d99c43efa9835194b8809ca2e3e79ea3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  menuButton: {fileID: 1646920021}
 --- !u!1 &1302980669
 GameObject:
   m_ObjectHideFlags: 0

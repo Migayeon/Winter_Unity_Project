@@ -51,12 +51,6 @@ public class AfterTurn : MonoBehaviour
         // 학생들 커리큘럼 진행
         student_Rev = GoodsManager.goodsAr;
         nextTurn.onClick.RemoveAllListeners();
-        nextTurn.onClick.AddListener(
-            delegate
-            {
-                curriculumModManager.loadCurriculumSceneWithMod(0);
-            }
-        );
         foreach (StudentGroup[] period in PlayerInfo.studentGroups)
         {
             foreach (StudentGroup group in period)
@@ -178,6 +172,32 @@ public class AfterTurn : MonoBehaviour
             PlayerInfo.graduatedGroups.Add(grd);
         }
         GoodsManager.CalculateEndedFame();
+        // 돈 없으면 울면서 파산함
+        Text nextTurnText = nextTurn.transform.GetChild(0).GetComponent<Text>();
+        if (GoodsManager.goodsAr >= 0)
+        {
+            nextTurnText.text = "다음 턴으로";
+            nextTurnText.color = new Color32(50, 50, 50, 255);
+            nextTurn.GetComponent<Image>().color = Color.white;
+            nextTurn.onClick.AddListener(
+                delegate
+                {
+                    curriculumModManager.loadCurriculumSceneWithMod(0);
+                }
+            );
+        }
+        else
+        {
+            nextTurnText.text = "파산하기";
+            nextTurnText.color = new Color32(255, 50, 50, 255);
+            nextTurn.GetComponent<Image>().color = new Color(0.5f, 0.5f, 0.5f);
+            nextTurn.onClick.AddListener(
+                delegate
+                {
+                    SceneManager.LoadScene("Bankrupt");
+                }
+            );
+        }
         // BeforeTurn 불러오기, 1턴 추가
         TurnManager.turn++;
         //SceneManager.LoadScene("Curriculum");

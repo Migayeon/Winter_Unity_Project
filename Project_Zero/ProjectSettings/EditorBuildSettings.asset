@@ -59,4 +59,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Title/Achievement.unity
     guid: 1f921c2d03c607a4ead33911fa8063b8
+  - enabled: 1
+    path: Assets/Scenes/Bankrupt.unity
+    guid: 1003d6cf0deb5c7449ec87e1edc2ee45
   m_configObjects: {}
