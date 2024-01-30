@@ -147,9 +147,8 @@ public static class SubjectTree
         }
         for (int i = 0; i < subjectsCount; i++)
             subjectState.Add(State.Closed);
-        subjectState[0] = State.ReadyToOpen;
-        subjectState[1] = State.ReadyToOpen;
-        subjectState[4] = State.ReadyToOpen;
+        for (int i = 0; i < subjectsInfo.initialSubjectId.Length; i++)
+            openSubject(subjectsInfo.initialSubjectId[i]);
         for (int i = 0; i < openedSubjectsId.Count; i++)
             openSubject(openedSubjectsId[i]);
     }
@@ -354,9 +353,24 @@ public static class SubjectTree
             q.Enqueue(tmp);
             filter[id] = (professorInSubjectCnt[id] != 0);
         }
+        List<bool> canPassGroup = new List<bool>(subjectsInfo.groupCount + 1);
+        for (int i = 0; i < subjectsInfo.groupCount + 1; i++)
+            canPassGroup.Add(false);
+        for (int i = 0; i < subjectsInfo.groupCount + 1; i++)
+        {
+            List<int> nowGroup = subjectGroups[i];
+            foreach (int subjectId in nowGroup)
+            {
+                if (professorInSubjectCnt[subjectId] != 0)
+                    canPassGroup[i] = true;
+            }
+        }
         while (q.Count != 0)
         {
             KeyValuePair<int, bool> subjectIdAble = q.Dequeue();
+            int groupId = subjects[subjectIdAble.Key].subjectGroupId;
+            if (canPassGroup[groupId])
+                subjectIdAble = new KeyValuePair<int, bool>(subjectIdAble.Key, true);
             if (!subjectIdAble.Value)
                 filter[subjectIdAble.Key] = false;
             foreach (int nextSubjectId in subjects[subjectIdAble.Key].nextSubjects)
@@ -389,7 +403,7 @@ public static class SubjectTree
         rst.professorsId = professorsLecture.Keys.ToArray().ToList();
         for (int i = 0; i < professorsLecture.Keys.Count; i++)
         {
-            List<bool> teachingState = professorsLecture[professorsLecture.Keys.ToList<long>()[i]];
+            List<bool> teachingState = professorsLecture[professorsLecture.Keys.ToList()[i]];
             rst.lecturesId.Add("");
             for (int j = 0; j < subjectsCount; j += 3)
                 rst.lecturesId[i] += (
@@ -419,11 +433,11 @@ public static class SubjectTree
             for (int j = 0; j < Math.Ceiling((double) subjectsCount / 3); j++)
             {
                 int tmp = Convert.ToInt32(data.lecturesId[i][j]);
-                lectureState.Add((tmp & 4) == 1);
-                if ((tmp & 4) == 1) professorInSubjectCnt[j * 3] ++;
+                lectureState.Add((tmp & 4) == 4);
+                if ((tmp & 4) == 4) professorInSubjectCnt[j * 3] ++;
                 if (lectureState.Count == subjectsCount) break;
-                lectureState.Add((tmp & 2) == 1);
-                if ((tmp & 2) == 1) professorInSubjectCnt[j * 3 + 1]++;
+                lectureState.Add((tmp & 2) == 2);
+                if ((tmp & 2) == 2) professorInSubjectCnt[j * 3 + 1]++;
                 if (lectureState.Count == subjectsCount) break;
                 lectureState.Add((tmp & 1) == 1);
                 if ((tmp & 1) == 1) professorInSubjectCnt[j * 3 + 2]++;
@@ -442,12 +456,14 @@ public class SubjectInfo
     public string[] enforceTypeName;
     public int groupCount;
     public int[] costByTier;
-    public SubjectInfo(int Count, string[] EnforceTypeName, int GroupCount, int[] CostByTier)
+    public int[] initialSubjectId;
+    public SubjectInfo(int Count, string[] EnforceTypeName, int GroupCount, int[] CostByTier, int[] InitialSubjectId)
     {
         count = Count;
         enforceTypeName = EnforceTypeName;
         groupCount = GroupCount;
         costByTier = CostByTier;
+        initialSubjectId = InitialSubjectId;
     }
 }
 
