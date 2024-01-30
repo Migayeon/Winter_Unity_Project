@@ -251,6 +251,8 @@ public class CurriculumSetting : MonoBehaviour
 
     public void SkipCurriculum()
     {
+        for (int i = 0; i < 8; i++) CurriculumList.Add(0);
+        studentGroup[div - 1].SetCurriCulum(CurriculumList);
         if (div == 3)
         {
             PlayerInfo.studentGroups.Add(studentGroup);
@@ -285,8 +287,9 @@ public class CurriculumSetting : MonoBehaviour
             subject.onClick.AddListener(delegate { SubjectClick(Convert.ToInt32(subject.name)); });
         }
 
-        NewCurriculum();
         next.onClick.AddListener(SaveCurriculum);
+        NewCurriculum();
+        
     }
     void Update()
     {

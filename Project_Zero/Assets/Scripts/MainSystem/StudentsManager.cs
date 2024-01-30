@@ -18,23 +18,26 @@ public class StudentGroup
         curriculum = null; // 함수 연결
         stat = new List<int> { 0, 0, 0, 0, 0 };
 
-        int lim = 0;
-        int statSum = Random.Range(300, 400);
-        int lastSum = statSum;
+        if (num > 0)
+        {
+            int lim = 0;
+            int statSum = Random.Range(300, 400);
+            int lastSum = statSum;
 
-        for (int i = 0; i < 5; i++)
-        {
-            stat[i] = 10 + statSum * (Random.Range(lim, lim + 20) - lim) / 100;
-            lastSum -= stat[i];
-        }
-        for (int i = 0; i < lastSum; i++)
-        {
-            if (stat[i % 5] >= 100)
+            for (int i = 0; i < 5; i++)
             {
-                lastSum++;
-                continue;
+                stat[i] = 10 + statSum * (Random.Range(lim, lim + 20) - lim) / 100;
+                lastSum -= stat[i];
             }
-            stat[i % 5]++;
+            for (int i = 0; i < lastSum; i++)
+            {
+                if (stat[i % 5] >= 100)
+                {
+                    lastSum++;
+                    continue;
+                }
+                stat[i % 5]++;
+            }
         }
     }
     public StudentGroup(string data)
