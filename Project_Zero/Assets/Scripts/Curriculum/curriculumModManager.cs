@@ -14,14 +14,13 @@ public class curriculumModManager : MonoBehaviour
 
     void changeMod(int mod)
     {
-        subjectGetterTransform.GetComponent<CurriculumSubjectGetter>().setMod(mod);
         for (int i = 0; i < canvasList.Count; i++)
         {
             canvasList[i].gameObject.SetActive(mod == i);
         }
     }
 
-    private void Awake()
+    private void Start()
     {
         changeMod(nowMod);
     }
@@ -35,5 +34,10 @@ public class curriculumModManager : MonoBehaviour
     public static void changeCurriculmMod(int mod)
     {
         nowMod = mod;
+    }
+
+    public static int getNowMod()
+    {
+        return nowMod;
     }
 }

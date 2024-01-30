@@ -369,10 +369,7 @@ public static class SubjectTree
         for (int i = 0; i < subjectsCount; i++)
         {
             if (filter[i])
-            {
                 rst++;
-                Debug.Log(i.ToString() + " : " + filter[i].ToString());
-            }
         }
         return rst >= 8;
     }

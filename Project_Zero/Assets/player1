@@ -1,9 +1,9 @@
 {
-    "turn": 10,
-    "ar": 27914328,
-    "stone": 0,
+    "turn": 2,
+    "ar": 2147290770,
+    "stone": 2147483647,
     "studentsNum": 0,
-    "fame": 18,
-    "myName": "d",
-    "arcademyName": "dd"
+    "fame": 106,
+    "myName": "무민",
+    "arcademyName": "테스트"
 }

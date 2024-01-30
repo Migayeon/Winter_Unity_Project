@@ -31,9 +31,11 @@ public class ManageCurriculumMod : MonoBehaviour
     [SerializeField]
     private Button goBackButton;
     [SerializeField]
-    private ESC_Manager EscManger;
+    private ESC_Manager EscManager;
     [SerializeField]
     private Sprite[] professorIllust;
+    [SerializeField]
+    private Transform subjectInfoUI;
 
     private Transform professorContents;
     private Transform professorNameUI;
@@ -48,17 +50,18 @@ public class ManageCurriculumMod : MonoBehaviour
 
     private int selectedSubjectId = -1;
     private bool isProfessorDetailOpen = false;
+    private bool selectFixed = false;
 
     private void Awake()
     {
         professorContents = professorInfoUI.GetChild(0).GetChild(0).GetChild(0).GetChild(0);
         professorNameUI = professorInfoUI.GetChild(1);
-        detailNameTransform = professorDetailUI.GetChild(0).GetChild(0);
-        detailInfoTransform = professorDetailUI.GetChild(0).GetChild(1);
-        assignButtonTransform = professorDetailUI.GetChild(0).GetChild(2);
-        freeButtonTransform = professorDetailUI.GetChild(0).GetChild(3);
-        professorImageTransform = professorDetailUI.GetChild(0).GetChild(4);
-        exitDetailButtonTransform = professorDetailUI.GetChild(1);
+        detailNameTransform = professorDetailUI.GetChild(1).GetChild(0);
+        detailInfoTransform = professorDetailUI.GetChild(1).GetChild(1);
+        assignButtonTransform = professorDetailUI.GetChild(1).GetChild(2);
+        freeButtonTransform = professorDetailUI.GetChild(1).GetChild(3);
+        professorImageTransform = professorDetailUI.GetChild(1).GetChild(4);
+        exitDetailButtonTransform = professorDetailUI.GetChild(2);
 
         foreach (Transform subject in subjectGameObject.GetComponentInChildren<Transform>())
             setColor(subject);
@@ -83,16 +86,16 @@ public class ManageCurriculumMod : MonoBehaviour
     private void Start()
     {
         panel.gameObject.SetActive(false);
+        subjectInfoUI.gameObject.SetActive(false);
         professorInfoUI.gameObject.SetActive(false);
         professorDetailUI.gameObject.SetActive(false);
         OpenSubjectButton.gameObject.SetActive(false);
     }
     private void Update()
     {
-        if (EscManger.isPause) return;
+        if (EscManager.isPause) return;
         if (isProfessorDetailOpen) return;
-        print(SubjectTree.checkAvailToCreateCurriculum());
-        if (!CurriculumSubjectGetter.selectFixed)
+        if (!selectFixed)
         {
             Vector2 mp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Ray2D ray2 = new Ray2D(mp, Vector2.zero);
@@ -101,11 +104,13 @@ public class ManageCurriculumMod : MonoBehaviour
             {
                 Transform nowTransform = hit.collider.transform;
                 int nowTransformId = int.Parse(nowTransform.name);
+                setSubjectInfo(nowTransformId);
                 setUI(nowTransformId);
             }
             else
             {
                 panel.gameObject.SetActive(false);
+                subjectInfoUI.gameObject.SetActive(false);
                 professorInfoUI.gameObject.SetActive(false);
                 OpenSubjectButton.gameObject.SetActive(false);
             }
@@ -130,11 +135,11 @@ public class ManageCurriculumMod : MonoBehaviour
 
     public void SubjectClick(int clickedId)
     {
-        if (EscManger.isPause) return;
+        if (EscManager.isPause) return;
         if (isProfessorDetailOpen) return;
         if (clickedId == selectedSubjectId)
         {
-            CurriculumSubjectGetter.selectFixed = false;
+            selectFixed = false;
             selectedSubjectId = -1;
             foreach (Transform subject in subjectGameObject.GetComponentInChildren<Transform>())
                 setColor(subject);
@@ -145,8 +150,7 @@ public class ManageCurriculumMod : MonoBehaviour
                 foreach (Transform subject in subjectGameObject.GetComponentInChildren<Transform>())
                     setColor(subject);
             selectedSubjectId = clickedId;
-            CurriculumSubjectGetter.selectFixed = true;
-            subjectGetter.GetComponent<CurriculumSubjectGetter>().setUI(clickedId);
+            selectFixed = true;
             setUI(clickedId);
             subjectGameObject.transform.GetChild(selectedSubjectId).GetComponent<Image>().color = Color.green;
         }
@@ -173,12 +177,14 @@ public class ManageCurriculumMod : MonoBehaviour
         {
             initProfessorScroll(nowTransformId);
             panel.gameObject.SetActive(true);
+            subjectInfoUI.gameObject.SetActive(true);
             professorInfoUI.gameObject.SetActive(true);
             OpenSubjectButton.gameObject.SetActive(false);
         }
         else if (SubjectTree.subjectState[nowTransformId] == SubjectTree.State.ReadyToOpen)
         {
             panel.gameObject.SetActive(true);
+            subjectInfoUI.gameObject.SetActive(true);
             professorInfoUI.gameObject.SetActive(false);
             int cost = SubjectTree.subjectsInfo.costByTier[SubjectTree.subjects[nowTransformId].tier];
             if (GoodsManager.goodsAr >= cost)
@@ -197,7 +203,8 @@ public class ManageCurriculumMod : MonoBehaviour
         }
         else
         {
-            panel.gameObject.SetActive(false);
+            panel.gameObject.SetActive(true);
+            subjectInfoUI.gameObject.SetActive(true);
             professorInfoUI.gameObject.SetActive(false);
             OpenSubjectButton.gameObject.SetActive(false);
         }
@@ -210,7 +217,7 @@ public class ManageCurriculumMod : MonoBehaviour
             Destroy(child.gameObject);
     }
 
-    public SelectButton addProfessorSelectButton(ProfessorSystem.Professor professor, int subjectId, int index)
+    public SelectButton addProfessorSelectButton(Professor professor, int subjectId, int index)
     {
         GameObject newSelectButton = Instantiate(professorSelectButtonPrefab, professorContents);
         Transform buttonTransform = newSelectButton.transform.GetChild(0);
@@ -229,7 +236,7 @@ public class ManageCurriculumMod : MonoBehaviour
         return new SelectButton(professor, newSelectButton);
     }
 
-    public void updateSelectButtonAndColor(Transform professorBusy, Transform buttonTransform, ProfessorSystem.Professor professor, int subjectId)
+    public void updateSelectButtonAndColor(Transform professorBusy, Transform buttonTransform, Professor professor, int subjectId)
     {
         Button button = buttonTransform.GetComponent<Button>();
         professorBusy.GetComponent<TMP_Text>().text = $"{professor.ProfessorGetSubjects().Count} / {getProfessorMaxAssignNum(professor)}";
@@ -272,7 +279,7 @@ public class ManageCurriculumMod : MonoBehaviour
     {
         clearProfessorContents();
         int index = 0;
-        foreach (ProfessorSystem.Professor professor in PlayerInfo.ProfessorList)
+        foreach (Professor professor in PlayerInfo.ProfessorList)
         {
             selectButtons.Add(addProfessorSelectButton(professor, subjectId, index++));
         }
@@ -280,15 +287,15 @@ public class ManageCurriculumMod : MonoBehaviour
 
     public class SelectButton
     {
-        public ProfessorSystem.Professor professor;
+        public Professor professor;
         public GameObject buttonObject;
-        public SelectButton(ProfessorSystem.Professor professor, GameObject buttonObject)
+        public SelectButton(Professor professor, GameObject buttonObject)
         {
             this.professor = professor;
             this.buttonObject = buttonObject;
         }
     }
-    public int getProfessorMaxAssignNum(ProfessorSystem.Professor professor)
+    public int getProfessorMaxAssignNum(Professor professor)
     {
         int ProfessorMaxAssignNum = 3;
         if (professor.ProfessorGetType() == 0)
@@ -305,7 +312,7 @@ public class ManageCurriculumMod : MonoBehaviour
         }
         return ProfessorMaxAssignNum;
     }
-    public void openDetail(ProfessorSystem.Professor professor, int subjectId, int index)
+    public void openDetail(Professor professor, int subjectId, int index)
     {
         if (isProfessorDetailOpen) return;
         CameraController.canMove = false;
@@ -346,7 +353,7 @@ public class ManageCurriculumMod : MonoBehaviour
         }
     }
 
-    public void changeDetailInfo(ProfessorSystem.Professor professor)
+    public void changeDetailInfo(Professor professor)
     {
         TMP_Text infoText = detailInfoTransform.GetComponent<TMP_Text>();
         int professorAbleToAssignNum = getProfessorMaxAssignNum(professor);
@@ -362,7 +369,7 @@ public class ManageCurriculumMod : MonoBehaviour
         infoText.text += $"영창 마법력 : {professorStat[5]}";
     }
 
-    public void assignButtonClick(ProfessorSystem.Professor professor, int subjectId, int index)
+    public void assignButtonClick(Professor professor, int subjectId, int index)
     {
         SubjectTree.addProfessorAt(professor.ProfessorGetID(), subjectId);
         professor.ProfessorAddSubject(subjectId);
@@ -373,8 +380,9 @@ public class ManageCurriculumMod : MonoBehaviour
 
         assignButtonTransform.gameObject.SetActive(false);
         freeButtonTransform.gameObject.SetActive(true);
+        closeButtonClick();
     }
-    public void freeButtonClick(ProfessorSystem.Professor professor, int subjectId, int index)
+    public void freeButtonClick(Professor professor, int subjectId, int index)
     {
         SubjectTree.removeProfessorAt(professor.ProfessorGetID(), subjectId);
         professor.ProfessorRemoveSubject(subjectId);
@@ -385,6 +393,7 @@ public class ManageCurriculumMod : MonoBehaviour
 
         assignButtonTransform.gameObject.SetActive(true);
         freeButtonTransform.gameObject.SetActive(false);
+        closeButtonClick();
     }
 
     public void closeButtonClick()
@@ -398,5 +407,19 @@ public class ManageCurriculumMod : MonoBehaviour
     {
         if (isProfessorDetailOpen) return;
         SceneManager.LoadScene("Main");
+    }
+    public void setSubjectInfo(int id)
+    {
+        subjectInfoUI.gameObject.SetActive(true);
+        Subject subjectInfo = SubjectTree.getSubject(id);
+        subjectInfoUI.GetChild(1).GetComponent<TMP_Text>().text = subjectInfo.name;
+        List<int> enforceInfo = subjectInfo.enforceContents;
+        string tmpText = "";
+        for (int i = 0; i < enforceInfo.Count; i++)
+        {
+            if (enforceInfo[i] != 0)
+                tmpText += SubjectTree.subjectsInfo.enforceTypeName[i] + " + " + enforceInfo[i] + "%\n";
+        }
+        subjectInfoUI.GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = tmpText;
     }
 }

@@ -16,6 +16,10 @@ public class CurriculumSetting : MonoBehaviour
     public Text infoMessage;
     public GameObject subjectGameobject;
     public Button next;
+    [SerializeField]
+    private Transform subjectInfoUI;
+    [SerializeField]
+    private ESC_Manager ESC_Script;
 
     public StudentGroup[] studentGroup = new StudentGroup[3];
 
@@ -25,6 +29,7 @@ public class CurriculumSetting : MonoBehaviour
     private int localMinimum;
     private int coefficient;
     private bool isShift;
+    private bool selectFixed;
 
     public enum returnState
     {
@@ -66,13 +71,15 @@ public class CurriculumSetting : MonoBehaviour
         else
         {
             CurriculumList.Add(i);
+            subjectInfoUI.gameObject.SetActive(true);
+            selectFixed = true;
             if (!SubjectTree.isVaildCurriculum(CurriculumList))
             {
                 CurriculumList.Remove(i);
                 returnState tmp = followCurriculum(i);
                 if (tmp == returnState.overMaximum)
                 {
-                    StartCoroutine(WarningMessage("커리큘럼 길이가 최대를 초과하여 일부 하위 과목만 선택했습니다."));
+                    StartCoroutine(WarningMessage("커리큘럼 길이가 최대를 초과하여 일부 하위 과목만 선택했습니다.", 2));
                 }
                 else if (tmp == returnState.haveClosedSubject)
                 {
@@ -166,6 +173,7 @@ public class CurriculumSetting : MonoBehaviour
 
     public void CurriculumCancel(int i)
     {
+        selectFixed = false;
         int time = CurriculumList.Count - CurriculumList.IndexOf(i);
         int next = i;
         for (int j = 0; j < time; j++)
@@ -223,10 +231,6 @@ public class CurriculumSetting : MonoBehaviour
                 "커리큘럼을 분배할 수 없습니다\r\n"+
                 "다음 버튼을 눌러주세요";
         }
-        
-        
-        
-        
         sum += num;
     }
 
@@ -264,11 +268,11 @@ public class CurriculumSetting : MonoBehaviour
         manager.GetComponent<CurriculumTreeDrawingManager>().drawTree(CurriculumList);
     }
 
-    IEnumerator WarningMessage(string message)
+    IEnumerator WarningMessage(string message, float time = 1.0f)
     {
         warningMessage.text = message;
         warningMessage.enabled = true;
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(time);
         warningMessage.enabled = false;
     }
 
@@ -297,5 +301,36 @@ public class CurriculumSetting : MonoBehaviour
             isShift = true;
         if (Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.RightShift))
             isShift = false;
+        if (ESC_Script.isPause) return;
+        if (!selectFixed)
+        {
+            Vector2 mp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Ray2D ray2 = new Ray2D(mp, Vector2.zero);
+            RaycastHit2D hit = Physics2D.Raycast(ray2.origin, ray2.direction);
+            if (hit.collider != null)
+            {
+                Transform nowTransform = hit.collider.transform;
+                int nowTransformId = int.Parse(nowTransform.name);
+                setSubjectInfoUI(nowTransformId);
+            }
+            else
+            {
+                subjectInfoUI.gameObject.SetActive(false);
+            }
+        }
+    }
+    public void setSubjectInfoUI(int id)
+    {
+        subjectInfoUI.gameObject.SetActive(true);
+        Subject subjectInfo = SubjectTree.getSubject(id);
+        subjectInfoUI.GetChild(1).GetComponent<TMP_Text>().text = subjectInfo.name;
+        List<int> enforceInfo = subjectInfo.enforceContents;
+        string tmpText = "";
+        for (int i = 0; i < enforceInfo.Count; i++)
+        {
+            if (enforceInfo[i] != 0)
+                tmpText += SubjectTree.subjectsInfo.enforceTypeName[i] + " + " + enforceInfo[i] + "%\n";
+        }
+        subjectInfoUI.GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = tmpText;
     }
 }

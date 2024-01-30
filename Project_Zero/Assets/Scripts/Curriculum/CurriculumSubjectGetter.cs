@@ -18,10 +18,15 @@ public class CurriculumSubjectGetter : MonoBehaviour
     private Transform[] subjectInfoUIList;
     private Transform subjectInfoUI;
 
+    [SerializeField]
+    private Transform[] panelList;
+    private Transform panel;
+
     private Transform subjectContentsUI;
     private Transform subjectNameUI;
 
     public static bool selectFixed = false;
+
 
     private void Update()
     {
@@ -35,24 +40,29 @@ public class CurriculumSubjectGetter : MonoBehaviour
             if (hit.collider != null)
             {
                 GameObject nowObj = hit.collider.gameObject;
+                panel.gameObject.SetActive(true);
                 subjectInfoUI.gameObject.SetActive(true);
                 setUI(int.Parse(nowObj.name));
             }
             else
             {
+                panel.gameObject.SetActive(false);
                 subjectInfoUI.gameObject.SetActive(false);
             }
         }
     }
     public void setMod(int mod)
     {
-        if (subjectInfoUIList[mod] != null) {
+        if (subjectInfoUIList[mod] != null)
+        {
             subjectInfoUI = subjectInfoUIList[mod];
+            panel = panelList[mod];
             subjectContentsUI = subjectInfoUI.GetChild(0).GetChild(0);
             subjectNameUI = subjectInfoUI.GetChild(1);
         }
         else
         {
+            panel = null;
             subjectInfoUI = null;
             subjectContentsUI = null;
             subjectNameUI = null;
@@ -61,6 +71,7 @@ public class CurriculumSubjectGetter : MonoBehaviour
 
     public void setUI(int id)
     {
+        panel.gameObject.SetActive(true);
         subjectInfoUI.gameObject.SetActive(true);
         Subject subjectInfo = SubjectTree.getSubject(id);
         subjectNameUI.GetComponent<TMP_Text>().text = subjectInfo.name;
@@ -77,5 +88,6 @@ public class CurriculumSubjectGetter : MonoBehaviour
     public void setSubjectInfoUITransform(int mod)
     {
         subjectInfoUI = subjectInfoUIList[mod];
+        panel = panelList[mod];
     }
 }

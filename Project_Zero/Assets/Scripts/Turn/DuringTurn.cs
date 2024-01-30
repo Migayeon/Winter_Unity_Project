@@ -11,7 +11,7 @@ public class DuringTurn : MonoBehaviour
     private void Awake()
     {
         endTurn.onClick.AddListener(EndTurn);
-        endTurn.gameObject.SetActive(SubjectTree.ableToEndTurn);
+        endTurn.gameObject.SetActive(SubjectTree.checkAvailToCreateCurriculum());
     }
 
     private void EndTurn()
