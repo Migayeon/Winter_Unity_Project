@@ -26,8 +26,6 @@ public class BGMManager : MonoBehaviour
         if (instance == null) instance = this;
         else Destroy(this.gameObject);
         //Debug.Log(sceneName);
-        audioSource = GetComponent<AudioSource>();
-        currentBGM = audioSource.clip.name;
         DontDestroyOnLoad(gameObject);
         
         /*
@@ -42,6 +40,8 @@ public class BGMManager : MonoBehaviour
     }
     private void LoadedSceneEvent(Scene scene, LoadSceneMode mode)
     {
+        audioSource = GetComponent<AudioSource>();
+        currentBGM = audioSource.clip.name;
         Debug.Log(scene.name);
         string BGMname = "";
         try
@@ -78,7 +78,10 @@ public class BGMManager : MonoBehaviour
                     return;
                 }
             }
-            audioSource.Play();
+            if (audioSource.clip!=null)
+            {
+                audioSource.Play();
+            }
         }
         Debug.Log(name);
     }
