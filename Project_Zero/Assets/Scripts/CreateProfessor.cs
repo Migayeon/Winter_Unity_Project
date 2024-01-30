@@ -329,6 +329,7 @@ public class CreateProfessor : ProfessorSystem
             MaxProfessorsErrorMessage.text = string.Format("<안내><br><br>교수는 최대 {0}명 고용할 수 있습니다.", PlayerInfo.maxProfessor);
             Debug.Log("FIRST ROLL");
         }
+
         else if (PlayerInfo.ProfessorPicked)
         {
             //show the previously picked professor
@@ -439,6 +440,7 @@ public class CreateProfessor : ProfessorSystem
             PickProfessor2Button.onClick.AddListener(() => PickProfessor2(NewProfessors[1]));
             PickProfessor3Button.onClick.AddListener(() => PickProfessor3(NewProfessors[2]));
 
+            PickedProfessorPopupExitButton.onClick.RemoveAllListeners();
             PickedProfessorPopupExitButton.onClick.AddListener(() => ExitPopup(HideTextObject));
         }
     }
