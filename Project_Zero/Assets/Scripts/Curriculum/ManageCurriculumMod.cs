@@ -108,11 +108,11 @@ public class ManageCurriculumMod : MonoBehaviour
         }
         else if (SubjectTree.subjectState[int.Parse(subject.name)] == SubjectTree.State.ReadyToOpen)
         {
-            subject.GetComponent<Image>().color = new Color(0.4f, 0.9f, 0.7f);
+            subject.GetComponent<Image>().color = new Color(0.4f, 0.4f, 0.4f);
         }
         else
         {
-            subject.GetComponent<Image>().color = new Color(0.3f, 0.3f, 0.3f);
+            subject.GetComponent<Image>().color = new Color(0.6f, 0.1f, 0.1f);
         }
     }
 
@@ -218,6 +218,10 @@ public class ManageCurriculumMod : MonoBehaviour
     {
         Button button = buttonTransform.GetComponent<Button>();
         professorBusy.GetComponent<TMP_Text>().text = $"{professor.ProfessorGetSubjects().Count} / {getProfessorMaxAssignNum(professor)}";
+        if (professor.ProfessorGetSubjects().Contains(subjectId))
+        {
+            buttonTransform.GetComponent<Image>().color = Color.cyan;
+        }
         if (professor.ProfessorGetSubjects().Count == getProfessorMaxAssignNum(professor) && !professor.ProfessorGetSubjects().Contains(subjectId))
         {
             buttonTransform.GetComponent<Image>().color = new Color(0.75f, 0.75f, 0.75f);

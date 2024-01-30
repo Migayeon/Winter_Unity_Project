@@ -113,7 +113,7 @@ public class TitleManager : MonoBehaviour
         continueGame.onClick.AddListener(ContinueGame);
         gameOption.onClick.AddListener(OpenOption);
         exitGame.onClick.AddListener(ExitGame);
-        achievementButton.onClick.AddListener(turnToAchievementAScene);
+        //achievementButton.onClick.AddListener(turnToAchievementAScene);
 
         // UI 기본 설정
         exitMessage.SetActive(false);
