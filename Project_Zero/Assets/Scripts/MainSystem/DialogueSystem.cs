@@ -8,6 +8,8 @@ public class DialogueSystem : MonoBehaviour
     public static string situation = null;
     public GameObject dialogueUI;
     public GameObject endMark;
+
+    public Button skipButton;
     public Text character;
     public Text message;
     public Image imageUI;
@@ -113,8 +115,21 @@ public class DialogueSystem : MonoBehaviour
     private void CloseDialogue()
     {
         dialogueUI.SetActive(false);
+        skipButton.gameObject.SetActive(false);
         dialogueUI.GetComponent<Button>().onClick.RemoveAllListeners();
         situation = null;
+    }
+    
+    public void SkipDialogue()
+    {
+        if (prevObject != "none")
+        {
+            GameObject.Find(prevObject).GetComponent<Image>().color = Color.white;
+        }
+        imageUI.sprite = null;
+        imageUI.gameObject.SetActive(false);
+        isNowAnimation = false;
+        CloseDialogue();
     }
 
     private void Awake()
@@ -129,6 +144,7 @@ public class DialogueSystem : MonoBehaviour
             isNowAnimation = false;
             dialogueUI.SetActive(true);
             dialogueUI.GetComponent<Button>().onClick.AddListener(DialogueProcess);
+            skipButton.onClick.AddListener(SkipDialogue);
             DialogueProcess();
         }
         else
