@@ -61,6 +61,11 @@ using System.Linq;
  * ***: try completely rewriting the code at some point for better readability and stuff
  */
 
+
+//UPDATED TODO : 24-01-31
+// fix up code
+// implement save data for returning from main menu (use PlayerInfo.cs)
+
 public class CreateProfessor : ProfessorSystem
 {    
     const int UniqueProfessorRarity = 5; //probability (edit later)

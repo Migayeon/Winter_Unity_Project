@@ -10,6 +10,19 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
 
+/* TODO:
+ * - Fix random generation of skills that can be upgraded
+ * idea:
+ * 1) at start of turn, generate random skill indexes and values for current # of professors
+ * 2) when player enters ManageProfessor scene, check the number of professors. If there are deltas (increases),
+ *    generate new indexes and values for the added professors
+ * 3) store current data in PlayerInfo.cs, update when neded
+ * 
+ *    TODO: create list that stores if professor is currently employed
+ *    (to make sure deletions are handled properly and to show right skill upgrade indexes and values)
+ *    
+ *    lots of stuff to do, lol
+ */
 public class ManageProfessorTest : MonoBehaviour
 {
     public const int ProfessorAwayTime = 3;
@@ -67,12 +80,13 @@ public class ManageProfessorTest : MonoBehaviour
     public System.Random randomseed = new System.Random();
     void Start()
     {
-        
+        Debug.Log("====================== MANAGEPROFESSOR.CS START ======================");
+
         int ProfessorCount = PlayerInfo.ProfessorList.Count;
+        Debug.Log("ProfessorCount : " + ProfessorCount);
 
         ProfessorAwayRefuseMessage.SetActive(false);
         ProfessorFireRefuseMessage.SetActive(false);
-        Debug.Log(ProfessorCount);
 
         ProfessorCountInfo.text = Convert.ToString(ProfessorCount);
 
@@ -98,9 +112,9 @@ public class ManageProfessorTest : MonoBehaviour
         }
         */
         //List of GameObjects that store professor information (prefab)
-        List<GameObject> ProfessorInfoObjects = new List<GameObject>(ProfessorCount);
-                                
 
+        List<GameObject> ProfessorInfoObjects = new List<GameObject>();
+                                
         List<TextMeshProUGUI> ProfessorTMPData = new List<TextMeshProUGUI>(5);
 
         //instantiate Button objects that store professor data from prefab
@@ -121,12 +135,16 @@ public class ManageProfessorTest : MonoBehaviour
         //for all professors
         for (int i = 0; i < ProfessorCount; ++i)
         {
+            Debug.Log("Iteration : " + i);
+
             ProfessorInfoButton.Add(ProfessorInfoObjects[i].GetComponent<Button>()); //add button
+
             int idx = i;
             ProfessorInfoButton[i].onClick.AddListener(() => ShowInfoOnPopup(PlayerInfo.ProfessorList[idx], idx)); //change later (from TempProfessorList to actual Player data list)
+
             Debug.Log(ProfessorInfoButton.Count);
             // change index from 0 to (other variable)
-            Debug.Log("CHECK");
+
             ProfessorInfo = ProfessorInfoObjects[i].GetComponentsInChildren<TextMeshProUGUI>();
             ProfessorInfo[0].text = PlayerInfo.ProfessorList[i].ProfessorGetName();
             ProfessorInfo[1].text = PlayerInfo.ProfessorList[i].ProfessorGetTypeInString();
@@ -193,6 +211,7 @@ public class ManageProfessorTest : MonoBehaviour
         Debug.Log("ReturnToMenu");
         SceneManager.LoadScene("Main");
     }
+
     public void ShowInfoOnPopup(ProfessorSystem.Professor ProfData, int idx)
     {
         Debug.Log("ShowInfoOnPopup called : " + idx);
