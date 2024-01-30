@@ -1778,7 +1778,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &332751529
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1800,6 +1800,81 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 3.4999504}
   m_SizeDelta: {x: 100, y: -6.9999}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &334774886
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 334774887}
+  - component: {fileID: 334774889}
+  - component: {fileID: 334774888}
+  m_Layer: 5
+  m_Name: professorImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &334774887
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 334774886}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2103746870}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -699.9998, y: 200.00002}
+  m_SizeDelta: {x: 400, y: 400}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &334774888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 334774886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 1110059414, guid: 03403fb64626b2047856a53c16676700, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &334774889
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 334774886}
+  m_CullTransparentMesh: 1
 --- !u!1 &334843369
 GameObject:
   m_ObjectHideFlags: 0
@@ -5601,8 +5676,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -592}
-  m_SizeDelta: {x: 1800, y: 767.89}
+  m_AnchoredPosition: {x: 234.99, y: -592}
+  m_SizeDelta: {x: 1330.02, y: 767.89}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1232294823
 MonoBehaviour:
@@ -10270,6 +10345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89fbf0c95bd9fe44b90bcbe83a9a9268, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  panel: {fileID: 269250470}
   professorInfoUI: {fileID: 130373390}
   OpenSubjectButton: {fileID: 2141914936}
   subjectGameObject: {fileID: 1949356028}
@@ -10278,6 +10354,10 @@ MonoBehaviour:
   professorDetailUI: {fileID: 332751529}
   goBackButton: {fileID: 1235995686}
   EscManger: {fileID: 1441014056}
+  professorIllust:
+  - {fileID: 1110059414, guid: 03403fb64626b2047856a53c16676700, type: 3}
+  - {fileID: -832158421, guid: 03403fb64626b2047856a53c16676700, type: 3}
+  - {fileID: 1692357007, guid: 03403fb64626b2047856a53c16676700, type: 3}
 --- !u!224 &2032023855 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3811438421782059592, guid: 6e3122d4cb5938d46bc389da485c672d, type: 3}
@@ -10533,6 +10613,7 @@ RectTransform:
   - {fileID: 1232294822}
   - {fileID: 1288721726}
   - {fileID: 1582748369}
+  - {fileID: 334774887}
   m_Father: {fileID: 332751529}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}

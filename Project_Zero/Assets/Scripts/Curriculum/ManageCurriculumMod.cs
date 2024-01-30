@@ -15,6 +15,8 @@ using static ProfessorSystem;
 public class ManageCurriculumMod : MonoBehaviour
 {
     [SerializeField]
+    private Transform panel;
+    [SerializeField]
     private Transform professorInfoUI;
     [SerializeField]
     private Transform OpenSubjectButton;
@@ -30,6 +32,8 @@ public class ManageCurriculumMod : MonoBehaviour
     private Button goBackButton;
     [SerializeField]
     private ESC_Manager EscManger;
+    [SerializeField]
+    private Sprite[] professorIllust;
 
     private Transform professorContents;
     private Transform professorNameUI;
@@ -39,6 +43,7 @@ public class ManageCurriculumMod : MonoBehaviour
     private Transform detailInfoTransform;
     private Transform assignButtonTransform;
     private Transform freeButtonTransform;
+    private Transform professorImageTransform;
     private Transform exitDetailButtonTransform;
 
     private int selectedSubjectId = -1;
@@ -52,11 +57,8 @@ public class ManageCurriculumMod : MonoBehaviour
         detailInfoTransform = professorDetailUI.GetChild(0).GetChild(1);
         assignButtonTransform = professorDetailUI.GetChild(0).GetChild(2);
         freeButtonTransform = professorDetailUI.GetChild(0).GetChild(3);
+        professorImageTransform = professorDetailUI.GetChild(0).GetChild(4);
         exitDetailButtonTransform = professorDetailUI.GetChild(1);
-
-        professorDetailUI.gameObject.SetActive(false);
-        professorDetailUI.gameObject.SetActive(false);
-        OpenSubjectButton.gameObject.SetActive(false);
 
         foreach (Transform subject in subjectGameObject.GetComponentInChildren<Transform>())
             setColor(subject);
@@ -77,10 +79,19 @@ public class ManageCurriculumMod : MonoBehaviour
             }
         );
     }
+
+    private void Start()
+    {
+        panel.gameObject.SetActive(false);
+        professorInfoUI.gameObject.SetActive(false);
+        professorDetailUI.gameObject.SetActive(false);
+        OpenSubjectButton.gameObject.SetActive(false);
+    }
     private void Update()
     {
         if (EscManger.isPause) return;
         if (isProfessorDetailOpen) return;
+        print(SubjectTree.checkAvailToCreateCurriculum());
         if (!CurriculumSubjectGetter.selectFixed)
         {
             Vector2 mp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -94,6 +105,7 @@ public class ManageCurriculumMod : MonoBehaviour
             }
             else
             {
+                panel.gameObject.SetActive(false);
                 professorInfoUI.gameObject.SetActive(false);
                 OpenSubjectButton.gameObject.SetActive(false);
             }
@@ -160,11 +172,13 @@ public class ManageCurriculumMod : MonoBehaviour
         if (SubjectTree.subjectState[nowTransformId] == SubjectTree.State.Open)
         {
             initProfessorScroll(nowTransformId);
+            panel.gameObject.SetActive(true);
             professorInfoUI.gameObject.SetActive(true);
             OpenSubjectButton.gameObject.SetActive(false);
         }
         else if (SubjectTree.subjectState[nowTransformId] == SubjectTree.State.ReadyToOpen)
         {
+            panel.gameObject.SetActive(true);
             professorInfoUI.gameObject.SetActive(false);
             int cost = SubjectTree.subjectsInfo.costByTier[SubjectTree.subjects[nowTransformId].tier];
             if (GoodsManager.goodsAr >= cost)
@@ -183,6 +197,7 @@ public class ManageCurriculumMod : MonoBehaviour
         }
         else
         {
+            panel.gameObject.SetActive(false);
             professorInfoUI.gameObject.SetActive(false);
             OpenSubjectButton.gameObject.SetActive(false);
         }
@@ -299,6 +314,7 @@ public class ManageCurriculumMod : MonoBehaviour
         TMP_Text professorNameText = detailNameTransform.GetComponent<TMP_Text>();
         professorNameText.text = professor.ProfessorGetName();
         changeDetailInfo(professor);
+        professorImageTransform.GetComponent<Image>().sprite = professorIllust[professor.ProfessorGetType()];
         Button exitButton = exitDetailButtonTransform.GetComponent<Button>();
         Button assignButton = assignButtonTransform.GetComponent<Button>();
         Button freeButton = freeButtonTransform.GetComponent<Button>();

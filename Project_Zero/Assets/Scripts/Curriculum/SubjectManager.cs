@@ -370,8 +370,9 @@ public static class SubjectTree
         {
             if (filter[i])
                 rst++;
+                Debug.Log(i.ToString() + " : " + filter[i].ToString());
         }
-       return rst >= 8;
+        return rst >= 8;
     }
 
     public class SaveData
