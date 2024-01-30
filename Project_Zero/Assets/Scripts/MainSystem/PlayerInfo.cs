@@ -38,10 +38,10 @@ public class PlayerInfo : MonoBehaviour
 
     //CreateProfessor.cs manage
     public static ProfessorSystem.Professor[] RandomProfessorList = new ProfessorSystem.Professor[3];
-    public static bool[] ShowRandomProfessor = new[] { true, true, true };
     public static bool GenerateNewRandomProfessorList = true; //default value on startup (초기값)
     public static bool PickedRandomProfessor = false;
-
+    public static bool ProfessorPicked = false;
+    public static ProfessorSystem.Professor PickedProfessorInfo;
     public static int ProfessorCount()
     {
         return ProfessorList.Count;
