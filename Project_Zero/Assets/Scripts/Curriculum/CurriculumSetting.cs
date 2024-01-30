@@ -72,6 +72,7 @@ public class CurriculumSetting : MonoBehaviour
         {
             CurriculumList.Add(i);
             subjectInfoUI.gameObject.SetActive(true);
+            setSubjectInfoUI(i);
             selectFixed = true;
             if (!SubjectTree.isVaildCurriculum(CurriculumList))
             {

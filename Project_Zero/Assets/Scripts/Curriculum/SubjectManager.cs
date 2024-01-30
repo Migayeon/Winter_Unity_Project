@@ -445,6 +445,7 @@ public static class SubjectTree
             }
             professorsLecture[data.professorsId[i]] = lectureState;
         }
+        ableToEndTurn = checkAvailToCreateCurriculum();
         initSubjectStates(data.subjectStates);
     }
 }
