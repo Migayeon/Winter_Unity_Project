@@ -75,6 +75,7 @@ public class BGMManager : MonoBehaviour
                 if (name == "")
                 {
                     audioSource.clip = null;
+                    return;
                 }
             }
             audioSource.Play();
