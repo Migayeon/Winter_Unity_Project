@@ -10,6 +10,8 @@ public class DialogueSystem : MonoBehaviour
     public Button dialogueButton;
     public Text character;
     public Text message;
+    public Image imageUI;
+    public MainSceneUIManager mainSceneUIManager;
 
     struct content
     {
@@ -20,6 +22,7 @@ public class DialogueSystem : MonoBehaviour
     private int dialogueLength;
     private int dialogueIndex;
     private string[] dialogueString;
+    private string prevObject;
 
     private bool isNowAnimation;
 
@@ -28,7 +31,7 @@ public class DialogueSystem : MonoBehaviour
         foreach (char letter in str)
         {
             message.text += letter;
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.05f);
         }
         isNowAnimation = false;
     }
@@ -48,17 +51,57 @@ public class DialogueSystem : MonoBehaviour
                 CloseDialogue();
                 return;
             }
-            isNowAnimation = true;
             message.text = string.Empty;
 
             dialogueString = dialogue.message[dialogueIndex].Split(":");
-            character.text = dialogueString[0];
-            if (dialogueString[0] == "&E")
+            Debug.Log(dialogueIndex);
+            Debug.Log(dialogueString[1]);
+
+            if (dialogueString[0] == "&O")
             {
-                isNowAnimation = true;
+                if(prevObject != "none")
+                {
+                    GameObject.Find(prevObject).GetComponent<Image>().color = Color.white;
+                }
+                if (dialogueString[1] != "none")
+                {
+                    GameObject.Find(dialogueString[1]).GetComponent<Image>().color = Color.green;
+                }
+                prevObject = dialogueString[1];
+                isNowAnimation = false;
                 dialogueIndex++;
+                DialogueProcess();
                 return;
             }
+            else if (dialogueString[0] == "&I")
+            {
+                if (dialogueString[1] == "Close")
+                {
+                    imageUI.sprite = null;
+                    imageUI.gameObject.SetActive(false);
+                }
+                else
+                {
+                    imageUI.sprite = Resources.Load<Sprite>("Image/Tutorial/"+dialogueString[1]);
+                    imageUI.gameObject.SetActive(true);
+                }
+                isNowAnimation = false;
+                dialogueIndex++;
+                DialogueProcess();
+                return;
+            }
+            else if(dialogueString[0] == "&M")
+            {
+                mainSceneUIManager.NextTab();
+                isNowAnimation = false;
+                dialogueIndex++;
+                DialogueProcess();
+                return;
+            }
+
+            
+            character.text = dialogueString[0];
+            isNowAnimation = true;
             StartCoroutine(DialogueAnimation(dialogueString[1]));
             dialogueIndex++;
         }
@@ -75,6 +118,7 @@ public class DialogueSystem : MonoBehaviour
     {
         if (situation != null)
         {
+            prevObject = "none";
             TextAsset json = Resources.Load<TextAsset>("Dialogue/" + situation);
             dialogue = JsonUtility.FromJson<content>(json.ToString());
             dialogueLength = dialogue.message.Length;
