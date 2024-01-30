@@ -30,6 +30,7 @@ public static class SubjectTree
 
     public static int openSubjectCnt = 0;
     public static int professorManagingSubjectCnt = 0;
+    public static bool ableToEndTurn = false;
 
     public static void initSubjectsAndInfo()
     {
@@ -338,6 +339,39 @@ public static class SubjectTree
                     result.Add(origin);
             }
         }
+    }
+
+    public static bool checkAvailToCreateCurriculum()
+    {
+        List<bool> filter = new List<bool>(subjectsCount);
+        Queue<KeyValuePair<int, bool>> q = new Queue<KeyValuePair<int, bool>>();
+        for (int i = 0; i < subjectsCount; i++)
+            filter.Add(professorInSubjectCnt[i] != 0);
+        int[] firstId = {0, 1, 4};
+        foreach (int id in firstId)
+        {
+            KeyValuePair<int, bool> tmp = new KeyValuePair<int, bool>(id, professorInSubjectCnt[id] != 0);
+            q.Enqueue(tmp);
+            filter[id] = professorInSubjectCnt[id] != 0;
+        }
+        while (q.Count != 0)
+        {
+            KeyValuePair<int, bool> subjectInfo = q.Dequeue();
+            if (!subjectInfo.Value)
+                filter[subjectInfo.Key] = false;
+            foreach (int nextSubjectId in subjects[subjectInfo.Key].nextSubjects)
+            {
+                KeyValuePair<int, bool> tmp = new KeyValuePair<int, bool>(nextSubjectId, subjectInfo.Value);
+                q.Enqueue(tmp);
+            }
+        }
+        int rst = 0;
+        for (int i = 0; i < subjectsCount; i++)
+        {
+            if (filter[i])
+                rst++;
+        }
+       return rst >= 8;
     }
 
     public class SaveData

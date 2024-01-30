@@ -333,6 +333,7 @@ public class ManageCurriculumMod : MonoBehaviour
 
         changeDetailInfo(professor);
         updateProfessorSelectButton(index);
+        SubjectTree.ableToEndTurn =  SubjectTree.checkAvailToCreateCurriculum();
 
         assignButtonTransform.gameObject.SetActive(false);
         freeButtonTransform.gameObject.SetActive(true);
@@ -344,6 +345,7 @@ public class ManageCurriculumMod : MonoBehaviour
 
         changeDetailInfo(professor);
         updateProfessorSelectButton(index);
+        SubjectTree.ableToEndTurn = SubjectTree.checkAvailToCreateCurriculum();
 
         assignButtonTransform.gameObject.SetActive(true);
         freeButtonTransform.gameObject.SetActive(false);

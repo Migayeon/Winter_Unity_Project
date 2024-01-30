@@ -11,11 +11,7 @@ public class DuringTurn : MonoBehaviour
     private void Awake()
     {
         endTurn.onClick.AddListener(EndTurn);
-    }
-
-    private void Update()
-    {
-        endTurn.gameObject.SetActive(SubjectTree.professorManagingSubjectCnt >= 8);
+        endTurn.gameObject.SetActive(SubjectTree.ableToEndTurn);
     }
 
     private void EndTurn()
