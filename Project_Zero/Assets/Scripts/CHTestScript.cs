@@ -1,11 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class CHTestScript : MonoBehaviour
 {
-    private void Update()
+    public Button button;
+    private void Start()
     {
-        GoodsManager.CalculateEndedFame();
+        button.onClick.AddListener(CH);
+    }
+    public void CH()
+    {
+        SceneManager.LoadScene("Title");
     }
 }
