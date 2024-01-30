@@ -442,11 +442,13 @@ public class SubjectInfo
     public int count;
     public string[] enforceTypeName;
     public int groupCount;
-    public SubjectInfo(int Count, string[] EnforceTypeName, int GroupCount)
+    public int[] costByTier;
+    public SubjectInfo(int Count, string[] EnforceTypeName, int GroupCount, int[] CostByTier)
     {
         count = Count;
         enforceTypeName = EnforceTypeName;
         groupCount = GroupCount;
+        costByTier = CostByTier;
     }
 }
 

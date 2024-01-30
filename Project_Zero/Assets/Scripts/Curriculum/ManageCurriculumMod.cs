@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Xml.Linq;
 using TMPro;
 using Unity.VisualScripting;
@@ -144,6 +145,8 @@ public class ManageCurriculumMod : MonoBehaviour
         if (isProfessorDetailOpen) return;
         if (selectedSubjectId != -1)
         {
+            int cost = SubjectTree.subjectsInfo.costByTier[SubjectTree.subjects[selectedSubjectId].tier];
+            GoodsManager.goodsAr -= cost;
             SubjectTree.openSubject(selectedSubjectId);
             setUI(selectedSubjectId);
             foreach (Transform subject in subjectGameObject.GetComponentInChildren<Transform>())
@@ -163,6 +166,19 @@ public class ManageCurriculumMod : MonoBehaviour
         else if (SubjectTree.subjectState[nowTransformId] == SubjectTree.State.ReadyToOpen)
         {
             professorInfoUI.gameObject.SetActive(false);
+            int cost = SubjectTree.subjectsInfo.costByTier[SubjectTree.subjects[nowTransformId].tier];
+            if (GoodsManager.goodsAr >= cost)
+            {
+                OpenSubjectButton.GetComponent<Button>().interactable = true;
+                OpenSubjectButton.GetChild(0).GetComponent<TMP_Text>().text = "구매하기\n( " + cost.ToString() + "Ar )";
+                OpenSubjectButton.GetComponent<Image>().color = Color.white;
+            }
+            else
+            {
+                OpenSubjectButton.GetComponent<Button>().interactable = false;
+                OpenSubjectButton.GetChild(0).GetComponent<TMP_Text>().text = "구매불가\n( " + cost.ToString() + "Ar )";
+                OpenSubjectButton.GetComponent<Image>().color = new Color(0.3f, 0.3f, 0.3f);
+            }
             OpenSubjectButton.gameObject.SetActive(true);
         }
         else
@@ -345,7 +361,7 @@ public class ManageCurriculumMod : MonoBehaviour
 
         changeDetailInfo(professor);
         updateProfessorSelectButton(index);
-        SubjectTree.ableToEndTurn = SubjectTree.checkAvailToCreateCurriculum();
+                SubjectTree.ableToEndTurn =  SubjectTree.checkAvailToCreateCurriculum();
 
         assignButtonTransform.gameObject.SetActive(true);
         freeButtonTransform.gameObject.SetActive(false);
