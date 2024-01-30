@@ -115,7 +115,7 @@ public class CurriculumSetting : MonoBehaviour
                             flag = returnState.haveClosedSubject;
                             break;
                         }
-                        if (SubjectTree.professorInSubjectCnt[curriForClickedSubject[i]] != 0)
+                        if (SubjectTree.professorInSubjectCnt[curriForClickedSubject[i]] == 0)
                         {
                             StartCoroutine(WarningMessage("아직 교수를 배치하지 않은 과목이 있습니다."));
                             flag = returnState.noProfessor;
@@ -142,7 +142,7 @@ public class CurriculumSetting : MonoBehaviour
                     flag = returnState.haveClosedSubject;
                     break;
                 }
-                if (SubjectTree.professorInSubjectCnt[curriForClickedSubject[i]] != 0)
+                if (SubjectTree.professorInSubjectCnt[curriForClickedSubject[i]] == 0)
                 {
                     StartCoroutine(WarningMessage("아직 교수를 배치하지 않은 과목이 있습니다."));
                     flag = returnState.noProfessor;
