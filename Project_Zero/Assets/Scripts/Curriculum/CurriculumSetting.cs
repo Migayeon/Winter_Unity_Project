@@ -192,7 +192,7 @@ public class CurriculumSetting : MonoBehaviour
     {
         if (num + PlayerInfo.StudentGroupCount() + sum > PlayerInfo.maxStudent) 
         {
-            num = Mathf.Max(0, PlayerInfo.maxStudent + sum - PlayerInfo.StudentGroupCount());
+            num = Mathf.Max(0, PlayerInfo.maxStudent - PlayerInfo.StudentGroupCount() - sum);
         }
         div++;
         studentGroup[div - 1] = new StudentGroup(div, num, PlayerInfo.cost);
