@@ -307,7 +307,7 @@ public class CreateProfessor : ProfessorSystem
         PickProfessor1Button.enabled = false;
         PickProfessor2Button.enabled = false;
         PickProfessor3Button.enabled = false;
-        PickedProfessorPopupExitButton.enabled = false;
+        //PickedProfessorPopupExitButton.enabled = false;
 
         HideTextObject.SetActive(false);
 
