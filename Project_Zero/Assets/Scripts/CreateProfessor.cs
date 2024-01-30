@@ -229,7 +229,6 @@ public class CreateProfessor : ProfessorSystem
     public TextMeshProUGUI PickProfessor2ButtonText;
     public TextMeshProUGUI PickProfessor3ButtonText;
 
-
     public Dictionary<int, string> KoreanStatList = new Dictionary<int, string>(6)
         {
             {0, "강의력"},
@@ -296,7 +295,6 @@ public class CreateProfessor : ProfessorSystem
         // Add listeners to basic buttons
         RetryProfessorsButton.onClick.AddListener(RetryProfessors);
         ReturnMenuButton.onClick.AddListener(ReturnMenu);
-
 
     }
     void Start()
@@ -427,6 +425,8 @@ public class CreateProfessor : ProfessorSystem
             Professor3Salary.text = "월급 : " + Convert.ToString(NewProfessors[2].ProfessorGetSalary());
 
             /*
+             * \
+             * 
             PickProfessor1Button = ButtonClickObject.GetComponentInChildren<Button>();
             PickProfessor2Button = ButtonClickObject.GetComponentInChildren<Button>();
             PickProfessor3Button = ButtonClickObject.GetComponentInChildren<Button>();
@@ -477,6 +477,7 @@ public class CreateProfessor : ProfessorSystem
         PlayerInfo.ProfessorPicked = true;
         PlayerInfo.PickedProfessorInfo = InsertProf;
 
+        PickedProfessorPopupExitButton.enabled = true;
     }
 
     public void PickProfessor2(Professor InsertProf)
@@ -508,6 +509,8 @@ public class CreateProfessor : ProfessorSystem
         HideTextObject.SetActive(true);
         PlayerInfo.ProfessorPicked = true;
         PlayerInfo.PickedProfessorInfo = InsertProf;
+
+        PickedProfessorPopupExitButton.enabled = true;
 
     }
 
