@@ -398,14 +398,13 @@ public static class SubjectTree
                     Convert.ToInt32(teachingState[j]) * 4
                 ).ToString();
         }
-        /*for (int i = 0; i < subjectsCount; i++)
+        for (int i = 0; i < subjectsCount; i++)
         {
             if (subjectState[i] == State.Open)
             {
                 rst.subjectStates.Add(i);
-                Debug.Log(i);
             }
-        }*/
+        }
         return JsonUtility.ToJson(rst,true);
     }
 
