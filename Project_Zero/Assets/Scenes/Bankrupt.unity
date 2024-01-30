@@ -274,6 +274,7 @@ MonoBehaviour:
   floor: 0
   startTime: 30
   bounceRate: 0.85
+  bounceLimit: 0.01
 --- !u!1 &525474726
 GameObject:
   m_ObjectHideFlags: 0
@@ -425,6 +426,7 @@ MonoBehaviour:
   floor: 0
   startTime: 50
   bounceRate: 0.85
+  bounceLimit: 0.01
 --- !u!1 &731892643
 GameObject:
   m_ObjectHideFlags: 0
@@ -585,6 +587,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1122036939
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1122036940}
+  - component: {fileID: 1122036941}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1122036940
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122036939}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.247702, y: -1.1024009, z: -5.0419497}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1122036941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122036939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d99c43efa9835194b8809ca2e3e79ea3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1302980669
 GameObject:
   m_ObjectHideFlags: 0
@@ -736,6 +782,7 @@ MonoBehaviour:
   floor: 0
   startTime: 40
   bounceRate: 0.85
+  bounceLimit: 0.01
 --- !u!1 &1442483769
 GameObject:
   m_ObjectHideFlags: 0
@@ -1079,10 +1126,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 995a9a054297b7946a6b10b41a3a4b85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  height: 800
-  floor: -460
+  height: 1000
+  floor: -450
   startTime: 0
-  bounceRate: 0.9
+  bounceRate: 0.6
+  bounceLimit: 0
 --- !u!1 &2062020821
 GameObject:
   m_ObjectHideFlags: 0
@@ -1196,3 +1244,4 @@ SceneRoots:
   - {fileID: 784935309}
   - {fileID: 2062020825}
   - {fileID: 731892646}
+  - {fileID: 1122036940}

@@ -13,6 +13,8 @@ public class BankruptDrop : MonoBehaviour
     private int startTime;
     [SerializeField]
     private float bounceRate;
+    [SerializeField]
+    private float bounceLimit = 0.01f;
     private bool inFloor = false;
     private float speed = 0;
     private void FixedUpdate()
@@ -31,7 +33,7 @@ public class BankruptDrop : MonoBehaviour
         {
             speed = - speed * bounceRate;
         }
-        if (transform.position.y <= floor / 144 && speed < 0.01f / 144)
+        if (transform.position.y <= floor / 144 && speed < bounceLimit / 144)
         {
             speed = 0;
             transform.position = new Vector3(transform.position.x, floor / 144, 0f);
