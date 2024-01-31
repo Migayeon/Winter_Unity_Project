@@ -35,7 +35,7 @@ public class AfterTurn : MonoBehaviour
     int professor_Rev;
     int professor_Cost;
     public static int academy_Cost = 0;
-    int marketing_Cost;
+    public static int marketing_Cost = 0;
     public static int magic_Cost = 0;
     int total_Result;
     bool isGraduated;
@@ -109,8 +109,8 @@ public class AfterTurn : MonoBehaviour
 
         // 건물 증축시 비용 적용 완료... ( ClassEx.cs 참고 )
 
-        // 마케팅 비용 정산하는 것 구현 바람... To 동엽
-        marketing_Cost = 0;
+        // 마케팅 비용 정산하는 것 구현 바람... To 동엽 ( ClassEx.cs에 구현 완료 )
+        //marketing_Cost = 0;
 
         // 총 결산 진행.
         total_Result = student_Rev + professor_Rev + magic_Rev +
@@ -165,6 +165,7 @@ public class AfterTurn : MonoBehaviour
         academy_Cost = 0;
         magic_Cost = 0;
         total_Result = 0;
+        marketing_Cost = 0;
 
         // 졸업생 리스트에 학생 그룹 추가 + 명성 갱신
         foreach (StudentGroup grd in toBeGraduated)

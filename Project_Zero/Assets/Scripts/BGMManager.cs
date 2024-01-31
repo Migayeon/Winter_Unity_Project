@@ -41,7 +41,14 @@ public class BGMManager : MonoBehaviour
     private void LoadedSceneEvent(Scene scene, LoadSceneMode mode)
     {
         audioSource = GetComponent<AudioSource>();
-        currentBGM = audioSource.clip.name;
+        try
+        {
+            currentBGM = audioSource.clip.name;
+        }
+        catch
+        {
+            currentBGM = null;
+        }
         Debug.Log(scene.name);
         string BGMname = "";
         try

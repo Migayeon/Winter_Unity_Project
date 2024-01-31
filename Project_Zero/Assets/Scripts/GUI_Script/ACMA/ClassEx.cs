@@ -148,6 +148,7 @@ public class ClassEx : MonoBehaviour
             {
                 GoodsManager.goodsAr -= marA;
                 GoodsManager.GoodsConstFame += num;
+                AfterTurn.marketing_Cost -= marA;
                 marA += 1000;
                 requiredMarketA.text = $"{marA}Ar 필요";
                 duringMarketA = TurnManager.turn;
@@ -173,6 +174,7 @@ public class ClassEx : MonoBehaviour
             {
                 GoodsManager.goodsAr -= marB;
                 GoodsManager.GoodsConstFame += num;
+                AfterTurn.marketing_Cost -= marB;
                 marB += 1000;
                 requiredMarketB.text = $"{marB}Ar 필요";
                 duringMarketB = TurnManager.turn;
@@ -199,6 +201,7 @@ public class ClassEx : MonoBehaviour
             {
                 GoodsManager.goodsAr -= marC;
                 GoodsManager.GoodsConstFame += num;
+                AfterTurn.marketing_Cost -= marC;
                 marC += 1000;
                 requiredMarketC.text = $"{marC}Ar 필요";
                 duringMarketC = TurnManager.turn;
@@ -224,6 +227,7 @@ public class ClassEx : MonoBehaviour
             {
                 GoodsManager.goodsAr -= marD;
                 GoodsManager.GoodsConstFame += num;
+                AfterTurn.marketing_Cost -= marD;
                 marD += 1000;
                 requiredMarketD.text = $"{marD}Ar 필요";
                 duringMarketD = TurnManager.turn;
