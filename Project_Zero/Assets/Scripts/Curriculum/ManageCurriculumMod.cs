@@ -224,8 +224,10 @@ public class ManageCurriculumMod : MonoBehaviour
         Transform buttonTransform = newSelectButton.transform.GetChild(0);
         Transform professorName = buttonTransform.GetChild(0);
         Transform professorBusy = buttonTransform.GetChild(1);
+        Transform professorTypeDisplay = buttonTransform.GetChild(2);
         professorName.GetComponent<TMP_Text>().text = professor.ProfessorGetName();
         Button button = buttonTransform.GetComponent<Button>();
+        professorTypeDisplay.GetComponent<Image>().sprite = professorIllust[professor.ProfessorGetType()];
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(
             delegate
@@ -395,6 +397,7 @@ public class ManageCurriculumMod : MonoBehaviour
         assignButtonTransform.gameObject.SetActive(true);
         freeButtonTransform.gameObject.SetActive(false);
         closeButtonClick();
+        initProfessorScroll(subjectId);
     }
 
     public void closeButtonClick()

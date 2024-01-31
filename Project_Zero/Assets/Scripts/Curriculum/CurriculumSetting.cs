@@ -267,6 +267,15 @@ public class CurriculumSetting : MonoBehaviour
         }
         NewCurriculum();
         manager.GetComponent<CurriculumTreeDrawingManager>().drawTree(CurriculumList);
+        List<bool> filter = SubjectTree.getAvailableSubjects();
+        Image[] images = subjectGameobject.transform.GetComponentsInChildren<Image>();
+        for (int subjectId = 0; subjectId < SubjectTree.subjectsCount; subjectId++)
+        {
+            if (filter[subjectId])
+                images[subjectId].color = Color.white;
+            else
+                images[subjectId].color = new Color(0.3f, 0.3f, 0.3f);
+        }
     }
 
     IEnumerator WarningMessage(string message, float time = 1.0f)
@@ -288,15 +297,24 @@ public class CurriculumSetting : MonoBehaviour
         //Debug.Log($"학생수 : {num}\n 명성 : {GoodsManager.goodsCalculatedEndedFame}");
         warningMessage.enabled = false;
         foreach (var subject in subjectGameobject.transform.GetComponentsInChildren<Button>())
-        {
             subject.onClick.AddListener(delegate { SubjectClick(Convert.ToInt32(subject.name)); });
-        }
-
         next.onClick.AddListener(SaveCurriculum);
         NewCurriculum();
         
     }
-    void Update()
+    private void Start()
+    {
+        List<bool> filter = SubjectTree.getAvailableSubjects();
+        Image[] images = subjectGameobject.transform.GetComponentsInChildren<Image>();
+        for (int subjectId = 0; subjectId < SubjectTree.subjectsCount; subjectId++)
+        {
+            if (filter[subjectId])
+                images[subjectId].color = Color.white;
+            else
+                images[subjectId].color = new Color(0.3f, 0.3f, 0.3f);
+        }
+    }
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
             isShift = true;

@@ -388,6 +388,48 @@ public static class SubjectTree
         return rst >= 8;
     }
 
+    public static List<bool> getAvailableSubjects()
+    {
+        List<bool> filter = new List<bool>(subjectsCount);
+        Queue<KeyValuePair<int, bool>> q = new Queue<KeyValuePair<int, bool>>();
+        for (int i = 0; i < subjectsCount; i++)
+            filter.Add(professorInSubjectCnt[i] != 0);
+        int[] firstId = { 0, 1, 4 };
+        foreach (int id in firstId)
+        {
+            KeyValuePair<int, bool> tmp = new KeyValuePair<int, bool>(id, professorInSubjectCnt[id] != 0);
+            q.Enqueue(tmp);
+            filter[id] = (professorInSubjectCnt[id] != 0);
+        }
+        List<bool> canPassGroup = new List<bool>(subjectsInfo.groupCount + 1);
+        for (int i = 0; i < subjectsInfo.groupCount + 1; i++)
+            canPassGroup.Add(false);
+        for (int i = 0; i < subjectsInfo.groupCount + 1; i++)
+        {
+            List<int> nowGroup = subjectGroups[i];
+            foreach (int subjectId in nowGroup)
+            {
+                if (professorInSubjectCnt[subjectId] != 0)
+                    canPassGroup[i] = true;
+            }
+        }
+        while (q.Count != 0)
+        {
+            KeyValuePair<int, bool> subjectIdAble = q.Dequeue();
+            int groupId = subjects[subjectIdAble.Key].subjectGroupId;
+            if (canPassGroup[groupId])
+                subjectIdAble = new KeyValuePair<int, bool>(subjectIdAble.Key, true);
+            if (!subjectIdAble.Value)
+                filter[subjectIdAble.Key] = false;
+            foreach (int nextSubjectId in subjects[subjectIdAble.Key].nextSubjects)
+            {
+                KeyValuePair<int, bool> tmp = new KeyValuePair<int, bool>(nextSubjectId, subjectIdAble.Value);
+                q.Enqueue(tmp);
+            }
+        }
+        return filter;
+    }
+
     public class SaveData
     {
         public int professorCnt = 0;

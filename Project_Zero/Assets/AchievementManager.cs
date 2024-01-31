@@ -14,6 +14,8 @@ public class AchievementManager : MonoBehaviour
     private Transform achievementTransform;
     [SerializeField]
     private RectTransform scroll;
+    [SerializeField]
+    private Button menuBtn;
 
     private Transform scrollContents;
     public AchievementManagementInfo achievementManagementInfo;
@@ -29,6 +31,8 @@ public class AchievementManager : MonoBehaviour
         scrollContents = scroll.GetChild(0).GetChild(0);
         for (int i = 0; i < achievementCount; i++)
             addAchievement(i);
+        menuBtn.onClick.RemoveAllListeners();
+        menuBtn.onClick.AddListener(gotoMenu);
     }
 
     private void addAchievement(int achievementId)
