@@ -334,19 +334,6 @@ public class CreateProfessor : ProfessorSystem
             MaxProfessorsErrorMessage.text = string.Format("<안내><br><br>교수는 최대 {0}명 고용할 수 있습니다.", PlayerInfo.maxProfessor);
             Debug.Log("FIRST ROLL");
         }
-
-        else if (PlayerInfo.ProfessorPicked)
-        {
-            //show the previously picked professor
-            Debug.Log("PROFESSOR PICKED");
-            PickedProfessorName.text = PlayerInfo.PickedProfessorInfo.ProfessorGetName();
-            PickedProfessorType.text = PlayerInfo.PickedProfessorInfo.ProfessorGetTypeInString();
-            PickedProfessorStat.text = StatToString(PlayerInfo.PickedProfessorInfo.ProfessorGetStats());
-            PickedProfessorSalary.text = Convert.ToString(PlayerInfo.PickedProfessorInfo.ProfessorGetSalary());
-            HideTextObject.SetActive(true);
-
-
-        }
         else
         {
             PickProfessor1ButtonText.text = "채용";
@@ -448,13 +435,44 @@ public class CreateProfessor : ProfessorSystem
             PickedProfessorPopupExitButton.onClick.RemoveAllListeners();
             PickedProfessorPopupExitButton.onClick.AddListener(() => ExitPopup(HideTextObject));
         }
+
+        if (!PlayerInfo.ProfessorPickedStatus[0])
+        {
+            Professor1Name.text = "";
+            Professor1Type.text = "";
+            Professor1Stat.text = "";
+            Professor1Salary.text = "";
+            PickProfessor1Button.enabled = false;
+        }
+        if (!PlayerInfo.ProfessorPickedStatus[1])
+        {
+            Professor2Name.text = "";
+            Professor2Type.text = "";
+            Professor2Stat.text = "";
+            Professor2Salary.text = "";
+            PickProfessor2Button.enabled = false;
+        }
+        if (!PlayerInfo.ProfessorPickedStatus[2])
+        {
+            Professor3Name.text = "";
+            Professor3Type.text = "";
+            Professor3Stat.text = "";
+            Professor3Salary.text = "";
+            PickProfessor3Button.enabled = false;
+        }
     }
 
     public void PickProfessor1(Professor InsertProf)
     {
         Debug.Log("PickProfessor1");
         PlayerInfo.ProfessorList.Add(InsertProf);
+
+        PlayerInfo.ProfessorPickedStatus[0] = false;
+        
         PickProfessor1Button.enabled = false;
+
+
+
         Debug.Log(Professor1Name.text);
         Debug.Log(Professor1Type.text);
         Debug.Log(Professor1Stat.text);
@@ -491,7 +509,11 @@ public class CreateProfessor : ProfessorSystem
     {
         Debug.Log("PickProfessor2");
         PlayerInfo.ProfessorList.Add(InsertProf);
+
+        PlayerInfo.ProfessorPickedStatus[1] = false;
+
         PickProfessor2Button.enabled = false;
+
         Debug.Log(Professor1Name.text);
         Debug.Log(Professor1Type.text);
         Debug.Log(Professor1Stat.text);
@@ -525,7 +547,11 @@ public class CreateProfessor : ProfessorSystem
     {
         Debug.Log("PickProfessor3");
         PlayerInfo.ProfessorList.Add(InsertProf);
+
+        PlayerInfo.ProfessorPickedStatus[2] = false;
+
         PickProfessor3Button.enabled = false;
+
         Debug.Log(Professor1Name.text);
         Debug.Log(Professor1Type.text);
         Debug.Log(Professor1Stat.text);
@@ -560,6 +586,11 @@ public class CreateProfessor : ProfessorSystem
             Array.Clear(PlayerInfo.RandomProfessorList, 0, PlayerInfo.RandomProfessorList.Length);
             PlayerInfo.GenerateNewRandomProfessorList = true;
             PlayerInfo.ProfessorPicked = false;
+
+            for (int i = 0; i < 3; ++i)
+            {
+                PlayerInfo.ProfessorPickedStatus[i] = true;
+            }
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
         else

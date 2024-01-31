@@ -42,6 +42,7 @@ public class PlayerInfo : MonoBehaviour
     public static bool PickedRandomProfessor = false;
     public static bool ProfessorPicked = false;
     public static ProfessorSystem.Professor PickedProfessorInfo;
+    public static bool[] ProfessorPickedStatus = { true, true, true }; //default initialization
     public static int ProfessorCount()
     {
         return ProfessorList.Count;
