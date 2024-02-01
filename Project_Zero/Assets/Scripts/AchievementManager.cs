@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static AchievementManager;
 
 public class AchievementManager : MonoBehaviour
 {
@@ -24,6 +27,7 @@ public class AchievementManager : MonoBehaviour
     
     private readonly string INFO_PATH = Path.Combine(Application.dataPath, "Resources/AchievementsJson/achievementsInfo.json");
     private int achievementCount = 0;
+    private bool isAchievementDetailOpen = false;
 
     private void Start()
     {
@@ -33,6 +37,22 @@ public class AchievementManager : MonoBehaviour
             addAchievement(i);
         menuBtn.onClick.RemoveAllListeners();
         menuBtn.onClick.AddListener(gotoMenu);
+    }
+
+    private void Update()
+    {
+        if (isAchievementDetailOpen) return;
+        Vector2 mp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Ray2D ray2 = new Ray2D(mp, Vector2.zero);
+        RaycastHit2D hit = Physics2D.Raycast(ray2.origin, ray2.direction);
+        if (hit.collider != null)
+        {
+            Transform nowTransform = hit.collider.transform;
+            int nowTransformId = int.Parse(nowTransform.name);
+        }
+        else
+        {
+        }
     }
 
     private void addAchievement(int achievementId)
@@ -54,7 +74,7 @@ public class AchievementManager : MonoBehaviour
         }
     }
 
-    private void initAchievementInfo()
+    private KeyValuePair<AchievementManagementInfo, List<AchievementInfo>> initAchievementInfo()
     {
         achievementInfos = new List<AchievementInfo>();
         isAchievementOpened = new List<bool>();
@@ -69,6 +89,7 @@ public class AchievementManager : MonoBehaviour
         }
         foreach (int achievementId in achievementManagementInfo.clearedAchievement)
             isAchievementOpened[achievementId] = true;
+        return new KeyValuePair<AchievementManagementInfo, List<AchievementInfo>>(achievementManagementInfo, achievementInfos);
     }
 
     public void gotoMenu()
@@ -80,6 +101,7 @@ public class AchievementManager : MonoBehaviour
     {
         public int count;
         public int[] clearedAchievement;
+        public int[] stats;
     }
 
     class AchievementInfo
@@ -89,5 +111,47 @@ public class AchievementManager : MonoBehaviour
         string description;
         bool hidden;
         string code;
+    }
+}
+
+class AchieveController
+{
+    private static readonly string INFO_PATH = Path.Combine(Application.dataPath, "Resources/AchievementsJson/achievementsInfo.json");
+    private static AchievementManagementInfo loadedInfo;
+
+    private static void LoadJson()
+    {
+        string loadJson = File.ReadAllText(INFO_PATH);
+        loadedInfo = JsonUtility.FromJson<AchievementManagementInfo>(loadJson);
+    }
+
+    public static void Achieve(int achieveId)
+    {
+        LoadJson();
+        loadedInfo.clearedAchievement.Append(achieveId);
+        string json = JsonUtility.ToJson(loadedInfo, true);
+        File.WriteAllText(INFO_PATH, json);
+    }
+
+    public static void AddStat(int achieveId, int value)
+    {
+        LoadJson();
+        loadedInfo.stats[achieveId] += value;
+        string json = JsonUtility.ToJson(loadedInfo, true);
+        File.WriteAllText(INFO_PATH, json);
+    }
+
+    public static void SetStat(int achieveId, int value)
+    {
+        LoadJson();
+        loadedInfo.stats[achieveId] = value;
+        string json = JsonUtility.ToJson(loadedInfo, true);
+        File.WriteAllText(INFO_PATH, json);
+    }
+
+    public static int GetStat(int achieveId)
+    {
+        LoadJson();
+        return loadedInfo.stats[achieveId];
     }
 }
