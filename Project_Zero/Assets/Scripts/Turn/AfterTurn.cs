@@ -199,8 +199,13 @@ public class AfterTurn : MonoBehaviour
                 }
             );
         }
+        foreach (StudentGroup group in toBeGraduated)
+        {
+            group.GetExam();
+        }
         // BeforeTurn 불러오기, 1턴 추가
         TurnManager.turn++;
         //SceneManager.LoadScene("Curriculum");
+
     }
 }

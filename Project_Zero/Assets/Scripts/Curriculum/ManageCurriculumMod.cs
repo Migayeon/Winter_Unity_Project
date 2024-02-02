@@ -90,6 +90,7 @@ public class ManageCurriculumMod : MonoBehaviour
         professorInfoUI.gameObject.SetActive(false);
         professorDetailUI.gameObject.SetActive(false);
         OpenSubjectButton.gameObject.SetActive(false);
+        EscManager.gameObject.SetActive(false);
     }
     private void Update()
     {
