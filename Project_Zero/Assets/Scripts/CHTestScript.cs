@@ -13,6 +13,6 @@ public class CHTestScript : MonoBehaviour
     }
     public void CH()
     {
-        SceneManager.LoadScene("Title");
+        LoadingSceneManager.LoadScene("Main");
     }
 }

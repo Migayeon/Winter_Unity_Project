@@ -30,7 +30,7 @@ public class DuringTurn : MonoBehaviour
 
     private void EndTurn()
     {
-        SceneManager.LoadScene("AfterTurn");
+        LoadingSceneManager.LoadScene("AfterTurn");
     }
 
     private void CannotEndTurnWarning()

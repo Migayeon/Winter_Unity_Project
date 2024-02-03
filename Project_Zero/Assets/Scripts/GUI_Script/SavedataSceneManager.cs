@@ -57,7 +57,7 @@ public class SavedataSceneManager : MonoBehaviour
     {
         PlayerInfo.dataIndex = i;
         SaveManager.LoadProcess();
-        SceneManager.LoadScene("Main");
+        LoadingSceneManager.LoadScene("Main");
     }
 
     public void ErrorMessage()
