@@ -115,6 +115,10 @@ public class CreateProfessor : ProfessorSystem
         randomFirstNameIndex = randomGenerator.Next(0, firstName.Count);
         RandomFirstName = firstName[randomFirstNameIndex];
 
+        // 업적 테스트를 위한 임시 추가
+        RandomFirstName = "시후";
+        RandomLastName = "대";
+
         finalRandomName = RandomLastName + " " + RandomFirstName;
 
         //log for debug
@@ -466,7 +470,10 @@ public class CreateProfessor : ProfessorSystem
     {
         Debug.Log("PickProfessor1");
         PlayerInfo.ProfessorList.Add(InsertProf);
-
+        if (InsertProf.ProfessorGetName() == "대 시후")
+        {
+            AchievementManager.Achieve(0);
+        }
         PlayerInfo.ProfessorPickedStatus[0] = false;
         
         PickProfessor1Button.enabled = false;
@@ -509,7 +516,10 @@ public class CreateProfessor : ProfessorSystem
     {
         Debug.Log("PickProfessor2");
         PlayerInfo.ProfessorList.Add(InsertProf);
-
+        if (InsertProf.ProfessorGetName() == "대 시후")
+        {
+            AchievementManager.Achieve(0);
+        }
         PlayerInfo.ProfessorPickedStatus[1] = false;
 
         PickProfessor2Button.enabled = false;
@@ -547,7 +557,10 @@ public class CreateProfessor : ProfessorSystem
     {
         Debug.Log("PickProfessor3");
         PlayerInfo.ProfessorList.Add(InsertProf);
-
+        if (InsertProf.ProfessorGetName() == "대 시후")
+        {
+            AchievementManager.Achieve(0);
+        }
         PlayerInfo.ProfessorPickedStatus[2] = false;
 
         PickProfessor3Button.enabled = false;
