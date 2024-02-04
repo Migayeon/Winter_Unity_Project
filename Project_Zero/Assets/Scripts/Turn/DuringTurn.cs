@@ -35,7 +35,7 @@ public class DuringTurn : MonoBehaviour
 
     private void CannotEndTurnWarning()
     {
-        StartCoroutine(WarningMessage("교수가 배치된 과목 8개로 구성된 커리큘럼\n1개 이상을 보유하십시오."));
+        StartCoroutine(WarningMessage("교수가 배치된 과목 8개로 구성된 커리큘럼\n1개 이상을 보유하십시오.", 2.5f));
     }
     IEnumerator WarningMessage(string message, float time = 1.0f)
     {
