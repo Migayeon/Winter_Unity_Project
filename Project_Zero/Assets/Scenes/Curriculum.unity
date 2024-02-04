@@ -4862,6 +4862,7 @@ MonoBehaviour:
   - {fileID: 334843373}
   - {fileID: 1313543891}
   - {fileID: 502372896}
+  ESC_Canvas: {fileID: 7257532975002210689}
 --- !u!1 &976185653
 GameObject:
   m_ObjectHideFlags: 0
@@ -11520,6 +11521,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d81fb85f764d81649aa1b20b4cc273d3, type: 3}
+--- !u!1 &7257532975002210689 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 657107666101991439, guid: d81fb85f764d81649aa1b20b4cc273d3, type: 3}
+  m_PrefabInstance: {fileID: 7257532975002210688}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

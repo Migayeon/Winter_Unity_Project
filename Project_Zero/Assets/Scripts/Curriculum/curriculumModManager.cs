@@ -9,15 +9,19 @@ public class curriculumModManager : MonoBehaviour
     private Transform subjectGetterTransform;
     [SerializeField]
     private List<Transform> canvasList;
+    [SerializeField]
+    private GameObject ESC_Canvas;
 
     private static int nowMod = 0;
 
     void changeMod(int mod)
     {
+        if (mod == 0)
+            ESC_Canvas.SetActive(false);
+        else
+            ESC_Canvas.SetActive(true);
         for (int i = 0; i < canvasList.Count; i++)
-        {
             canvasList[i].gameObject.SetActive(mod == i);
-        }
     }
 
     private void Start()
