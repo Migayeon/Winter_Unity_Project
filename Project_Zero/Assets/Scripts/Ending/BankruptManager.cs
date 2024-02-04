@@ -12,6 +12,7 @@ public class BankruptManager : MonoBehaviour
     {
         menuButton.onClick.RemoveAllListeners();
         menuButton.onClick.AddListener(TurnToMenu);
+        AchievementManager.Achieve(2);
     }
 
     private void TurnToMenu()
