@@ -43,12 +43,12 @@ public class CurriculumSetting : MonoBehaviour
     {
         if (SubjectTree.subjectState[i] != SubjectTree.State.Open)
         {
-            StartCoroutine(WarningMessage("아직 해금하지 않은 과목입니다."));
+            StartCoroutine(WarningMessage("아직 해금하지 않은 과목입니다.", 2.5f));
             return;
         }
         else if (SubjectTree.professorInSubjectCnt[i] == 0)
         {
-            StartCoroutine(WarningMessage("교수를 배치하지 않은 과목입니다."));
+            StartCoroutine(WarningMessage("교수를 배치하지 않은 과목입니다.", 2.5f));
             return;
         }
         if (CurriculumList.Contains(i))
@@ -64,7 +64,7 @@ public class CurriculumSetting : MonoBehaviour
             }
             else
             {
-                StartCoroutine(WarningMessage("커리큘럼의 길이가 최대입니다."));
+                StartCoroutine(WarningMessage("커리큘럼의 길이가 최대입니다.", 2.5f));
             }
             return;
         }
@@ -80,11 +80,11 @@ public class CurriculumSetting : MonoBehaviour
                 returnState tmp = followCurriculum(i);
                 if (tmp == returnState.overMaximum)
                 {
-                    StartCoroutine(WarningMessage("커리큘럼 길이가 최대를 초과하여 일부 하위 과목만 선택했습니다.", 2));
+                    StartCoroutine(WarningMessage("커리큘럼 길이가 최대를 초과하여 일부 하위 과목만 선택했습니다.", 2.5f));
                 }
                 else if (tmp == returnState.haveClosedSubject)
                 {
-                    StartCoroutine(WarningMessage("아직 해금하지 않은 과목이 있습니다."));
+                    StartCoroutine(WarningMessage("아직 해금하지 않은 과목이 있습니다.", 2.5f));
                 }
                 /* CurriculumList.Remove(i);
                  * StartCoroutine(WarningMessage("해당 과목의 이수 조건을 만족하지 못했습니다."));
@@ -120,13 +120,13 @@ public class CurriculumSetting : MonoBehaviour
                     {
                         if (SubjectTree.subjectState[curriForClickedSubject[i]] != SubjectTree.State.Open)
                         {
-                            StartCoroutine(WarningMessage("아직 해금하지 않은 과목이 있습니다."));
+                            StartCoroutine(WarningMessage("아직 해금하지 않은 과목이 있습니다.", 2.5f));
                             flag = returnState.haveClosedSubject;
                             break;
                         }
                         if (SubjectTree.professorInSubjectCnt[curriForClickedSubject[i]] == 0)
                         {
-                            StartCoroutine(WarningMessage("아직 교수를 배치하지 않은 과목이 있습니다."));
+                            StartCoroutine(WarningMessage("아직 교수를 배치하지 않은 과목이 있습니다.", 2.5f));
                             flag = returnState.noProfessor;
                             break;
                         }
@@ -147,13 +147,13 @@ public class CurriculumSetting : MonoBehaviour
             {
                 if (SubjectTree.subjectState[curriForClickedSubject[i]] != SubjectTree.State.Open)
                 {
-                    StartCoroutine(WarningMessage("아직 해금하지 않은 과목이 있습니다."));
+                    StartCoroutine(WarningMessage("아직 해금하지 않은 과목이 있습니다.", 2.5f));
                     flag = returnState.haveClosedSubject;
                     break;
                 }
                 if (SubjectTree.professorInSubjectCnt[curriForClickedSubject[i]] == 0)
                 {
-                    StartCoroutine(WarningMessage("아직 교수를 배치하지 않은 과목이 있습니다."));
+                    StartCoroutine(WarningMessage("아직 교수를 배치하지 않은 과목이 있습니다.", 2.5f));
                     flag = returnState.noProfessor;
                     break;
                 }
@@ -239,7 +239,7 @@ public class CurriculumSetting : MonoBehaviour
     {
         if (CurriculumList.Count < 8)
         {
-            StartCoroutine(WarningMessage("커리큘럼은 8과목으로 구성되어야 합니다."));
+            StartCoroutine(WarningMessage("커리큘럼은 8과목으로 구성되어야 합니다.", 2.5f));
             return;
         }
         studentGroup[div - 1].SetCurriCulum(CurriculumList);
