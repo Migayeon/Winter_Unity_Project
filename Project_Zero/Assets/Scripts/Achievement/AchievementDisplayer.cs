@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -16,6 +18,8 @@ public class AchievementDisplayer : MonoBehaviour
     private RectTransform scroll;
     [SerializeField]
     private Button menuBtn;
+    [SerializeField]
+    private RectTransform simpleDescription;
 
     private Transform scrollContents;
     private bool isAchievementDetailOpen = false;
@@ -38,9 +42,18 @@ public class AchievementDisplayer : MonoBehaviour
         if (hit.collider != null)
         {
             Transform nowTransform = hit.collider.transform;
+            int achievementId = Convert.ToInt32(nowTransform.name);
+            simpleDescription.gameObject.SetActive(true);
+            TMP_Text achievementNameText = simpleDescription.GetChild(0).GetComponent<TMP_Text>();
+            TMP_Text achievementContentsText = simpleDescription.GetChild(1).GetComponent<TMP_Text>();
+            bool haveTohideInfo = AchievementManager.achievementInfos[achievementId].hidden && !AchievementManager.isAchieveOpened(achievementId);
+            achievementNameText.text = haveTohideInfo ? "???" : AchievementManager.achievementInfos[achievementId].name;
+            achievementContentsText.text = haveTohideInfo ? "???" : AchievementManager.achievementInfos[achievementId].description;
+            simpleDescription.position = new Vector3(hit.point.x,hit.point.y, -1);
         }
         else
         {
+            simpleDescription.gameObject.SetActive(false);
         }
     }
 
@@ -61,6 +74,7 @@ public class AchievementDisplayer : MonoBehaviour
             newPicture.GetComponent<SpriteRenderer>().sprite = null;
             newFrame.GetComponent<SpriteRenderer>().color = new Color32(80, 112, 173, 255);
         }
+        newFrame.name = achievementId.ToString();
     }
 
     public void gotoMenu()

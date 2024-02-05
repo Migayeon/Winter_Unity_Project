@@ -36,7 +36,6 @@ public class curriculumModManager : MonoBehaviour
                 AchievementManager.Achieve(4);
             }
         );
-        print("??");
         changeMod(nowMod);
     }
 

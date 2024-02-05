@@ -32,7 +32,6 @@ public class AchievementManager : MonoBehaviour
         {
             isAchievementOpened.Add(false);
             string path = Path.Combine(Application.dataPath, "AchievementsJson/" + i.ToString() + ".json");
-            i++;
             if (!File.Exists(path))
             {
                 achievementCount = i;
@@ -40,6 +39,7 @@ public class AchievementManager : MonoBehaviour
             }
             loadJson = File.ReadAllText(path);
             achievementInfos.Add(JsonUtility.FromJson<AchievementInfo>(loadJson));
+            i++;
         }
         foreach (int achievementId in achievementManagementInfo.clearedAchievement)
             isAchievementOpened[achievementId] = true;
@@ -115,10 +115,8 @@ public class AchievementManager : MonoBehaviour
             loadedInfo.stats.Add(0);
     }
 
-    public static bool isAchieveOpened(int achieveId, bool recentlyUpdated = false)
+    public static bool isAchieveOpened(int achieveId)
     {
-        if (recentlyUpdated)
-            LoadJson();
         return isAchievementOpened[achieveId];
     }
 
