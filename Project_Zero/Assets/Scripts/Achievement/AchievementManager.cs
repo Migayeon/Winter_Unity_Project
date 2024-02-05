@@ -81,6 +81,7 @@ public class AchievementManager : MonoBehaviour
         string json = JsonUtility.ToJson(loadedInfo, true);
         isAchievementOpened[achieveId] = true;
         AchievementAlertManager.alertAchieve(achieveId);
+        AchievementDisplayer.updateAchievement(achieveId);
         File.WriteAllText(ACHIEVE_SAVE_PATH, json);
     }
 

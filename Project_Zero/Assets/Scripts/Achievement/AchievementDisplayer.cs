@@ -9,6 +9,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 public class AchievementDisplayer : MonoBehaviour
 {
@@ -23,9 +24,11 @@ public class AchievementDisplayer : MonoBehaviour
 
     private Transform scrollContents;
     private bool isAchievementDetailOpen = false;
+    private static List<Transform> frames = new List<Transform>();
 
     private void Start()
     {
+        frames.Clear();
         scrollContents = scroll.GetChild(0).GetChild(0);
         for (int i = 0; i < AchievementManager.achievementCount; i++)
             addAchievement(i);
@@ -60,21 +63,29 @@ public class AchievementDisplayer : MonoBehaviour
     private void addAchievement(int achievementId)
     {
         Transform newFrame = Instantiate(achievementTransform, new Vector2(-5f + achievementId * 4, 0.5f), Quaternion.identity, scrollContents);
-        Transform newLight = newFrame.GetChild(0);
-        Transform newPicture = newFrame.GetChild(1);
+        frames.Add(newFrame);
+        updateAchievement(achievementId);
+        newFrame.name = achievementId.ToString();
+    }
+
+    public static void updateAchievement(int achievementId)
+    {
+        if (frames.Count <= achievementId) return;
+        Transform nowFrame = frames[achievementId];
+        Transform nowLight = nowFrame.GetChild(0);
+        Transform nowPicture = nowFrame.GetChild(1);
         if (AchievementManager.isAchievementOpened[achievementId])
         {
-            newLight.gameObject.SetActive(true);
-            newPicture.GetComponent<SpriteRenderer>().sprite = AchievementManager.illustSprites[achievementId];
-            newFrame.GetComponent<SpriteRenderer>().color = Color.white;
+            nowLight.gameObject.SetActive(true);
+            nowPicture.GetComponent<SpriteRenderer>().sprite = AchievementManager.illustSprites[achievementId];
+            nowFrame.GetComponent<SpriteRenderer>().color = Color.white;
         }
         else
         {
-            newLight.gameObject.SetActive(false);
-            newPicture.GetComponent<SpriteRenderer>().sprite = null;
-            newFrame.GetComponent<SpriteRenderer>().color = new Color32(80, 112, 173, 255);
+            nowLight.gameObject.SetActive(false);
+            nowPicture.GetComponent<SpriteRenderer>().sprite = null;
+            nowFrame.GetComponent<SpriteRenderer>().color = new Color32(80, 112, 173, 255);
         }
-        newFrame.name = achievementId.ToString();
     }
 
     public void gotoMenu()
