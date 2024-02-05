@@ -24,6 +24,11 @@ public class MainSceneUIManager : MonoBehaviour
     public Text tabName;
     public Text turn;
     public Text fame;
+    [SerializeField]
+    private Button assistantBtn;
+    private const float interval = 1.0f;
+    private float clickedTime = -1.0f;
+    private int clickCnt = 0;
 
     public Button[] sceneButton = new Button[9];
     string[] sceneName = new string[9] // 연결된 scene 추가
@@ -131,6 +136,8 @@ public class MainSceneUIManager : MonoBehaviour
         prevButton.onClick.AddListener(PrevTab);
         nextButton.onClick.AddListener(NextTab);
         selectOpenButton.onClick.AddListener(SelectTab);
+        assistantBtn.onClick.RemoveAllListeners();
+        assistantBtn.onClick.AddListener(ClickAssistant);
         for (int i = 0; i < 4; i++)
         {
             int j = i;
@@ -152,5 +159,19 @@ public class MainSceneUIManager : MonoBehaviour
                 sceneButton[i].onClick.AddListener(delegate { MoveScene(sceneName[j]); });
             }
         }
+    }
+
+    private void ClickAssistant()
+    {
+        if (Time.time - clickedTime < interval)
+        {
+            if (++clickCnt == 30)
+                AchievementManager.Achieve(3);
+        }
+        else
+        {
+            clickCnt = 1;
+        }
+        clickedTime = Time.time;
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class curriculumModManager : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class curriculumModManager : MonoBehaviour
     private List<Transform> canvasList;
     [SerializeField]
     private GameObject ESC_Canvas;
+    [SerializeField]
+    private Button migayeonBtn;
 
     private static int nowMod = 0;
 
@@ -26,6 +29,14 @@ public class curriculumModManager : MonoBehaviour
 
     private void Start()
     {
+        migayeonBtn.onClick.RemoveAllListeners();
+        migayeonBtn.onClick.AddListener(
+            delegate
+            {
+                AchievementManager.Achieve(4);
+            }
+        );
+        print("??");
         changeMod(nowMod);
     }
 

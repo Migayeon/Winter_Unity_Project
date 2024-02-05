@@ -170,6 +170,8 @@ public class ManageCurriculumMod : MonoBehaviour
             foreach (Transform subject in subjectGameObject.GetComponentInChildren<Transform>())
                 if (int.Parse(subject.name) != selectedSubjectId)
                     setColor(subject);
+            if (SubjectTree.subjects[selectedSubjectId].subjectGroupId == 1)
+                AchievementManager.Achieve(6);
         }
     }
 
