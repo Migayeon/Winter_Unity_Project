@@ -74,11 +74,16 @@ public class AfterTurn : MonoBehaviour
                 Debug.Log(grd.GetExam());
                 int possibility = TestCheckManager.CheckPossiblity(grd, grd.GetExam());
                 int passed = 0;
+                int passedStudentCnt = 0;
                 for (int i = 0; i < grd.GetNumber(); i++)   // 각 학생별로 합격 여부 계산
                 {
                     int num = Random.Range(1, 100);
                     if (num > possibility) continue;
-                    else passed++;
+                    else
+                    {
+                        passedStudentCnt += grd.GetNumber();
+                        passed++;
+                    }
                 }
                 if (grd.GetExam() < 6) PlayerInfo.nineSuccess += passed;
                 else if (grd.GetExam() < 12) PlayerInfo.sevenSuccess += passed;
@@ -88,6 +93,18 @@ public class AfterTurn : MonoBehaviour
                 grd.SetPassedNum(passed);
                 Debug.Log($"{grd.GetPeriod()}기 {grd.GetDivision()}분반 합격자 수 " +
                     $"{grd.GetPassedNum()}/{grd.GetNumber()}");
+                if (grd.GetPassedNum() == 3)
+                    AchievementManager.Achieve(5);
+                if (grd.GetPassedNum() == 0)
+                    AchievementManager.Achieve(14);
+                if (grd.GetExam() < 6 && passedStudentCnt > 0)
+                {
+                    int achieveCode = 9;
+                    AchievementManager.CreateLocalStat(achieveCode);
+                    AchievementManager.localStat[achieveCode] += passedStudentCnt;
+                    if (passedStudentCnt >= 1000)
+                        AchievementManager.Achieve(achieveCode);
+                }
             }
         }
 

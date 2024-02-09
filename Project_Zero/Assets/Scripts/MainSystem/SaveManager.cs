@@ -174,16 +174,25 @@ public class SaveManager : MonoBehaviour
     {
         string json = SubjectTree.save();
         File.WriteAllText(path + "subject" + i.ToString(), json);
-        Debug.Log("SubjectSave");
     }
 
     public static void SubjectLoad(int i)
     {
         string jsonData = File.ReadAllText(path + "subject" + i.ToString());
         SubjectTree.load(jsonData);
-        Debug.Log("Success");
     }
 
+    public static void AchievementLocalStatSave(int i)
+    {
+        string json = AchievementManager.SaveLocalStat();
+        File.WriteAllText(path + "achievementStat" + i.ToString(), json);
+    }
+
+    public static void AchievementLocalStatLoad(int i)
+    {
+        string jsonData = File.ReadAllText(path + "achievementStat" + i.ToString());
+        AchievementManager.LoadLocalStat(jsonData);
+    }
 
     public static void SaveProcess()
     {
@@ -203,6 +212,7 @@ public class SaveManager : MonoBehaviour
         ProfessorSave(i);
         StudentSave(i);
         SubjectSave(i);
+        AchievementLocalStatSave(i);
     }
 
     public static void LoadProcess()
@@ -215,6 +225,7 @@ public class SaveManager : MonoBehaviour
         SubjectTree.initSubjectStates(new List<int>());
         SubjectTree.callOnlyOneTimeWhenGameStart();
         SubjectLoad(i);
+        AchievementLocalStatLoad(i);
         TestCheckManager.InitTestInfo();
     }
 

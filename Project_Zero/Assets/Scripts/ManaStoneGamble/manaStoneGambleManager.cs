@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 using TMPro;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 public class manaStoneGambleManager : MonoBehaviour
 {
@@ -116,7 +117,6 @@ public class manaStoneGambleManager : MonoBehaviour
         {
             isCalculated = false;
             GoodsManager.goodsAr -= betAr;
-            betAr = (int)(betAr * 0.5);
             nowPower = 0;
             selectedPower = 0;
             stopPower = getBetaRandom();
@@ -154,7 +154,7 @@ public class manaStoneGambleManager : MonoBehaviour
         }
         if (betAr > GoodsManager.goodsAr)
         {
-            betAr = (int)(GoodsManager.goodsAr);
+            betAr = GoodsManager.goodsAr;
             if (GoodsManager.goodsAr > 0)
             {
                 betInputField.GetComponent<TMP_InputField>().text = GoodsManager.goodsAr.ToString();
@@ -165,7 +165,6 @@ public class manaStoneGambleManager : MonoBehaviour
                 betInputField.GetComponent<TMP_InputField>().text = "0";
             }
         }
-        
     }
 
 
@@ -200,10 +199,18 @@ public class manaStoneGambleManager : MonoBehaviour
             // 정산 타임
             if (!isCalculated)
             {
-                int revenueInThisRound = (int)(betAr * selectedPower);
+                int revenueInThisRound = (int)(betAr * selectedPower * 0.5);
                 GoodsManager.goodsAr += revenueInThisRound;
                 revenueDisplayObject.SetActive(true);
                 revenueDisplayObject.GetComponent<TMP_Text>().text = $"얻은 수익: {revenueInThisRound}";
+                if (selectedPower == 0)
+                {
+                    const int ACHIEVEMNET_ID = 10;
+                    AchievementManager.CreateLocalStat(ACHIEVEMNET_ID, 0);
+                    AchievementManager.localStat[ACHIEVEMNET_ID] += betAr;
+                    if (AchievementManager.localStat[ACHIEVEMNET_ID] >= 100000)
+                        AchievementManager.Achieve(ACHIEVEMNET_ID);
+                }
                 isCalculated = true;
             }
         }

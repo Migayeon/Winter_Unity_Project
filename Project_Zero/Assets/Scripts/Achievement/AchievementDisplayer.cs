@@ -49,7 +49,7 @@ public class AchievementDisplayer : MonoBehaviour
             simpleDescription.gameObject.SetActive(true);
             TMP_Text achievementNameText = simpleDescription.GetChild(0).GetComponent<TMP_Text>();
             TMP_Text achievementContentsText = simpleDescription.GetChild(1).GetComponent<TMP_Text>();
-            bool haveTohideInfo = AchievementManager.achievementInfos[achievementId].hidden && !AchievementManager.isAchieveOpened(achievementId);
+            bool haveTohideInfo = AchievementManager.achievementInfos[achievementId].hidden && !AchievementManager.IsAchievementOpened(achievementId);
             achievementNameText.text = haveTohideInfo ? "???" : AchievementManager.achievementInfos[achievementId].name;
             achievementContentsText.text = haveTohideInfo ? "???" : AchievementManager.achievementInfos[achievementId].description;
             simpleDescription.position = new Vector3(hit.point.x,hit.point.y, -1);

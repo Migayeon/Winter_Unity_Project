@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static Unity.Burst.Intrinsics.X86.Avx;
 
 public class AchievementManager : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class AchievementManager : MonoBehaviour
 
     public static int achievementCount = 0;
     public static List<bool> isAchievementOpened = new List<bool>();
+
+    public static Dictionary<int, int> localStat = new Dictionary<int, int>();
 
     public static KeyValuePair<AchievementManagementSave, List<AchievementInfo>> InitAchievementInfo()
     {
@@ -55,7 +58,13 @@ public class AchievementManager : MonoBehaviour
     public class AchievementManagementSave
     {
         public List<int> clearedAchievement;
-        public List<int> stats;
+        public List<int> staticStats;
+    }
+    
+    public class LocalStatSave
+    {
+        public List<int> Keys;
+        public List<int> Values;
     }
 
     public class AchievementInfo
@@ -85,38 +94,59 @@ public class AchievementManager : MonoBehaviour
         File.WriteAllText(ACHIEVE_SAVE_PATH, json);
     }
 
-    public static void AddStat(int achieveId, int value)
+    public static void AddStaticStat(int achieveId, int value)
     {
         LoadJson();
-        AdjustStatList(achieveId);
-        loadedInfo.stats[achieveId] += value;
+        AdjustStaticStatList(achieveId);
+        loadedInfo.staticStats[achieveId] += value;
         string json = JsonUtility.ToJson(loadedInfo, true);
         File.WriteAllText(ACHIEVE_SAVE_PATH, json);
     }
 
-    public static void SetStat(int achieveId, int value)
+    public static void SetStaticStat(int achieveId, int value)
     {
         LoadJson();
-        AdjustStatList(achieveId);
-        loadedInfo.stats[achieveId] = value;
+        AdjustStaticStatList(achieveId);
+        loadedInfo.staticStats[achieveId] = value;
         string json = JsonUtility.ToJson(loadedInfo, true);
         File.WriteAllText(ACHIEVE_SAVE_PATH, json);
     }
 
-    public static int GetStat(int achieveId)
+    public static int GetStaticStat(int achieveId)
     {
         LoadJson();
-        AdjustStatList(achieveId);
-        return loadedInfo.stats[achieveId];
+        AdjustStaticStatList(achieveId);
+        return loadedInfo.staticStats[achieveId];
     }
 
-    public static void AdjustStatList(int achieveId)
+    public static void AdjustStaticStatList(int achieveId)
     {
-        while (achieveId > loadedInfo.stats.Count - 1)
-            loadedInfo.stats.Add(0);
+        while (achieveId > loadedInfo.staticStats.Count - 1)
+            loadedInfo.staticStats.Add(0);
     }
 
-    public static bool isAchieveOpened(int achieveId)
+    public static string SaveLocalStat()
+    {
+        LocalStatSave tmp = new LocalStatSave();
+        tmp.Keys = localStat.Keys.ToList();
+        tmp.Values = localStat.Values.ToList();
+        return JsonUtility.ToJson(tmp);
+    }
+
+    public static void LoadLocalStat(string json)
+    {
+        LocalStatSave tmp = JsonUtility.FromJson<LocalStatSave>(json);
+        for (int i = 0; i < tmp.Keys.Count; i++)
+            localStat[tmp.Keys[i]] = tmp.Values[i];
+    }
+
+    public static void CreateLocalStat(int achieveId, int value = 0)
+    {
+        if (!localStat.Keys.Contains(achieveId))
+            localStat[achieveId] = 0;
+    }
+
+    public static bool IsAchievementOpened(int achieveId)
     {
         return isAchievementOpened[achieveId];
     }

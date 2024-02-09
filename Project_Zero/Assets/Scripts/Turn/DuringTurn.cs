@@ -30,6 +30,16 @@ public class DuringTurn : MonoBehaviour
 
     private void EndTurn()
     {
+        const int CHEAP_ACHIEVEMENT_ID = 7;
+        AchievementManager.CreateLocalStat(CHEAP_ACHIEVEMENT_ID);
+        if (PlayerInfo.cost == 60)
+        {
+            AchievementManager.localStat[CHEAP_ACHIEVEMENT_ID]++;
+            if (AchievementManager.localStat[CHEAP_ACHIEVEMENT_ID] == 10)
+                AchievementManager.Achieve(CHEAP_ACHIEVEMENT_ID);
+        }
+        else
+            AchievementManager.localStat[CHEAP_ACHIEVEMENT_ID] = 0;
         LoadingSceneManager.LoadScene("AfterTurn");
     }
 

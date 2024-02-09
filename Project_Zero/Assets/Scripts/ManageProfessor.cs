@@ -326,6 +326,11 @@ public class ManageProfessorTest : MonoBehaviour
             PlayerInfo.ProfessorList.RemoveAt(PlayerInfo.ProfessorList.FindIndex(x => x.ProfessorGetID() == ProfData.ProfessorGetID()));
             int achieveCode = 12; // 업적 - 귀하의 노고에 감사드리며...
             AchievementManager.Achieve(achieveCode);
+            achieveCode = 11;
+            AchievementManager.CreateLocalStat(achieveCode);
+            AchievementManager.localStat[achieveCode]++;
+            if (AchievementManager.localStat[achieveCode] == 10)
+                AchievementManager.Achieve(achieveCode);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
         else

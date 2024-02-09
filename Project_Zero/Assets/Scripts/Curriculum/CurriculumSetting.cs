@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class CurriculumSetting : MonoBehaviour
@@ -195,6 +197,8 @@ public class CurriculumSetting : MonoBehaviour
         {
             num = Mathf.Max(0, PlayerInfo.maxStudent - PlayerInfo.StudentGroupCount() - sum);
         }
+        if (PlayerInfo.cost == 300 && num >= 1000)
+            AchievementManager.Achieve(8);
         div++;
         studentGroup[div - 1] = new StudentGroup(div, num, PlayerInfo.cost);
         foreach (var subject in subjectGameobject.transform.GetComponentsInChildren<Button>())
