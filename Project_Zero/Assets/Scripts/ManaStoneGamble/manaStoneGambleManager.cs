@@ -203,11 +203,11 @@ public class manaStoneGambleManager : MonoBehaviour
                 GoodsManager.goodsAr += revenueInThisRound;
                 revenueDisplayObject.SetActive(true);
                 revenueDisplayObject.GetComponent<TMP_Text>().text = $"얻은 수익: {revenueInThisRound}";
-                if (selectedPower == 0)
+                if (revenueInThisRound < betAr)
                 {
                     const int ACHIEVEMNET_ID = 10;
                     AchievementManager.CreateLocalStat(ACHIEVEMNET_ID, 0);
-                    AchievementManager.localStat[ACHIEVEMNET_ID] += betAr;
+                    AchievementManager.localStat[ACHIEVEMNET_ID] += betAr - revenueInThisRound;
                     if (AchievementManager.localStat[ACHIEVEMNET_ID] >= 100000)
                         AchievementManager.Achieve(ACHIEVEMNET_ID);
                 }
