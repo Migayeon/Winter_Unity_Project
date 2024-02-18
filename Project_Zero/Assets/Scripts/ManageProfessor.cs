@@ -23,24 +23,24 @@ using UnityEngine.SceneManagement;
  *    
  *    lots of stuff to do, lol
  */
-public class ManageProfessorTest : MonoBehaviour
+
+
+/* Issue Tracker (updated 2024-02-18) */
+/*
+ * Issue 1: Professor Upgrade StatList
+ * 
+ * 
+ * 
+ * 
+ * 
+ */
+
+public class ManageProfessor : MonoBehaviour
 {
-    public const int ProfessorAwayTime = 3;
 
-    //min, max values for the "upgrade professor by how much" question (random generation)
-    public const int ProfessorUpgradeValueMinimum = 50;
-    public const int ProfessorUpgradeValueMaximum = 200;
+    /* UI Objects */
     
-    public GameObject ReferencePrefab; //reference Prefab (ProfessorInfo file)
-    public GameObject content; //GameObject for spawning new instances of the reference prefab
-
-    public Button ReturnButton; //Button for Return to Main Menu option
-
-    public Button ExitPopupButton; //Button for exiting the Professor Information popup
-
-    public GameObject PopUpObject; //GameObject for spawning the Professor Information popup
-
-    public List<Button> ProfessorInfoButton = new List<Button>(); //List of Professors (as Button object)
+    // TextMeshPro
 
     public TextMeshProUGUI PopupTitleText;
     public TextMeshProUGUI ProfessorName;
@@ -58,14 +58,47 @@ public class ManageProfessorTest : MonoBehaviour
 
     public TextMeshProUGUI ProfessorCountInfo;
 
-    public GameObject ProfessorAwayRefuseMessage;
-    public GameObject ProfessorFireRefuseMessage;
+    public TextMeshProUGUI[] ProfessorUpgradeValues = new TextMeshProUGUI[6];
+
+    // Button
+
+    public Button ReturnButton; //Button for Return to Main Menu option
+    public Button ExitPopupButton; //Button for exiting the Professor Information popup
 
     public Button UpgradeButton1, UpgradeButton2;
     public Button AwayButton;
     public Button FireButton;
 
-    public GameObject NoProfessorsHired;
+    public Button[] ProfessorUpgradeButtons = new Button[6];
+
+    /* GameObjects */
+
+    public GameObject ProfessorAwayRefuseMessage; // Error message when player cannot send professor away
+    public GameObject ProfessorFireRefuseMessage; // Error message when player cannot fire professor
+    public GameObject NoProfessorsHired; // message when player does not have any professors hired
+
+    public GameObject ReferencePrefab; //reference Prefab for instantiation Professor buttons
+
+    public GameObject content; //GameObject for spawning new instances of the reference prefab
+
+    public GameObject PopUpObject; //GameObject for spawning the Professor Information popup
+
+
+    public List<Button> ProfessorButtons = new List<Button>(); //List of Professors (as Button objects, see prefab)
+
+
+
+    /* constants */
+
+    public const int ProfessorAwayTime = 3; //number of turns professor is "away" for
+
+    //min, max values for the "upgrade professor by how much" question (random generation)
+    public const int ProfessorUpgradeValueMinimum = 50;
+    public const int ProfessorUpgradeValueMaximum = 200;
+    
+
+
+    // Dictionary object referencing what skill the index of the Professor Stats list represents
 
     public Dictionary<int, string> KoreanStatList = new Dictionary<int, string>(6)
         {
@@ -77,114 +110,123 @@ public class ManageProfessorTest : MonoBehaviour
             {5, "영창"},
         };
 
+    
+    /* Random Number Generation */
     public System.Random randomseed = new System.Random();
+
+
+    /* ProfessorStatsIndexToString */
+    // Function for turning Professor stats into a string
+
+    // This function is used to format Professor Stat data in a way that can be read by TextMeshPro and shown to the player.
+
+    // i.e. if IndexBegin = 2 and IndexEnd = 4, the returned string will look like this:
+    // 마나감응 : 1234<br>손재주 : 1234<br>속성력 : 1234<br>
+    string ProfessorStatsIndexToString(List<int> statlist, int IndexBegin, int IndexEnd)
+    {
+        string ProfessorStats = "";
+        for (int j = IndexBegin; j <= IndexEnd; ++j)
+        {
+            ProfessorStats += KoreanStatList[j];
+            ProfessorStats += " ";
+            ProfessorStats += statlist[j];
+            ProfessorStats += "<br>";
+        }
+        return ProfessorStats;
+    }
+
+
+    /* ShowMessageForLimitedTime */
+    //this function will show a GameObject for a limited amount of time.
+    IEnumerator ShowMessageForLimitedTime(GameObject tt, float time)
+    {
+        tt.SetActive(true);
+        yield return new WaitForSeconds(1.0f);
+        tt.SetActive(false);
+    }
+
+    void Awake()
+    {
+        for (int i = 0; i < 6; ++i)
+        {
+            ProfessorUpgradeValues[i].GetComponent<TextMeshProUGUI>();
+            ProfessorUpgradeButtons[i].GetComponent<Button>();
+        }
+    }
     void Start()
     {
-        Debug.Log("====================== MANAGEPROFESSOR.CS START ======================");
+        /* // Initialization // */
 
-        int ProfessorCount = PlayerInfo.ProfessorList.Count;
-        Debug.Log("ProfessorCount : " + ProfessorCount);
+        /* Step 1 */
+        int ProfessorCount = PlayerInfo.ProfessorList.Count; // get the number of professors that the player currently has
 
+        ProfessorCountInfo.text = Convert.ToString(ProfessorCount); //show number of professors on upper left corner
+
+        //set Error messages as inactive (not shown to player)
         ProfessorAwayRefuseMessage.SetActive(false);
         ProfessorFireRefuseMessage.SetActive(false);
+        PopUpObject.SetActive(false);
 
-        ProfessorCountInfo.text = Convert.ToString(ProfessorCount);
+        for (int i = 0; i < 6; ++i)
+        {
+            ProfessorUpgradeValues[i].gameObject.SetActive(false);
+            ProfessorUpgradeButtons[i].gameObject.SetActive(false);
+        }
+
+        //add Listener to Return To Menu button
+        ReturnButton.onClick.AddListener(ReturnToMenu);
 
         if (ProfessorCount == 0)
         {
-            NoProfessorsHired.SetActive(true);
+            NoProfessorsHired.SetActive(true); //player has not hired any professors
         }
         else
         {
             NoProfessorsHired.SetActive(false);
         }
-        PopUpObject.SetActive(false);
 
-        //temporary # of professors
-        //int ProfessorCount = 10;
-
-        //temporary professor list;
-        //List<ProfessorSystem.Professor> TempProfessorList = new List<ProfessorSystem.Professor>(ProfessorCount);
-        /*
-        for (int i = 0; i < 10; ++i)
-        {
-            PlayerInfo.ProfessorList.Add(CreateProfessor.CreateNewProfessor(i));
-        }
-        */
-        //List of GameObjects that store professor information (prefab)
-
-        List<GameObject> ProfessorInfoObjects = new List<GameObject>();
-                                
-        List<TextMeshProUGUI> ProfessorTMPData = new List<TextMeshProUGUI>(5);
-
-        //instantiate Button objects that store professor data from prefab
+        //List of GameObjects that store Professors
+        List<GameObject> ProfessorObjects = new List<GameObject>();
+        
+        //instantiate GameObject objects that store professor data from prefab
         for (int i = 0; i < ProfessorCount; ++i)
         {
-            ProfessorInfoObjects.Add(Instantiate(ReferencePrefab, new Vector3(-1920, 0, 0), Quaternion.identity, content.transform));
+            ProfessorObjects.Add(Instantiate(ReferencePrefab, new Vector3(-1920, 0, 0), Quaternion.identity, content.transform));
         }
-
-        //Create list for storing professor stat data
-        List<int> tempStatList = new List<int>(ProfessorSystem.professorStats);
-
-        //Create temporary string for printing professor information (as string)
-        string tempStatStr = "";
 
         //Professor type (in integer value)
-        int profTypeInt;
+        int ProfessorTypeInt;
 
-        //for all professors
+
+        /* Step 2 */
         for (int i = 0; i < ProfessorCount; ++i)
         {
-            Debug.Log("Iteration : " + i);
+            int profIndex = i;
+            ProfessorButtons.Add(ProfessorObjects[i].GetComponent<Button>()); //add button
 
-            ProfessorInfoButton.Add(ProfessorInfoObjects[i].GetComponent<Button>()); //add button
+            Debug.Log("Index Value : " + i);
+            Debug.Log("Professor ID : " + PlayerInfo.ProfessorList[i].ProfessorGetID());
+            Debug.Log("ProfessorButtons List length : " + ProfessorButtons.Count);
+            Debug.Log("ProfessorList List length : " + PlayerInfo.ProfessorList.Count);
+            ProfessorButtons[i].onClick.AddListener(() => ShowInfoOnPopup(profIndex));
 
-            int idx = i;
-            ProfessorInfoButton[i].onClick.AddListener(() => ShowInfoOnPopup(PlayerInfo.ProfessorList[idx], idx)); //change later (from TempProfessorList to actual Player data list)
+            ProfessorInfo = ProfessorObjects[i].GetComponentsInChildren<TextMeshProUGUI>();
 
-            Debug.Log(ProfessorInfoButton.Count);
-            // change index from 0 to (other variable)
+            /* Get Professor Information */
 
-            ProfessorInfo = ProfessorInfoObjects[i].GetComponentsInChildren<TextMeshProUGUI>();
             ProfessorInfo[0].text = PlayerInfo.ProfessorList[i].ProfessorGetName();
+
             ProfessorInfo[1].text = PlayerInfo.ProfessorList[i].ProfessorGetTypeInString();
-            Debug.Log(ProfessorInfo[1].text);
-            Debug.Log(PlayerInfo.ProfessorList[i].ProfessorGetTypeInString());
-            profTypeInt = PlayerInfo.ProfessorList[i].ProfessorGetType();
-            if (profTypeInt == 2)
-            {
-                ProfessorInfo[1].color = new Color32(238, 184, 196, 255);
-            }
-            else if (profTypeInt == 1)
-            {
-                ProfessorInfo[1].color = new Color32(230, 212, 123, 255);
-            }
-            tempStatList = PlayerInfo.ProfessorList[i].ProfessorGetStats();
-            tempStatStr = "";
-            for (int j = 0; j < 3; ++j)
-            {
-                tempStatStr += KoreanStatList[j];
-                tempStatStr += " ";
-                tempStatStr += tempStatList[j];
-                tempStatStr += "<br>";
-            }
-            ProfessorInfo[2].text = tempStatStr;
-            tempStatStr = "";
-            for (int j = 3; j < 6; ++j)
-            {
-                tempStatStr += KoreanStatList[j];
-                tempStatStr += " ";
-                tempStatStr += tempStatList[j];
-                tempStatStr += "<br>";
-            }
-            ProfessorInfo[3].text = tempStatStr;
+
+            ProfessorTypeInt = PlayerInfo.ProfessorList[i].ProfessorGetType();
+
+            //turn professor stats to string
+            ProfessorInfo[2].text = ProfessorStatsIndexToString(PlayerInfo.ProfessorList[i].ProfessorGetStats(), 0, 2);
+            ProfessorInfo[3].text = ProfessorStatsIndexToString(PlayerInfo.ProfessorList[i].ProfessorGetStats(), 3, 5);
+
             ProfessorInfo[4].text = "급여 : " + Convert.ToString(PlayerInfo.ProfessorList[i].ProfessorGetSalary());
 
-            //generate random skill indexes and delta values
-            /* TODO
-             * This part currently does not seem to work (no idea why)
-             * will fix later
-             */
+            //generate random skill values
             int index1 = 0, index2 = 0;
             while (index1 == index2)
             {
@@ -195,15 +237,15 @@ public class ManageProfessorTest : MonoBehaviour
             List<int> TempListValue = new List<int>(2);
             TempListIndex.Add(Math.Min(index1, index2));
             TempListIndex.Add(Math.Max(index1, index2));
-            PlayerInfo.UpgradeSkillIndex[i] = TempListIndex;
-            TempListIndex.Clear();
+            PlayerInfo.UpgradeSkillIndex.Add(TempListIndex); //temporary, for testing, will not work in main
+            Debug.Log("UpgradeSkillIndex Length : " + PlayerInfo.UpgradeSkillIndex.Count);
+            //PlayerInfo.UpgradeSkillIndex[i] = TempListIndex;
 
             TempListValue.Add(randomseed.Next(ProfessorUpgradeValueMinimum, ProfessorUpgradeValueMaximum + 1));
             TempListValue.Add(randomseed.Next(ProfessorUpgradeValueMinimum, ProfessorUpgradeValueMaximum + 1));
-            PlayerInfo.UpgradeSkillValue[i] = TempListValue;
-            TempListValue.Clear();
+            PlayerInfo.UpgradeSkillValue.Add(TempListValue); //temporary, for testing, will not work in main
+            //PlayerInfo.UpgradeSkillValue[i] = TempListValue;
         }
-        ReturnButton.onClick.AddListener(ReturnToMenu);
     }
 
     public void ReturnToMenu()
@@ -212,8 +254,10 @@ public class ManageProfessorTest : MonoBehaviour
         LoadingSceneManager.LoadScene("Main");
     }
 
-    public void ShowInfoOnPopup(ProfessorSystem.Professor ProfData, int idx)
+    public void ShowInfoOnPopup(int idx)
     {
+        Debug.Log("Entered ShowInfoOnPopup || ProfessorList Count : " + PlayerInfo.ProfessorList.Count + " || Index : " + idx);
+        ProfessorSystem.Professor ProfData = PlayerInfo.ProfessorList[idx];
         Debug.Log("ShowInfoOnPopup called : " + idx);
         List<int> tempStatList = new List<int>(6);
         ExitPopupButton.onClick.AddListener(RemovePopup);
@@ -251,23 +295,36 @@ public class ManageProfessorTest : MonoBehaviour
 
         Debug.Log("Index : " + idx);
         Debug.Log("List Length : " + PlayerInfo.UpgradeSkillIndex.Count);
+        Debug.Log(PlayerInfo.UpgradeSkillIndex[idx].Count);
         Debug.Log(PlayerInfo.UpgradeSkillIndex[idx][0]);
         Debug.Log(PlayerInfo.UpgradeSkillIndex[idx][1]);
         int UpgradeIndex1 = PlayerInfo.UpgradeSkillIndex[idx][0];
         int UpgradeIndex2 = PlayerInfo.UpgradeSkillIndex[idx][1];
-        UpgradeStatInfo1.text = KoreanStatList[UpgradeIndex1];
-        UpgradeStatInfo2.text = KoreanStatList[UpgradeIndex2];
+        //UpgradeStatInfo1.text = KoreanStatList[UpgradeIndex1];
+        //UpgradeStatInfo2.text = KoreanStatList[UpgradeIndex2];
         UpgradeStatValue1.text = Convert.ToString(PlayerInfo.UpgradeSkillValue[idx][0]);
         UpgradeStatValue2.text = Convert.ToString(PlayerInfo.UpgradeSkillValue[idx][1]);
         UpgradeButton1.onClick.AddListener(() => UpgradeStats(UpgradeIndex1));
         UpgradeButton2.onClick.AddListener(() => UpgradeStats(UpgradeIndex2));
         AwayButton.onClick.AddListener(() => ProfessorSendAway(ProfData));
         FireButton.onClick.AddListener(() => FireProfessor(ProfData));
+
+        ProfessorUpgradeValues[UpgradeIndex1].gameObject.SetActive(true);
+        ProfessorUpgradeValues[UpgradeIndex2].gameObject.SetActive(true);
+        ProfessorUpgradeButtons[UpgradeIndex1].gameObject.SetActive(true);
+        ProfessorUpgradeButtons[UpgradeIndex2].gameObject.SetActive(true);
+
         PopUpObject.SetActive(true);
     }
+
     public void RemovePopup()
     {
         Debug.Log("Remove Popup call");
+        for (int i = 0; i < 6; ++i)
+        {
+            ProfessorUpgradeValues[i].gameObject.SetActive(false);
+            ProfessorUpgradeButtons[i].gameObject.SetActive(false);
+        }
         PopUpObject.SetActive(false);
     }
 
@@ -300,7 +357,7 @@ public class ManageProfessorTest : MonoBehaviour
         }
         else
         {
-            StartCoroutine(ShowMessageForLimitedTime(ProfessorAwayRefuseMessage));
+            StartCoroutine(ShowMessageForLimitedTime(ProfessorAwayRefuseMessage, 1.0f));
         }
     }
     public void FireProfessor(ProfessorSystem.Professor ProfData)
@@ -335,15 +392,9 @@ public class ManageProfessorTest : MonoBehaviour
         }
         else
         {
-            StartCoroutine(ShowMessageForLimitedTime(ProfessorFireRefuseMessage));
+            StartCoroutine(ShowMessageForLimitedTime(ProfessorFireRefuseMessage, 1.0f));
             //ProfessorAwayRefuseMessage.enabled = true;
         }
-    }
-    IEnumerator ShowMessageForLimitedTime(GameObject tt)
-    {
-        tt.SetActive(true);
-        yield return new WaitForSeconds(1.0f);
-        tt.SetActive(false);
     }
 }
 
