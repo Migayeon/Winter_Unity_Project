@@ -68,4 +68,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CHTest.unity
     guid: 259c3d05135e7bc4e92aa31fce56e906
+  - enabled: 1
+    path: Assets/Scenes/Title/Credit.unity
+    guid: 324654b3d7ac10a428e9af0bb04a36b4
   m_configObjects: {}

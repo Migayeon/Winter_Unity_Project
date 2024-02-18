@@ -19,21 +19,14 @@ public class ProfessorSystem : MonoBehaviour
         private bool away; //true = is away, false = is not away (able to teach)
         private int awayTime;
         private List<int> subjects = new List<int>(); //List of subjects that the professor is teaching
-        public static Dictionary<int, string> statlist = new Dictionary<int, string>(6)
+        public List<string> statList = new List<string>(6)
         {
-            {0, "lecture"},
-            {1, "theory"},
-            {2, "mana"},
-            {3, "craft"},
-            {4, "element"},
-            {5, "attack"},
-        };
-
-        public static Dictionary<int, string> ProfessorTypeList = new Dictionary<int, string>(3)
-        {
-            {0, "일반" },
-            {1, "전투" },
-            {2, "유니크"},
+            "lecture",
+            "theory",
+            "mana",
+            "craft",
+            "element",
+            "attack"
         };
         public Professor() {}
         public Professor(long _id, string _name, int _tenure, int _type, List<int> _stat)
@@ -116,7 +109,7 @@ public class ProfessorSystem : MonoBehaviour
         {
             for (int i = 0; i < professorStats; ++i)
             {
-                if (statlist[i] == statname)
+                if (statList[i] == statname)
                 {
                     stat[i] = changedValue;
                     break;
@@ -126,11 +119,17 @@ public class ProfessorSystem : MonoBehaviour
 
         public void ProfessorChangeSalary(double mul)
         {
-            salary = (int)((double)salary * mul);
+            salary = (int)(salary * mul);
         }
 
         public string ProfessorGetTypeInString()
         {
+            List<string> ProfessorTypeList = new List<string>(3)
+            {
+                "일반",
+                "전투",
+                "유니크"
+            };
             return ProfessorTypeList[type];
         }
 
@@ -161,7 +160,7 @@ public class ProfessorSystem : MonoBehaviour
             string temp = "Professor Stats : ";
             for (int i = 0; i < professorStats; ++i)
             {
-                temp += statlist[i];
+                temp += statList[i];
                 temp += " ";
                 temp += Convert.ToString(stat[i]);
                 temp += "     ";
@@ -209,6 +208,13 @@ public class ProfessorSystem : MonoBehaviour
             {
                 subjects.Add(int.Parse(dataList[i]));
             }
+        }
+
+        public void UpgradeRandomStat(int upgradePoint)
+        {
+            System.Random rand = new System.Random();
+            for(int i = 0; i < upgradePoint; i++)
+                stat[rand.Next(professorStats - 1)]++;
         }
     }
     
