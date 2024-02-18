@@ -90,4 +90,26 @@ public class PlayerInfo : MonoBehaviour
             ProfessorList.Add(new ProfessorSystem.Professor(data[i]));
         }
     }
+
+    public static List<string> StudentStatRandomUpgrade(int upgradeMax)
+    {
+        List<string> upgradedStudent = new List<string>();
+        for(int i = 0; i < studentGroups.Count; i++)
+        {
+            for(int j = 0; j < 3; j++)
+            {
+                if (studentGroups[i][j].GetNumber() > 0 && upgradeMax > 0)
+                {
+                    if (Random.Range(0, 3) == 0)
+                    {
+                        upgradeMax--;
+                        studentGroups[i][j].RandomStatUp();
+                        upgradedStudent.Add(i.ToString() + "/" + j.ToString());
+                    }
+                }
+            }
+        }
+
+        return upgradedStudent;
+    }
 }

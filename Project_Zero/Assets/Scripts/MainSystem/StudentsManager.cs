@@ -99,7 +99,7 @@ public class StudentGroup
     {
         for (int i = 0; i < 10; i++)
         {
-            stat[Random.Range(0, 4)]++;
+            stat[Random.Range(0, 5)]++;
         }
     }
 
