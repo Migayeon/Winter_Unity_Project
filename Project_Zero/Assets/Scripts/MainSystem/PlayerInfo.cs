@@ -9,7 +9,7 @@ public class PlayerInfo : MonoBehaviour
     public static int cost = 60; // 학원비
     public static string playerName = "default"; // 플레이어 이름
     public static string arcademyName = "default"; // 학원 이름
-    public static int maxStudent = 300; // 최대 학생 명수
+    public static int maxStudent = 1; // 최대 학생 명수
     public static int maxProfessor = 30; // 최대 교수 명수
 
     public static int nineSuccess = 0;

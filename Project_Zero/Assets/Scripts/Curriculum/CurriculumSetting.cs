@@ -232,9 +232,9 @@ public class CurriculumSetting : MonoBehaviour
                 "Stat\r\n" +
                 "\r\n" +
                 "해당 분반에 학생이 없습니다\r\n" +
-                "\r\n" +
-                "커리큘럼을 분배할 수 없습니다\r\n"+
-                "다음 버튼을 눌러주세요";
+                "\r\n";
+            warningMessage.text = "학생이 없어 커리큘럼을\r\n분배할 수 없습니다.";
+            warningMessage.enabled = true;
         }
         sum += num;
     }

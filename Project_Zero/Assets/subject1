@@ -1,7 +1,15 @@
 {
-    "professorCnt": 0,
-    "professorsId": [],
-    "lecturesId": [],
+    "professorCnt": 3,
+    "professorsId": [
+        202402181532101,
+        202402181532100,
+        202402181533501
+    ],
+    "lecturesId": [
+        "5400000000",
+        "2120000000",
+        "0240000000"
+    ],
     "subjectStates": [
         0,
         1,
