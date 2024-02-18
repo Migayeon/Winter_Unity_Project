@@ -65,7 +65,7 @@ public class CheckCurriculumManager : MonoBehaviour
         periodDiv.parent.gameObject.SetActive(false);
         backButton.onClick.AddListener(delegate
         {
-            SceneManager.LoadScene("Main");
+            LoadingSceneManager.LoadScene("Main");
         });
         foreach (Transform button in scroll_content.GetComponentInChildren<Transform>())
         {

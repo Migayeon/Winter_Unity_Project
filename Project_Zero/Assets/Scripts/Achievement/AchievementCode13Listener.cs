@@ -20,6 +20,7 @@ public class AchievementCode13Listener : MonoBehaviour
 
     void Update()
     {
+        if (AchievementManager.isAchievementOpened[13]) return;
         if (Input.GetKey(arrows[step]))
         {
             if (Time.time - clickTime < interval)

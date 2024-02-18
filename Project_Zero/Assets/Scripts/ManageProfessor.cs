@@ -251,7 +251,7 @@ public class ManageProfessor : MonoBehaviour
     public void ReturnToMenu()
     {
         Debug.Log("ReturnToMenu");
-        SceneManager.LoadScene("Main");
+        LoadingSceneManager.LoadScene("Main");
     }
 
     public void ShowInfoOnPopup(int idx)

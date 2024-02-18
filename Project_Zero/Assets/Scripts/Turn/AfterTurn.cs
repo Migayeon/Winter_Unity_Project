@@ -212,7 +212,7 @@ public class AfterTurn : MonoBehaviour
             nextTurn.onClick.AddListener(
                 delegate
                 {
-                    SceneManager.LoadScene("Bankrupt");
+                    LoadingSceneManager.LoadScene("Bankrupt");
                 }
             );
         }

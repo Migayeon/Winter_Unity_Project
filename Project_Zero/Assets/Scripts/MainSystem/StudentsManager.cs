@@ -95,11 +95,11 @@ public class StudentGroup
     {
         passedNum = num;
     }
-    public void RandomStatUp()
+    public void RandomStatUp(int amount)
     {
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < amount; i++)
         {
-            stat[Random.Range(0, 4)]++;
+            stat[Random.Range(0, 5)]++;
         }
     }
 

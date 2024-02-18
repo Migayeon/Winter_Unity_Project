@@ -413,7 +413,7 @@ public class ManageCurriculumMod : MonoBehaviour
     public void goBack()
     {
         if (isProfessorDetailOpen) return;
-        SceneManager.LoadScene("Main");
+        LoadingSceneManager.LoadScene("Main");
     }
     public void setSubjectInfo(int id)
     {

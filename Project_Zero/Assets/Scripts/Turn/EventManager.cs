@@ -312,8 +312,9 @@ public class EventManager : MonoBehaviour
                         GoodsManager.GoodsConstFame += Convert.ToInt32(amount);
                         break;
                     case 3:
-                        type = "무작위 학생 그룹 무작위 스탯 ";
-                        GoodsManager.goodsAr += Convert.ToInt32(amount); // 나중에 학생 스탯으로 변경
+                        string upgradedStudentsInfo = PlayerInfo.StudentStatRandomUpgrade(Convert.ToInt32(amount))[0];
+                        List<string> showList = upgradedStudentsInfo.Split('/').ToList();
+                        type = $"{showList[0]}기 {showList[1]}분반 무작위 스탯 ";
                         break;
                     case 4:
                         type = "마정석 가격 ";
@@ -353,8 +354,9 @@ public class EventManager : MonoBehaviour
                         GoodsManager.GoodsConstFame *= Convert.ToInt32(amount);
                         break;
                     case 3:
-                        type = "무작위 학생 그룹 무작위 스탯 ";
-                        GoodsManager.goodsAr *= Convert.ToInt32(amount); // 나중에 학생 스탯으로 변경
+                        string upgradedStudentsInfo = PlayerInfo.StudentStatRandomUpgrade(Convert.ToInt32(amount))[0];
+                        List<string> showList = upgradedStudentsInfo.Split('/').ToList();
+                        type = $"{showList[0]}기 {showList[1]}분반 무작위 스탯 ";
                         break;
                     case 4:
                         type = "마정석 가격 ";

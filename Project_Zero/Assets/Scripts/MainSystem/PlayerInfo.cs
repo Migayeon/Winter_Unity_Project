@@ -9,7 +9,7 @@ public class PlayerInfo : MonoBehaviour
     public static int cost = 60; // 학원비
     public static string playerName = "default"; // 플레이어 이름
     public static string arcademyName = "default"; // 학원 이름
-    public static int maxStudent = 1; // 최대 학생 명수
+    public static int maxStudent = 300; // 최대 학생 명수
     public static int maxProfessor = 30; // 최대 교수 명수
 
     public static int nineSuccess = 0;
@@ -89,5 +89,28 @@ public class PlayerInfo : MonoBehaviour
         {
             ProfessorList.Add(new ProfessorSystem.Professor(data[i]));
         }
+    }
+
+    public static List<string> StudentStatRandomUpgrade(int amount)
+    {
+        int upgradeMax = 1;
+        List<string> upgradedStudent = new List<string>();
+        for(int i = 0; i < studentGroups.Count; i++)
+        {
+            for(int j = 0; j < 3; j++)
+            {
+                if (studentGroups[i][j].GetNumber() > 0 && upgradeMax > 0)
+                {
+                    if (Random.Range(0, 3) == 0)
+                    {
+                        upgradeMax--;
+                        studentGroups[i][j].RandomStatUp(amount);
+                        upgradedStudent.Add(i.ToString() + "/" + j.ToString());
+                    }
+                }
+            }
+        }
+
+        return upgradedStudent;
     }
 }

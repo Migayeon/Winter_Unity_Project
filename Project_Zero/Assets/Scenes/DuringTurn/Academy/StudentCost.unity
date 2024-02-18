@@ -1669,6 +1669,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5226072844503040490, guid: 47cae4a138e2fbc4e8b1fcb0be9add32, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1900622509}
+    - target: {fileID: 5226072844503040490, guid: 47cae4a138e2fbc4e8b1fcb0be9add32, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangeScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 5226072844503040490, guid: 47cae4a138e2fbc4e8b1fcb0be9add32, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SceneChange, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 7633170381886350882, guid: 47cae4a138e2fbc4e8b1fcb0be9add32, type: 3}
       propertyPath: m_Name
       value: BackButtonCanvas
@@ -1685,11 +1697,33 @@ PrefabInstance:
       propertyPath: m_PlaneDistance
       value: 90
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 245877763839120775, guid: 47cae4a138e2fbc4e8b1fcb0be9add32, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3561159399700292767, guid: 47cae4a138e2fbc4e8b1fcb0be9add32, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1900622509}
   m_SourcePrefab: {fileID: 100100000, guid: 47cae4a138e2fbc4e8b1fcb0be9add32, type: 3}
+--- !u!1 &1900622508 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3561159399700292767, guid: 47cae4a138e2fbc4e8b1fcb0be9add32, type: 3}
+  m_PrefabInstance: {fileID: 1900622507}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1900622509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1900622508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd4117217385e9948b08f2cdf88ca9cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetScene: Main
 --- !u!1 &1908670719
 GameObject:
   m_ObjectHideFlags: 0
@@ -1873,6 +1907,10 @@ PrefabInstance:
     - target: {fileID: 657107666101991439, guid: d81fb85f764d81649aa1b20b4cc273d3, type: 3}
       propertyPath: m_Name
       value: EscCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 657107666101991439, guid: d81fb85f764d81649aa1b20b4cc273d3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1228760522198490241, guid: d81fb85f764d81649aa1b20b4cc273d3, type: 3}
       propertyPath: m_Camera
@@ -2154,6 +2192,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1346580608}
     m_Modifications:
+    - target: {fileID: 2257629843232962904, guid: 889fd774f674cc0499769742be284e28, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6982e370fb6a06944b6b1bdc157433d1, type: 3}
+    - target: {fileID: 2572851824953070669, guid: 889fd774f674cc0499769742be284e28, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -88.68
+      objectReference: {fileID: 0}
+    - target: {fileID: 2572851824953070669, guid: 889fd774f674cc0499769742be284e28, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -88.67
+      objectReference: {fileID: 0}
+    - target: {fileID: 2572851824953070669, guid: 889fd774f674cc0499769742be284e28, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 2.4599915
+      objectReference: {fileID: 0}
+    - target: {fileID: 2572851824953070669, guid: 889fd774f674cc0499769742be284e28, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -1.64
+      objectReference: {fileID: 0}
     - target: {fileID: 2973931307919391834, guid: 889fd774f674cc0499769742be284e28, type: 3}
       propertyPath: m_Name
       value: InfoButtonAndContents
@@ -2170,13 +2228,33 @@ PrefabInstance:
         \uBC14\uD0D5\uC73C\uB85C \uC801\uC808\uD55C \uD559\uC6D0\uBE44\uB97C \uCE21\uC815\uD574\uC57C
         \uD569\uB2C8\uB2E4."
       objectReference: {fileID: 0}
+    - target: {fileID: 3406168608887989396, guid: 889fd774f674cc0499769742be284e28, type: 3}
+      propertyPath: m_fontSize
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3406168608887989396, guid: 889fd774f674cc0499769742be284e28, type: 3}
+      propertyPath: m_fontSizeMax
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3406168608887989396, guid: 889fd774f674cc0499769742be284e28, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3406168608887989396, guid: 889fd774f674cc0499769742be284e28, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3406168608887989396, guid: 889fd774f674cc0499769742be284e28, type: 3}
+      propertyPath: m_overrideHtmlColors
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8122973408696125364, guid: 889fd774f674cc0499769742be284e28, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 655.56
+      value: 700
       objectReference: {fileID: 0}
     - target: {fileID: 8122973408696125364, guid: 889fd774f674cc0499769742be284e28, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 217.99
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 8122973408696125364, guid: 889fd774f674cc0499769742be284e28, type: 3}
       propertyPath: m_AnchoredPosition.x
