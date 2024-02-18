@@ -10,15 +10,33 @@ public class ProfessorSystem : MonoBehaviour
     public const int professorStats = 6;
     public class Professor
     {
-        public long id ; //Professor ID (can be any int)
-        public string name; //Professor name
-        public int tenure; //Professor tenure ( >= 0), measured in *TURNS*
-        public int type; //Professor type (2: unique, 1: battle, 0: normal)
-        public List<int> stat = new List<int>(6); //professor stats
-        public int salary;
-        public bool away; //true = is away, false = is not away (able to teach)
-        public int awayTime;
-        public List<int> subjects = new List<int>(); //List of subjects that the professor is teaching
+        [SerializeField]
+        private long id ; //Professor ID (can be any int)
+
+        [SerializeField]
+        private string name; //Professor name
+
+        [SerializeField]
+        private int tenure; //Professor tenure ( >= 0), measured in *TURNS*
+
+        [SerializeField]
+        private int type; //Professor type (2: unique, 1: battle, 0: normal)
+
+        [SerializeField]
+        private List<int> stat = new List<int>(6); //professor stats
+
+        [SerializeField]
+        private int salary;
+
+        [SerializeField]
+        private bool away; //true = is away, false = is not away (able to teach)
+
+        [SerializeField]
+        private int awayTime;
+
+        [SerializeField]
+        private List<int> subjects = new List<int>(); //List of subjects that the professor is teaching
+
         public List<string> statList = new List<string>(6)
         {
             "lecture",

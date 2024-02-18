@@ -42,15 +42,24 @@ public class StudentGroup
     }
     public StudentGroup() { }
 
+    [SerializeField]
     private int period;
-    private int division; // 분반
-    private int number; // 학생 수
-    private int age; // 공부 기간
-    private int cost; // 학원비
-    private int exam = 0; // 볼 시험 종류(저장 구현해야함)
-    private int passedNum = 0; // 합격한 학생 수(저장 구현해야함)
 
+    [SerializeField]
+    private int division; // 분반
+
+    [SerializeField]
+    private int number; // 학생 수
+
+    [SerializeField] private int age; // 공부 기간
+    [SerializeField] private int cost; // 학원비
+    [SerializeField] private int exam = 0; // 볼 시험 종류(저장 구현해야함)
+    [SerializeField] private int passedNum = 0; // 합격한 학생 수(저장 구현해야함)
+
+    [SerializeField]
     private List<int> curriculum; // 커리큘럼
+
+    [SerializeField]
     private List<int> stat; // 스탯
 
     public int GetPeriod() { return period; }

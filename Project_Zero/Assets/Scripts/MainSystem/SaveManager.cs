@@ -110,7 +110,7 @@ public class SaveManager : MonoBehaviour
         for (int j = 0; j < inGameData.professor.Count; j++)
         {
             ProfessorSystem.Professor newProfessor
-                = JsonUtility.FromJson<ProfessorSystem.Professor>(inGameData.professor[i]);
+                = JsonUtility.FromJson<ProfessorSystem.Professor>(inGameData.professor[j]);
             PlayerInfo.ProfessorList.Add(newProfessor);
         }
 
@@ -137,7 +137,8 @@ public class SaveManager : MonoBehaviour
             string dataJson = "";
             for (int j = 0; j < 3; j++)
             {
-                dataJson += JsonUtility.ToJson(PlayerInfo.studentGroups[i][j], true);
+                dataJson += JsonUtility.ToJson(PlayerInfo.studentGroups[i][j]);
+                Debug.Log(dataJson);
                 if (j < 2)
                 {
                     dataJson += "/";
@@ -151,7 +152,8 @@ public class SaveManager : MonoBehaviour
     {
         for (int i = 0;i<PlayerInfo.ProfessorList.Count;i++)
         {
-            string dataJson = JsonUtility.ToJson(PlayerInfo.ProfessorList[i], true);
+            string dataJson = JsonUtility.ToJson(PlayerInfo.ProfessorList[i]);
+            Debug.Log(dataJson);
             data.professor.Add(dataJson);
         }
     }
