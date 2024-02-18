@@ -260,14 +260,20 @@ public class CurriculumSetting : MonoBehaviour
 
     public void SkipCurriculum()
     {
-        for (int i = 0; i < 8; i++) CurriculumList.Add(0);
-        studentGroup[div - 1].SetCurriCulum(CurriculumList);
+        for (;div<=3; div++)
+        {
+            studentGroup[div - 1] = new StudentGroup(div, 0, PlayerInfo.cost);
+            CurriculumList.Clear();
+            for (int i = 0; i < 8; i++) CurriculumList.Add(0);
+            studentGroup[div - 1].SetCurriCulum(CurriculumList);
+        }
+        PlayerInfo.studentGroups.Add(studentGroup);
+        //GoodsUIUpdate.ShowUI();
+        SceneManager.LoadScene("BeforeTurn");
+        return;
         if (div == 3)
         {
-            PlayerInfo.studentGroups.Add(studentGroup);
-            //GoodsUIUpdate.ShowUI();
-            SceneManager.LoadScene("BeforeTurn");
-            return;
+            
         }
         NewCurriculum();
         manager.GetComponent<CurriculumTreeDrawingManager>().drawTree(CurriculumList);

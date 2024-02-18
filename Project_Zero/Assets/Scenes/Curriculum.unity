@@ -1895,7 +1895,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &334843370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7538,6 +7538,7 @@ GameObject:
   - component: {fileID: 1449681186}
   - component: {fileID: 1449681189}
   - component: {fileID: 1449681188}
+  - component: {fileID: 1449681190}
   m_Layer: 5
   m_Name: message
   m_TagString: Untagged
@@ -7561,8 +7562,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -270, y: -600}
-  m_SizeDelta: {x: 1500, y: 200}
+  m_AnchoredPosition: {x: 280, y: 0}
+  m_SizeDelta: {x: 1500, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1449681186
 MonoBehaviour:
@@ -7586,18 +7587,18 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 7f563cb96934c2743b70c397c840cc87, type: 3}
-    m_FontSize: 60
+    m_FontSize: 100
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
-    m_MaxSize: 90
+    m_MaxSize: 120
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uD574\uB2F9 \uACFC\uBAA9\uC758 \uC774\uC218 \uC870\uAC74\uC744 \uB9CC\uC871\uD558\uC9C0
+  m_Text: "\uD574\uB2F9 \uACFC\uBAA9\uC758 \uC774\uC218 \uC870\uAC74\uC744\n\uB9CC\uC871\uD558\uC9C0
     \uBABB\uD588\uC2B5\uB2C8\uB2E4."
 --- !u!222 &1449681187
 CanvasRenderer:
@@ -7680,6 +7681,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1449681190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1449681184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 1, g: 0.9445204, b: 0, a: 0.9647059}
+  m_EffectDistance: {x: 2, y: 2}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1452839863
 GameObject:
   m_ObjectHideFlags: 0
@@ -11503,7 +11519,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 657107666101991439, guid: d81fb85f764d81649aa1b20b4cc273d3, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1228760522198490241, guid: d81fb85f764d81649aa1b20b4cc273d3, type: 3}
       propertyPath: m_Camera
