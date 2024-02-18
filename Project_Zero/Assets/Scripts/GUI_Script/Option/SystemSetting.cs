@@ -24,6 +24,7 @@ public class SystemSetting : MonoBehaviour
         message.SetActive(false);
 
         PlayerPrefs.DeleteAll();
+        AchievementManager.ResetAchievements();
         SceneManager.LoadScene("Title");
         /*
           
