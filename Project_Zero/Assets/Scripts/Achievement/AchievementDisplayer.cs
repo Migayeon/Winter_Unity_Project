@@ -25,6 +25,13 @@ public class AchievementDisplayer : MonoBehaviour
     private Transform scrollContents;
     private bool isAchievementDetailOpen = false;
     private static List<Transform> frames = new List<Transform>();
+    private float widthOfDescription;
+
+    private void Awake()
+    {
+        widthOfDescription = simpleDescription.sizeDelta.x;
+        print(widthOfDescription);
+    }
 
     private void Start()
     {
@@ -52,7 +59,10 @@ public class AchievementDisplayer : MonoBehaviour
             bool haveTohideInfo = AchievementManager.achievementInfos[achievementId].hidden && !AchievementManager.IsAchievementOpened(achievementId);
             achievementNameText.text = haveTohideInfo ? "???" : AchievementManager.achievementInfos[achievementId].name;
             achievementContentsText.text = haveTohideInfo ? "???" : AchievementManager.achievementInfos[achievementId].description;
-            simpleDescription.position = new Vector3(hit.point.x,hit.point.y, -1);
+            if (mp.x * 1440 + widthOfDescription > 1920)
+                simpleDescription.position = new Vector3(hit.point.x - widthOfDescription / 144, hit.point.y, -1);
+            else
+                simpleDescription.position = new Vector3(hit.point.x, hit.point.y, -1);
         }
         else
         {
