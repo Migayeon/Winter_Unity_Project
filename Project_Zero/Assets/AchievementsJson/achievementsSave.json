@@ -1,5 +1,8 @@
 {
-    "clearedAchievement": [],
+    "clearedAchievement": [
+        1,
+        2
+    ],
     "staticStats": [
         0,
         0,

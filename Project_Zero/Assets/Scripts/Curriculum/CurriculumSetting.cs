@@ -234,6 +234,15 @@ public class CurriculumSetting : MonoBehaviour
             warningMessage.enabled = true;
         }
         sum += num;
+        List<bool> filter = SubjectTree.getAvailableSubjects();
+        Image[] images = subjectGameobject.transform.GetComponentsInChildren<Image>();
+        for (int subjectId = 0; subjectId < SubjectTree.subjectsCount; subjectId++)
+        {
+            if (filter[subjectId])
+                images[subjectId].color = Color.white;
+            else
+                images[subjectId].color = new Color(0.3f, 0.3f, 0.3f);
+        }
     }
 
     public void SaveCurriculum()
@@ -308,18 +317,6 @@ public class CurriculumSetting : MonoBehaviour
         next.onClick.AddListener(SaveCurriculum);
         NewCurriculum();
         
-    }
-    private void Start()
-    {
-        List<bool> filter = SubjectTree.getAvailableSubjects();
-        Image[] images = subjectGameobject.transform.GetComponentsInChildren<Image>();
-        for (int subjectId = 0; subjectId < SubjectTree.subjectsCount; subjectId++)
-        {
-            if (filter[subjectId])
-                images[subjectId].color = Color.white;
-            else
-                images[subjectId].color = new Color(0.3f, 0.3f, 0.3f);
-        }
     }
     private void Update()
     {
