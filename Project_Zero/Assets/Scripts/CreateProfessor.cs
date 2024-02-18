@@ -115,10 +115,6 @@ public class CreateProfessor : ProfessorSystem
         randomFirstNameIndex = randomGenerator.Next(0, firstName.Count);
         RandomFirstName = firstName[randomFirstNameIndex];
 
-        // 업적 테스트를 위한 임시 추가
-        RandomFirstName = "시후";
-        RandomLastName = "대";
-
         finalRandomName = RandomLastName + " " + RandomFirstName;
 
         //log for debug
