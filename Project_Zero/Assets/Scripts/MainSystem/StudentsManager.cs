@@ -95,10 +95,9 @@ public class StudentGroup
     {
         passedNum = num;
     }
-    public void RandomStatUp()
+    public void RandomStatUp(int amount)
     {
-        int limit = Random.Range(10, 16);
-        for (int i = 0; i < limit; i++)
+        for (int i = 0; i < amount; i++)
         {
             stat[Random.Range(0, 5)]++;
         }

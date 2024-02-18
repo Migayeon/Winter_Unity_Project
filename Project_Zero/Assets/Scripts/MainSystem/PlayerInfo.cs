@@ -91,8 +91,9 @@ public class PlayerInfo : MonoBehaviour
         }
     }
 
-    public static List<string> StudentStatRandomUpgrade(int upgradeMax)
+    public static List<string> StudentStatRandomUpgrade(int amount)
     {
+        int upgradeMax = 1;
         List<string> upgradedStudent = new List<string>();
         for(int i = 0; i < studentGroups.Count; i++)
         {
@@ -103,7 +104,7 @@ public class PlayerInfo : MonoBehaviour
                     if (Random.Range(0, 3) == 0)
                     {
                         upgradeMax--;
-                        studentGroups[i][j].RandomStatUp();
+                        studentGroups[i][j].RandomStatUp(amount);
                         upgradedStudent.Add(i.ToString() + "/" + j.ToString());
                     }
                 }

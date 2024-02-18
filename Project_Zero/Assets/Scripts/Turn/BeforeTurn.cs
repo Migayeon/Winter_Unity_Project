@@ -37,6 +37,7 @@ public class BeforeTurn : MonoBehaviour
 
         // 이벤트 가져오기
         eventInfo = EventManager.GetEvent();
+        eventInfo = ("common", 4);//test
         if (eventInfo.Item2 == -1)
         {
             eventTitle.text = "오늘은 평화로운 날입니다.";
