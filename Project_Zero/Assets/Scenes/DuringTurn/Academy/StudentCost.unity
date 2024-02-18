@@ -1681,6 +1681,30 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: SceneChange, Assembly-CSharp
       objectReference: {fileID: 0}
+    - target: {fileID: 6760032602897521988, guid: 47cae4a138e2fbc4e8b1fcb0be9add32, type: 3}
+      propertyPath: m_Color.b
+      value: 0.78431374
+      objectReference: {fileID: 0}
+    - target: {fileID: 6760032602897521988, guid: 47cae4a138e2fbc4e8b1fcb0be9add32, type: 3}
+      propertyPath: m_Color.g
+      value: 0.78431374
+      objectReference: {fileID: 0}
+    - target: {fileID: 6760032602897521988, guid: 47cae4a138e2fbc4e8b1fcb0be9add32, type: 3}
+      propertyPath: m_Color.r
+      value: 0.78431374
+      objectReference: {fileID: 0}
+    - target: {fileID: 6779143230218742512, guid: 47cae4a138e2fbc4e8b1fcb0be9add32, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 7341212021441689110, guid: 47cae4a138e2fbc4e8b1fcb0be9add32, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7341212021441689110, guid: 47cae4a138e2fbc4e8b1fcb0be9add32, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 338f59a378f271047ada4a76540885b4, type: 3}
     - target: {fileID: 7633170381886350882, guid: 47cae4a138e2fbc4e8b1fcb0be9add32, type: 3}
       propertyPath: m_Name
       value: BackButtonCanvas

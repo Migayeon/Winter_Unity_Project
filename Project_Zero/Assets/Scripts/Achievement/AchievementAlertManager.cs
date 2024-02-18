@@ -41,8 +41,6 @@ public class AchievementAlertManager : MonoBehaviour
             panelProgress = 0;
             startPos = alertPanel.position;
             targetY = startPos.y - 200;//alertPanel.localScale.y * 3 / 2;
-            Debug.Log(startPos.y);
-            Debug.Log(targetY);
         }
     }
 
