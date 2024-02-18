@@ -20,8 +20,7 @@ public class PlayerData
     public int turn, ar, stone, studentsNum, fame; //, debt; 빚 추가해야 함.
     public string myName, arcademyName;
 
-    //public string[] professor; // 클래스 정보 받아서 하나의 스트링으로
-    //public string[] students;
+    
     /*
      
     재화 시스템에 따라 더 추가하기. (무엇을 저장해야 하는가?) 
@@ -31,70 +30,21 @@ public class PlayerData
     {
         return new string[5]{myName,arcademyName,turn.ToString(),ar.ToString(),fame.ToString()};
     }
+
 }
-public class ProfessorData
+
+public struct InGameData
 {
-    public string[] professorData;
-    public int professorNum;
-
-    public void ProfessorDataSave() 
-    {
-        int i = 0;
-        professorNum = PlayerInfo.ProfessorCount();
-        professorData = new string[professorNum];
-        foreach (ProfessorSystem.Professor professor in PlayerInfo.ProfessorList) 
-        {
-            professorData[i] = professor.ProfessorDataToString();
-            i++;
-        }
-        professorNum = i;
-    }
-
-    public int GetProfessorNum()
-    {
-        return professorNum;
-    }
-
-    public string[] GetProfessorData()
-    {
-        return professorData;
-    }
+    public List<string> professor; // 클래스 정보 받아서 하나의 스트링으로
+    public List<string> students;
+    public string subject;
 }
-public class StudentData
-{
-    public int groupNum;
-    public string[] studentData;
 
-    public void StudentDataSave() 
-    {
-        int i = 0;
-        groupNum = PlayerInfo.studentGroups.Count*3;
-        studentData = new string[groupNum];
-        foreach (StudentGroup[] students in PlayerInfo.studentGroups)
-        {
-            foreach(StudentGroup student in students)
-            {
-                studentData[i] = student.StudentDataToString();
-                i++;
-            }
-        }
-    }
-
-    public int GetGroupNum()
-    {
-        return groupNum;
-    }
-
-    public string[] GetStudentData()
-    {
-        return studentData;
-    }
-}
 
 public class SaveManager : MonoBehaviour
 {
     private static ProfessorSystem.Professor professor1;
-    private static string path = Application.dataPath + '/';
+    private static string path = Application.persistentDataPath + '/';
 
     public static string[] PlayerDataPreview(int i)
     {
@@ -136,50 +86,74 @@ public class SaveManager : MonoBehaviour
         return;
     }
 
-    public static void StudentSave(int i)
+    public static void InGameDataSave(int i)
     {
-        StudentData studentData = new StudentData();
-        studentData.StudentDataSave();
-        //Debug.Log();
-        string json = JsonUtility.ToJson(studentData, true);
-        File.WriteAllText(path + "student" + i.ToString(), json);
-        Debug.Log("Success");
+        InGameData inGameData = new InGameData();
+        inGameData.professor = new List<string>();
+        inGameData.students = new List<string>();
+        inGameData.subject = SubjectTree.save();
+
+        ProfessorSave(inGameData);
+        StudentSave(inGameData);
+
+        string json = JsonUtility.ToJson(inGameData, true);
+        File.WriteAllText(path + "inGameData" + i.ToString(), json);
     }
 
-    public static void StudentLoad(int i)
+    public static void InGameDataLoad(int i)
     {
-        string jsonData = File.ReadAllText(path + "student" + i.ToString());
-        StudentData studentData = JsonUtility.FromJson<StudentData>(jsonData);
-        PlayerInfo.LoadStudentData(studentData.GetStudentData(),studentData.GetGroupNum());
+        string json = File.ReadAllText(path + "inGameData" + i.ToString());
+        InGameData inGameData = JsonUtility.FromJson<InGameData>(json);
+        PlayerInfo.ProfessorList = new List<ProfessorSystem.Professor>();
+        PlayerInfo.studentGroups = new List<StudentGroup[]>();
+
+        for (int j = 0; j < inGameData.professor.Count; j++)
+        {
+            ProfessorSystem.Professor newProfessor
+                = JsonUtility.FromJson<ProfessorSystem.Professor>(inGameData.professor[i]);
+            PlayerInfo.ProfessorList.Add(newProfessor);
+        }
+
+        for (int j = 0; j < inGameData.students.Count; j++)
+        {
+            StudentGroup[] newStudentGroup = new StudentGroup[3];
+            string[] studentsJson = inGameData.students[j].Split("/");
+            for (int k = 0; k < 3; k++)
+            {
+                newStudentGroup[k] = JsonUtility.FromJson<StudentGroup>(studentsJson[k]);
+            }
+            PlayerInfo.studentGroups.Add(newStudentGroup);
+        }
+        SubjectTree.initSubjectsAndInfo();
+        SubjectTree.initSubjectStates(new List<int>());
+        SubjectTree.callOnlyOneTimeWhenGameStart();
+        SubjectTree.load(inGameData.subject);
     }
 
-    private static void ProfessorSave(int i)
+    public static void StudentSave(InGameData data)
     {
-        ProfessorData professorData = new ProfessorData();
-        professorData.ProfessorDataSave();
-        // Debug.Log(professorData.GetProfessorData()[0]);
-        string json = JsonUtility.ToJson(professorData, true);
-        File.WriteAllText(path + "professor" + i.ToString(), json);
-        Debug.Log("Success");
+        for (int i = 0; i<PlayerInfo.studentGroups.Count; i++)
+        {
+            string dataJson = "";
+            for (int j = 0; j < 3; j++)
+            {
+                dataJson += JsonUtility.ToJson(PlayerInfo.studentGroups[i][j], true);
+                if (j < 2)
+                {
+                    dataJson += "/";
+                }
+            }
+            data.students.Add(dataJson);
+        }
     }
 
-    public static void ProfessorLoad(int i)
+    private static void ProfessorSave(InGameData data)
     {
-        string jsonData = File.ReadAllText(path + "professor" + i.ToString());
-        ProfessorData professorData = JsonUtility.FromJson<ProfessorData>(jsonData);
-        PlayerInfo.LoadProfessorData(professorData.GetProfessorData(), professorData.GetProfessorNum());
-    }
-
-    public static void SubjectSave(int i)
-    {
-        string json = SubjectTree.save();
-        File.WriteAllText(path + "subject" + i.ToString(), json);
-    }
-
-    public static void SubjectLoad(int i)
-    {
-        string jsonData = File.ReadAllText(path + "subject" + i.ToString());
-        SubjectTree.load(jsonData);
+        for (int i = 0;i<PlayerInfo.ProfessorList.Count;i++)
+        {
+            string dataJson = JsonUtility.ToJson(PlayerInfo.ProfessorList[i], true);
+            data.professor.Add(dataJson);
+        }
     }
 
     public static void AchievementLocalStatSave(int i)
@@ -209,9 +183,9 @@ public class SaveManager : MonoBehaviour
         PlayerPrefs.Save();
 
         PlayerDataSave(i);
-        ProfessorSave(i);
-        StudentSave(i);
-        SubjectSave(i);
+        //ProfessorSave(i);
+        //StudentSave(i);
+        InGameDataSave(i);
         AchievementLocalStatSave(i);
     }
 
@@ -219,12 +193,7 @@ public class SaveManager : MonoBehaviour
     {
         int i = PlayerInfo.dataIndex;
         PlayerDataLoad(i);
-        ProfessorLoad(i);
-        StudentLoad(i);
-        SubjectTree.initSubjectsAndInfo();
-        SubjectTree.initSubjectStates(new List<int>());
-        SubjectTree.callOnlyOneTimeWhenGameStart();
-        SubjectLoad(i);
+        InGameDataLoad(i);
         AchievementLocalStatLoad(i);
         TestCheckManager.InitTestInfo();
     }

@@ -600,7 +600,7 @@ public class CreateProfessor : ProfessorSystem
             {
                 PlayerInfo.ProfessorPickedStatus[i] = true;
             }
-            LoadingSceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            Start();
         }
         else
         {

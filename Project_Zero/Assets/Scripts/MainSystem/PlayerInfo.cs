@@ -68,29 +68,6 @@ public class PlayerInfo : MonoBehaviour
         return sum;
     }
 
-    public static void LoadStudentData(string[] data, int lim)
-    {
-        studentGroups.Clear();
-        for(int i = 0; i < lim/3; i++)
-        {
-            StudentGroup[] students = new StudentGroup[3];
-            for (int j =0; j < 3;j++)
-            {
-                students[j] = new StudentGroup(data[3 * i + j]);
-            }
-            studentGroups.Add(students);
-        }
-    }
-
-    public static void LoadProfessorData(string[] data, int lim)
-    {
-        ProfessorList.Clear();
-        for(int i = 0;i < lim; i++)
-        {
-            ProfessorList.Add(new ProfessorSystem.Professor(data[i]));
-        }
-    }
-
     public static List<string> StudentStatRandomUpgrade(int amount)
     {
         int upgradeMax = 1;

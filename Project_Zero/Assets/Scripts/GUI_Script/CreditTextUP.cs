@@ -10,7 +10,7 @@ public class CreditTextUP : MonoBehaviour
     void FixedUpdate()
     {
         transform.position = transform.position + new Vector3(0f, speed, 0f);
-        if (transform.localPosition.y >= 3330)
+        if (transform.localPosition.y >= 3805)
         {
             SceneManager.LoadScene("Title");
         }

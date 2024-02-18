@@ -40,25 +40,6 @@ public class StudentGroup
             }
         }
     }
-    public StudentGroup(string data)
-    {
-        string[] dataArr =data.Split('/');
-        period = int.Parse(dataArr[0]);
-        division = int.Parse(dataArr[1]);
-        number = int.Parse(dataArr[2]);
-        age = int.Parse(dataArr[3]);
-        cost = int.Parse(dataArr[4]);
-        curriculum = new List<int>();
-        stat = new List<int>();
-        for (int i = 5; i < 13; i++)
-        {
-            curriculum.Add(int.Parse(dataArr[i]));
-        }
-        for (int i = 13; i <= 17; i++)
-        {
-            stat.Add(int.Parse(dataArr[i]));
-        }
-    }
     public StudentGroup() { }
 
     private int period;
@@ -115,25 +96,6 @@ public class StudentGroup
         GoodsManager.goodsAr += cost * number;
         if (age == 8) return false;
         return true;
-    }
-
-    public string StudentDataToString()
-    {
-        string data =
-            period.ToString() + '/' +
-            division.ToString() + '/' +
-            number.ToString() + '/' +
-            age.ToString() + '/' +
-            cost.ToString();
-        foreach (int i in curriculum)
-        {
-            data += '/' + i.ToString();
-        }
-        foreach(int i in stat)
-        {
-            data += "/" + i.ToString();
-        }
-        return data;
     }
     
 }

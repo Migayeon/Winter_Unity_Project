@@ -10,30 +10,23 @@ public class ProfessorSystem : MonoBehaviour
     public const int professorStats = 6;
     public class Professor
     {
-        private long id ; //Professor ID (can be any int)
-        private string name; //Professor name
-        private int tenure; //Professor tenure ( >= 0), measured in *TURNS*
-        private int type; //Professor type (2: unique, 1: battle, 0: normal)
-        private List<int> stat = new List<int>(6); //professor stats
-        private int salary;
-        private bool away; //true = is away, false = is not away (able to teach)
-        private int awayTime;
-        private List<int> subjects = new List<int>(); //List of subjects that the professor is teaching
-        public static Dictionary<int, string> statlist = new Dictionary<int, string>(6)
+        public long id ; //Professor ID (can be any int)
+        public string name; //Professor name
+        public int tenure; //Professor tenure ( >= 0), measured in *TURNS*
+        public int type; //Professor type (2: unique, 1: battle, 0: normal)
+        public List<int> stat = new List<int>(6); //professor stats
+        public int salary;
+        public bool away; //true = is away, false = is not away (able to teach)
+        public int awayTime;
+        public List<int> subjects = new List<int>(); //List of subjects that the professor is teaching
+        public List<string> statList = new List<string>(6)
         {
-            {0, "lecture"},
-            {1, "theory"},
-            {2, "mana"},
-            {3, "craft"},
-            {4, "element"},
-            {5, "attack"},
-        };
-
-        public static Dictionary<int, string> ProfessorTypeList = new Dictionary<int, string>(3)
-        {
-            {0, "일반" },
-            {1, "전투" },
-            {2, "유니크"},
+            "lecture",
+            "theory",
+            "mana",
+            "craft",
+            "element",
+            "attack"
         };
         public Professor() {}
         public Professor(long _id, string _name, int _tenure, int _type, List<int> _stat)
@@ -116,7 +109,7 @@ public class ProfessorSystem : MonoBehaviour
         {
             for (int i = 0; i < professorStats; ++i)
             {
-                if (statlist[i] == statname)
+                if (statList[i] == statname)
                 {
                     stat[i] = changedValue;
                     break;
@@ -126,11 +119,17 @@ public class ProfessorSystem : MonoBehaviour
 
         public void ProfessorChangeSalary(double mul)
         {
-            salary = (int)((double)salary * mul);
+            salary = (int)(salary * mul);
         }
 
         public string ProfessorGetTypeInString()
         {
+            List<string> ProfessorTypeList = new List<string>(3)
+            {
+                "일반",
+                "전투",
+                "유니크"
+            };
             return ProfessorTypeList[type];
         }
 
@@ -161,7 +160,7 @@ public class ProfessorSystem : MonoBehaviour
             string temp = "Professor Stats : ";
             for (int i = 0; i < professorStats; ++i)
             {
-                temp += statlist[i];
+                temp += statList[i];
                 temp += " ";
                 temp += Convert.ToString(stat[i]);
                 temp += "     ";
@@ -170,45 +169,11 @@ public class ProfessorSystem : MonoBehaviour
             Debug.Log(string.Format("Salary: {0}", salary));
         }
 
-        /* 추가한 내용 : 교수 데이터 string 형태로 리턴하는 함수 / string 형태를 읽어 교수를 형성하는 함수 */
-        public string ProfessorDataToString()
+        public void UpgradeRandomStat(int upgradePoint)
         {
-            string data =
-                id.ToString() + '/' +
-                name + '/' +
-                tenure.ToString() + '/' +
-                type.ToString();
-
-            foreach (int i in stat)
-                data += '/' + i.ToString();
-
-            data += '/' + salary.ToString() + '/' + (away ? 1 : 0).ToString();
-
-            foreach (int i in subjects)
-                data += "/" + i.ToString();
-
-            return data;
-        }
-
-        public Professor (string data)
-        {
-            string[] dataList = data.Split("/");
-            id = long.Parse(dataList[0]);
-            name = dataList[1];
-            tenure = int.Parse(dataList[2]);
-            type = int.Parse(dataList[3]);
-            stat = new List<int>();
-            for (int i = 4; i < 10; i++)
-            {
-                stat.Add(int.Parse(dataList[i]));
-            }
-            salary = int.Parse(dataList[10]);
-            away = (dataList[11] == "1") ? true : false;
-            subjects = new List<int>();
-            for (int i = 12; i < dataList.Length; i++)
-            {
-                subjects.Add(int.Parse(dataList[i]));
-            }
+            System.Random rand = new System.Random();
+            for(int i = 0; i < upgradePoint; i++)
+                stat[rand.Next(professorStats - 1)]++;
         }
     }
     

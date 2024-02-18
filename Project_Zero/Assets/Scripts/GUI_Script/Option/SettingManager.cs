@@ -34,6 +34,12 @@ public class SettingManager : MonoBehaviour
     {
         tabButton[0].onClick.AddListener(() => OpenTab(0));
         tabButton[1].onClick.AddListener(() => OpenTab(1));
+        tabButton[2].onClick.AddListener(
+            delegate
+            {
+                SceneManager.LoadScene("Credit");
+            }
+        );
         xButton.onClick.AddListener(BackTracking);
         OpenTab(0);
     }
