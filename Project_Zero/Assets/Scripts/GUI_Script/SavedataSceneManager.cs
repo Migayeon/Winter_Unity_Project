@@ -31,7 +31,7 @@ public class SavedataSceneManager : MonoBehaviour
         SubjectTree.initSubjectsAndInfo();
         SubjectTree.initSubjectStates(new List<int>());
         SubjectTree.callOnlyOneTimeWhenGameStart();
-        BeforeTurn.ProfessorCreateFirstTime = true;
+        BeforeTurn.HaveToGenerateNewProfessors = true;
         AchievementManager.Achieve(1);
         /*
          

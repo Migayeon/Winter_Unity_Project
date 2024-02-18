@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 using Unity.VisualScripting;
 using System.Collections;
 using System.Linq;
+using static ProfessorSystem;
 
 
 // TODO list for ProfessorSystem
@@ -71,10 +72,11 @@ public class CreateProfessor : ProfessorSystem
     const int UniqueProfessorRarity = 5; //probability (edit later)
     const int BattleProfessorRarity = 15; //probability (edit later)
     const int TotalRarity = 100;
+    const int RETRY_COST = 50;
     public static string GenerateName()
     {
-        StreamReader ReadEnglishName = new StreamReader("Assets\\Resources\\Names\\englishNames.csv");
-        StreamReader ReadKoreanName = new StreamReader("Assets\\Resources\\Names\\koreanNames.csv");
+        StreamReader ReadEnglishName = new StreamReader("Assets/Resources/Names/englishNames.csv");
+        StreamReader ReadKoreanName = new StreamReader("Assets/Resources/Names/koreanNames.csv");
         string line;
         string[] row;
         int randomLastNameIndex, randomFirstNameIndex;
@@ -199,65 +201,29 @@ public class CreateProfessor : ProfessorSystem
 
     }
 
-    //TODO: clean up TextMeshProUGUI assets (use arrays?)
-    //ex) public TextMeshProUGUI[,] ProfessorData = new TextMeshProUGUI[3,3];
+    [SerializeField]
+    private Button PickedProfessorPopupExitButton;
+    [SerializeField]
+    private List<Transform> ProfessorTransforms;
+    [SerializeField]
+    private GameObject ButtonClickObject;
+    [SerializeField]
+    private GameObject HideTextObject;
+    [SerializeField]
+    private GameObject MaxProfessorsErrorObject;
 
-    public Button PickProfessor1Button;
-    public Button PickProfessor2Button;
-    public Button PickProfessor3Button;
-    public Button RetryProfessorsButton;
-    public Button ReturnMenuButton;
-    public Button PickedProfessorPopupExitButton;
-    public GameObject ProfessorObject1, ProfessorObject2, ProfessorObject3;
-    public GameObject ButtonClickObject;
-    public GameObject HideTextObject;
-    public GameObject MaxProfessorsErrorObject;
-    public TextMeshProUGUI PickedProfessorName, PickedProfessorType, PickedProfessorStat, PickedProfessorSalary;
-    public TextMeshProUGUI Professor1Name;
-    public TextMeshProUGUI Professor1Type;
-    public TextMeshProUGUI Professor1Stat;
-    public TextMeshProUGUI Professor1Salary;
-    public TextMeshProUGUI Professor2Name;
-    public TextMeshProUGUI Professor2Type;
-    public TextMeshProUGUI Professor2Stat;
-    public TextMeshProUGUI Professor2Salary;
-    public TextMeshProUGUI Professor3Name;
-    public TextMeshProUGUI Professor3Type;
-    public TextMeshProUGUI Professor3Stat;
-    public TextMeshProUGUI Professor3Salary;
+    [SerializeField]
+    private TextMeshProUGUI RetryCostInfo;
+    [SerializeField]
+    private TextMeshProUGUI RetryFailMessage;
+    [SerializeField]
+    private TextMeshProUGUI MaxProfessorsErrorMessage;
+    [SerializeField]
+    private Sprite[] professorIllust;
 
-    public TextMeshProUGUI RetryCostInfo;
-    public TextMeshProUGUI RetryFailMessage;
-    public TextMeshProUGUI MaxProfessorsErrorMessage;
-
-    public TextMeshProUGUI PickProfessor1ButtonText;
-    public TextMeshProUGUI PickProfessor2ButtonText;
-    public TextMeshProUGUI PickProfessor3ButtonText;
-
-    public Dictionary<int, string> KoreanStatList = new Dictionary<int, string>(6)
-        {
-            {0, "강의력"},
-            {1, "마법이론"},
-            {2, "마나감응"},
-            {3, "손재주"},
-            {4, "속성력"},
-            {5, "영창"},
-        };
-
-
-    public string StatToString(List<int> stat)
-    {
-
-        string temp = "";
-        for (int j = 0; j < professorStats; ++j)
-        {
-            temp += KoreanStatList[j];
-            temp += " : ";
-            temp += stat[j];
-            temp += "<br>";
-        }
-        return temp;
-    }
+    private List<ProfessorResume> ProfessorResumes;
+    private TextMeshProUGUI PickedProfessorName, PickedProfessorType, PickedProfessorStat, PickedProfessorSalary;
+    private Image PickedProfessorImage;
 
     void Awake()
     {
@@ -267,53 +233,18 @@ public class CreateProfessor : ProfessorSystem
 
         //TextMeshProUGUI
         MaxProfessorsErrorMessage = MaxProfessorsErrorMessage.GetComponent<TextMeshProUGUI>();
-
-        Professor1Name = Professor1Name.GetComponent<TextMeshProUGUI>();
-        Professor1Type = Professor1Type.GetComponent<TextMeshProUGUI>();
-        Professor1Stat = Professor1Stat.GetComponent<TextMeshProUGUI>();
-        Professor1Salary = Professor1Salary.GetComponent<TextMeshProUGUI>();
-
-        Professor2Name = Professor2Name.GetComponent<TextMeshProUGUI>();
-        Professor2Type = Professor2Type.GetComponent<TextMeshProUGUI>();
-        Professor2Stat = Professor2Stat.GetComponent<TextMeshProUGUI>();
-        Professor2Salary = Professor2Salary.GetComponent<TextMeshProUGUI>();
-
-        Professor3Name = Professor3Name.GetComponent<TextMeshProUGUI>();
-        Professor3Type = Professor3Type.GetComponent<TextMeshProUGUI>();
-        Professor3Stat = Professor3Stat.GetComponent<TextMeshProUGUI>();
-        Professor3Salary = Professor3Salary.GetComponent<TextMeshProUGUI>();
-
-
-        //Button
-        PickProfessor1Button = PickProfessor1Button.GetComponent<Button>();
-        PickProfessor2Button = PickProfessor2Button.GetComponent<Button>();
-        PickProfessor3Button = PickProfessor3Button.GetComponent<Button>();
-        RetryProfessorsButton = RetryProfessorsButton.GetComponent<Button>();
-        ReturnMenuButton = ReturnMenuButton.GetComponent<Button>();
+        ProfessorResumes = new List<ProfessorResume>();
+        for (int i = 0; i < 3; i++)
+            ProfessorResumes.Add(new ProfessorResume(ProfessorTransforms[i]));
         PickedProfessorPopupExitButton = PickedProfessorPopupExitButton.GetComponent<Button>();
-
-        //TextMeshProUGUI - Text content of Buttons
-        PickProfessor1ButtonText = PickProfessor1ButtonText.GetComponent<TextMeshProUGUI>();
-        PickProfessor2ButtonText = PickProfessor2ButtonText.GetComponent<TextMeshProUGUI>();
-        PickProfessor3ButtonText = PickProfessor3ButtonText.GetComponent<TextMeshProUGUI>();
-
-        // Add listeners to basic buttons
-        RetryProfessorsButton.onClick.AddListener(RetryProfessors);
-        ReturnMenuButton.onClick.AddListener(ReturnMenu);
-
+        PickedProfessorName = HideTextObject.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+        PickedProfessorType = HideTextObject.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+        PickedProfessorStat = HideTextObject.transform.GetChild(4).GetComponent<TextMeshProUGUI>();
+        PickedProfessorSalary = HideTextObject.transform.GetChild(5).GetComponent<TextMeshProUGUI>();
+        PickedProfessorImage = HideTextObject.transform.GetChild(6).GetComponent<Image>();
     }
     void Start()
     {
-        PickProfessor1ButtonText.text = "";
-        PickProfessor2ButtonText.text = "";
-        PickProfessor3ButtonText.text = "";
-
-        //disable professor pick buttons
-        PickProfessor1Button.enabled = false;
-        PickProfessor2Button.enabled = false;
-        PickProfessor3Button.enabled = false;
-        //PickedProfessorPopupExitButton.enabled = false;
-
         HideTextObject.SetActive(false);
 
         MaxProfessorsErrorMessage.enabled = false;
@@ -321,7 +252,6 @@ public class CreateProfessor : ProfessorSystem
         RetryCostInfo.enabled = false;
 
         HideTextObject.SetActive(false);
-
         MaxProfessorsErrorObject.SetActive(false);
 
         //FIX THIS PART!!!
@@ -336,271 +266,69 @@ public class CreateProfessor : ProfessorSystem
         }
         else
         {
-            PickProfessor1ButtonText.text = "채용";
-            PickProfessor2ButtonText.text = "채용";
-            PickProfessor3ButtonText.text = "채용";
-            MaxProfessorsErrorObject.SetActive(false);
-
             RetryCostInfo.enabled = true;
-            RetryFailMessage.enabled = false;
 
-            List<Professor> NewProfessors = new List<Professor>();
-
-            // issue part - control flow be damned, this code is spaghetti code that even FSM would avoid.
+            // issue part - control flow be damned, this code is spaghetti code that even FSM would avoid. XD
             // A pastafarian nightmare, if i do say so myself
 
-            
-            if (BeforeTurn.ProfessorCreateFirstTime)
+            if (BeforeTurn.HaveToGenerateNewProfessors)
             {
+                PlayerInfo.RandomProfessorList.Clear();
                 for (int i = 0; i < 3; ++i)
-                {
-                    NewProfessors.Add(CreateNewProfessor(i));
-                    PlayerInfo.RandomProfessorList[i] = NewProfessors[i];
-                }
-                PlayerInfo.GenerateNewRandomProfessorList = false;
-                BeforeTurn.ProfessorCreateFirstTime = false;
-
+                    PlayerInfo.RandomProfessorList.Add(ProfessorResumes[i].GenerateNewProfessor(i));
+                BeforeTurn.HaveToGenerateNewProfessors = false;
             }
             else
             {
-                if (PlayerInfo.GenerateNewRandomProfessorList)
-                {
-                    for (int i = 0; i < 3; ++i)
-                    {
-                        NewProfessors.Add(CreateNewProfessor(i));
-                        PlayerInfo.RandomProfessorList[i] = NewProfessors[i];
-                    }
-                    PlayerInfo.GenerateNewRandomProfessorList = false;
-                }
-                else
-                {
-                    for (int i = 0; i < 3; ++i)
-                    {
-                        NewProfessors.Add(PlayerInfo.RandomProfessorList[i]);
-                    }
-                }
+                for (int i = 0; i < 3; ++i)
+                    ProfessorResumes[i].professor = PlayerInfo.RandomProfessorList[i];
             }
-
-            PickProfessor1Button.enabled = true;
-            PickProfessor2Button.enabled = true;
-            PickProfessor3Button.enabled = true;
-
-            Professor1Name.text = NewProfessors[0].ProfessorGetName();
-            Professor2Name.text = NewProfessors[1].ProfessorGetName();
-            Professor3Name.text = NewProfessors[2].ProfessorGetName();
-
-            Professor1Type.text = NewProfessors[0].ProfessorGetTypeInString();
-            Professor2Type.text = NewProfessors[1].ProfessorGetTypeInString();
-            Professor3Type.text = NewProfessors[2].ProfessorGetTypeInString();
-            {
-
-                List<int> tempStatData = new List<int>(professorStats);
-                tempStatData = NewProfessors[0].ProfessorGetStats();
-                Professor1Stat.text = StatToString(tempStatData);
-            }
-
-            {
-
-                List<int> tempStatData = new List<int>(professorStats);
-                tempStatData = NewProfessors[1].ProfessorGetStats();
-                Professor2Stat.text = StatToString(tempStatData);
-            }
-
-            {
-
-                List<int> tempStatData = new List<int>(professorStats);
-                tempStatData = NewProfessors[2].ProfessorGetStats();
-                Professor3Stat.text = StatToString(tempStatData);
-            }
-
-            Professor1Salary.text = "월급 : " + Convert.ToString(NewProfessors[0].ProfessorGetSalary());
-            Professor2Salary.text = "월급 : " + Convert.ToString(NewProfessors[1].ProfessorGetSalary());
-            Professor3Salary.text = "월급 : " + Convert.ToString(NewProfessors[2].ProfessorGetSalary());
-
-            /*
-             * \
-             * 
-            PickProfessor1Button = ButtonClickObject.GetComponentInChildren<Button>();
-            PickProfessor2Button = ButtonClickObject.GetComponentInChildren<Button>();
-            PickProfessor3Button = ButtonClickObject.GetComponentInChildren<Button>();
-            RetryProfessorsButton = ButtonClickObject.GetComponentInChildren<Button>();
-            ReturnMenuButton = ButtonClickObject.GetComponentInChildren<Button>();
-            */
-
-
-            PickProfessor1Button.onClick.AddListener(() => PickProfessor1(NewProfessors[0]));
-            PickProfessor2Button.onClick.AddListener(() => PickProfessor2(NewProfessors[1]));
-            PickProfessor3Button.onClick.AddListener(() => PickProfessor3(NewProfessors[2]));
-
-            PickedProfessorPopupExitButton.onClick.RemoveAllListeners();
-            PickedProfessorPopupExitButton.onClick.AddListener(() => ExitPopup(HideTextObject));
+            foreach (ProfessorResume nowResume in ProfessorResumes)
+                nowResume.Open();
         }
 
-        if (!PlayerInfo.ProfessorPickedStatus[0])
+        for (int i = 0; i < 3; i++)
         {
-            Professor1Name.text = "";
-            Professor1Type.text = "";
-            Professor1Stat.text = "";
-            Professor1Salary.text = "";
-            PickProfessor1Button.enabled = false;
-        }
-        if (!PlayerInfo.ProfessorPickedStatus[1])
-        {
-            Professor2Name.text = "";
-            Professor2Type.text = "";
-            Professor2Stat.text = "";
-            Professor2Salary.text = "";
-            PickProfessor2Button.enabled = false;
-        }
-        if (!PlayerInfo.ProfessorPickedStatus[2])
-        {
-            Professor3Name.text = "";
-            Professor3Type.text = "";
-            Professor3Stat.text = "";
-            Professor3Salary.text = "";
-            PickProfessor3Button.enabled = false;
+            if (!PlayerInfo.ProfessorPickedStatus[i])
+                ProfessorResumes[i].Close();
         }
     }
 
-    public void PickProfessor1(Professor InsertProf)
+    public void PickProfessor(int index)
     {
-        Debug.Log("PickProfessor1");
-        PlayerInfo.ProfessorList.Add(InsertProf);
-        if (InsertProf.ProfessorGetName() == "대 시후")
-        {
+        ProfessorResume pickedProfessor = ProfessorResumes[index];
+        PlayerInfo.ProfessorList.Add(pickedProfessor.professor);
+        string professorName = pickedProfessor.name.text;
+        if (professorName == "대 시후")
             AchievementManager.Achieve(0);
-        }
-        PlayerInfo.ProfessorPickedStatus[0] = false;
-        
-        PickProfessor1Button.enabled = false;
-
-
-
-        Debug.Log(Professor1Name.text);
-        Debug.Log(Professor1Type.text);
-        Debug.Log(Professor1Stat.text);
-        Debug.Log(Professor1Salary.text);
-        Professor1Name.text = "";
-        Professor1Type.text = "";
-        Professor1Stat.text = "";
-        Professor1Salary.text = "";
-        PickProfessor1ButtonText.text = "";
-        Professor1Name.ForceMeshUpdate();
-        Professor1Type.ForceMeshUpdate();
-        Professor1Stat.ForceMeshUpdate();
-        Professor1Salary.ForceMeshUpdate();
-        PickProfessor1ButtonText.ForceMeshUpdate();
-        /*
-        Professor1Name.ForceMeshUpdate(true);
-        Professor1Type.ForceMeshUpdate(true);
-        Professor1Stat.ForceMeshUpdate(true);
-        Professor1Salary.ForceMeshUpdate(true);
-        */
-        PickedProfessorName.text = InsertProf.ProfessorGetName();
-        PickedProfessorType.text = InsertProf.ProfessorGetTypeInString();
-        PickedProfessorStat.text = StatToString(InsertProf.ProfessorGetStats());
-        PickedProfessorSalary.text = "월급 : " + Convert.ToString(InsertProf.ProfessorGetSalary());
+        PlayerInfo.ProfessorPickedStatus[index] = false;
+        PickedProfessorName.text = professorName;
+        PickedProfessorType.text = pickedProfessor.type.text;
+        PickedProfessorStat.text = pickedProfessor.stat.text;
+        PickedProfessorSalary.text = pickedProfessor.salary.text;
+        PickedProfessorImage.sprite = professorIllust[pickedProfessor.professor.ProfessorGetType()];
+        ProfessorResumes[index].Close();
 
         HideTextObject.SetActive(true);
         PlayerInfo.ProfessorPicked = true;
-        PlayerInfo.PickedProfessorInfo = InsertProf;
+        PlayerInfo.PickedProfessorInfo = pickedProfessor.professor;
 
         PickedProfessorPopupExitButton.enabled = true;
-    }
-
-    public void PickProfessor2(Professor InsertProf)
-    {
-        Debug.Log("PickProfessor2");
-        PlayerInfo.ProfessorList.Add(InsertProf);
-        if (InsertProf.ProfessorGetName() == "대 시후")
-        {
-            AchievementManager.Achieve(0);
-        }
-        PlayerInfo.ProfessorPickedStatus[1] = false;
-
-        PickProfessor2Button.enabled = false;
-
-        Debug.Log(Professor1Name.text);
-        Debug.Log(Professor1Type.text);
-        Debug.Log(Professor1Stat.text);
-        Debug.Log(Professor1Salary.text);
-
-        Professor2Name.text = "";
-        Professor2Type.text = "";
-        Professor2Stat.text = "";
-        Professor2Salary.text = "";
-        PickProfessor2ButtonText.text = "";
-        Professor2Name.ForceMeshUpdate();
-        Professor2Type.ForceMeshUpdate();
-        Professor2Stat.ForceMeshUpdate();
-        Professor2Salary.ForceMeshUpdate();
-        PickProfessor2ButtonText.ForceMeshUpdate();
-
-        PickedProfessorName.text = InsertProf.ProfessorGetName();
-        PickedProfessorType.text = InsertProf.ProfessorGetTypeInString();
-        PickedProfessorStat.text = StatToString(InsertProf.ProfessorGetStats());
-        PickedProfessorSalary.text = "월급 : " + Convert.ToString(InsertProf.ProfessorGetSalary());
-
-        HideTextObject.SetActive(true);
-        PlayerInfo.ProfessorPicked = true;
-        PlayerInfo.PickedProfessorInfo = InsertProf;
-
-        PickedProfessorPopupExitButton.enabled = true;
-
-    }
-
-    public void PickProfessor3(Professor InsertProf)
-    {
-        Debug.Log("PickProfessor3");
-        PlayerInfo.ProfessorList.Add(InsertProf);
-        if (InsertProf.ProfessorGetName() == "대 시후")
-        {
-            AchievementManager.Achieve(0);
-        }
-        PlayerInfo.ProfessorPickedStatus[2] = false;
-
-        PickProfessor3Button.enabled = false;
-
-        Debug.Log(Professor1Name.text);
-        Debug.Log(Professor1Type.text);
-        Debug.Log(Professor1Stat.text);
-        Debug.Log(Professor1Salary.text);
-
-        Professor3Name.text = "";
-        Professor3Type.text = "";
-        Professor3Stat.text = "";
-        Professor3Salary.text = "";
-        PickProfessor3ButtonText.text = "";
-        Professor3Name.ForceMeshUpdate();
-        Professor3Type.ForceMeshUpdate();
-        Professor3Stat.ForceMeshUpdate();
-        Professor3Salary.ForceMeshUpdate();
-        PickProfessor3ButtonText.ForceMeshUpdate();
-
-        PickedProfessorName.text = InsertProf.ProfessorGetName();
-        PickedProfessorType.text = InsertProf.ProfessorGetTypeInString();
-        PickedProfessorStat.text = StatToString(InsertProf.ProfessorGetStats());
-        PickedProfessorSalary.text = "월급 : " + Convert.ToString(InsertProf.ProfessorGetSalary());
-
-        HideTextObject.SetActive(true);
-        PlayerInfo.ProfessorPicked = true;
-        PlayerInfo.PickedProfessorInfo = InsertProf;
     }
     public void RetryProfessors()
     {
         Debug.Log("RetryProfessors");
-        if (GoodsManager.goodsAr >= 50)
+        if (GoodsManager.goodsAr >= RETRY_COST)
         {
-            GoodsManager.goodsAr -= 50;
-            Array.Clear(PlayerInfo.RandomProfessorList, 0, PlayerInfo.RandomProfessorList.Length);
-            PlayerInfo.GenerateNewRandomProfessorList = true;
+            GoodsManager.goodsAr -= RETRY_COST;
+            PlayerInfo.RandomProfessorList.Clear();
             PlayerInfo.ProfessorPicked = false;
-
             for (int i = 0; i < 3; ++i)
             {
+                PlayerInfo.RandomProfessorList.Add(ProfessorResumes[i].GenerateNewProfessor(i));
+                ProfessorResumes[i].Open();
                 PlayerInfo.ProfessorPickedStatus[i] = true;
             }
-            Start();
         }
         else
         {
@@ -619,5 +347,76 @@ public class CreateProfessor : ProfessorSystem
     {
         Debug.Log("ExitPopup");
         PopupObject.SetActive(false);
+    }
+
+    class ProfessorResume
+    {
+        public TextMeshProUGUI name;
+        public TextMeshProUGUI type;
+        public TextMeshProUGUI stat;
+        public TextMeshProUGUI salary;
+        public Button pickButton;
+        public TextMeshProUGUI pickText;
+        public Professor professor;
+
+        public ProfessorResume(Transform professorResumeTransform)
+        {
+            name = professorResumeTransform.GetChild(0).GetComponent<TextMeshProUGUI>();
+            type = professorResumeTransform.GetChild(1).GetComponent<TextMeshProUGUI>();
+            stat = professorResumeTransform.GetChild(2).GetComponent<TextMeshProUGUI>();
+            salary = professorResumeTransform.GetChild(3).GetComponent<TextMeshProUGUI>();
+            Transform pick = professorResumeTransform.GetChild(4);
+            pickButton = pick.GetComponent<Button>();
+            pickText = pick.GetChild(0).GetComponent<TextMeshProUGUI>();
+        }
+
+        public void Close()
+        {
+            pickButton.enabled = false;
+            name.text = "";
+            type.text = "";
+            stat.text = "";
+            salary.text = "";
+            pickText.text = "";
+            pickText.ForceMeshUpdate();
+        }
+
+        public void Open()
+        {
+            pickButton.enabled = true;
+            name.text = professor.ProfessorGetName();
+            type.text = professor.ProfessorGetTypeInString();
+            stat.text = StatToString();
+            salary.text = "월급 : " + Convert.ToString(professor.ProfessorGetSalary());
+        }
+
+        public Professor GenerateNewProfessor(int index)
+        {
+            pickText.text = "채용";
+            professor = CreateNewProfessor(index);
+            return professor;
+        }
+        public string StatToString()
+        {
+            List<int> professorStat= professor.ProfessorGetStats();
+            List<string> KoreanStatList = new List<string>(6)
+            {
+                "강의력",
+                "마법이론",
+                "마나감응",
+                "손재주",
+                "속성력",
+                "영창"
+            };
+            string temp = "";
+            for (int j = 0; j < professorStats; ++j)
+            {
+                temp += KoreanStatList[j];
+                temp += " : ";
+                temp += professorStat[j];
+                temp += "<br>";
+            }
+            return temp;
+        }
     }
 }

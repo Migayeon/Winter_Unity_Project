@@ -23,7 +23,7 @@ public class BeforeTurn : MonoBehaviour
 
     public System.Random randomseed = new System.Random();
 
-    public static bool ProfessorCreateFirstTime; //static bool value storing if the current roll should be a 'first roll'
+    public static bool HaveToGenerateNewProfessors; //static bool value storing if the current roll should be a 'first roll'
                                                  // -> player do not need to pay for a roll
 
     void Start()
@@ -105,6 +105,6 @@ public class BeforeTurn : MonoBehaviour
         // string temp = GenerateName(); //for testing
 
 
-        ProfessorCreateFirstTime = true; //initialize as true (will get free roll)
+        HaveToGenerateNewProfessors = true; //initialize as true (will get free roll)
     }
 }

@@ -832,7 +832,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 179913111}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1766734991}
+        m_TargetAssemblyTypeName: CreateProfessor, Assembly-CSharp
+        m_MethodName: ReturnMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &179913111
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1221,7 +1233,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 282734005}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1766734991}
+        m_TargetAssemblyTypeName: CreateProfessor, Assembly-CSharp
+        m_MethodName: PickProfessor
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &282734005
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2834,7 +2858,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 959426807}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1766734991}
+        m_TargetAssemblyTypeName: CreateProfessor, Assembly-CSharp
+        m_MethodName: RetryProfessors
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &959426807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3974,7 +4010,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1414835627}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1766734991}
+        m_TargetAssemblyTypeName: CreateProfessor, Assembly-CSharp
+        m_MethodName: PickProfessor
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1414835627
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4631,7 +4679,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1588479205}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1766734991}
+        m_TargetAssemblyTypeName: CreateProfessor, Assembly-CSharp
+        m_MethodName: PickProfessor
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1588479205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4932,40 +4992,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd69db26f7869004895000e7a0fb2c8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PickProfessor1Button: {fileID: 1588479204}
-  PickProfessor2Button: {fileID: 1414835626}
-  PickProfessor3Button: {fileID: 282734004}
-  RetryProfessorsButton: {fileID: 959426806}
-  ReturnMenuButton: {fileID: 179913110}
   PickedProfessorPopupExitButton: {fileID: 1970041901}
-  ProfessorObject1: {fileID: 496231068}
-  ProfessorObject2: {fileID: 1090927935}
-  ProfessorObject3: {fileID: 993197918}
+  ProfessorTransforms:
+  - {fileID: 496231069}
+  - {fileID: 1090927936}
+  - {fileID: 993197919}
   ButtonClickObject: {fileID: 1766734986}
   HideTextObject: {fileID: 550627167}
   MaxProfessorsErrorObject: {fileID: 2009280474}
-  PickedProfessorName: {fileID: 1179141765}
-  PickedProfessorType: {fileID: 861718788}
-  PickedProfessorStat: {fileID: 1964188530}
-  PickedProfessorSalary: {fileID: 250229042}
-  Professor1Name: {fileID: 1588096900}
-  Professor1Type: {fileID: 120196413}
-  Professor1Stat: {fileID: 886965589}
-  Professor1Salary: {fileID: 1148137349}
-  Professor2Name: {fileID: 1666871477}
-  Professor2Type: {fileID: 2000244249}
-  Professor2Stat: {fileID: 1491737281}
-  Professor2Salary: {fileID: 1322431143}
-  Professor3Name: {fileID: 329495115}
-  Professor3Type: {fileID: 821171122}
-  Professor3Stat: {fileID: 127482879}
-  Professor3Salary: {fileID: 502507792}
   RetryCostInfo: {fileID: 1568705134}
   RetryFailMessage: {fileID: 378777721}
   MaxProfessorsErrorMessage: {fileID: 2133931200}
-  PickProfessor1ButtonText: {fileID: 525884680}
-  PickProfessor2ButtonText: {fileID: 2121982329}
-  PickProfessor3ButtonText: {fileID: 342615435}
+  professorIllust:
+  - {fileID: 1110059414, guid: 03403fb64626b2047856a53c16676700, type: 3}
+  - {fileID: -832158421, guid: 03403fb64626b2047856a53c16676700, type: 3}
+  - {fileID: 1692357007, guid: 03403fb64626b2047856a53c16676700, type: 3}
 --- !u!1 &1829555156
 GameObject:
   m_ObjectHideFlags: 0
@@ -5366,7 +5407,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1970041899}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1766734991}
+        m_TargetAssemblyTypeName: CreateProfessor, Assembly-CSharp
+        m_MethodName: ExitPopup
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 550627167}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1972384822
 GameObject:
   m_ObjectHideFlags: 0
