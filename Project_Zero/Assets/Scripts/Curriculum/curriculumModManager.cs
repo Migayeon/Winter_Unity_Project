@@ -42,7 +42,7 @@ public class curriculumModManager : MonoBehaviour
     public static void loadCurriculumSceneWithMod(int mod)
     {
         nowMod = mod;
-        SceneManager.LoadScene("Curriculum");
+        LoadingSceneManager.LoadScene("Curriculum");
     }
 
     public static void changeCurriculmMod(int mod)

@@ -604,7 +604,7 @@ public class CreateProfessor : ProfessorSystem
             {
                 PlayerInfo.ProfessorPickedStatus[i] = true;
             }
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            LoadingSceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
         else
         {
@@ -616,7 +616,7 @@ public class CreateProfessor : ProfessorSystem
     public void ReturnMenu()
     {
         Debug.Log("ReturnMenu");
-        SceneManager.LoadScene("Main");
+        LoadingSceneManager.LoadScene("Main");
     }
 
     public void ExitPopup(GameObject PopupObject)

@@ -209,7 +209,7 @@ public class ManageProfessorTest : MonoBehaviour
     public void ReturnToMenu()
     {
         Debug.Log("ReturnToMenu");
-        SceneManager.LoadScene("Main");
+        LoadingSceneManager.LoadScene("Main");
     }
 
     public void ShowInfoOnPopup(ProfessorSystem.Professor ProfData, int idx)
