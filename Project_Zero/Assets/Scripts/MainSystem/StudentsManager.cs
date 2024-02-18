@@ -97,7 +97,8 @@ public class StudentGroup
     }
     public void RandomStatUp()
     {
-        for (int i = 0; i < 10; i++)
+        int limit = Random.Range(10, 16);
+        for (int i = 0; i < limit; i++)
         {
             stat[Random.Range(0, 5)]++;
         }
