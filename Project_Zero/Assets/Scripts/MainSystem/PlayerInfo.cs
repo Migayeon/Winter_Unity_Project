@@ -77,16 +77,15 @@ public class PlayerInfo : MonoBehaviour
             {
                 if (studentGroups[i][j].GetNumber() > 0 && upgradeMax > 0)
                 {
-                    if (Random.Range(0, 3) == 0)
+                    if (Random.Range(0, 3) == 0 || (i == studentGroups.Count - 1 && j == 2))
                     {
                         upgradeMax--;
                         studentGroups[i][j].RandomStatUp(amount);
-                        upgradedStudent.Add(i.ToString() + "/" + j.ToString());
+                        upgradedStudent.Add(studentGroups[i][j].GetPeriod().ToString() + "/" + (j + 1).ToString());
                     }
                 }
             }
         }
-
         return upgradedStudent;
     }
 }
