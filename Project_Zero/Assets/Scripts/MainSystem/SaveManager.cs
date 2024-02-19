@@ -8,19 +8,21 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerData
 {
-    public PlayerData(int _t, int _a, int _s, int _sN, int _f) 
+    public PlayerData(int _t, int _a, int _s, int _f) 
     {
         turn = _t;
         ar = _a;
         stone = _s;
-        studentsNum = _sN;
         fame = _f;
     }
     public PlayerData() { }
-    public int turn, ar, stone, studentsNum, fame; //, debt; 빚 추가해야 함.
-    public string myName, arcademyName;
 
-    
+    public int turn, ar, stone, fame; //, debt; 빚 추가해야 함.
+    public string myName, arcademyName;
+    public int cost, maxStudent, maxProfessor;
+    public int nineSuccess, sevenSuccess, fiveSuccess;
+
+
     /*
      
     재화 시스템에 따라 더 추가하기. (무엇을 저장해야 하는가?) 
@@ -56,29 +58,41 @@ public class SaveManager : MonoBehaviour
     {
         string jsonData = File.ReadAllText(path + "player" + i.ToString());
         PlayerData playerData = JsonUtility.FromJson<PlayerData>(jsonData);
+
         TurnManager.turn = playerData.turn;
         GoodsManager.goodsAr = playerData.ar;
         GoodsManager.goodsStone = playerData.stone;
         GoodsManager.goodsConstFame = playerData.fame;
+
         PlayerInfo.playerName = playerData.myName;
         PlayerInfo.arcademyName = playerData.arcademyName;
+        PlayerInfo.cost = playerData.cost;
+        PlayerInfo.maxStudent = playerData.maxStudent;
+        PlayerInfo.maxProfessor = playerData.maxProfessor;
+
+        PlayerInfo.nineSuccess = playerData.nineSuccess;
+        PlayerInfo.sevenSuccess = playerData.sevenSuccess;
+        PlayerInfo.fiveSuccess = playerData.fiveSuccess;
     }
 
     public static void PlayerDataSave(int i)
     {
         PlayerData newSave = new PlayerData();
+
         newSave.turn = TurnManager.turn;
         newSave.ar = GoodsManager.goodsAr;
         newSave.stone = GoodsManager.goodsStone;
         newSave.fame = GoodsManager.goodsConstFame;
-        //newSave.studentsNum = GoodsManager.goodsStudent;
-        /*
-         
-        이름 / 학원 저장 스크립트 추가해야 함.
-         
-         */
+
         newSave.myName = PlayerInfo.playerName;
         newSave.arcademyName = PlayerInfo.arcademyName;
+        newSave.cost = PlayerInfo.cost;
+        newSave.maxStudent = PlayerInfo.maxStudent;
+        newSave.maxProfessor = PlayerInfo.maxProfessor;
+
+        newSave.nineSuccess = PlayerInfo.nineSuccess;
+        newSave.sevenSuccess = PlayerInfo.sevenSuccess;
+        newSave.fiveSuccess = PlayerInfo.fiveSuccess;
 
         string json = JsonUtility.ToJson(newSave, true);
         File.WriteAllText(path + "player" + i.ToString(), json);

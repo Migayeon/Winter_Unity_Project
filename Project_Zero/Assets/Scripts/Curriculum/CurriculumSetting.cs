@@ -277,6 +277,7 @@ public class CurriculumSetting : MonoBehaviour
         //GoodsUIUpdate.ShowUI();
         SceneManager.LoadScene("BeforeTurn");
         return;
+        /* 
         if (div == 3)
         {
             
@@ -292,6 +293,7 @@ public class CurriculumSetting : MonoBehaviour
             else
                 images[subjectId].color = new Color(0.3f, 0.3f, 0.3f);
         }
+        */
     }
 
     IEnumerator WarningMessage(string message, float time = 1.0f)
