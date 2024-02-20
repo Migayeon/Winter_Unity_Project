@@ -18,6 +18,9 @@ public class ESC_Manager : MonoBehaviour
     public GameObject confirm;
     [SerializeField]
     private GameObject toTitleMessage;
+
+    public GameObject SettingCanvas;
+
     private void Awake()
     {
         escMessage.SetActive(false);
@@ -64,8 +67,7 @@ public class ESC_Manager : MonoBehaviour
 
     public void Setting()
     {
-        SettingManager.backPath = "Main";
-        SceneManager.LoadScene("Setting");
+        SettingCanvas.SetActive(true);
     }
     public void TitleCheckMessage()
     {

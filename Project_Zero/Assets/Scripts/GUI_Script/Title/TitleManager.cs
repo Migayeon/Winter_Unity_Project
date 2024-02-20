@@ -72,8 +72,8 @@ public class TitleManager : MonoBehaviour
 
     public void OpenOption()
     {
-        SettingManager.backPath = "Title";
-        SceneManager.LoadScene("Setting");
+        // SettingManager.backPath = "Title";
+        // SceneManager.LoadScene("Setting");
     }
 
     public void ExitGame() // 게임 종료 창 띄우기
