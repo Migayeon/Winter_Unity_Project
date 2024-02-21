@@ -1,6 +1,7 @@
 import json, os
 
 saveJson = {}
+PATH = "SystemInfo.json"
 
 class Node:
     def __init__(self, text = None, manageValue = None, description = None, query = None, manageList = None, manageDict = None, isRoot = False) -> None:
@@ -112,6 +113,9 @@ def save(data, key):
             rst += key + ":" + save(data[key], i)
     return rst
 
+def load(data, key):
+    data[key] = json.loads(data[key])
+
 root = Node("~", isRoot = True)
 manageKey = ["Professor"]
 root.child = Node("교수", manageDict = manageKey)
@@ -135,12 +139,15 @@ root.child.child.child.sibling.child.sibling.sibling.sibling.child.sibling = Nod
 
 if __name__ == "__main__":
     print("< 밸런스 컨트롤러 >")
+    with open(PATH, "r") as jsonFile:
+        saveJson = json.load(jsonFile)
+        for i in saveJson.keys():
+            load(saveJson, i)
     addr = root
     addrSave = []
     while True:
         print("현재 주소 : ", '/'.join(map(lambda x : x.text, addrSave + [addr])))
-        flag = addr.manageValue is None
-        if flag:
+        if addr.manageValue is None:
             if addr.child is not None:
                 options = addr.getChildren()
             elif addr.query is not None:
@@ -165,7 +172,9 @@ if __name__ == "__main__":
                 rst = {}
                 for i in saveJson.keys():
                     rst[i] = save(saveJson, i)
-                print(json.dumps(rst, indent = 4))
+                with open(PATH, "w") as jsonFile:
+                    json.dump(rst, jsonFile, indent = 4)
+                print("저장 완료!")
             elif selection == "b" and not addr.isRoot:
                 addr = addrSave.pop()
             elif selection == "q":
@@ -177,9 +186,22 @@ if __name__ == "__main__":
                 root.updateNewVariable()
                 print(saveJson)
         else:
-            print(f"설정할 값을 입력해주세요.\n{addr.text} : {addr.text} -> ?\n* 설정을 원치 않으시다면 숫자가 아닌 것을 입력해주세요. *")
+            nowValue = 0
+            tmp = saveJson
+            for i in range(len(addr.manageValue) - 1):
+                tmp = tmp[addr.manageValue[i]]
+            if type(tmp) == dict:
+                nowValue = tmp[addr.manageValue[-1]]
+            elif type(tmp) == list:
+                nowValue = tmp[addr.manageValue[-1]]
+            print(f"설정할 값을 입력해주세요.\n{addr.text} : {nowValue} -> ?\n* 설정을 원치 않으시다면 숫자가 아닌 것을 입력해주세요. *")
             value = input('>>> ')
             if value.isdigit():
-                int(value)
+                if type(tmp) == dict:
+                    tmp[addr.manageValue[-1]] = int(value)
+                elif type(tmp) == list:
+                    tmp[addr.manageValue[-1]] = int(value)
+                print(f"-> 값이 {value}(으)로 변경되었습니다!")
+                addr = addrSave.pop()
             else:
                 addr = addrSave.pop()
