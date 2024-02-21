@@ -60,7 +60,10 @@ public class AfterTurn : MonoBehaviour
                 bool check = group.CurriculumSequence();
                 if (check == false)
                 {
-                    toBeGraduated.Add(group);
+                    if(group.GetNumber() > 0)
+                    {
+                        toBeGraduated.Add(group);
+                    }
                     isGraduated = true;
                 }
             }
@@ -192,6 +195,19 @@ public class AfterTurn : MonoBehaviour
                     GetComponent<TextMeshProUGUI>().text =
                     $"{group.GetPassedNum()} / {group.GetNumber()}";
                 count++;
+            }
+            for(int i = count; i < 3; i++)
+            {
+                Debug.Log(i);
+                pageTwo.transform.GetChild(2).GetChild(i).GetChild(0).
+                    GetComponent<TextMeshProUGUI>().text =
+                    $"";
+                pageTwo.transform.GetChild(2).GetChild(i).GetChild(1).
+                    GetComponent<TextMeshProUGUI>().text =
+                    $"해당 분반에\r\n학생이 없습니다.";
+                pageTwo.transform.GetChild(2).GetChild(i).GetChild(2).
+                    GetComponent<TextMeshProUGUI>().text =
+                    $"";
             }
         }
         // 정산용 변수 초기화
