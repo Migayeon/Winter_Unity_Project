@@ -11,14 +11,16 @@ public class CheckTutorial : MonoBehaviour
 
     public void YesTutorial()
     {
-        LoadingSceneManager.LoadScene("Main");
         DialogueSystem.situation = "Tutorial";
+        LoadingSceneManager.LoadScene("Main");
+        
     }
 
     public void NoTutorial()
     {
-        LoadingSceneManager.LoadScene("Main");
         DialogueSystem.situation = null;
+        LoadingSceneManager.LoadScene("Main");
+        
     }
 
     private void Awake()

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class DialogueSystem : MonoBehaviour
@@ -59,8 +60,6 @@ public class DialogueSystem : MonoBehaviour
             message.text = string.Empty;
 
             dialogueString = dialogue.message[dialogueIndex].Split(":");
-            Debug.Log(dialogueIndex);
-            Debug.Log(dialogueString[1]);
 
             if (dialogueString[0] == "&O")
             {
@@ -136,21 +135,45 @@ public class DialogueSystem : MonoBehaviour
     {
         if (situation != null)
         {
-            prevObject = "none";
-            TextAsset json = Resources.Load<TextAsset>("Dialogue/" + situation);
-            dialogue = JsonUtility.FromJson<content>(json.ToString());
-            dialogueLength = dialogue.message.Length;
-            dialogueIndex = 0;
-            isNowAnimation = false;
-            dialogueUI.SetActive(true);
-            dialogueUI.GetComponent<Button>().onClick.AddListener(DialogueProcess);
+            StartDialogue();
+            skipButton.gameObject.SetActive(true);
+            skipButton.onClick.RemoveAllListeners();
             skipButton.onClick.AddListener(SkipDialogue);
-            DialogueProcess();
         }
         else
         {
             dialogueUI.SetActive(false);
             skipButton.gameObject.SetActive(false);
         }
+    }
+
+    public void StartDialogue()
+    {
+        prevObject = "none";
+        TextAsset json = Resources.Load<TextAsset>("Dialogue/" + situation);
+        dialogue = JsonUtility.FromJson<content>(json.ToString());
+        dialogueLength = dialogue.message.Length;
+        dialogueIndex = 0;
+        isNowAnimation = false;
+        dialogueUI.SetActive(true);
+        dialogueUI.GetComponent<Button>().onClick.RemoveAllListeners();
+        dialogueUI.GetComponent<Button>().onClick.AddListener(DialogueProcess);
+        DialogueProcess();
+    }
+
+    public void SimpleDialogue()
+    {
+        int maximum = 0;
+        string sceneName = SceneManager.GetActiveScene().name;
+        if(sceneName == "Main")
+        {
+            maximum = 3;
+        }
+        else if(sceneName == "BeforeTurn")
+        {
+            maximum = 1;
+        }
+        situation = sceneName + "/" + Random.Range(0, maximum).ToString();
+        StartDialogue();
     }
 }
