@@ -213,11 +213,9 @@ public class CreateProfessor : ProfessorSystem
         {
             case 0:
                 ProfessorStats[0] += 100;
-                StatScale -= 100;
                 break;
             case 1:
                 ProfessorStats[0] += 100;
-                StatScale -= 100;
                 break;
         }
         for (int i = 0; i < StatScale; i++)
