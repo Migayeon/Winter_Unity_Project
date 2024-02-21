@@ -25,6 +25,8 @@ public class SavedataSceneManager : MonoBehaviour
         GoodsManager.goodsConstFame = 10;
         GoodsManager.goodsStudent = 0;
 
+        CreateProfessor.professorGenerateSeed = Random.Range(-2147483648, 2147483647);
+
         PlayerInfo.ProfessorList.Clear();
         PlayerInfo.studentGroups.Clear();
 
