@@ -32,6 +32,16 @@ public class SavedataSceneManager : MonoBehaviour
         SubjectTree.initSubjectStates(new List<int>());
         SubjectTree.callOnlyOneTimeWhenGameStart();
         BeforeTurn.HaveToGenerateNewProfessors = true;
+        for (int roll = 0; roll < 3; roll++)
+        {
+            ProfessorSystem.Professor tmp = CreateProfessor.CreateNewProfessor(roll);
+            while (tmp.ProfessorGetType() != roll / 2)
+                tmp = CreateProfessor.CreateNewProfessor(roll);
+            tmp.ProfessorChangeSalary(0);
+            PlayerInfo.ProfessorList.Add(tmp);
+            if (tmp.ProfessorGetName() == "대 시후")
+                AchievementManager.Achieve(0);
+        }
         AchievementManager.Achieve(1);
         /*
          
