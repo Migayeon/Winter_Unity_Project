@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -63,7 +64,22 @@ public class AfterTurn : MonoBehaviour
                 }
             }
         }
-        if (isGraduated == true) PlayerInfo.studentGroups.RemoveAt(0);
+        if (isGraduated == true)
+        {
+            StudentGroup[] graduateGroup = PlayerInfo.studentGroups[0];
+
+            int numSum = graduateGroup[0].GetNumber() + graduateGroup[1].GetNumber() + graduateGroup[2].GetNumber();
+            int costSum = graduateGroup[0].GetCost() * 8 * numSum;
+
+            string graduationData =
+                graduateGroup[0].GetPeriod().ToString() + "/" +
+                numSum.ToString() + "/" +
+                graduateGroup[0].GetCost().ToString() + "/" +
+                costSum.ToString();
+            PlayerInfo.graduateList.Add(graduationData);
+
+            PlayerInfo.studentGroups.RemoveAt(0);
+        }
         student_Rev = GoodsManager.goodsAr - student_Rev;
 
         // 커리큘럼 마친 학생들 시험 보게 하기

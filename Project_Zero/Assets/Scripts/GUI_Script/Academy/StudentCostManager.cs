@@ -27,7 +27,8 @@ public class StudentCostManager : MonoBehaviour
         }
         for (int i = 0; i<PlayerInfo.graduateList.Count; i++)
         {
-
+            GameObject studentInfo = Instantiate(infoPrefab, content);
+            studentInfo.GetComponent<StudentCostUpdate>().CurrentContentUpdate(PlayerInfo.graduateList[i]);
         }
         for (int i = 0; i<PlayerInfo.studentGroups.Count; i++)
         {

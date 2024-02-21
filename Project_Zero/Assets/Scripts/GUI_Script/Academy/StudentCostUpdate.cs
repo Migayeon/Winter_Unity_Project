@@ -32,4 +32,13 @@ public class StudentCostUpdate : MonoBehaviour
         costT.text = cost.ToString();
         costSumT.text = costSum.ToString();
     }
+
+    public void CurrentContentUpdate(string graduateData)
+    {
+        string[] studentInfo = graduateData.Split("/");
+        periodT.text = studentInfo[0];
+        numT.text = studentInfo[1];
+        costT.text = studentInfo[2];
+        costSumT.text = studentInfo[3];
+    }
 }

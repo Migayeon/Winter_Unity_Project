@@ -103,7 +103,10 @@ public class StudentGroup
         }
         age++;
         GoodsManager.goodsAr += cost * number;
-        if (age == 8) return false;
+        if (age == 8)
+        {
+            return false;
+        }
         return true;
     }
     
