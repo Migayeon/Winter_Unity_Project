@@ -96,10 +96,16 @@ public class StudentGroup
     public bool CurriculumSequence()
     {
         Subject subject = SubjectTree.getSubject(curriculum[age]);
+        int[] subjectWeight = new int[5] { 1, 2, 4, 6, 12 };
         List<int> enforceType = subject.enforceContents;
         for (int i = 0; i < enforceType.Count; i++)
         {
-            stat[i] += enforceType[i];
+            stat[i] +=
+                StudentsManager.professorInfoInSubject[subject.id, 0][0] *
+                StudentsManager.professorInfoInSubject[subject.id, i + 1][0] *
+                subjectWeight[subject.tier - 1] *
+                enforceType[i] 
+                / 2000000; 
         }
         age++;
         GoodsManager.goodsAr += cost * number;
@@ -114,16 +120,41 @@ public class StudentGroup
 
 public class StudentsManager : MonoBehaviour
 {
-   
-    private void Awake()
-    {
-        /*
-         
-        구현할 것
-        1. 활성화된 과목 비활성화 된 과목 분리
-        2. 스크립트 오브젝트에 부여
-        3.  
+    /*
+    교수 탐색 후 과목마다 보너스를 찾아내는 함수... 
 
-         */
+     1. afterTurn에서 사용합니다
+     2. 첫번째 인덱스는 과목 번호, 두번째 인덱스는 스탯 번호, 리스트 내부에는 스탯들
+     3. 한 과목에 여러명의 교수가 배치되면 어떻게 능력치를 부여할지... 
+     
+     */
+
+    public static List<int>[,] professorInfoInSubject;
+
+    public static void UpdateProfessorInfoInSubject()
+    {
+        professorInfoInSubject = new List<int>[30, 6];
+        for(int i = 0; i < 30; i++)
+        {
+            for(int j = 0; j < 6; j++)
+            {
+                professorInfoInSubject[i, j] = new List<int>();
+            }
+        }
+        foreach (ProfessorSystem.Professor professor in PlayerInfo.ProfessorList)
+        {
+            List<int> subjectList = professor.ProfessorGetSubjects();
+            List<int> statList = professor.ProfessorGetStats();
+            for(int i = 0; i < subjectList.Count; i++)
+            {
+                for(int j = 0; j < 6; j++)
+                {
+                    Debug.Log($"{i} {j}");
+                    Debug.Log(professorInfoInSubject[subjectList[i], j]);
+                    professorInfoInSubject[subjectList[i], j].Add(statList[j]);
+                }
+            }
+        }
     }
+    
 }

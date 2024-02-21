@@ -52,6 +52,7 @@ public class AfterTurn : MonoBehaviour
         // 학생들 커리큘럼 진행
         student_Rev = GoodsManager.goodsAr;
         nextTurn.onClick.RemoveAllListeners();
+        StudentsManager.UpdateProfessorInfoInSubject();
         foreach (StudentGroup[] period in PlayerInfo.studentGroups)
         {
             foreach (StudentGroup group in period)
