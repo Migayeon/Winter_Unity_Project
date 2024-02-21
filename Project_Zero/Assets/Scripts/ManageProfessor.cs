@@ -304,6 +304,11 @@ public class ManageProfessor : MonoBehaviour
         //UpgradeStatInfo2.text = KoreanStatList[UpgradeIndex2];
         UpgradeStatValue1.text = Convert.ToString(PlayerInfo.UpgradeSkillValue[idx][0]);
         UpgradeStatValue2.text = Convert.ToString(PlayerInfo.UpgradeSkillValue[idx][1]);
+
+        UpgradeButton1.onClick.RemoveAllListeners();
+        UpgradeButton2.onClick.RemoveAllListeners();
+        AwayButton.onClick.RemoveAllListeners();
+        FireButton.onClick.RemoveAllListeners();
         UpgradeButton1.onClick.AddListener(() => UpgradeStats(UpgradeIndex1));
         UpgradeButton2.onClick.AddListener(() => UpgradeStats(UpgradeIndex2));
         AwayButton.onClick.AddListener(() => ProfessorSendAway(ProfData));

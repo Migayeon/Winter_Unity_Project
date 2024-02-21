@@ -149,8 +149,6 @@ public class StudentsManager : MonoBehaviour
             {
                 for(int j = 0; j < 6; j++)
                 {
-                    Debug.Log($"{i} {j}");
-                    Debug.Log(professorInfoInSubject[subjectList[i], j]);
                     professorInfoInSubject[subjectList[i], j].Add(statList[j]);
                 }
             }
