@@ -28,38 +28,6 @@ using static ProfessorSystem;
  * preferably idea 1, but if it doesn't work we can revert to 2.
  * 
  * else -> create new professors (first roll)
- * 
- *
- * <Enter Scene>
- * if (First Roll)
- * {
- *      generate three new professors
- *      store currently generate data (so that it can be reshown if user goes back to main menu then comes back again)
- *      
- *      if (Player selects professor)
- *      {
- *          send data to PlayerInfo
- *          store selected professor data (so that it can be shown again if player goes to main menu then comes back)
- *          
- *          if (player selects prof)
- *          {
- *          ...
- *      }
- * }
- * else
- * {
- *      if (player had selected before)
- *      {
- *          show info of previously selected professor
- *      }
- *      else
- *      {
- *          ...
- *      }
- * }
- * 
- * ISSUE: FLOWCHART IS A BIT TOO COMPLICATED!
- * ***: try completely rewriting the code at some point for better readability and stuff
  */
 
 
@@ -71,11 +39,10 @@ public class CreateProfessor : ProfessorSystem
 {    
     const int UniqueProfessorRarity = 5; //probability (edit later)
     const int BattleProfessorRarity = 15; //probability (edit later)
-    const int TotalRarity = 100;
     const int RETRY_COST = 50;
     public static int professorGenerateSeed;
     public static int[] professorSeeds = new int[3];
-    public static string GenerateName()
+    public static string GenerateName(int seed = 2147483647)
     {
         StreamReader ReadEnglishName = new StreamReader("Assets/Resources/Names/englishNames.csv");
         StreamReader ReadKoreanName = new StreamReader("Assets/Resources/Names/koreanNames.csv");
@@ -111,7 +78,12 @@ public class CreateProfessor : ProfessorSystem
             }
         }
         ReadKoreanName.Close();
-        System.Random randomGenerator = new System.Random(professorGenerateSeed);
+        System.Random randomGenerator;
+        if (seed != 2147483647)
+            randomGenerator = new System.Random(professorGenerateSeed);
+        else
+            randomGenerator = new System.Random();
+
 
         randomLastNameIndex = randomGenerator.Next(0, lastName.Count);
         RandomLastName = lastName[randomLastNameIndex];
@@ -133,75 +105,125 @@ public class CreateProfessor : ProfessorSystem
         PopupObject.SetActive(false);
     }
 
-    public static Professor CreateNewProfessor(int num) // "static" keyword is included for testing purposes only (used in professor info management testing), may remove later
+    public static Professor CreateRandomProfessor(int num) // "static" keyword is included for testing purposes only (used in professor info management testing), may remove later
     {
         System.Random RandomGenerator = new System.Random(professorGenerateSeed);
-        List<int> ProfessorRarityList = new List<int>(TotalRarity);
-        for (int i = 0; i < UniqueProfessorRarity; ++i)
+        long ProfessorID = Convert.ToInt64(DateTime.Now.ToString("yyyyMMdd") + DateTime.Now.ToString("HHmmss") + Convert.ToString(num));
+        string ProfessorName = GenerateName(professorGenerateSeed);
+        int ProfessorTenure = 0;
+        int ProfessorRarity = RandomGenerator.Next(0, 100);
+        if (ProfessorRarity <= UniqueProfessorRarity)
+            ProfessorRarity = 2;
+        else if (ProfessorRarity <= UniqueProfessorRarity + BattleProfessorRarity)
+            ProfessorRarity = 1;
+        else
+            ProfessorRarity = 0;
+        int[] ProfessorStats = new int[professorStats];
+        int StatScale = 0, salarySaleWeight = 0;
+        switch (ProfessorRarity)
         {
-            ProfessorRarityList.Add(2);
+            case 0:
+                StatScale = RandomGenerator.Next(2700, 4200 + 1);
+                salarySaleWeight = 3;
+                break;
+            case 1:
+                StatScale = RandomGenerator.Next(2700, 4200 + 1);
+                salarySaleWeight = 3;
+                break;
+            case 2:
+                StatScale = RandomGenerator.Next(3600, 4500 + 1);
+                salarySaleWeight = 3;
+                break;
         }
-        for (int i = 0; i < BattleProfessorRarity; ++i)
+        for (int i = 1; i < professorStats; i++)
         {
-            ProfessorRarityList.Add(1);
+            switch (ProfessorRarity)
+            {
+                case 0:
+                    ProfessorStats[i] += 100;
+                    StatScale -= 100;
+                    break;
+                case 1:
+                    ProfessorStats[i] += 100;
+                    StatScale -= 100;
+                    break;
+                case 2:
+                    ProfessorStats[i] += 100;
+                    StatScale -= 100;
+                    break;
+            }
         }
-        for (int i = 0; i < TotalRarity - BattleProfessorRarity - UniqueProfessorRarity; ++i)
+        switch (ProfessorRarity)
         {
-            ProfessorRarityList.Add(0);
+            case 0:
+                ProfessorStats[0] += 200;
+                StatScale -= 200;
+                break;
+            case 1:
+                ProfessorStats[0] += 200;
+                StatScale -= 200;
+                break;
+            case 2:
+                ProfessorStats[0] += 300;
+                StatScale -= 300;
+                break;
         }
+        for (int i = 0; i < StatScale; i++)
+            ProfessorStats[RandomGenerator.Next(professorStats)]++;
+        Professor NewProfessor = new Professor(ProfessorID, ProfessorName, ProfessorTenure, ProfessorRarity, ProfessorStats.ToList(), StatScale / salarySaleWeight);
+        professorGenerateSeed = RandomGenerator.Next(-2147483648, 2147483647);
+        return NewProfessor;
+    }
 
+    public static Professor CreateStandardProfessor(int num, int rarity)
+    {
+        System.Random RandomGenerator = new System.Random();
         long ProfessorID = Convert.ToInt64(DateTime.Now.ToString("yyyyMMdd") + DateTime.Now.ToString("HHmmss") + Convert.ToString(num));
         string ProfessorName = GenerateName();
         int ProfessorTenure = 0;
-        int ProfessorRarity = ProfessorRarityList[RandomGenerator.Next(0, 100)];
-        List<int> ProfessorStats = new List<int>(6);
-        int StatScale = RandomGenerator.Next(3000, 4001);
-        int StatSum = 0;
-        for (int i = 0; i < ProfessorSystem.professorStats; ++i)
+        int ProfessorRarity = rarity;
+        int[] ProfessorStats = new int[professorStats];
+        int StatScale = 0, salarySaleWeight = 0;
+        switch (ProfessorRarity)
         {
-            ProfessorStats.Add(RandomGenerator.Next(1000, 10000));
-            StatSum += ProfessorStats[i];
+            case 0:
+                StatScale = 500;
+                salarySaleWeight = 2;
+                break;
+            case 1:
+                StatScale = 500;
+                salarySaleWeight = 2;
+                break;
         }
-        for (int i = 0; i < ProfessorSystem.professorStats; ++i)
+        for (int i = 1; i < professorStats; i++)
         {
-            ProfessorStats[i] = (int)((ProfessorStats[i]) * ((float)StatScale / StatSum));
+            switch (ProfessorRarity)
+            {
+                case 0:
+                    ProfessorStats[i] += 50;
+                    StatScale -= 50;
+                    break;
+                case 1:
+                    ProfessorStats[i] += 50;
+                    StatScale -= 50;
+                    break;
+            }
         }
-        //3000~4000, divide among 6 stats;
-        //set salary (sum of all stats)
-        int ProfessorSalary = 0;
-        for (int i = 0; i < ProfessorSystem.professorStats; ++i)
+        switch (ProfessorRarity)
         {
-            ProfessorSalary += ProfessorStats[i];
+            case 0:
+                ProfessorStats[0] += 100;
+                StatScale -= 100;
+                break;
+            case 1:
+                ProfessorStats[0] += 100;
+                StatScale -= 100;
+                break;
         }
-        Professor NewProfessor = new Professor(ProfessorID, ProfessorName, ProfessorTenure, ProfessorRarity, ProfessorStats, ProfessorSalary);
-        Debug.Log(string.Format("num {0}", num));
-        NewProfessor.UnityDebugLogProfessorInfo();
-        professorGenerateSeed = RandomGenerator.Next(-2147483648, 2147483647);
-
-        //test logging
-        /*
-        Debug.Log(string.Format("num {0}", num));
-        Debug.Log("Created new professor");
-        Debug.Log(string.Format("Professor ID : {0}", ProfessorID));
-        Debug.Log(string.Format("Professor Name : {0}", ProfessorName));
-        Debug.Log(string.Format("Professor Tenure : {0}", ProfessorTenure));
-        if (ProfessorRarity == 1)
-            Debug.Log("Professor Rarity : unique");
-        else
-            Debug.Log("Professor Rarity : normal");
-        string temp = "Professor Stats : ";
-        for (int i = 0; i < ProfessorSystem.professorStats; ++i)
-        {
-            temp += ProfessorSystem.Professor.statlist[i];
-            temp += " ";
-            temp += Convert.ToString(ProfessorStats[i]);
-            temp += "     ";
-        }
-        Debug.Log(temp);
-        Debug.Log(ProfessorSalary);
-        */
+        for (int i = 0; i < StatScale; i++)
+            ProfessorStats[RandomGenerator.Next(professorStats)]++;
+        Professor NewProfessor = new Professor(ProfessorID, ProfessorName, ProfessorTenure, ProfessorRarity, ProfessorStats.ToList(), StatScale / salarySaleWeight);
         return NewProfessor;
-
     }
 
     [SerializeField]
@@ -225,7 +247,7 @@ public class CreateProfessor : ProfessorSystem
     private Sprite[] professorIllust;
 
     private List<ProfessorResume> ProfessorResumes;
-    private TextMeshProUGUI PickedProfessorName, PickedProfessorType, PickedProfessorStat, PickedProfessorSalary;
+    private TextMeshProUGUI PickedProfessorName, PickedProfessorType, PickedProfessorStat, PickedProfessorSalary, PickedProfessorDeposit;
     private Image PickedProfessorImage;
 
     void Awake()
@@ -244,7 +266,8 @@ public class CreateProfessor : ProfessorSystem
         PickedProfessorType = HideTextObject.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
         PickedProfessorStat = HideTextObject.transform.GetChild(4).GetComponent<TextMeshProUGUI>();
         PickedProfessorSalary = HideTextObject.transform.GetChild(5).GetComponent<TextMeshProUGUI>();
-        PickedProfessorImage = HideTextObject.transform.GetChild(6).GetComponent<Image>();
+        PickedProfessorDeposit = HideTextObject.transform.GetChild(6).GetComponent<TextMeshProUGUI>();
+        PickedProfessorImage = HideTextObject.transform.GetChild(7).GetComponent<Image>();
     }
     void Start()
     {
@@ -257,11 +280,7 @@ public class CreateProfessor : ProfessorSystem
         HideTextObject.SetActive(false);
         MaxProfessorsErrorObject.SetActive(false);
 
-        //FIX THIS PART!!!
-        //control flow is fucked lol, might have to redo the whole thing
-        //end my suffering
-
-        if (PlayerInfo.ProfessorCount() == PlayerInfo.maxProfessor) // if player has reached the maximum number of professors
+        if (PlayerInfo.ProfessorCount() == PlayerInfo.maxProfessor)
         {
             MaxProfessorsErrorObject.SetActive(true);
             MaxProfessorsErrorMessage.text = string.Format("<안내><br><br>교수는 최대 {0}명 고용할 수 있습니다.", PlayerInfo.maxProfessor);
@@ -300,6 +319,9 @@ public class CreateProfessor : ProfessorSystem
     public void PickProfessor(int index)
     {
         ProfessorResume pickedProfessor = ProfessorResumes[index];
+        if (GoodsManager.goodsAr < pickedProfessor.depositNum)
+            return;
+        GoodsManager.goodsAr -= pickedProfessor.depositNum;
         PlayerInfo.ProfessorList.Add(pickedProfessor.professor);
         string professorName = pickedProfessor.name.text;
         if (professorName == "대 시후")
@@ -309,6 +331,7 @@ public class CreateProfessor : ProfessorSystem
         PickedProfessorType.text = pickedProfessor.type.text;
         PickedProfessorStat.text = pickedProfessor.stat.text;
         PickedProfessorSalary.text = pickedProfessor.salary.text;
+        PickedProfessorDeposit.text = pickedProfessor.deposit.text;
         PickedProfessorImage.sprite = professorIllust[pickedProfessor.professor.ProfessorGetType()];
         ProfessorResumes[index].Close();
 
@@ -371,7 +394,7 @@ public class CreateProfessor : ProfessorSystem
         for (int i = 0; i < 3; i++)
         {
             professorGenerateSeed = resumeData.resumeSeeds[i];
-            PlayerInfo.RandomProfessorList.Add(CreateNewProfessor(i));
+            PlayerInfo.RandomProfessorList.Add(CreateRandomProfessor(i));
         }
         professorGenerateSeed = resumeData.seed;
     }
@@ -389,9 +412,11 @@ public class CreateProfessor : ProfessorSystem
         public TextMeshProUGUI type;
         public TextMeshProUGUI stat;
         public TextMeshProUGUI salary;
+        public TextMeshProUGUI deposit;
         public Button pickButton;
         public TextMeshProUGUI pickText;
         public Professor professor;
+        public int depositNum;
 
         public ProfessorResume(Transform professorResumeTransform)
         {
@@ -399,7 +424,8 @@ public class CreateProfessor : ProfessorSystem
             type = professorResumeTransform.GetChild(1).GetComponent<TextMeshProUGUI>();
             stat = professorResumeTransform.GetChild(2).GetComponent<TextMeshProUGUI>();
             salary = professorResumeTransform.GetChild(3).GetComponent<TextMeshProUGUI>();
-            Transform pick = professorResumeTransform.GetChild(4);
+            deposit = professorResumeTransform.GetChild(4).GetComponent<TextMeshProUGUI>();
+            Transform pick = professorResumeTransform.GetChild(5);
             pickButton = pick.GetComponent<Button>();
             pickText = pick.GetChild(0).GetComponent<TextMeshProUGUI>();
         }
@@ -411,6 +437,7 @@ public class CreateProfessor : ProfessorSystem
             type.text = "";
             stat.text = "";
             salary.text = "";
+            deposit.text = "";
             pickText.text = "";
             pickText.ForceMeshUpdate();
         }
@@ -422,13 +449,28 @@ public class CreateProfessor : ProfessorSystem
             type.text = professor.ProfessorGetTypeInString();
             stat.text = StatToString();
             salary.text = "월급 : " + Convert.ToString(professor.ProfessorGetSalary());
+            int weight = 2;
+            switch (professor.ProfessorGetType())
+            {
+                case 0:
+                    weight = 2;
+                    break;
+                case 1:
+                    weight = 2;
+                    break;
+                case 2:
+                    weight = 3;
+                    break;
+            }
+            depositNum = professor.ProfessorGetSalary() * weight;
+            deposit.text = "계약금 : " + Convert.ToString(depositNum);
         }
 
         public Professor GenerateNewProfessor(int index)
         {
             pickText.text = "채용";
             professorSeeds[index] = professorGenerateSeed;
-            professor = CreateNewProfessor(index);
+            professor = CreateRandomProfessor(index);
             return professor;
         }
         public string StatToString()

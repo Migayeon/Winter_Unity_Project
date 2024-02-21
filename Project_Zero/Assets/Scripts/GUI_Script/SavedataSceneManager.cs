@@ -38,10 +38,7 @@ public class SavedataSceneManager : MonoBehaviour
         CreateProfessor.professorGenerateSeed = randomGenerator.Next(-2147483648, 2147483647);
         for (int roll = 0; roll < 3; roll++)
         {
-            ProfessorSystem.Professor tmp = CreateProfessor.CreateNewProfessor(roll);
-            while (tmp.ProfessorGetType() != roll / 2)
-                tmp = CreateProfessor.CreateNewProfessor(roll);
-            tmp.ProfessorChangeSalary(0);
+            ProfessorSystem.Professor tmp = CreateProfessor.CreateStandardProfessor(roll, roll / 2);
             PlayerInfo.ProfessorList.Add(tmp);
             if (tmp.ProfessorGetName() == "대 시후")
                 AchievementManager.Achieve(0);

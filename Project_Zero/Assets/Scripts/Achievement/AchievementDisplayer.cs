@@ -82,6 +82,7 @@ public class AchievementDisplayer : MonoBehaviour
     {
         if (frames.Count <= achievementId) return;
         if (frames.Count == 0) return;
+        if (SceneManager.GetActiveScene().name != "Achievement") return;
         Transform nowFrame = frames[achievementId];
         Transform nowLight = nowFrame.GetChild(0);
         Transform nowPicture = nowFrame.GetChild(1);
