@@ -73,6 +73,8 @@ public class CreateProfessor : ProfessorSystem
     const int BattleProfessorRarity = 15; //probability (edit later)
     const int TotalRarity = 100;
     const int RETRY_COST = 50;
+    public static int professorGenerateSeed;
+    public static int[] professorSeeds = new int[3];
     public static string GenerateName()
     {
         StreamReader ReadEnglishName = new StreamReader("Assets/Resources/Names/englishNames.csv");
@@ -109,7 +111,7 @@ public class CreateProfessor : ProfessorSystem
             }
         }
         ReadKoreanName.Close();
-        System.Random randomGenerator = new System.Random();
+        System.Random randomGenerator = new System.Random(professorGenerateSeed);
 
         randomLastNameIndex = randomGenerator.Next(0, lastName.Count);
         RandomLastName = lastName[randomLastNameIndex];
@@ -133,7 +135,7 @@ public class CreateProfessor : ProfessorSystem
 
     public static Professor CreateNewProfessor(int num) // "static" keyword is included for testing purposes only (used in professor info management testing), may remove later
     {
-        System.Random RandomGenerator = new System.Random();
+        System.Random RandomGenerator = new System.Random(professorGenerateSeed);
         List<int> ProfessorRarityList = new List<int>(TotalRarity);
         for (int i = 0; i < UniqueProfessorRarity; ++i)
         {
@@ -162,7 +164,7 @@ public class CreateProfessor : ProfessorSystem
         }
         for (int i = 0; i < ProfessorSystem.professorStats; ++i)
         {
-            ProfessorStats[i] = (int)((float)(ProfessorStats[i]) * ((float)StatScale / StatSum));
+            ProfessorStats[i] = (int)((ProfessorStats[i]) * ((float)StatScale / StatSum));
         }
         //3000~4000, divide among 6 stats;
         //set salary (sum of all stats)
@@ -174,6 +176,7 @@ public class CreateProfessor : ProfessorSystem
         Professor NewProfessor = new Professor(ProfessorID, ProfessorName, ProfessorTenure, ProfessorRarity, ProfessorStats, ProfessorSalary);
         Debug.Log(string.Format("num {0}", num));
         NewProfessor.UnityDebugLogProfessorInfo();
+        professorGenerateSeed = RandomGenerator.Next(-2147483648, 2147483647);
 
         //test logging
         /*
@@ -349,6 +352,37 @@ public class CreateProfessor : ProfessorSystem
         PopupObject.SetActive(false);
     }
 
+    public static string Save()
+    {
+        SaveData resumeData = new SaveData();
+        resumeData.seed = professorGenerateSeed;
+        resumeData.resumeSeeds = professorSeeds;
+        resumeData.isOpened = PlayerInfo.ProfessorPickedStatus;
+        return JsonUtility.ToJson(resumeData);
+    }
+
+    public static void Load(string json)
+    {
+        SaveData resumeData = JsonUtility.FromJson<SaveData>(json);
+        professorSeeds = resumeData.resumeSeeds;
+        PlayerInfo.ProfessorPickedStatus = resumeData.isOpened;
+        BeforeTurn.HaveToGenerateNewProfessors = false;
+        PlayerInfo.RandomProfessorList.Clear();
+        for (int i = 0; i < 3; i++)
+        {
+            professorGenerateSeed = resumeData.resumeSeeds[i];
+            PlayerInfo.RandomProfessorList.Add(CreateNewProfessor(i));
+        }
+        professorGenerateSeed = resumeData.seed;
+    }
+
+    class SaveData
+    {
+        public int seed;
+        public int[] resumeSeeds;
+        public bool[] isOpened;
+    }
+
     class ProfessorResume
     {
         public TextMeshProUGUI name;
@@ -393,6 +427,7 @@ public class CreateProfessor : ProfessorSystem
         public Professor GenerateNewProfessor(int index)
         {
             pickText.text = "채용";
+            professorSeeds[index] = professorGenerateSeed;
             professor = CreateNewProfessor(index);
             return professor;
         }

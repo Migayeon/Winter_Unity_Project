@@ -59,7 +59,7 @@ public class EventManager : MonoBehaviour
     public static (string, int) GetEvent()
     {
         System.Random generateRandom = new System.Random();
-        string[] filenames = new string[] { "Assets\\Resources\\Events\\Common.csv", "Assets\\Resources\\Events\\Rare.csv", "Assets\\Resources\\Events\\Unique.csv" }; //enter filenames here
+        string[] filenames = new string[] { "Assets/Resources/Events/Common.csv", "Assets/Resources/Events/Rare.csv", "Assets/Resources/Events/Unique.csv" }; //enter filenames here
         string[] rarityTypes = new string[] { "common", "rare", "unique" };
         int SelectRandomEvent(int rarity, int casecount, int[,] datalist)
         {

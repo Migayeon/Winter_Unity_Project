@@ -32,6 +32,8 @@ public class SavedataSceneManager : MonoBehaviour
         SubjectTree.initSubjectStates(new List<int>());
         SubjectTree.callOnlyOneTimeWhenGameStart();
         BeforeTurn.HaveToGenerateNewProfessors = true;
+        System.Random randomGenerator = new System.Random();
+        CreateProfessor.professorGenerateSeed = randomGenerator.Next(-2147483648, 2147483647);
         for (int roll = 0; roll < 3; roll++)
         {
             ProfessorSystem.Professor tmp = CreateProfessor.CreateNewProfessor(roll);
@@ -42,6 +44,7 @@ public class SavedataSceneManager : MonoBehaviour
             if (tmp.ProfessorGetName() == "대 시후")
                 AchievementManager.Achieve(0);
         }
+        PlayerInfo.ProfessorPickedStatus = new bool[3] { true, true, true };
         AchievementManager.Achieve(1);
         /*
          

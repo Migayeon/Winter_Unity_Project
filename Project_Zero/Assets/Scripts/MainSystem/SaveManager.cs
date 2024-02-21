@@ -40,6 +40,7 @@ public struct InGameData
     public List<string> professor; // 클래스 정보 받아서 하나의 스트링으로
     public List<string> students;
     public string subject;
+    public string professorCandidates;
 }
 
 
@@ -106,6 +107,7 @@ public class SaveManager : MonoBehaviour
         inGameData.professor = new List<string>();
         inGameData.students = new List<string>();
         inGameData.subject = SubjectTree.save();
+        inGameData.professorCandidates = CreateProfessor.Save();
 
         ProfessorSave(inGameData);
         StudentSave(inGameData);
@@ -142,6 +144,7 @@ public class SaveManager : MonoBehaviour
         SubjectTree.initSubjectStates(new List<int>());
         SubjectTree.callOnlyOneTimeWhenGameStart();
         SubjectTree.load(inGameData.subject);
+        CreateProfessor.Load(inGameData.professorCandidates);
     }
 
     public static void StudentSave(InGameData data)
