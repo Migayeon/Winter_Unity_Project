@@ -73,6 +73,7 @@ public class PlayerInfo : MonoBehaviour
         List<string> upgradedStudent = new List<string>();
         for(int i = 0; i < studentGroups.Count; i++)
         {
+            Debug.Log("i is " + i.ToString());
             for(int j = 0; j < 3; j++)
             {
                 if (studentGroups[i][j].GetNumber() > 0 && upgradeMax > 0)

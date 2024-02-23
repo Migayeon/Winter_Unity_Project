@@ -192,7 +192,9 @@ public class CurriculumSetting : MonoBehaviour
     {
         if (num + PlayerInfo.StudentGroupCount() + sum > PlayerInfo.maxStudent) 
         {
+            Debug.Log(PlayerInfo.maxStudent - PlayerInfo.StudentGroupCount() - sum);
             num = Mathf.Max(0, PlayerInfo.maxStudent - PlayerInfo.StudentGroupCount() - sum);
+            Debug.Log(num);
         }
         if (PlayerInfo.cost == 300 && num >= 1000)
             AchievementManager.Achieve(8);
@@ -311,7 +313,7 @@ public class CurriculumSetting : MonoBehaviour
         localMinimum = UnityEngine.Random.Range(400, 500);
         num = PlayerInfo.cost - localMinimum;
         GoodsManager.CalculateEndedFame();
-        num = (num * num / coefficient) * (GoodsManager.goodsCalculatedEndedFame / 100);
+        num = ((num * num / coefficient) * GoodsManager.goodsCalculatedEndedFame) / 100;
         //Debug.Log($"학생수 : {num}\n 명성 : {GoodsManager.goodsCalculatedEndedFame}");
         warningMessage.enabled = false;
         foreach (var subject in subjectGameobject.transform.GetComponentsInChildren<Button>())
