@@ -67,27 +67,34 @@ public class PlayerInfo : MonoBehaviour
         return sum;
     }
 
-    public static List<string> StudentStatRandomUpgrade(int amount)
+    public static List<string> StudentStatRandomUpgrade(int amount, int upgradeMax)
     {
-        int upgradeMax = 1;
+        int randomIndex;
         List<string> upgradedStudent = new List<string>();
-        for(int i = 0; i < studentGroups.Count; i++)
+        List<int> studentsIndex = new List<int>();
+        for (int i = 0; i < studentGroups.Count; i++)
         {
-            for(int j = 0; j < 3; j++)
+            for (int j = 0; j < 3; j++)
             {
-                if (studentGroups[i][j].GetNumber() > 0 && upgradeMax > 0)
+                if (studentGroups[i][j].GetNumber() > 0)
                 {
-                    if (Random.Range(0, 20) == 0)
-                    {
-                        upgradeMax--;
-                        studentGroups[i][j].RandomStatUp(amount);
-                        upgradedStudent.Add(studentGroups[i][j].GetPeriod().ToString() + "/" + (j + 1).ToString());
-                    }
+                    studentsIndex.Add(3 * i + j);
                 }
             }
         }
-        for (int i = studentGroups.Count - 1; i >=0;i--){
 
+        if(studentsIndex.Count == 0)
+        {
+            return upgradedStudent;
+        }
+
+        for (int i = 0; i < upgradeMax; i++)
+        {
+            randomIndex = Random.Range(0, studentsIndex.Count);
+            studentGroups[randomIndex/3][randomIndex%3].RandomStatUp(amount);
+            upgradedStudent.Add(studentGroups[randomIndex / 3][randomIndex % 3].GetPeriod().ToString() + "/" + (randomIndex % 3 + 1).ToString());
+            studentsIndex.RemoveAt(randomIndex);
+        }
 
         return upgradedStudent;
     }

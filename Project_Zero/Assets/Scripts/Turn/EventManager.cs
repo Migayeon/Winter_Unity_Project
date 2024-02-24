@@ -312,7 +312,7 @@ public class EventManager : MonoBehaviour
                         GoodsManager.GoodsConstFame += Convert.ToInt32(amount);
                         break;
                     case 3:
-                        string upgradedStudentsInfo = PlayerInfo.StudentStatRandomUpgrade(Convert.ToInt32(amount))[0];
+                        string upgradedStudentsInfo = PlayerInfo.StudentStatRandomUpgrade(Convert.ToInt32(amount), 1)[0];
                         List<string> showList = upgradedStudentsInfo.Split('/').ToList();
                         type = $"{showList[0]}기 {showList[1]}분반 무작위 스탯 ";
                         break;
@@ -354,7 +354,7 @@ public class EventManager : MonoBehaviour
                         GoodsManager.GoodsConstFame *= Convert.ToInt32(amount);
                         break;
                     case 3:
-                        string upgradedStudentsInfo = PlayerInfo.StudentStatRandomUpgrade(Convert.ToInt32(amount))[0];
+                        string upgradedStudentsInfo = PlayerInfo.StudentStatRandomUpgrade(Convert.ToInt32(amount), 1)[0];
                         List<string> showList = upgradedStudentsInfo.Split('/').ToList();
                         type = $"{showList[0]}기 {showList[1]}분반 무작위 스탯 ";
                         break;
