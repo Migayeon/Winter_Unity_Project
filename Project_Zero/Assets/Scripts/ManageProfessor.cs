@@ -11,28 +11,9 @@ using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
 
 /* TODO:
- * - Fix random generation of skills that can be upgraded
- * idea:
- * 1) at start of turn, generate random skill indexes and values for current # of professors
- * 2) when player enters ManageProfessor scene, check the number of professors. If there are deltas (increases),
- *    generate new indexes and values for the added professors
- * 3) store current data in PlayerInfo.cs, update when neded
- * 
- *    TODO: create list that stores if professor is currently employed
- *    (to make sure deletions are handled properly and to show right skill upgrade indexes and values)
- *    
- *    lots of stuff to do, lol
- */
-
-
-/* Issue Tracker (updated 2024-02-18) */
-/*
- * Issue 1: Professor Upgrade StatList
- * 
- * 
- * 
- * 
- * 
+ * - come up with permanent solution for generating random upgrade indexes and values.
+ *      
+ *      current solution will generate random upgrade indexes and values for each Professor *when the scene is loaded* (TempListIndex, TempListValue)
  */
 
 public class ManageProfessor : MonoBehaviour
@@ -79,7 +60,6 @@ public class ManageProfessor : MonoBehaviour
     public List<Button> ProfessorButtons = new List<Button>(); //List of Professors (as Button objects, see prefab)
 
 
-
     /* constants */
 
     public const int ProfessorAwayTime = 3; //number of turns professor is "away" for
@@ -102,7 +82,11 @@ public class ManageProfessor : MonoBehaviour
             {5, "영창"},
         };
 
-    
+    public List<(int, int)> TempListIndex = new List<(int, int)>();
+    public List<(int, int)> TempListValue = new List<(int, int)>();
+
+    //for testing only (fix later)
+
     /* Random Number Generation */
     public System.Random randomseed = new System.Random();
 
@@ -180,6 +164,10 @@ public class ManageProfessor : MonoBehaviour
         int ProfessorTypeInt;
 
 
+        //clear temp index and value lists (this is for testing only - there needs to be a permanent solution for generating upgrade values and storing them)
+        TempListIndex.Clear();
+        TempListValue.Clear();
+
         /* Step 2 */
         for (int i = 0; i < ProfessorCount; ++i)
         {
@@ -215,17 +203,13 @@ public class ManageProfessor : MonoBehaviour
                 index1 = randomseed.Next(0, 6);
                 index2 = randomseed.Next(0, 6);
             }
-            List<int> TempListIndex = new List<int>(2);
-            List<int> TempListValue = new List<int>(2);
-            TempListIndex.Add(Math.Min(index1, index2));
-            TempListIndex.Add(Math.Max(index1, index2));
-            PlayerInfo.UpgradeSkillIndex.Add(TempListIndex); //temporary, for testing, will not work in main
-            Debug.Log("UpgradeSkillIndex Length : " + PlayerInfo.UpgradeSkillIndex.Count);
+            TempListIndex.Add((Math.Min(index1, index2), Math.Max(index1, index2)));
+            // PlayerInfo.UpgradeSkillIndex.Add(TempListIndex); //temporary, for testing, will not work in main
+            //  Debug.Log("UpgradeSkillIndex Length : " + PlayerInfo.UpgradeSkillIndex.Count);
             //PlayerInfo.UpgradeSkillIndex[i] = TempListIndex;
 
-            TempListValue.Add(randomseed.Next(ProfessorUpgradeValueMinimum, ProfessorUpgradeValueMaximum + 1));
-            TempListValue.Add(randomseed.Next(ProfessorUpgradeValueMinimum, ProfessorUpgradeValueMaximum + 1));
-            PlayerInfo.UpgradeSkillValue.Add(TempListValue); //temporary, for testing, will not work in main
+            TempListValue.Add((randomseed.Next(ProfessorUpgradeValueMinimum, ProfessorUpgradeValueMaximum + 1), randomseed.Next(ProfessorUpgradeValueMinimum, ProfessorUpgradeValueMaximum + 1)));
+            // PlayerInfo.UpgradeSkillValue.Add(TempListValue); //temporary, for testing, will not work in main
             //PlayerInfo.UpgradeSkillValue[i] = TempListValue;
         }
     }
@@ -273,15 +257,10 @@ public class ManageProfessor : MonoBehaviour
         }
         PopupText[5].text = PopupStatStr;
 
-        Debug.Log("Index : " + idx);
-        Debug.Log("List Length : " + PlayerInfo.UpgradeSkillIndex.Count);
-        Debug.Log(PlayerInfo.UpgradeSkillIndex[idx].Count);
-        Debug.Log(PlayerInfo.UpgradeSkillIndex[idx][0]);
-        Debug.Log(PlayerInfo.UpgradeSkillIndex[idx][1]);
-        int UpgradeIndex1 = PlayerInfo.UpgradeSkillIndex[idx][0];
-        int UpgradeIndex2 = PlayerInfo.UpgradeSkillIndex[idx][1];
-        int UpgradeValue1 = PlayerInfo.UpgradeSkillValue[idx][0];
-        int UpgradeValue2 = PlayerInfo.UpgradeSkillValue[idx][1];
+        int UpgradeIndex1 = TempListIndex[idx].Item1;
+        int UpgradeIndex2 = TempListIndex[idx].Item2;
+        int UpgradeValue1 = TempListValue[idx].Item1;
+        int UpgradeValue2 = TempListValue[idx].Item1;
         //UpgradeStatInfo1.text = KoreanStatList[UpgradeIndex1];
         //UpgradeStatInfo2.text = KoreanStatList[UpgradeIndex2];
 
