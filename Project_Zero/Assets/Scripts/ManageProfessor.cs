@@ -311,20 +311,21 @@ public class ManageProfessor : MonoBehaviour
     public void ProfessorSendAway(ProfessorSystem.Professor ProfData)
     {
         Debug.Log("ProfessorSendAway");
-        bool flag = true;
+        bool ProfessorAvailable = true;
         for (int i = 0; i < PlayerInfo.studentGroups.Count; ++i)
         {
             for (int j = 0; j < 3; ++j)
             {
                 if (SubjectTree.canRemoveProfessor(ProfData.ProfessorGetID(), PlayerInfo.studentGroups[i][j].GetCurriculum()) == false)
                 {
+                    ProfessorAvailable = false;
                     goto ExitLoop;
                 }
             }
         }
         ExitLoop:
         Debug.Log("ExitLoop Passed");
-        if (flag)
+        if (ProfessorAvailable)
         {
             PlayerInfo.ProfessorList[PlayerInfo.ProfessorList.FindIndex(x => x.ProfessorGetID() == ProfData.ProfessorGetID())].ProfessorSetAwayStatus(true, randomseed.Next(1, 3));
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -338,13 +339,14 @@ public class ManageProfessor : MonoBehaviour
     {
         Debug.Log("FireProfessor");
         Debug.Log("COUNTS : " + PlayerInfo.studentGroups.Count);
-        bool flag = true;
+        bool ProfessorAvailable = true;
         for (int i = 0; i < PlayerInfo.studentGroups.Count; ++i)
         {
             for (int j = 0; j < 3; ++j)
             {
                 if (SubjectTree.canRemoveProfessor(ProfData.ProfessorGetID(), PlayerInfo.studentGroups[i][j].GetCurriculum()) == false)
                 {
+                    ProfessorAvailable = false;
                     goto ExitLoop;
                 }
             }
@@ -352,7 +354,7 @@ public class ManageProfessor : MonoBehaviour
         ExitLoop:
         Debug.Log("ExitLoop Passed");
         Debug.Log("COUNTS : " + PlayerInfo.studentGroups.Count);
-        if (flag)
+        if (ProfessorAvailable)
         {
             PlayerInfo.ProfessorList.RemoveAt(PlayerInfo.ProfessorList.FindIndex(x => x.ProfessorGetID() == ProfData.ProfessorGetID()));
             int achieveCode = 12; // 업적 - 귀하의 노고에 감사드리며...
