@@ -77,6 +77,7 @@ public class SettingManager : MonoBehaviour
             bgmSlider.value.ToString() + "/" +
             sfxSlider.value.ToString();
         PlayerPrefs.SetString("setting", volumeString);
+        PlayerPrefs.Save();
     }
 
     public void CloseSetting()

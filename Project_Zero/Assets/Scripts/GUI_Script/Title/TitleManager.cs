@@ -155,8 +155,13 @@ public class TitleManager : MonoBehaviour
         // UI 기본 설정
         exitMessage.SetActive(false);
         warningMessage.SetActive(false);
-        LoadSetting();
+        
         // soundManager.SetActive(true);
         //SettingManager.LoadSetting();
+    }
+
+    private void Start()
+    {
+        LoadSetting();
     }
 }
