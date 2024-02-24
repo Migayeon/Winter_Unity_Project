@@ -26,6 +26,12 @@ public class BeforeTurn : MonoBehaviour
     public static bool HaveToGenerateNewProfessors; //static bool value storing if the current roll should be a 'first roll'
                                                  // -> player do not need to pay for a roll
 
+    void NoneEvent()
+    {
+        eventTitle.text = "오늘은 평화로운 날입니다.";
+        eventContent.text = "아무 일도 일어나지 않았습니다.";
+        eventChanges.text = "";
+    }
     void Start()
     {
         // 오르<->마정석 환전 비율 변환
@@ -40,17 +46,19 @@ public class BeforeTurn : MonoBehaviour
         eventInfo = ("common", 4);//test
         if (eventInfo.Item2 == -1)
         {
-            eventTitle.text = "오늘은 평화로운 날입니다.";
-            eventContent.text = "아무 일도 일어나지 않았습니다.";
-            eventChanges.text = "";
+            NoneEvent();
         }
         else
         {
             List<string> eventList = new List<string>();
             eventList = EventManager.ShowEvent(eventInfo.Item1, eventInfo.Item2);
-            eventTitle.text = eventList[0];
-            eventContent.text = eventList[1];
-            eventChanges.text = eventList[2];
+            if (eventList.Count < 3) NoneEvent();
+            else
+            {
+                eventTitle.text = eventList[0];
+                eventContent.text = eventList[1];
+                eventChanges.text = eventList[2];
+            }
         }
 
         // 이벤트 가져온 이후 실제 환전 비율에 따라 가격 변환
