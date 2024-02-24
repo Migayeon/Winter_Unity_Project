@@ -211,6 +211,11 @@ public class manaStoneGambleManager : MonoBehaviour
                     if (AchievementManager.localStat[ACHIEVEMNET_ID] >= 100000)
                         AchievementManager.Achieve(ACHIEVEMNET_ID);
                 }
+                if (revenueInThisRound - betAr >= 100000)
+                {
+                    const int ACHIEVEMNET_ID = 15;
+                    AchievementManager.Achieve(ACHIEVEMNET_ID);
+                }
                 isCalculated = true;
             }
         }

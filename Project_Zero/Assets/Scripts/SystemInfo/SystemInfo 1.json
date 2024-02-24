@@ -1,0 +1,127 @@
+{
+    "StdNormal": {
+        "StatPoint": 400,
+        "SalarySale": 2,
+        "FixedStat": [
+            100,
+            0,
+            0,
+            0,
+            0,
+            0
+        ],
+        "MinStat": [
+            50,
+            50,
+            50,
+            50,
+            50,
+            50
+        ]
+    },
+    "StdBattle": {
+        "StatPoint": 400,
+        "SalarySale": 2,
+        "FixedStat": [
+            100,
+            0,
+            0,
+            0,
+            0,
+            0
+        ],
+        "MinStat": [
+            50,
+            50,
+            50,
+            50,
+            50,
+            50
+        ]
+    },
+    "StdUnique": {
+        "StatPoint": 500,
+        "SalarySale": 2,
+        "FixedStat": [
+            100,
+            0,
+            0,
+            0,
+            0,
+            0
+        ],
+        "MinStat": [
+            70,
+            70,
+            70,
+            70,
+            70,
+            70
+        ]
+    },
+    "StdNormalCnt": 2,
+    "StdBattleCnt": 1,
+    "StdUniqueCnt": 0,
+    "Normal": {
+        "StatPoint": 0,
+        "SalarySale": 0,
+        "FixedStat": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ],
+        "MinStat": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    "Battle": {
+        "StatPoint": 0,
+        "SalarySale": 0,
+        "FixedStat": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ],
+        "MinStat": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    "Unique": {
+        "StatPoint": 0,
+        "SalarySale": 0,
+        "FixedStat": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ],
+        "MinStat": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    "BattlePercent": 0,
+    "UniquePercent": 0
+}
