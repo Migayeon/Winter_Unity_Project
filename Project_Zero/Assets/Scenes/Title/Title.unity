@@ -2583,6 +2583,7 @@ MonoBehaviour:
   exitGame: {fileID: 1984818242}
   exitMessage: {fileID: 1730722914}
   warningMessage: {fileID: 253505928}
+  audioMixer: {fileID: 24100000, guid: 58c2e24fd8ada7e4e831672fcb2a7b46, type: 2}
   achievementButton: {fileID: 46155186}
 --- !u!1 &1659445312
 GameObject:
