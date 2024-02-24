@@ -1,0 +1,14 @@
+{
+    "StatPointMin": 3600,
+    "StatPointMax": 4500,
+    "SalarySale": 3,
+    "DepositScale": 3,
+    "MinStat": [
+        300,
+        100,
+        100,
+        100,
+        100,
+        100
+    ]
+}

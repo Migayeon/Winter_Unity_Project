@@ -1,6 +1,7 @@
-import json, os
+import json, os, copy
 
 saveJson = {}
+updateRst = {}
 PATH = "SystemInfo.json"
 
 class Node:
@@ -19,26 +20,29 @@ class Node:
     def updateNewVariable(self):
         children = self.getChildren()
         if self.manageList is not None:
-            tmp = saveJson
+            update = updateRst
             for i in range(len(self.manageList) - 1):
-                tmp = tmp[self.manageList[i]]
-            if type(tmp) == dict:
-                if tmp.get(self.manageList[-1]) is None:
-                    tmp[self.manageList[-1]] = []
-            elif type(tmp) == list:
-                while len(tmp) < self.manageList[-1]:
-                    tmp.append([])
+                update = update[self.manageList[i]]
+            if type(update) == dict:
+                if update.get(self.manageList[-1]) is None:
+                    update[self.manageList[-1]] = []
+            elif type(update) == list:
+                if len(update) == self.manageList[-1]:
+                    update.append([])
         
         if self.manageDict is not None:
             tmp = saveJson
             for i in range(len(self.manageDict) - 1):
                 tmp = tmp[self.manageDict[i]]
             if type(tmp) == dict:
+                for i in tuple(tmp.keys()):
+                    if i != self.manageDict[-1]:
+                        del tmp[i]
                 if tmp.get(self.manageDict[-1]) is None:
                     tmp[self.manageDict[-1]] = {}
             elif type(tmp) == list:
-                while len(tmp) < self.manageDict[-1]:
-                    tmp.append([])
+                if len(tmp) == self.manageDict[-1]:
+                    tmp.append({})
 
         if children is None:
             if self.manageValue is not None:
@@ -49,7 +53,7 @@ class Node:
                     if tmp.get(self.manageValue[-1]) is None:
                         tmp[self.manageValue[-1]] = 0
                 elif type(tmp) == list:
-                    while len(tmp) < self.manageValue[-1]:
+                    if len(tmp) == self.manageValue[-1]:
                         tmp.append(0)
         else:
             for child in children:
@@ -89,10 +93,11 @@ def query(queryValue : list, queryId : str):
         return root
 
     def stdProfessor():
-        root = Node("총 스탯 포인트", manageValue = [*queryValue, "StatPoint"])
-        root.sibling = Node("봉급 조절", manageValue = [*queryValue, "SalarySale"], description = "[총 스탯] / [봉급 조절] 이 봉급이 됨")
-        root.sibling.sibling = Node("항목별 기본 제공 스탯", manageList = [*queryValue, "FixedStat"], query = query([*queryValue, "FixedStat"], "setStat"), description = "기본 제공으로 고정된 경우 추가적인 스탯분배는 받지 못합니다.")
-        root.sibling.sibling.sibling = Node("항목별 최소 스탯", manageList = [*queryValue, "MinStat"], query = query([*queryValue, "MinStat"], "setStat"))
+        root = Node("총 스탯 최대치", manageValue = [*queryValue, "StatPointMax"])
+        root.sibling = Node("총 스탯 최저치", manageValue = [*queryValue, "StatPointMin"])
+        root.sibling.sibling = Node("봉급 조절", manageValue = [*queryValue, "SalarySale"], description = "[총 스탯] / [봉급 조절] 이 봉급이 됨")
+        root.sibling.sibling.sibling = Node("항목별 기본 제공 스탯", manageList = [*queryValue, "FixedStat"], query = query([*queryValue, "FixedStat"], "setStat"), description = "기본 제공으로 고정된 경우 추가적인 스탯분배는 받지 못합니다.")
+        root.sibling.sibling.sibling.sibling = Node("항목별 최소 스탯", manageList = [*queryValue, "MinStat"], query = query([*queryValue, "MinStat"], "setStat"))
         return root
     
     queryManager = {
@@ -143,6 +148,7 @@ if __name__ == "__main__":
         saveJson = json.load(jsonFile)
         for i in saveJson.keys():
             load(saveJson, i)
+    print(saveJson)
     addr = root
     addrSave = []
     while True:
@@ -154,8 +160,9 @@ if __name__ == "__main__":
                 options = addr.query().getSiblings()
             idx = 0
             for option in options:
-                print(f'{idx} : {option}')
+                print(f'> {idx} \t {option}')
                 idx += 1
+            print()
             print("s : 저장하기")
             if not addr.isRoot:
                 print("b : 뒤로가기")
@@ -166,8 +173,9 @@ if __name__ == "__main__":
             selection = input(">>> ")
             if selection.isdigit():
                 selection = int(selection)
-                addrSave.append(addr)
-                addr = options[selection]
+                if selection < len(options):
+                    addrSave.append(addr)
+                    addr = options[selection]
             elif selection == "s":
                 rst = {}
                 for i in saveJson.keys():
@@ -194,14 +202,14 @@ if __name__ == "__main__":
                 nowValue = tmp[addr.manageValue[-1]]
             elif type(tmp) == list:
                 nowValue = tmp[addr.manageValue[-1]]
-            print(f"설정할 값을 입력해주세요.\n{addr.text} : {nowValue} -> ?\n* 설정을 원치 않으시다면 숫자가 아닌 것을 입력해주세요. *")
+            print(f"설정할 값을 입력해주세요.\n{addr.text} : {nowValue}\n* 설정을 원치 않으시다면 숫자가 아닌 것을 입력해주세요. *")
             value = input('>>> ')
             if value.isdigit():
                 if type(tmp) == dict:
                     tmp[addr.manageValue[-1]] = int(value)
                 elif type(tmp) == list:
                     tmp[addr.manageValue[-1]] = int(value)
-                print(f"-> 값이 {value}(으)로 변경되었습니다!")
+                print(f"{addr.text} : {nowValue} -> {value}")
                 addr = addrSave.pop()
             else:
                 addr = addrSave.pop()

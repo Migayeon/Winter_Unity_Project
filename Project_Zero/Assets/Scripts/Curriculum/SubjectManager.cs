@@ -26,6 +26,7 @@ public static class SubjectTree
     public static List<int> studentInSubjectCnt = new List<int>();
     public static List<int> professorInSubjectCnt = new List<int>();
     public static Dictionary<long, List<bool>> professorsLecture = new Dictionary<long, List<bool>>();
+   
     public static int subjectsCount = 0;
 
     public static int openSubjectCnt = 0;
@@ -161,7 +162,7 @@ public static class SubjectTree
         Queue<int> searchQ = new Queue<int>();
         for (int i = 0; i < subjectsCount; i++)
         {
-            if (subjects[i].needCount == 0 && flatIdList[i])
+            if (subjects[i].needCount == 0 && flatIdList[i] && professorInSubjectCnt[i] > 0)
             {
                 searchQ.Enqueue(i);
                 flatSearchList[i] = true;
@@ -174,7 +175,7 @@ public static class SubjectTree
             for (int i = 0; i < next.Count; i++)
             {
                 int index = next[i];
-                if (--cntList[index] == 0 && flatIdList[index])
+                if (--cntList[index] == 0 && flatIdList[index] && professorInSubjectCnt[i] > 0)
                 {
                     searchQ.Enqueue(index);
                     flatSearchList[index] = true;
