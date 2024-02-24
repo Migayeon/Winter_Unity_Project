@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 
 public class ProfessorSystem : MonoBehaviour
 {
-    
+    public const int MAX_STAT_VALUE = 10000000;
     public const int professorStats = 6;
     public class Professor
     {
@@ -92,6 +92,7 @@ public class ProfessorSystem : MonoBehaviour
 
         public int ProfessorGetAwayTime() { return awayTime; }
         public List<int> ProfessorGetSubjects() { return subjects; }
+
         public void ProfessorIncreaseTenure()
         {
             tenure++;
@@ -119,6 +120,18 @@ public class ProfessorSystem : MonoBehaviour
         {
             awayTime -= val;
         }
+        public void ProfessorUpgradeStat(int StatIndex, int UpgradeValue)
+        {
+            if (stat[StatIndex] + UpgradeValue <= MAX_STAT_VALUE)
+            {
+                stat[StatIndex] += UpgradeValue;
+            }
+            else
+            {
+                Debug.Log("Unable to upgrade - reached MAXVAL");
+            }
+        }
+
         public void ProfessorChangeStat(int idx, int changedValue)
         {
             stat[idx] = changedValue;

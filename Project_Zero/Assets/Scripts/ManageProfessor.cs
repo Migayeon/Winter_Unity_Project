@@ -48,28 +48,20 @@ public class ManageProfessor : MonoBehaviour
     public TextMeshProUGUI ProfessorSalary;
     public TextMeshProUGUI ProfessorStat;
 
-    public TextMeshProUGUI UpgradeStatInfo1;
-    public TextMeshProUGUI UpgradeStatInfo2;
-    public TextMeshProUGUI UpgradeStatValue1;
-    public TextMeshProUGUI UpgradeStatValue2;
 
     public TextMeshProUGUI[] ProfessorInfo = new TextMeshProUGUI[5];
     public TextMeshProUGUI[] PopupText = new TextMeshProUGUI[6];
 
     public TextMeshProUGUI ProfessorCountInfo;
 
-    public TextMeshProUGUI[] ProfessorUpgradeValues = new TextMeshProUGUI[6];
-
     // Button
 
     public Button ReturnButton; //Button for Return to Main Menu option
     public Button ExitPopupButton; //Button for exiting the Professor Information popup
 
-    public Button UpgradeButton1, UpgradeButton2;
+    public Button UpgradeButton;
     public Button AwayButton;
     public Button FireButton;
-
-    public Button[] ProfessorUpgradeButtons = new Button[6];
 
     /* GameObjects */
 
@@ -147,11 +139,7 @@ public class ManageProfessor : MonoBehaviour
 
     void Awake()
     {
-        for (int i = 0; i < 6; ++i)
-        {
-            ProfessorUpgradeValues[i].GetComponent<TextMeshProUGUI>();
-            ProfessorUpgradeButtons[i].GetComponent<Button>();
-        }
+
     }
     void Start()
     {
@@ -166,12 +154,6 @@ public class ManageProfessor : MonoBehaviour
         ProfessorAwayRefuseMessage.SetActive(false);
         ProfessorFireRefuseMessage.SetActive(false);
         PopUpObject.SetActive(false);
-
-        for (int i = 0; i < 6; ++i)
-        {
-            ProfessorUpgradeValues[i].gameObject.SetActive(false);
-            ProfessorUpgradeButtons[i].gameObject.SetActive(false);
-        }
 
         //add Listener to Return To Menu button
         ReturnButton.onClick.AddListener(ReturnToMenu);
@@ -278,8 +260,6 @@ public class ManageProfessor : MonoBehaviour
             PopupText[2].text = "출장중";
         else
             PopupText[2].text = "";
-        //hijack for testing
-        PopupText[2].text = "출장중";
         PopupText[3].text = Convert.ToString(ProfData.ProfessorGetTenureInTurns());
         PopupText[4].text = Convert.ToString(ProfData.ProfessorGetSalary());
         List<int> PopupStatList = ProfData.ProfessorGetStats();
@@ -300,24 +280,17 @@ public class ManageProfessor : MonoBehaviour
         Debug.Log(PlayerInfo.UpgradeSkillIndex[idx][1]);
         int UpgradeIndex1 = PlayerInfo.UpgradeSkillIndex[idx][0];
         int UpgradeIndex2 = PlayerInfo.UpgradeSkillIndex[idx][1];
+        int UpgradeValue1 = PlayerInfo.UpgradeSkillValue[idx][0];
+        int UpgradeValue2 = PlayerInfo.UpgradeSkillValue[idx][1];
         //UpgradeStatInfo1.text = KoreanStatList[UpgradeIndex1];
         //UpgradeStatInfo2.text = KoreanStatList[UpgradeIndex2];
-        UpgradeStatValue1.text = Convert.ToString(PlayerInfo.UpgradeSkillValue[idx][0]);
-        UpgradeStatValue2.text = Convert.ToString(PlayerInfo.UpgradeSkillValue[idx][1]);
 
-        UpgradeButton1.onClick.RemoveAllListeners();
-        UpgradeButton2.onClick.RemoveAllListeners();
+        UpgradeButton.onClick.RemoveAllListeners();
         AwayButton.onClick.RemoveAllListeners();
         FireButton.onClick.RemoveAllListeners();
-        UpgradeButton1.onClick.AddListener(() => UpgradeStats(UpgradeIndex1));
-        UpgradeButton2.onClick.AddListener(() => UpgradeStats(UpgradeIndex2));
+        UpgradeButton.onClick.AddListener(() => UpgradeStats(idx, UpgradeIndex1, UpgradeIndex2, UpgradeValue1, UpgradeValue2));
         AwayButton.onClick.AddListener(() => ProfessorSendAway(ProfData));
         FireButton.onClick.AddListener(() => FireProfessor(ProfData));
-
-        ProfessorUpgradeValues[UpgradeIndex1].gameObject.SetActive(true);
-        ProfessorUpgradeValues[UpgradeIndex2].gameObject.SetActive(true);
-        ProfessorUpgradeButtons[UpgradeIndex1].gameObject.SetActive(true);
-        ProfessorUpgradeButtons[UpgradeIndex2].gameObject.SetActive(true);
 
         PopUpObject.SetActive(true);
     }
@@ -325,18 +298,14 @@ public class ManageProfessor : MonoBehaviour
     public void RemovePopup()
     {
         Debug.Log("Remove Popup call");
-        for (int i = 0; i < 6; ++i)
-        {
-            ProfessorUpgradeValues[i].gameObject.SetActive(false);
-            ProfessorUpgradeButtons[i].gameObject.SetActive(false);
-        }
         PopUpObject.SetActive(false);
     }
 
-    public void UpgradeStats(int StatIndex)
+    public void UpgradeStats(int ProfessorIndex, int StatIndex1, int StatIndex2, int StatValue1, int StatValue2)
     {
-        Debug.Log("UpgradeStats : " + StatIndex);
-        
+        Debug.Log("UpgradeStats | ProfIndex :" + ProfessorIndex + "   Stat1 : "  + StatIndex1 + "  Stat2 : " + StatIndex2);
+        PlayerInfo.ProfessorList[ProfessorIndex].ProfessorUpgradeStat(StatIndex1, StatValue1);
+        PlayerInfo.ProfessorList[ProfessorIndex].ProfessorUpgradeStat(StatIndex2, StatValue2);
     }
 
     public void ProfessorSendAway(ProfessorSystem.Professor ProfData)
