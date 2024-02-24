@@ -108,6 +108,7 @@ public class TitleManager : MonoBehaviour
 
     private void Awake()
     {
+        SettingManager.LoadSetting();
         // 버튼 별로 함수 할당
         newGame.onClick.AddListener(NewGameStart);
         continueGame.onClick.AddListener(ContinueGame);
