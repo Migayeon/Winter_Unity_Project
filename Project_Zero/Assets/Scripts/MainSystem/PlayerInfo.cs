@@ -73,12 +73,11 @@ public class PlayerInfo : MonoBehaviour
         List<string> upgradedStudent = new List<string>();
         for(int i = 0; i < studentGroups.Count; i++)
         {
-            Debug.Log("i is " + i.ToString());
             for(int j = 0; j < 3; j++)
             {
                 if (studentGroups[i][j].GetNumber() > 0 && upgradeMax > 0)
                 {
-                    if (Random.Range(0, 3) == 0 || (i == studentGroups.Count - 1 && j == 2))
+                    if (Random.Range(0, 20) == 0)
                     {
                         upgradeMax--;
                         studentGroups[i][j].RandomStatUp(amount);
@@ -87,6 +86,9 @@ public class PlayerInfo : MonoBehaviour
                 }
             }
         }
+        for (int i = studentGroups.Count - 1; i >=0;i--){
+
+
         return upgradedStudent;
     }
 }
