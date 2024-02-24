@@ -69,6 +69,29 @@ public class SettingManager : MonoBehaviour
 
     }
 
+    public void SaveSetting()
+    {
+        string volumeString =
+            volume["Master"].ToString() + "/" +
+            volume["BGM"].ToString() + "/" +
+            volume["SFX"].ToString();
+        PlayerPrefs.SetString("setting", volumeString);
+    }
+
+    public static void LoadSetting()
+    {
+        if (PlayerPrefs.HasKey("setting"))
+        {
+            string[] volumeSetting = PlayerPrefs.GetString("setting").Split("/");
+            volume["Master"] = float.Parse(volumeSetting[0]);
+            volume["BGM"] = float.Parse(volumeSetting[1]);
+            volume["SFX"] = float.Parse(volumeSetting[2]);
+        }
+        AudioMixer mixer = Resources.Load<AudioMixer>("Sound/Mixer/MyMixer");
+        mixer.SetFloat("Master", volume["Master"]);
+        mixer.SetFloat("BGM", volume["BGM"]);
+        mixer.SetFloat("SFX", volume["SFX"]);
+    }
 
     private void Awake()
     {
