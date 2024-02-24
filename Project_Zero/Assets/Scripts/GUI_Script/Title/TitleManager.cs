@@ -40,7 +40,7 @@ public class TitleManager : MonoBehaviour
     public GameObject exitMessage;
     public GameObject warningMessage;
     public AudioMixer audioMixer;
-    // public GameObject soundManager;
+    public GameObject soundManager;
     [SerializeField]
     private Button achievementButton;
 
@@ -138,9 +138,19 @@ public class TitleManager : MonoBehaviour
             audioMixer.SetFloat("BGM", 10.0f);
             audioMixer.SetFloat("SFX", 10.0f);
             PlayerPrefs.SetString("setting", "10/10/10");
+            PlayerPrefs.Save();
         }
 
-    }
+
+        /*
+        float result;
+        Debug.Log(audioMixer.GetFloat("Master", out result));
+        Debug.Log(result);
+        BGMManager.SetBGM("start")
+        */
+    } 
+
+    //IEnumerator
 
     private void Awake()
     {
@@ -156,12 +166,13 @@ public class TitleManager : MonoBehaviour
         exitMessage.SetActive(false);
         warningMessage.SetActive(false);
         
-        // soundManager.SetActive(true);
+        //soundManager.SetActive(true);
         //SettingManager.LoadSetting();
     }
 
     private void Start()
     {
         LoadSetting();
+        //soundManager.SetActive(true);
     }
 }
