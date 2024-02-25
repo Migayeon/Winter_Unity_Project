@@ -2460,7 +2460,7 @@ GameObject:
   - component: {fileID: 1599872002}
   - component: {fileID: 1599872001}
   m_Layer: 0
-  m_Name: Logo (7)
+  m_Name: Logo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2584,6 +2584,7 @@ MonoBehaviour:
   exitMessage: {fileID: 1730722914}
   warningMessage: {fileID: 253505928}
   audioMixer: {fileID: 24100000, guid: 58c2e24fd8ada7e4e831672fcb2a7b46, type: 2}
+  soundManager: {fileID: 0}
   achievementButton: {fileID: 46155186}
 --- !u!1 &1659445312
 GameObject:
