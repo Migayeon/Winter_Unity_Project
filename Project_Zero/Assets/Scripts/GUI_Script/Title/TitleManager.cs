@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -39,8 +38,6 @@ public class TitleManager : MonoBehaviour
     private Button yesButton, noButton, xButton;
     public GameObject exitMessage;
     public GameObject warningMessage;
-    public AudioMixer audioMixer;
-    public GameObject soundManager;
     [SerializeField]
     private Button achievementButton;
 
@@ -109,52 +106,9 @@ public class TitleManager : MonoBehaviour
         SceneManager.LoadScene("Achievement");
     }
 
-    public void LoadSetting()
-    {
-        if (PlayerPrefs.HasKey("setting"))
-        {
-            Debug.Log("Load Volume");
-            Debug.Log(PlayerPrefs.GetString("setting"));
-            string[] volumeSetting = PlayerPrefs.GetString("setting").Split("/");
-            string[] volumeName = new string[3] { "Master", "BGM", "SFX" };
-            for (int i = 0; i < 3; i++)
-            {
-                float parsedVolume = float.Parse(volumeSetting[i]);
-                Debug.Log(parsedVolume);
-                if (parsedVolume == -40f)
-                {
-                    audioMixer.SetFloat(volumeName[i], -80f);
-                }
-                else
-                {
-                    audioMixer.SetFloat(volumeName[i], parsedVolume);
-                    Debug.Log(audioMixer.name);
-                }
-            }
-        }
-        else
-        {
-            audioMixer.SetFloat("Master", 10.0f);
-            audioMixer.SetFloat("BGM", 10.0f);
-            audioMixer.SetFloat("SFX", 10.0f);
-            PlayerPrefs.SetString("setting", "10/10/10");
-            PlayerPrefs.Save();
-        }
-
-
-        /*
-        float result;
-        Debug.Log(audioMixer.GetFloat("Master", out result));
-        Debug.Log(result);
-        BGMManager.SetBGM("start")
-        */
-    } 
-
-    //IEnumerator
-
     private void Awake()
     {
-        
+        SettingManager.LoadSetting();
         // 버튼 별로 함수 할당
         newGame.onClick.AddListener(NewGameStart);
         continueGame.onClick.AddListener(ContinueGame);
@@ -165,14 +119,5 @@ public class TitleManager : MonoBehaviour
         // UI 기본 설정
         exitMessage.SetActive(false);
         warningMessage.SetActive(false);
-        
-        //soundManager.SetActive(true);
-        //SettingManager.LoadSetting();
-    }
-
-    private void Start()
-    {
-        LoadSetting();
-        //soundManager.SetActive(true);
     }
 }

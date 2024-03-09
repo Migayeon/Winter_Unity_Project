@@ -1,3 +1,10 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using System.IO;
+using Unity.Jobs;
+using Unity.VisualScripting;
+using UnityEditor.Build.Content;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -19,7 +26,7 @@ public class MainSceneUIManager : MonoBehaviour
     public Text fame;
     [SerializeField]
     private Button assistantBtn;
-    private const float interval = 3.0f;
+    private const float interval = 1.0f;
     private float clickedTime = -1.0f;
     private int clickCnt = 0;
 
@@ -158,7 +165,7 @@ public class MainSceneUIManager : MonoBehaviour
     {
         if (Time.time - clickedTime < interval)
         {
-            if (++clickCnt == 10)
+            if (++clickCnt == 30)
                 AchievementManager.Achieve(3);
         }
         else

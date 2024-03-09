@@ -14,15 +14,14 @@ public class SettingManager : MonoBehaviour
     public GameObject[] tab = new GameObject[N];
 
     // 사운드 탭 관련 변수
-    //public static Dictionary<string, float> volume = new Dictionary<string, float>();
-    //{ { "BGM", 10.0f }, { "SFX", 10.0f }, { "Master", 10.0f } };
+    public static Dictionary<string, float> volume = new Dictionary<string, float>()
+    { { "BGM", 10.0f }, { "SFX", 10.0f }, { "Master", 10.0f } };
     public AudioMixer mixer;
     public Slider bgmSlider, masterSlider, sfxSlider;
 
 
     public void OpenTab(int index)
     {
-
         for (int i = 0; i < N; i++)
         {
             tabButton[i].interactable = true;
@@ -38,19 +37,19 @@ public class SettingManager : MonoBehaviour
         bgmSlider.onValueChanged.AddListener(delegate { ControlVolume(bgmSlider); });
         masterSlider.onValueChanged.AddListener(delegate { ControlVolume(masterSlider); });
         sfxSlider.onValueChanged.AddListener(delegate { ControlVolume(sfxSlider); });
-        string[] volumeSetting = PlayerPrefs.GetString("setting").Split("/");
-        masterSlider.value = float.Parse(volumeSetting[0]);
-        bgmSlider.value = float.Parse(volumeSetting[1]);
-        sfxSlider.value = float.Parse(volumeSetting[2]);
+        bgmSlider.value = volume["BGM"];
+        sfxSlider.value = volume["SFX"];
+        masterSlider.value = volume["Master"];
     }
 
     public void ControlVolume(Slider slider)
     {
         string type = slider.name;
+        volume[type] = slider.value;
         if (slider.value == -40f)
             mixer.SetFloat(type, -80f);
         else
-            mixer.SetFloat(type, slider.value);
+            mixer.SetFloat(type, volume[type]);
     }
 
     public void OpenSystemTab()
@@ -73,25 +72,26 @@ public class SettingManager : MonoBehaviour
     public void SaveSetting()
     {
         string volumeString =
-            masterSlider.value.ToString() + "/" +
-            bgmSlider.value.ToString() + "/" +
-            sfxSlider.value.ToString();
+            volume["Master"].ToString() + "/" +
+            volume["BGM"].ToString() + "/" +
+            volume["SFX"].ToString();
         PlayerPrefs.SetString("setting", volumeString);
-        PlayerPrefs.Save();
     }
 
-    public void CloseSetting()
+    public static void LoadSetting()
     {
-        string[] volumeSetting = PlayerPrefs.GetString("setting").Split("/");
-        masterSlider.value = float.Parse(volumeSetting[0]);
-        bgmSlider.value = float.Parse(volumeSetting[1]);
-        sfxSlider.value = float.Parse(volumeSetting[2]);
-        ControlVolume(masterSlider);
-        ControlVolume(bgmSlider);
-        ControlVolume(sfxSlider);
+        if (PlayerPrefs.HasKey("setting"))
+        {
+            string[] volumeSetting = PlayerPrefs.GetString("setting").Split("/");
+            volume["Master"] = float.Parse(volumeSetting[0]);
+            volume["BGM"] = float.Parse(volumeSetting[1]);
+            volume["SFX"] = float.Parse(volumeSetting[2]);
+        }
+        AudioMixer mixer = Resources.Load<AudioMixer>("Sound/Mixer/MyMixer");
+        mixer.SetFloat("Master", volume["Master"]);
+        mixer.SetFloat("BGM", volume["BGM"]);
+        mixer.SetFloat("SFX", volume["SFX"]);
     }
-
-    
 
     private void Awake()
     {

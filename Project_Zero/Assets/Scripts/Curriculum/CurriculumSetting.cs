@@ -27,7 +27,7 @@ public class CurriculumSetting : MonoBehaviour
     private int sum = 0;
     private int localMinimum;
     private int coefficient;
-    private bool isShift = true;
+    private bool isShift;
     private bool selectFixed;
 
     public enum returnState
@@ -327,7 +327,7 @@ public class CurriculumSetting : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
             isShift = true;
         if (Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.RightShift))
-            isShift = true;
+            isShift = false;
         if (ESC_Script.isPause) return;
         if (!selectFixed)
         {

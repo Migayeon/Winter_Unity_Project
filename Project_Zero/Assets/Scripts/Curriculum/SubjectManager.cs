@@ -1,7 +1,9 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using UnityEngine;
 public static class SubjectTree
 {
@@ -173,7 +175,7 @@ public static class SubjectTree
             for (int i = 0; i < next.Count; i++)
             {
                 int index = next[i];
-                if (--cntList[index] == 0 && flatIdList[index] && professorInSubjectCnt[index] > 0)
+                if (--cntList[index] == 0 && flatIdList[index] && professorInSubjectCnt[i] > 0)
                 {
                     searchQ.Enqueue(index);
                     flatSearchList[index] = true;
@@ -374,7 +376,7 @@ public static class SubjectTree
                 filter[subjectIdAble.Key] = false;
             foreach (int nextSubjectId in subjects[subjectIdAble.Key].nextSubjects)
             {
-                KeyValuePair<int, bool> tmp = new KeyValuePair<int, bool>(nextSubjectId, subjectIdAble.Value && professorInSubjectCnt[nextSubjectId] != 0);
+                KeyValuePair<int, bool> tmp = new KeyValuePair<int, bool>(nextSubjectId, subjectIdAble.Value);
                 q.Enqueue(tmp);
             }
         }
