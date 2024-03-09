@@ -79,6 +79,7 @@ public class CheckCurriculumManager : MonoBehaviour
                 {
                     GameObject newStudent = Instantiate(s_prefab, scroll_content);
                     newStudent.transform.GetChild(0).GetComponent<Text>().text = $"{student.GetPeriod()}기 {student.GetDivision()}분반";
+                    newStudent.GetComponent<Button>().onClick.RemoveAllListeners();
                     newStudent.GetComponent<Button>().onClick.AddListener(delegate
                     {
                         ShowCurriculum(student.GetCurriculum(), student.GetAge());

@@ -1,13 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using static Unity.Burst.Intrinsics.X86.Avx;
 
 public class AchievementManager : MonoBehaviour
 {
